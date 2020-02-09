@@ -1,0 +1,13 @@
+{% extends 'blog/base.html' %}
+{% load feincms3 %}
+{% block content %}
+
+<ul>
+{% for article in article_list %}
+<li><a href="{{article.get_absolute_url}}">{{article}}</a></li>
+{% endfor %}
+</ul>
+
+{% render_region regions 'side' %}
+{% render_region regions 'main' %}
+{% endblock %}

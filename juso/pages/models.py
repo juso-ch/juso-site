@@ -95,21 +95,35 @@ class Page(
         verbose_name=_("category"),
     )
 
+    class Meta:
+        verbose_name = _("page")
+        verbose_name_plural = _("page")
+
 
 PluginBase = create_plugin_base(Page)
 
 
 class External(plugins.external.External, PluginBase):
-    pass
+    class Meta:
+        verbose_name = _("external")
+        verbose_name = _("external")
 
 
 class RichText(plugins.richtext.RichText, PluginBase):
-    pass
+    class Meta:
+        verbose_name = _("rich text")
+        verbose_name = _("rich text")
 
 
 class Image(plugins.image.Image, PluginBase):
     caption = models.CharField(_("caption"), max_length=200, blank=True)
 
+    class Meta:
+        verbose_name = _("image")
+        verbose_name_plural = _("images")
+
 
 class HTML(plugins.html.HTML, PluginBase):
-    pass
+    class Meta:
+        verbose_name = _("HTML")
+        verbose_name_plural = _("HTML")

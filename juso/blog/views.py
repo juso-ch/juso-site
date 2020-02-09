@@ -58,5 +58,8 @@ def article_detail(request, slug):
             "regions": Regions.from_item(
                 article, renderer=renderer, timeout=60
             ),
+            "page_regions": Regions.from_item(
+                page, renderer=pages.renderer.renderer, timeout=60
+            ),
         },
     )

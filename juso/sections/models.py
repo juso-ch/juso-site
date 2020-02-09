@@ -15,8 +15,8 @@ from taggit.managers import TaggableManager
 
 
 class Category(LanguageMixin, TreeNode):
-    name = models.CharField(max_length=200)
-    slug = models.SlugField()
+    name = models.CharField(max_length=200, verbose_name=_("name"))
+    slug = models.SlugField(verbose_name=_("slug"))
 
     def __str__(self):
         return self.name
@@ -34,14 +34,15 @@ class Section(TreeNode):
     class Meta:
         verbose_name = _("section")
         verbose_name_plural = _("sections")
+        ordering = ['name']
 
     def __str__(self):
         return self.name
 
 
 class ContentMixin(LanguageMixin, TemplateMixin):
-    title = models.CharField(max_length=200)
-    slug = models.SlugField()
+    title = models.CharField(max_length=200, verbose_name=_("title"))
+    slug = models.SlugField(verbose_name=_("slug"))
     author = models.ForeignKey(
         User, models.SET_NULL, null=True, blank=True,
         verbose_name=_("author")
@@ -87,7 +88,7 @@ def get_template_list(app_name, *templates):
     return [
         Template(
             key=template[0],
-            title=template[0],
+            title=_(template[0]),
             template_name=f"{app_name}/{template[0]}.html",
             regions=(
                 Region(key=region, title=region)

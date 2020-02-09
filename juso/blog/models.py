@@ -19,6 +19,11 @@ class NameSpace(LanguageMixin):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = _("name space")
+        verbose_name_plural = _("name spaces")
+        ordering = ['slug']
+
 
 class Article(ContentMixin):
     TEMPLATES = get_template_list('blog', (
@@ -44,6 +49,10 @@ class Article(ContentMixin):
                 'slug': self.slug
             }
         )
+
+    class Meta:
+        verbose_name = _("article")
+        verbose_name_plural = _("articles")
 
 
 PluginBase = create_plugin_base(Article)

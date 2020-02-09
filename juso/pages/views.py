@@ -12,6 +12,7 @@ def page_detail(request, path=None):
         Page.objects.active(),
         path="/{}/".format(path) if path else "/",
     )
+    page.activate_language(request)
     return render(
         request,
         "pages/default.html",

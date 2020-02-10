@@ -1,17 +1,10 @@
-from django.utils.translation import gettext_lazy as _
-from django.db import models
-
-from feincms3.apps import AppsMixin
-
 from content_editor.models import Region, Template, create_plugin_base
-
-from feincms3.mixins import (
-    RedirectMixin, MenuMixin,
-    LanguageMixin, TemplateMixin
-)
-
+from django.db import models
+from django.utils.translation import gettext_lazy as _
 from feincms3 import plugins
-
+from feincms3.apps import AppsMixin
+from feincms3.mixins import (LanguageMixin, MenuMixin, RedirectMixin,
+                             TemplateMixin)
 from feincms3_meta.models import MetaMixin
 from feincms3_sites.models import AbstractPage
 

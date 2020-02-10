@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from feincms3.regions import Regions
 
 from juso.pages.models import Page

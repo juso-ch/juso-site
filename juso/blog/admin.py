@@ -1,22 +1,99 @@
-from django.contrib import admin
-
-from feincms3 import plugins
-from juso.blog.models import Article, NameSpace
 from content_editor.admin import ContentEditor
+from django.contrib import admin
+from django.utils.translation import gettext as _
+from feincms3 import plugins
+from js_asset import JS
 
 from juso.blog import models
-from js_asset import JS
+from juso.blog.models import Article, NameSpace
+
 # Register your models here.
 
 
 @admin.register(Article)
 class ArticleAdmin(ContentEditor):
+
+    list_display = [
+        'title',
+        'slug',
+        'author',
+        'publication_date',
+        'category',
+        'section',
+        'namespace',
+    ]
+
+    list_filter = [
+        'category',
+        'author',
+        'section',
+        'namespace',
+    ]
+
+    date_hierarchy = 'publication_date'
+
+    autocomplete_fields = [
+        'category',
+        'namespace',
+        'author',
+        'section',
+    ]
+
+    search_fields = [
+        'title',
+        'description'
+    ]
+
+    prepopulated_fields = {
+        "slug": ("title",),
+    }
+
+    readonly_fields = (
+        'created_date',
+        'edited_date',
+    )
+
+    fieldsets = (
+        (None, {
+            'fields': (
+                'title',
+                'author',
+                'category',
+                'tags',
+            )
+        }),
+        (_('settings'), {
+            'classes': ('tabbed',),
+            'fields': (
+                'language_code',
+                'slug',
+                ('publication_date', 'created_date', 'edited_date'),
+                'section',
+                'namespace',
+            )
+        }),
+        (_('meta'), {
+            'classes': ('tabbed', ),
+            'fields': (
+                'meta_title',
+                'meta_author',
+                'meta_description',
+                'meta_image',
+                'meta_image_ppoi',
+                'meta_robots',
+                'meta_canonical',
+            )
+        })
+    )
+
     inlines = [
         plugins.richtext.RichTextInline.create(models.RichText),
         plugins.image.ImageInline.create(models.Image),
         plugins.html.HTMLInline.create(models.HTML),
         plugins.external.ExternalInline.create(models.External)
     ]
+
+    actions = ['copy_selected']
 
     class Media:
         js = (
@@ -34,22 +111,53 @@ class ArticleAdmin(ContentEditor):
         sections = request.user.section_set.all()
         return qs.filter(section__in=sections)
 
-    def get_form(self, request, obj=None, **kwargs):
-        form = super().get_form(request, obj, **kwargs)
+    def copy_selected(self, request, queryset):
+        for article in queryset.all():
+            old_pk = article.pk
+            article.pk = None
+            article.id = None
+            article.slug = article.slug + '-copy'
 
-        section_field = form.base_fields['section']
+            article.save()
 
-        if not request.user.is_superuser:
-            sections = request.user.section_set.all()
-        section_field.queryset = sections
-        section_field.initial = sections[0]
+            old_article = models.Article.objects.get(pk=old_pk)
 
-        if section_field.queryset.count() == 1:
-            section_field.disabled = True
+            def copy_plugins(model_class):
+                for plugin in model_class.objects.filter(parent=old_article):
+                    plugin.pk = None
+                    plugin.id = None
+                    plugin.parent = article
+                    plugin.save()
 
-        return form
+            copy_plugins(models.RichText)
+            copy_plugins(models.Image)
+            copy_plugins(models.HTML)
+            copy_plugins(models.External)
+    copy_selected.short_description = _("copy selected")
 
 
 @admin.register(NameSpace)
 class NamespaceAdmin(admin.ModelAdmin):
-    pass
+    search_fields = [
+        'name'
+    ]
+
+    list_display = [
+        'name',
+        'slug',
+        'language_code'
+    ]
+
+    list_filter = [
+        'language_code'
+    ]
+
+    prepopulated_fields = {
+        "slug": ("name",)
+    }
+
+    fieldsets = (
+        (None, {
+            'fields': ('name', 'slug', 'language_code')
+        }),
+    )

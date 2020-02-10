@@ -1,8 +1,7 @@
-from feincms3.renderer import TemplatePluginRenderer
 from feincms3 import plugins
+from feincms3.renderer import TemplatePluginRenderer
 
 from juso.blog import models as blog
-
 
 renderer = TemplatePluginRenderer()
 

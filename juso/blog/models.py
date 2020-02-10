@@ -1,11 +1,9 @@
+from content_editor.models import create_plugin_base
 from django.db import models
 from django.utils.translation import gettext as _
-
-from feincms3.apps import reverse_app
-
-from content_editor.models import create_plugin_base
-from feincms3.mixins import LanguageMixin
 from feincms3 import plugins
+from feincms3.apps import reverse_app
+from feincms3.mixins import LanguageMixin
 
 from juso.sections.models import ContentMixin, get_template_list
 

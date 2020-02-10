@@ -1,10 +1,8 @@
 from django.utils.html import mark_safe
-
-from feincms3.renderer import TemplatePluginRenderer
 from feincms3 import plugins
+from feincms3.renderer import TemplatePluginRenderer
 
 from juso.pages import models as pages
-
 
 renderer = TemplatePluginRenderer()
 

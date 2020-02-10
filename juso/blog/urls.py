@@ -1,6 +1,6 @@
 from django.urls import path
-from juso.blog import views
 
+from juso.blog import views
 
 app_name = "blog"
 

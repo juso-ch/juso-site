@@ -1,6 +1,8 @@
 {% extends 'blog/base.html' %}
 {% load feincms3 %}
+
 {% block content %}
 <a href="{{article.get_absolute_url}}">{{article.title}}</a>
+{{regions}}
 {% render_region regions 'main' %}
 {% endblock %}

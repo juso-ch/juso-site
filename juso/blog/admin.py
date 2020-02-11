@@ -70,6 +70,7 @@ class ArticleAdmin(ContentEditor):
                 ('publication_date', 'created_date', 'edited_date'),
                 'section',
                 'namespace',
+                'template_key',
             )
         }),
         (_('meta'), {

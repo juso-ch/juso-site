@@ -1,14 +1,38 @@
+{% load menus %}
+{% all_menus as menus %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>{% block title %}{% endblock %}</title>
-  {% block meta %}
-  {{meta_tags}}
-  {% endblock %}
-</head>
-<body>
-  {% block content %}
-  {% endblock %}
-</body>
+  <head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{{request.site.section}}{% endblock %}</title>
+    {% block meta %}
+    {{meta_tags}}
+    {% endblock %}
+  </head>
+  <body>
+    {% block navigation %}
+    <nav>
+      {% for main, children in menus.main|group_by_tree %}
+      <a class="{% if page and main.id in page.tree_path %}active{% endif %}"
+         href="{{main.get_absolute_url}}">
+        {{main.title}}
+      </a>
+      {% if children %}
+      <nav>
+        {% for child in children %}
+        <a class="{% if page and child.id in page.tree_path %}active{% endif %}"
+           href="{{child.get_absolute_url}}">
+          {{child.title}}
+        </a>
+        {% endfor %}
+      </nav>
+      {% endif %}
+    </nav>
+
+    {% endfor %}
+    {% endblock %}
+
+    {% block content %}
+    {% endblock %}
+  </body>
 </html>

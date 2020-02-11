@@ -159,3 +159,6 @@ LANGUAGES = (
     ("it", _("Italian")),
 )
 LANGUAGE_CODE = 'de'
+
+MEDIA_ROOT = 'media'
+MEDIA_URL = '/media/'

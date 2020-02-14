@@ -1,0 +1,14 @@
+[
+{
+    "model": "feincms3_sites.site",
+    "pk": 1,
+    "fields": {
+        "is_active": true,
+        "is_default": true,
+        "host": "127.0.0.1:8000",
+        "is_managed_re": true,
+        "host_re": "^127\\.0\\.0\\.1:8000$",
+        "default_language": ""
+    }
+}
+]

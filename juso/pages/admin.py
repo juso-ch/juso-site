@@ -7,20 +7,20 @@ from feincms3_sites.admin import SiteAdmin
 from feincms3_sites.models import Site
 from js_asset import JS
 
+from juso.utils import CopyContentMixin 
 from juso.pages import models
 
 # Register your models here.
 
 
-
-
-
-
-class PageAdmin(ContentEditor, TreeAdmin):
+class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
     list_display = [
         "indented_title",
         "move_column",
-        "is_active", 'menu',
+        'slug',
+        'static_path',
+        'path',
+        "is_active",
         'language_code',
         "template_key",
         'application',
@@ -36,9 +36,15 @@ class PageAdmin(ContentEditor, TreeAdmin):
     ]
 
     search_fields = ['title']
-    list_editable = ['is_active']
+    list_editable = [
+        'is_active',
+        'slug',
+        'static_path',
+        'path',
+        'language_code',
+    ]
 
-    list_filter = ['is_active', 'menu']
+    list_filter = ['is_active', 'menu', 'language_code']
 
     inlines = [
         plugins.richtext.RichTextInline.create(models.RichText),
@@ -46,6 +52,8 @@ class PageAdmin(ContentEditor, TreeAdmin):
         plugins.html.HTMLInline.create(models.HTML),
         plugins.external.ExternalInline.create(models.External)
     ]
+
+    plugins = models.plugins
 
     fieldsets = (
         (None, {
@@ -61,6 +69,7 @@ class PageAdmin(ContentEditor, TreeAdmin):
                 'menu',
                 'language_code',
                 'template_key',
+                'is_landing_page',
             ),
         }),
         (_('path'), {
@@ -105,6 +114,7 @@ class PageAdmin(ContentEditor, TreeAdmin):
 
     class Media:
         js = (
+            'admin/js/jquery.init.js',
             JS('https://kit.fontawesome.com/91a6274901.js', {
                 'async': 'async',
                 'crossorigin': 'anonymous',
@@ -136,47 +146,6 @@ class PageAdmin(ContentEditor, TreeAdmin):
             return qs
         sections = request.user.section_set.all()
         return qs.filter(site__section__in=sections)
-
-    def copy_selected(self, request, queryset):
-        duplicated = []
-        for page in queryset.all():
-            # Skip
-            if page.pk in duplicated:
-                continue
-            page.path = page.path + 'copy/'
-            parent = self.copy_descendants(page, duplicated)
-            parent.save()
-
-    def copy_descendants(self, old_parent, duplicated):
-        old_pk = old_parent.pk
-        parent = old_parent
-        parent.pk = None
-        parent.id = None
-        parent.save()
-
-        duplicated.append(old_pk)
-
-        old_parent = models.Page.objects.get(pk=old_pk)
-
-        def copy_plugins(model_class):
-            for plugin in model_class.objects.filter(parent=old_parent):
-                plugin.pk = None
-                plugin.id = None
-                plugin.parent = parent
-                plugin.save()
-
-        copy_plugins(models.RichText)
-        copy_plugins(models.Image)
-        copy_plugins(models.HTML)
-        copy_plugins(models.External)
-
-        for child in old_parent.descendants().all():
-            new_child = self.copy_descendants(child, duplicated)
-            new_child.parent = parent
-            new_child.save()
-
-        return parent
-    copy_selected.short_description = _("copy selected")
 
 
 class SiteAdmin(SiteAdmin):

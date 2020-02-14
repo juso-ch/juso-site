@@ -8,9 +8,25 @@ from juso.pages.renderer import renderer
 # Create your views here.
 
 
+def get_landing_page(request):
+    queryset = Page.objects.active().filter(
+        is_landing_page=True,
+        language_code=request.LANGUAGE_CODE
+    )
+
+    if queryset.exists():
+        return queryset[0]
+
+    return get_object_or_404(
+        Page.objects.active(),
+        is_landing_page=True,
+    )
+
+
 def page_detail(request, path=None):
     if path is None and not Page.objects.active().filter(path='/').exists():
-        return redirect(f"/{request.LANGUAGE_CODE}/")
+        return redirect(get_landing_page(request).path)
+
     page = get_object_or_404(
         Page.objects.active(),
         path=f"/{path if path else '/'}/",
@@ -24,7 +40,8 @@ def page_detail(request, path=None):
             "page": page,
             "meta_tags": meta_tags([page] + ancestors, request=request),
             "regions": Regions.from_item(
-                page, renderer=renderer, timeout=60
+                page, renderer=renderer, timeout=60,
+                inherit_from=page.ancestors().reverse(),
             ),
         },
     )

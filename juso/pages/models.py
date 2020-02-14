@@ -1,5 +1,5 @@
-from content_editor.models import Region, Template, create_plugin_base
-from django.db import models
+from content_editor.models import create_plugin_base
+from django.db import models, transaction
 from django.utils.translation import gettext_lazy as _
 from feincms3 import plugins
 from feincms3.apps import AppsMixin
@@ -8,6 +8,7 @@ from feincms3.mixins import (LanguageMixin, MenuMixin, RedirectMixin,
 from feincms3_meta.models import MetaMixin
 from feincms3_sites.models import AbstractPage
 
+from juso.sections.models import get_template_list
 # Create your models here.
 
 
@@ -36,47 +37,31 @@ class Page(
             }
         )
     ]
+
     MENUS = (
         ("main", _("main navigation")),
         ("footer", _("footer navigation")),
     )
 
-    TEMPLATES = [
-        Template(
-            key="default",
-            title=_("default"),
-            template_name="pages/default.html",
-            regions=(
-                Region(key="main", title=_("Main")),
-            )
+    TEMPLATES = get_template_list('pages', (
+        (
+            'default', ('main',)
         ),
-        Template(
-            key="sidebar-right",
-            title=_("sidebar right"),
-            template_name="pages/sidebar-right.html",
-            regions=(
-                Region(key="main", title=_("main")),
-                Region(key="side", title=_("sidebar"), inherited=True)
-            )
+        (
+            'sidebar-right', ('main', 'sidebar')
         ),
-        Template(
-            key="sidebar-left",
-            title=_("sidebar left"),
-            template_name="pages/sidebar-left.html",
-            regions=(
-                Region(key="main", title=_("main")),
-                Region(key="side", title=_("sidebar"), inherited=True)
-            )
+        (
+            'sidebar-left', ('main', 'sidebar')
         ),
-        Template(
-            key="fullwidth",
-            title=_("fullwidth"),
-            template_name="pages/fullwidth.html",
-            regions=(
-                Region(key="main", title=_("main")),
-            )
-        ),
-    ]
+        (
+            'fullwidth', ('main',)
+        )
+    ))
+
+    is_landing_page = models.BooleanField(
+        default=False,
+        verbose_name=_("is landing page"),
+    )
 
     blog_namespace = models.ForeignKey(
         "blog.NameSpace", models.SET_NULL, blank=True, null=True,
@@ -87,6 +72,17 @@ class Page(
         "sections.Category", models.SET_NULL, blank=True, null=True,
         verbose_name=_("category"),
     )
+
+    @transaction.atomic
+    def save(self, *args, **kwargs):
+        if not self.is_landing_page:
+            return super().save(*args, **kwargs)
+        Page.objects.filter(
+            is_landing_page=True,
+            language_code=self.language_code,
+            site=self.site,
+        ).update(is_landing_page=False)
+        return super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = _("page")

@@ -1,5 +1,5 @@
 /* global ContentEditor, django */
-;(function($) {
+(function($) {
   $(document).on('content-editor:ready', function() {
     var buttons = [
       ['_anchor', '<i class="fas fa-anchor"></i>'],

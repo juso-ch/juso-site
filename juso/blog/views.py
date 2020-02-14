@@ -3,6 +3,8 @@ from feincms3.apps import page_for_app_request
 from feincms3.regions import Regions
 from feincms3.shortcuts import render_list
 
+from feincms3_meta.utils import meta_tags
+
 from juso import pages
 from juso.blog import models
 from juso.blog.renderer import renderer
@@ -22,15 +24,16 @@ def articles_for_page(page, qs=None):
 
 
 def article_list(request):
-    print(type(request.urlconf))
     page = page_for_app_request(request)
     page.activate_language(request)
 
+    ancestors = list(page.ancestors().reverse())
     return render_list(
         request,
         articles_for_page(page),
         {
             'page': page,
+            "meta_tags": meta_tags([page] + ancestors, request=request),
             'regions': Regions.from_item(
                 page, renderer=pages.renderer.renderer, timeout=60
             )
@@ -48,17 +51,23 @@ def article_detail(request, slug):
         slug=slug
     )
 
+    ancestors = list(page.ancestors().reverse())
+
     return render(
         request,
         article.template.template_name,
         {
             "page": page,
             "article": article,
+            "meta_tags": meta_tags(
+                [article, page] + ancestors,
+                request=request
+            ),
             "regions": Regions.from_item(
-                article, renderer=renderer, timeout=60
+                article, renderer=renderer, timeout=60,
             ),
             "page_regions": Regions.from_item(
-                page, renderer=pages.renderer.renderer, timeout=60
-            ),
+                page, renderer=pages.renderer.renderer,
+                timeout=60, inherit_from=ancestors)
         },
     )

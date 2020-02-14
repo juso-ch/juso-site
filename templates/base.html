@@ -1,5 +1,5 @@
 {% load menus %}
-{% all_menus as menus %}
+{% all_menus request.LANGUAGE_CODE as menus %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -24,12 +24,11 @@
            href="{{child.get_absolute_url}}">
           {{child.title}}
         </a>
-        {% endfor %}
+      {% endfor %}
       </nav>
       {% endif %}
-    </nav>
-
     {% endfor %}
+    </nav>
     {% endblock %}
 
     {% block content %}

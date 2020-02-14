@@ -64,7 +64,7 @@ class ContentMixin(LanguageMixin, MetaMixin, TemplateMixin):
         verbose_name=_("category")
     )
 
-    tags = TaggableManager()
+    tags = TaggableManager(blank=True)
 
     section = models.ForeignKey(
         Section, models.CASCADE,
@@ -81,16 +81,15 @@ class ContentMixin(LanguageMixin, MetaMixin, TemplateMixin):
         get_latest_by = 'publication_date'
 
 
-def get_template_list(app_name, *templates):
-    # templates = ('template_name', ('main', 'side', ..))
+def get_template_list(app_name, templates):
     return [
         Template(
             key=template[0],
-            title=_(template[0]),
+            title=_(template[0]).title(),
             template_name=f"{app_name}/{template[0]}.html",
-            regions=(
-                Region(key=region, title=region)
+            regions=[
+                Region(key=region, title=region.title(), inherited=True)
                 for region in template[1]
-            )
+            ]
         ) for template in templates
     ]

@@ -7,11 +7,13 @@ register = template.Library()
 
 
 @register.simple_tag
-def all_menus():
+def all_menus(language_code):
     menus = defaultdict(list)
     pages = Page.objects.with_tree_fields().exclude(
         is_active=False,
         menu=""
+    ).filter(
+        language_code=language_code
     ).extra(
         where=["tree_depth<=1"]
     )

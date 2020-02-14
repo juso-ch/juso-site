@@ -4,6 +4,7 @@ from django.utils.translation import gettext as _
 from feincms3 import plugins
 from js_asset import JS
 
+from juso.utils import CopyContentMixin
 from juso.blog import models
 from juso.blog.models import Article, NameSpace
 
@@ -11,7 +12,7 @@ from juso.blog.models import Article, NameSpace
 
 
 @admin.register(Article)
-class ArticleAdmin(ContentEditor):
+class ArticleAdmin(ContentEditor, CopyContentMixin):
 
     list_display = [
         'title',
@@ -20,6 +21,7 @@ class ArticleAdmin(ContentEditor):
         'publication_date',
         'category',
         'section',
+        'language_code',
         'namespace',
     ]
 
@@ -28,6 +30,12 @@ class ArticleAdmin(ContentEditor):
         'author',
         'section',
         'namespace',
+        'language_code',
+    ]
+
+    list_editable = [
+        'language_code',
+        'slug',
     ]
 
     date_hierarchy = 'publication_date'
@@ -94,10 +102,12 @@ class ArticleAdmin(ContentEditor):
         plugins.external.ExternalInline.create(models.External)
     ]
 
+    plugins = models.plugins
     actions = ['copy_selected']
 
     class Media:
         js = (
+            'admin/js/jquery.init.js',
             JS('https://kit.fontawesome.com/91a6274901.js', {
                 'async': 'async',
                 'crossorigin': 'anonymous',

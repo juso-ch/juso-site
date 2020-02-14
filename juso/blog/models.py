@@ -27,6 +27,15 @@ class Article(ContentMixin):
     TEMPLATES = get_template_list('blog', (
         (
             'default', ('main',)
+        ),
+        (
+            'sidebar-right', ('main', 'side')
+        ),
+        (
+            'sidebar-left', ('main', 'side')
+        ),
+        (
+            'fullwidth', ('main',)
         )
     ))
 
@@ -37,11 +46,9 @@ class Article(ContentMixin):
 
     def get_absolute_url(self):
         return reverse_app(
-            (
-                f'{self.section.site_id}-blog-{self.namespace}-{self.category}',
-                f'{self.section.site_id}-blog-{self.namespace}',
-                f'{self.section.site_id}-blog',
-            ),
+            (f'{self.section.site_id}-blog-{self.namespace}-{self.category}',
+             f'{self.section.site_id}-blog-{self.namespace}',
+             f'{self.section.site_id}-blog',),
             'article-detail',
             kwargs={
                 'slug': self.slug

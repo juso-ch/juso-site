@@ -13,7 +13,7 @@ python manage.py runserver
 
 ```
 
-## Usefull resources
+## Useful resources
 
 * [Django Doc](https://docs.djangoproject.com/en/3.0/)
 * [Django Templating Language](https://docs.djangoproject.com/en/3.0/ref/templates/language/)

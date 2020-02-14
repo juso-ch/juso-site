@@ -13,3 +13,8 @@ python manage.py runserver
 
 ```
 
+## Usefull resources
+
+* [Django Doc](https://docs.djangoproject.com/en/3.0/)
+* [Django Templating Language](https://docs.djangoproject.com/en/3.0/ref/templates/language/)
+* [FeinCMS](https://feincms3.readthedocs.io/en/latest/)

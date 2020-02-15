@@ -1,0 +1,8 @@
+<p>{{team.name}}</p>
+<ul>
+  {% for membership in team.membership_set.all %}
+  <li>
+    {{membership.person.first_name}} {{membership.person.last_name}} - {{membership.title}}
+  </li>
+  {% endfor %}
+</ul>

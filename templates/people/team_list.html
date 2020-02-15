@@ -1,0 +1,15 @@
+{% extends 'people/base.html' %}
+
+{% block content %}
+{% for team in team_list %}
+<h2><a href="{{team.get_absolute_url}}">{{team.name}}</a></h2>
+<ul>
+  {% for membership in team.membership_set.all %}
+  <li><a href="{{membership.person.get_absolute_url}}">
+      {{membership.person}}
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+{% endfor %}
+{% endblock %}

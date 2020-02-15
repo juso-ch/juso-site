@@ -8,6 +8,8 @@ from feincms3.mixins import (LanguageMixin, MenuMixin, RedirectMixin,
 from feincms3_meta.models import MetaMixin
 from feincms3_sites.models import AbstractPage
 
+from juso.plugins import download
+from juso.people import plugins as people_plugins
 from juso.sections.models import get_template_list
 # Create your models here.
 
@@ -34,6 +36,19 @@ class Page(
                         page.blog_namespace,
                         page.category
                     ] if x))
+            }
+        ),
+        (
+            'people',
+            _("people"),
+            {
+                "urlconf": "juso.people.urls",
+                "app_instance_namespace": lambda page: '-'.join(
+                    (str(x) for x in [
+                        page.site_id,
+                        page.application,
+                    ] if x)
+                )
             }
         )
     ]
@@ -112,7 +127,18 @@ class Image(plugins.image.Image, PluginBase):
         verbose_name_plural = _("images")
 
 
+class Download(download.Download, PluginBase):
+    pass
+
+
 class HTML(plugins.html.HTML, PluginBase):
     class Meta:
         verbose_name = _("HTML")
         verbose_name_plural = _("HTML")
+
+
+class Team(people_plugins.TeamPlugin, PluginBase):
+    pass
+
+
+plugins = [RichText, Image, HTML, External, Team, Download]

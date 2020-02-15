@@ -7,7 +7,9 @@ from feincms3_sites.admin import SiteAdmin
 from feincms3_sites.models import Site
 from js_asset import JS
 
-from juso.utils import CopyContentMixin 
+from juso.plugins import download
+from juso.people import plugins as people_plugins
+from juso.utils import CopyContentMixin
 from juso.pages import models
 
 # Register your models here.
@@ -26,7 +28,9 @@ class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
         'application',
     ]
     actions = ['copy_selected']
+
     prepopulated_fields = {'slug': ('title',)}
+
     autocomplete_fields = [
         'site',
         'parent',
@@ -50,7 +54,9 @@ class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
         plugins.richtext.RichTextInline.create(models.RichText),
         plugins.image.ImageInline.create(models.Image),
         plugins.html.HTMLInline.create(models.HTML),
-        plugins.external.ExternalInline.create(models.External)
+        plugins.external.ExternalInline.create(models.External),
+        download.DownloadInline.create(models.Download),
+        people_plugins.TeamPluginInline.create(models.Team),
     ]
 
     plugins = models.plugins
@@ -128,15 +134,8 @@ class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
         site_field = form.base_fields['site']
         site_field.required = True
 
-        if request.user.is_superuser:
-            return form
-
         sections = request.user.section_set.all()
-        site_field.queryset = Site.objects.filter(section__in=sections)
         site_field.initial = Site.objects.filter(section__in=sections)[0]
-
-        if site_field.queryset.count() == 1:
-            site_field.disabled = True
 
         return form
 

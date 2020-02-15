@@ -7,6 +7,13 @@ register = template.Library()
 
 
 @register.simple_tag
+def top_page(page):
+    if page.ancestors().count() > 0:
+        return page.ancestors()[0]
+    return page
+
+
+@register.simple_tag
 def all_menus(language_code):
     menus = defaultdict(list)
     pages = Page.objects.with_tree_fields().exclude(
@@ -15,7 +22,7 @@ def all_menus(language_code):
     ).filter(
         language_code=language_code
     ).extra(
-        where=["tree_depth<=1"]
+        where=["tree_depth>=1 and tree_depth<=2"]
     )
 
     for page in pages:

@@ -9,6 +9,9 @@ pip install -r requirements.txt
 
 python manage.py migrate
 
+# Load a default site
+python manage.py loaddata site
+
 python manage.py runserver
 
 ```

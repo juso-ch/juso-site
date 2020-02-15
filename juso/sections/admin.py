@@ -21,6 +21,10 @@ class SectionAdmin(TreeAdmin):
         'parent'
     ]
 
+    prepopulated_fields = {
+        'slug': ('name',),
+    }
+
     fieldsets = (
         (None, {
             'fields': ('name', 'users')

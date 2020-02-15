@@ -5,6 +5,7 @@ from feincms3 import plugins
 from feincms3.apps import reverse_app
 from feincms3.mixins import LanguageMixin
 
+from juso.plugins import download
 from juso.sections.models import ContentMixin, get_template_list
 
 # Create your models here.
@@ -77,3 +78,10 @@ class Image(plugins.image.Image, PluginBase):
 
 class HTML(plugins.html.HTML, PluginBase):
     pass
+
+
+class Download(download.Download, PluginBase):
+    pass
+
+
+plugins = [RichText, Image, HTML, External, Download]

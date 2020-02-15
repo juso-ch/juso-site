@@ -1,6 +1,7 @@
 from feincms3 import plugins
 from feincms3.renderer import TemplatePluginRenderer
 
+from juso.plugins import download
 from juso.blog import models as blog
 
 renderer = TemplatePluginRenderer()
@@ -23,4 +24,9 @@ renderer.register_string_renderer(
 renderer.register_string_renderer(
     blog.Image,
     lambda plugin: plugins.image.render_image(plugin)
+)
+
+renderer.register_string_renderer(
+    blog.Download,
+    lambda plugin: download.render_download(plugin)
 )

@@ -4,6 +4,7 @@ from django.utils.translation import gettext as _
 from feincms3 import plugins
 from js_asset import JS
 
+from juso.plugins import download
 from juso.utils import CopyContentMixin
 from juso.blog import models
 from juso.blog.models import Article, NameSpace
@@ -99,7 +100,8 @@ class ArticleAdmin(ContentEditor, CopyContentMixin):
         plugins.richtext.RichTextInline.create(models.RichText),
         plugins.image.ImageInline.create(models.Image),
         plugins.html.HTMLInline.create(models.HTML),
-        plugins.external.ExternalInline.create(models.External)
+        plugins.external.ExternalInline.create(models.External),
+        download.DownloadInline.create(models.Download),
     ]
 
     plugins = models.plugins

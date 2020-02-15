@@ -1,7 +1,18 @@
 {% extends 'blog/base.html' %}
 {% load feincms3 %}
 
+{% block header %}
+{% for parent in page.ancestors %}
+{% if forloop.counter > 1 %}
+<i class="far fa-angle-right"></i>
+{% endif %}
+<a href="{{parent.get_absolute_url}}">{{parent.title}}</a>
+{% endfor %}
+<i class="far fa-angle-right"></i>
+<a href="{{page.get_absolute_url}}">{{page.title}}</a>
+<h1>{{article.title}}</h1>
+{% endblock %}
+
 {% block content %}
-<h1><a href="{{article.get_absolute_url}}">{{article.title}}</a></h1>
 {% render_region regions 'main' %}
 {% endblock %}

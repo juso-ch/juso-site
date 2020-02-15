@@ -1,37 +1,65 @@
 {% load menus %}
 {% all_menus request.LANGUAGE_CODE as menus %}
+{% top_page page as top %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{request.LANGUAGE_CODE}}">
   <head>
     <meta charset="UTF-8">
     <title>{% block title %}{{request.site.section}}{% endblock %}</title>
     {% block meta %}
     {{meta_tags}}
     {% endblock %}
+
+    {% block styles %}
+
+    {% endblock %}
+
+
   </head>
   <body>
     {% block navigation %}
     <nav>
-      {% for main, children in menus.main|group_by_tree %}
-      <a class="{% if page and main.id in page.tree_path %}active{% endif %}"
-         href="{{main.get_absolute_url}}">
-        {{main.title}}
-      </a>
-      {% if children %}
-      <nav>
-        {% for child in children %}
-        <a class="{% if page and child.id in page.tree_path %}active{% endif %}"
-           href="{{child.get_absolute_url}}">
-          {{child.title}}
-        </a>
-      {% endfor %}
-      </nav>
-      {% endif %}
-    {% endfor %}
+      <a href="{{top.get_absolute_url}}">{{top.title}}</a>
+      <ul>
+        {% for main, children in menus.main|group_by_tree %}
+        <li><a class="{% if page and main.id in page.tree_path %}active{% endif %}"
+               href="{{main.get_absolute_url}}">
+            {{main.title}}</a></li>
+        {% if children %}
+        <ul>
+          <nav>
+            {% for child in children %}
+            <li>
+              <a class="{% if page and child.id in page.tree_path %}active{% endif %}"
+                 href="{{child.get_absolute_url}}">
+                {{child.title}}</a></li>
+            {% endfor %}
+          </nav>
+        </ul>
+        {% endif %}
+        {% endfor %}
+      </ul>
     </nav>
     {% endblock %}
 
-    {% block content %}
+    {% block header %}
+    {% for parent in page.ancestors %}
+    {% if forloop.counter > 1 %}
+    <i class="far fa-angle-right"></i>
+    {% endif %}
+    <a href="{{parent.get_absolute_url}}">{{parent.title}}</a>
+    {% endfor %}
+    <h1>{{page.title}}</h1>
     {% endblock %}
+
+    {% block content %}
+
+    {% endblock %}
+
+    {% block scripts %}
+
+    {% endblock %}
+    <script src="https://kit.fontawesome.com/7655daeee1.js" crossorigin="anonymous">
+    </script>
   </body>
 </html>

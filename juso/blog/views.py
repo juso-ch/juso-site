@@ -13,7 +13,9 @@ from juso.blog.renderer import renderer
 
 
 def articles_for_page(page, qs=None):
-    qs = qs if qs else models.Article.objects.all()
+    qs = qs if qs else models.Article.objects.filter(
+        language_code=page.language_code
+    )
     if page.category:
         qs = qs.filter(category=page.category)
     if page.blog_namespace:
@@ -35,7 +37,33 @@ def article_list(request):
             'page': page,
             "meta_tags": meta_tags([page] + ancestors, request=request),
             'regions': Regions.from_item(
-                page, renderer=pages.renderer.renderer, timeout=60
+                page, renderer=pages.renderer.renderer, timeout=60,
+                inherit_from=ancestors
+            )
+        },
+        paginate_by=10,
+    )
+
+
+def category_list(request, slug):
+    page = page_for_app_request(request)
+    page.activate_language(request)
+
+    articles = articles_for_page(page).filter(
+        category__slug=slug
+    )
+
+    ancestors = list(page.ancestors().reverse())
+
+    return render_list(
+        request,
+        articles,
+        {
+            'page': page,
+            "meta_tags": meta_tags([page] + ancestors, request=request),
+            'regions': Regions.from_item(
+                page, renderer=pages.renderer.renderer, timeout=60,
+                inherit_from=ancestors
             )
         },
         paginate_by=10,

@@ -117,36 +117,22 @@ class ArticleAdmin(ContentEditor, CopyContentMixin):
             'admin/plugin_buttons.js',
         )
 
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+
+        section_field = form.base_fields['section']
+
+        sections = request.user.section_set.all()
+        section_field.initial = sections[0]
+
+        return form
+
     def get_queryset(self, request):
         qs = super().get_queryset(request)
         if request.user.is_superuser:
             return qs
         sections = request.user.section_set.all()
         return qs.filter(section__in=sections)
-
-    def copy_selected(self, request, queryset):
-        for article in queryset.all():
-            old_pk = article.pk
-            article.pk = None
-            article.id = None
-            article.slug = article.slug + '-copy'
-
-            article.save()
-
-            old_article = models.Article.objects.get(pk=old_pk)
-
-            def copy_plugins(model_class):
-                for plugin in model_class.objects.filter(parent=old_article):
-                    plugin.pk = None
-                    plugin.id = None
-                    plugin.parent = article
-                    plugin.save()
-
-            copy_plugins(models.RichText)
-            copy_plugins(models.Image)
-            copy_plugins(models.HTML)
-            copy_plugins(models.External)
-    copy_selected.short_description = _("copy selected")
 
 
 @admin.register(NameSpace)
@@ -158,7 +144,7 @@ class NamespaceAdmin(admin.ModelAdmin):
     list_display = [
         'name',
         'slug',
-        'language_code'
+        'language_code',
     ]
 
     list_filter = [

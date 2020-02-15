@@ -12,7 +12,7 @@ from juso.sections.models import ContentMixin, get_template_list
 
 
 class NameSpace(LanguageMixin):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, verbose_name=_("name"))
     slug = models.SlugField()
 
     def __str__(self):
@@ -49,6 +49,7 @@ class Article(ContentMixin):
         return reverse_app(
             (f'{self.section.site_id}-blog-{self.namespace}-{self.category}',
              f'{self.section.site_id}-blog-{self.namespace}',
+             f'{self.section.site_id}-blog-{self.category}',
              f'{self.section.site_id}-blog',),
             'article-detail',
             kwargs={
@@ -59,6 +60,7 @@ class Article(ContentMixin):
     class Meta:
         verbose_name = _("article")
         verbose_name_plural = _("articles")
+        ordering = ['-publication_date']
 
 
 PluginBase = create_plugin_base(Article)

@@ -19,7 +19,8 @@
 
     for (var i = 0; i < buttons.length; ++i) {
       ContentEditor.addPluginButton('pages' + buttons[i][0], buttons[i][1])
-      ContentEditor.addPluginButton('articles' + buttons[i][0], buttons[i][1])
+      ContentEditor.addPluginButton('blog' + buttons[i][0], buttons[i][1])
+      ContentEditor.addPluginButton('events' + buttons[i][0], buttons[i][1])
     }
   })
 })(django.jQuery)

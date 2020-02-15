@@ -21,15 +21,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'wnvd9!$o8*1&8td7gz$xh!-868v4s=+nb4t&os+(id0i&2@bn+'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ['*']
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -39,6 +30,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "admin_ordering",
     "feincms3",
     "feincms3_sites",
     "content_editor",
@@ -50,6 +42,8 @@ INSTALLED_APPS = [
     "juso.sections",
     "juso.blog",
     "juso.pages",
+    "juso.events",
+    "juso.people",
 ]
 
 MIDDLEWARE = [
@@ -133,6 +127,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+STATIC_ROOT = 'static'
 STATIC_URL = '/static/'
 
 # Configure django-ckeditor
@@ -152,6 +147,10 @@ CKEDITOR_CONFIGS = {
 }
 CKEDITOR_CONFIGS["richtext-plugin"] = CKEDITOR_CONFIGS["default"]
 
+TEAM_TEMPLATE_CHOICES = (
+    ('teams/default.html', _("default")),
+)
+
 
 LANGUAGES = (
     ("de", _("German")),
@@ -162,3 +161,8 @@ LANGUAGE_CODE = 'de'
 
 MEDIA_ROOT = 'media'
 MEDIA_URL = '/media/'
+
+try:
+    from juso.local_settings import *
+except:
+    pass

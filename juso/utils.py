@@ -47,3 +47,17 @@ class CopyContentMixin():
         return parent
 
     copy_selected.short_description = _("copy selected")
+
+
+meta_fieldset = (_('meta'), {
+    'classes': ('tabbed',),
+    'fields': (
+        'meta_title',
+        'meta_author',
+        'meta_description',
+        'meta_image',
+        'meta_image_ppoi',
+        'meta_robots',
+        'meta_canonical',
+    )
+})

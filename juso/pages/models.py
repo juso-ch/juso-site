@@ -50,6 +50,21 @@ class Page(
                     ] if x)
                 )
             }
+        ),
+        (
+            'events',
+            _("events"),
+            {
+                "urlconf": "juso.events.urls",
+                "app_instance_namespace": lambda page: '-'.join(
+                    (str(x) for x in [
+                        page.site_id,
+                        page.application,
+                        page.event_namespace,
+                        page.category,
+                    ] if x)
+                )
+            },
         )
     ]
 
@@ -80,7 +95,16 @@ class Page(
 
     blog_namespace = models.ForeignKey(
         "blog.NameSpace", models.SET_NULL, blank=True, null=True,
-        verbose_name=_("namespace")
+        verbose_name=_("namespace (blog)")
+    )
+
+    event_namespace = models.ForeignKey(
+        "events.NameSpace", models.SET_NULL, blank=True, null=True,
+        verbose_name=_("namespace (event)")
+    )
+
+    all_events = models.BooleanField(
+        verbose_name=_("all events"), default=False
     )
 
     category = models.ForeignKey(

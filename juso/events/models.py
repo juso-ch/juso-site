@@ -5,10 +5,11 @@ from feincms3 import plugins
 from feincms3.mixins import LanguageMixin
 from feincms3_meta.models import MetaMixin
 from taggit.managers import TaggableManager
+from feincms3.apps import reverse_app
 
 from juso.people import plugins as people_plugins
 from juso.plugins import download
-from juso.sections.models import ContentMixin, get_template_list
+from juso.sections.models import ContentMixin, get_template_list, Section
 
 # Create your models here.
 
@@ -34,12 +35,17 @@ class Location(MetaMixin):
     zip_code = models.CharField(max_length=20, verbose_name=_("zip code"))
     country = models.CharField(max_length=200, verbose_name=_("country"))
 
+    section = models.ForeignKey(
+        Section, models.SET_NULL, blank=True, null=True,
+        verbose_name=_("section")
+    )
+
     website = models.URLField(blank=True, verbose_name=_("website"))
 
     lng = models.FloatField(verbose_name=_("longitude"))
     lat = models.FloatField(verbose_name=_("latitude"))
 
-    tags = TaggableManager()
+    tags = TaggableManager(blank=True)
 
     def __str__(self):
         return self.name
@@ -48,6 +54,23 @@ class Location(MetaMixin):
         verbose_name = _("location")
         verbose_name_plural = _("locations")
         ordering = ['name']
+
+    def get_absolute_url(self):
+        if not self.section:
+            return reverse_app(
+                [f'1-events'],
+                'location-detail',
+                kwargs={
+                    'slug': self.slug
+                }
+            )
+        return reverse_app(
+            [f'{self.section.site_id}-events'],
+            'location-detail',
+            kwargs={
+                'slug': self.slug
+            }
+        )
 
 
 LocationPluginBase = create_plugin_base(Location)
@@ -81,6 +104,18 @@ class Event(ContentMixin):
         verbose_name = _("event")
         verbose_name_plural = _("events")
         ordering = ['-start_date']
+
+    def get_absolute_url(self):
+        return reverse_app(
+            [f'{self.section.site_id}-events-{self.namespace}-{self.category}',
+             f'{self.section.site_id}-events-{self.namespace}',
+             f'{self.section.site_id}-events-{self.category}',
+             f'{self.section.site_id}-events'],
+            'event-detail',
+            kwargs={
+                'slug': self.slug
+            }
+        )
 
 
 PluginBase = create_plugin_base(Event)

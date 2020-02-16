@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.shortcuts import render, get_object_or_404
 
 from feincms3.apps import page_for_app_request
@@ -8,23 +9,25 @@ from feincms3_meta.utils import meta_tags
 
 from juso import pages
 
+from juso.sections.models import Section
 from juso.events.renderer import renderer, location_renderer
 from juso.events.models import Event, Location
 
 # Create your views here.
 
 
-def event_list_for_page(page, all_events=False, location=None, category=None):
+def event_list_for_page(page, all_events=False, past_events=False):
     qs = Event.objects.filter(
-        language_code=page.language_code
+        language_code=page.language_code,
     )
+    if past_events:
+        qs = qs.filter(end_date__gte=timezone.now())
+
+    else:
+        qs = qs.filter(end_date__lte=timezone.now())
 
     all_events = all_events or page.all_events
-    location = location or page.location
-    category = category or page.category
-
-    if location:
-        qs = qs.filter(location=location)
+    category = page.category
 
     if category:
         qs = qs.filter(category=page.category)
@@ -46,7 +49,7 @@ def location_detail(request, slug, all_events=False):
         Location.objects.all(),
         slug=slug
     )
-    ancestors = page.ancestors().reverse()
+    ancestors = list(page.ancestors().reverse())
 
     return render(
         request,
@@ -68,11 +71,11 @@ def location_detail(request, slug, all_events=False):
     )
 
 
-def event_list(request, all_events=False):
+def event_list(request):
     page = page_for_app_request(request)
     page.activate_language(request)
 
-    ancestors = page.ancestors().reverse()
+    ancestors = list(page.ancestors().reverse())
 
     return render_list(
         request,
@@ -84,7 +87,7 @@ def event_list(request, all_events=False):
                 request=request
             ),
             'regions': Regions.from_item(
-                page, renderer=page.renderer.renderer, timeout=60,
+                page, renderer=pages.renderer.renderer, timeout=60,
                 inherit_from=ancestors
             )
         },
@@ -114,11 +117,41 @@ def event_detail(request, slug):
                 request=request,
             ),
             "regions": Regions.from_item(
-                event, renderer=renderer, timout=60,
+                event, renderer=renderer, timeout=60,
             ),
             "page_regions": Regions.from_item(
                 page, renderer=pages.renderer.renderer,
                 timeout=60, inherit_from=ancestors
             )
         },
+    )
+
+
+def event_list_for_section(request, pk):
+    page = page_for_app_request(request)
+    page.activate_language(request)
+
+    section = get_object_or_404(Section, pk)
+
+    event_list = event_list_for_page(page, all_events=True)
+    event_list = event_list.filter(section=section)
+
+    ancestors = list(page.ancestors().reverse())
+
+    return render_list(
+        request,
+        event_list_for_page(page),
+        {
+            'page': page,
+            'meta_tags': meta_tags(
+                [page] + ancestors,
+                request=request
+            ),
+            'regions': Regions.from_item(
+                page, renderer=pages.renderer.renderer, timeout=60,
+                inherit_from=ancestors
+            ),
+            'section': section
+        },
+        paginate_by=20,
     )

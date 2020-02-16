@@ -158,6 +158,14 @@ class LocationAdmin(ContentEditor):
         'city'
     ]
 
+    prepopulated_fields = {
+        'slug': ('name',)
+    }
+
+    autocomplete_fields = [
+        'section'
+    ]
+
     fieldsets = (
         (None, {
             'fields': (
@@ -171,6 +179,8 @@ class LocationAdmin(ContentEditor):
         (_('advanced'), {
             'classes': ('tabbed',),
             'fields': (
+                'section',
+                'slug',
                 'lat',
                 'lng',
             )

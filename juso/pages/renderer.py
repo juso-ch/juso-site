@@ -2,6 +2,7 @@ from django.utils.html import mark_safe
 from feincms3 import plugins
 from feincms3.renderer import TemplatePluginRenderer
 
+from juso.plugins import download
 from juso.people import plugins as people_plugins
 from juso.pages import models as pages
 
@@ -25,6 +26,11 @@ renderer.register_string_renderer(
 renderer.register_string_renderer(
     pages.Image,
     lambda plugin: plugins.image.render_image(plugin)
+)
+
+renderer.register_string_renderer(
+    pages.Download,
+    lambda plugin: download.render_download(plugin)
 )
 
 renderer.register_string_renderer(

@@ -191,6 +191,12 @@ class LocationAdmin(ContentEditor):
         plugins.image.ImageInline.create(models.LocationImage),
     ]
 
+    def has_change_permission(self, request, obj=None):
+        if obj is None or obj.section is None:
+            return super().has_change_permission(request, obj)
+        sections = request.user.section_set.all()
+        return obj.section in sections
+
 
 @admin.register(NameSpace)
 class NamespaceAdmin(admin.ModelAdmin):

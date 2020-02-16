@@ -20,11 +20,8 @@ def event_list_for_page(page, all_events=False, past_events=False):
     qs = Event.objects.filter(
         language_code=page.language_code,
     )
-    if past_events:
+    if not past_events:
         qs = qs.filter(end_date__gte=timezone.now())
-
-    else:
-        qs = qs.filter(end_date__lte=timezone.now())
 
     all_events = all_events or page.all_events
     category = page.category
@@ -100,7 +97,7 @@ def event_detail(request, slug):
     page.activate_language(request)
 
     event = get_object_or_404(
-        event_list_for_page(page),
+        event_list_for_page(page, past_events=True),
         slug=slug
     )
 

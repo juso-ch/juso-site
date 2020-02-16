@@ -48,7 +48,7 @@ class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
         'language_code',
     ]
 
-    list_filter = ['is_active', 'menu', 'language_code']
+    list_filter = ['is_active', 'menu', 'language_code', 'site']
 
     inlines = [
         plugins.richtext.RichTextInline.create(models.RichText),

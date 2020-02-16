@@ -9,14 +9,15 @@ pip install -r requirements.txt
 
 python manage.py migrate
 
-# Load a default site
-python manage.py loaddata site
-
-python manage.py createsuperuser
+# Load a fixture with some example entries
+python manage.py loaddata example
 
 python manage.py runserver
 
 ```
+
+Add dns entries for juso.local and example.juso.local that point to your localhost.
+Visit juso.local:8000, example.juso.local, visit juso.local:8000/admin/ to see the admin interface. Log in as superuser with admin:admin or as regular user with user:user.
 
 ## Useful resources
 

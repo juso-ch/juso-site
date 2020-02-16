@@ -1,4 +1,5 @@
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import (get_object_or_404, render,
+                              redirect, get_list_or_404)
 from feincms3.regions import Regions
 from feincms3_meta.utils import meta_tags
 
@@ -17,10 +18,10 @@ def get_landing_page(request):
     if queryset.exists():
         return queryset[0]
 
-    return get_object_or_404(
+    return get_list_or_404(
         Page.objects.active(),
         is_landing_page=True,
-    )
+    )[0]
 
 
 def page_detail(request, path=None):

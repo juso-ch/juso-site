@@ -27,7 +27,7 @@ class SectionAdmin(TreeAdmin):
 
     fieldsets = (
         (None, {
-            'fields': ('name', 'users')
+            'fields': ('name', 'users', 'parent')
         }),
         (_("advanced"), {
             'classes': ('collapse',),

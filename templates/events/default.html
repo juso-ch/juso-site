@@ -1,5 +1,18 @@
 {% extends 'events/base.html' %}
+{% load feincms3 %}
+
+{% block header %}
+{% for parent in page.ancestors %}
+{% if forloop.counter > 1 %}
+<i class="far fa-angle-right"></i>
+{% endif %}
+<a href="{{parent.get_absolute_url}}">{{parent.title}}</a>
+{% endfor %}
+<i class="far fa-angle-right"></i>
+<a href="{{page.get_absolute_url}}">{{page.title}}</a>
+<h1>{{event.title}}</h1>
+{% endblock %}
 
 {% block content %}
-
+{% render_region regions 'main' %}
 {% endblock %}

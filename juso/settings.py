@@ -24,6 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Application definition
 
 INSTALLED_APPS = [
+    'django_su',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -162,7 +163,27 @@ LANGUAGE_CODE = 'de'
 MEDIA_ROOT = 'media'
 MEDIA_URL = '/media/'
 
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'django_su.backends.SuBackend',
+]
+
+AJAX_LOOKUP_CHANNELS = {'django_su':  dict(
+    model='auth.user', search_field='username'
+)}
+
+SU_LOGIN_REDIRECT_URL = "/admin/"
+SU_LOGOUT_REDIRECT_URL = "/admin/"
+
+
+def superuser_callback(user):
+    return user.is_superuser
+
+
+SU_LOGIN_CALLBACK = "juso.settings.superuser_callback"
+
 try:
     from juso.local_settings import *
 except:
     pass
+

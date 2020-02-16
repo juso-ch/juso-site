@@ -14,9 +14,9 @@ def top_page(page):
 
 
 @register.simple_tag
-def all_menus(language_code):
+def all_menus(language_code, top_page):
     menus = defaultdict(list)
-    pages = Page.objects.with_tree_fields().exclude(
+    pages = top_page.descendants().with_tree_fields().exclude(
         is_active=False,
         menu=""
     ).filter(

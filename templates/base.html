@@ -1,6 +1,6 @@
 {% load menus %}
-{% all_menus request.LANGUAGE_CODE as menus %}
 {% top_page page as top %}
+{% all_menus request.LANGUAGE_CODE top as menus %}
 <!DOCTYPE html>
 <html lang="{{request.LANGUAGE_CODE}}">
   <head>

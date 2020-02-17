@@ -1,65 +1,41 @@
-{% load menus %}
+{% load menus sekizai_tags %}
 {% top_page page as top %}
-{% all_menus request.LANGUAGE_CODE top as menus %}
 <!DOCTYPE html>
 <html lang="{{request.LANGUAGE_CODE}}">
   <head>
     <meta charset="UTF-8">
-    <title>{% block title %}{{request.site.section}}{% endblock %}</title>
+    <title>{% block title %}
+      {% if page is not top %}
+      {{title|default:page.title}} - {% endif %}
+      {{top.title}}
+      {% endblock %}</title>
     {% block meta %}
     {{meta_tags}}
     {% endblock %}
-
-    {% block styles %}
-
-    {% endblock %}
-
-
+    {% render_block 'css' %}
   </head>
   <body>
     {% block navigation %}
-    <nav>
-      <a href="{{top.get_absolute_url}}">{{top.title}}</a>
-      <ul>
-        {% for main, children in menus.main|group_by_tree %}
-        <li><a class="{% if page and main.id in page.tree_path %}active{% endif %}"
-               href="{{main.get_absolute_url}}">
-            {{main.title}}</a></li>
-        {% if children %}
-        <ul>
-          <nav>
-            {% for child in children %}
-            <li>
-              <a class="{% if page and child.id in page.tree_path %}active{% endif %}"
-                 href="{{child.get_absolute_url}}">
-                {{child.title}}</a></li>
-            {% endfor %}
-          </nav>
-        </ul>
-        {% endif %}
-        {% endfor %}
-      </ul>
-    </nav>
+    {% include 'navigation.html' %}
+    {% endblock %}
+
+    {% block breadcrumbs %}
+    {% include 'includes/breadcrumbs.html' %}
     {% endblock %}
 
     {% block header %}
-    {% for parent in page.ancestors %}
-    {% if forloop.counter > 1 %}
-    <i class="far fa-angle-right"></i>
-    {% endif %}
-    <a href="{{parent.get_absolute_url}}">{{parent.title}}</a>
-    {% endfor %}
-    <h1>{{page.title}}</h1>
+    <h1>{{title|default:page.title}}</h1>
     {% endblock %}
 
     {% block content %}
 
     {% endblock %}
 
-    {% block scripts %}
+    {% render_block 'js' %}
 
-    {% endblock %}
+    {% addtoblock 'js' %}
     <script src="https://kit.fontawesome.com/7655daeee1.js" crossorigin="anonymous">
     </script>
+    {% endaddtoblock %}
   </body>
 </html>

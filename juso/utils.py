@@ -21,7 +21,6 @@ class CopyContentMixin():
                 continue
 
             page.slug = page.slug + '-copy'
-            page.path = page.path + 'copy/'
             parent = self.copy_descendants(page, duplicated)
             parent.save()
 
@@ -38,6 +37,9 @@ class CopyContentMixin():
 
         for plugin in self.plugins:
             copy_plugins(plugin, old_parent, parent)
+
+        if not hasattr(old_parent, "children"):
+            return parent
 
         for child in old_parent.children.all():
             new_child = self.copy_descendants(child, duplicated)

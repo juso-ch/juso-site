@@ -1,18 +1,15 @@
 {% extends 'events/base.html' %}
 {% load feincms3 %}
-
-{% block header %}
-{% for parent in page.ancestors %}
-{% if forloop.counter > 1 %}
-<i class="far fa-angle-right"></i>
-{% endif %}
-<a href="{{parent.get_absolute_url}}">{{parent.title}}</a>
-{% endfor %}
-<i class="far fa-angle-right"></i>
-<a href="{{page.get_absolute_url}}">{{page.title}}</a>
-<h1>{{event.title}}</h1>
+{% block breadcrumbs %}
+{% include 'includes/breadcrumbs.html' with obj=event %}
 {% endblock %}
 
 {% block content %}
+<a href="{{event.location.get_absolute_url}}">
+  {{event.location}}
+</a>
+({{event.location.address}})
 {% render_region regions 'main' %}
+
+
 {% endblock %}

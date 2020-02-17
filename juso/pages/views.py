@@ -32,6 +32,7 @@ def page_detail(request, path=None):
         Page.objects.active(),
         path=f"/{path}/" if path else '/',
     )
+
     page.activate_language(request)
     ancestors = list(page.ancestors().reverse())
     return render(

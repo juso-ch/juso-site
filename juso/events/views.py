@@ -54,6 +54,10 @@ def location_detail(request, slug, all_events=False):
         {
             'page': page,
             'location': location,
+            'title': location.name,
+            'event_list': location.event_set.filter(
+                end_date__gte=timezone.now(),
+            ),
             'meta_tags': meta_tags(
                 [location, page] + ancestors, request=request
             ),
@@ -74,10 +78,15 @@ def event_list(request):
 
     ancestors = list(page.ancestors().reverse())
 
+    event_list = event_list_for_page(page)
+
     return render_list(
         request,
-        event_list_for_page(page),
+        event_list,
         {
+            'location_list': Location.objects.filter(
+                event__in=event_list,
+            ).distinct(),
             'page': page,
             'meta_tags': meta_tags(
                 [page] + ancestors,
@@ -109,6 +118,7 @@ def event_detail(request, slug):
         {
             'page': page,
             'event': event,
+            'title': event.title,
             'meta_tags': meta_tags(
                 [event, page] + ancestors,
                 request=request,

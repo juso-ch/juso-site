@@ -6,6 +6,8 @@ from js_asset import JS
 
 from feincms3 import plugins
 
+from geopy.geocoders import Nominatim
+
 from juso.people import plugins as people_plugins
 from juso.plugins import download
 from juso.utils import CopyContentMixin, meta_fieldset
@@ -196,6 +198,16 @@ class LocationAdmin(ContentEditor):
             return super().has_change_permission(request, obj)
         sections = request.user.section_set.all()
         return obj.section in sections
+
+    def save_model(self, request, obj, form, change):
+        if(not change):
+            locator = Nominatim(user_agent=settings.NOMINATIM_USER_AGENT)
+            location = locator.geocode(
+                f"{obj.street}, {obj.zip_code} {obj.city}, {obj.country}"
+            )
+            obj.lat = location.latitude
+            obj.lng = location.longitude
+        super().save_model(request, obj, form, change)
 
 
 @admin.register(NameSpace)

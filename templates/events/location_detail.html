@@ -1,5 +1,24 @@
 {% extends 'events/base.html' %}
+{% load sekizai_tags tools %}
+{% block breadcrumbs %}
+{% include 'includes/breadcrumbs.html' with obj=True%}
+{% endblock %}
 
 {% block content %}
-
+<address>
+  {{location.street}}<br/>
+  {{location.zip_code}} {{location.city}}<br/>
+</address>
+<ul>
+{% for event in location.event_set.all %}
+<li><a href="{{event.get_absolute_url}}">{{event}}</a></li>
+{% endfor %}
+</ul>
+{% render_region regions 'main' %}
+{% addtoblock 'js' %}
+<script>
+  window.__location = JSON.parse("{{location|jsonify|escapejs}}");
+  window.__events = JSON.parse("{{location.event_set.all|jsonify|escapejs}}");
+</script>
+{% endaddtoblock %}
 {% endblock %}

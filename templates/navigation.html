@@ -1,0 +1,24 @@
+{% load menus %}
+{% all_menus request.LANGUAGE_CODE top as menus %}
+<nav>
+  <a href="{{top.get_absolute_url}}">{{top.title}}</a>
+  <ul>
+    {% for main, children in menus.main|group_by_tree %}
+    <li><a class="{% if page and main.id in page.tree_path %}active{% endif %}"
+           href="{{main.get_absolute_url}}">
+        {{main.title}}</a></li>
+    {% if children %}
+    <ul>
+      <nav>
+        {% for child in children %}
+        <li>
+          <a class="{% if page and child.id in page.tree_path %}active{% endif %}"
+             href="{{child.get_absolute_url}}">
+            {{child.title}}</a></li>
+        {% endfor %}
+      </nav>
+    </ul>
+    {% endif %}
+    {% endfor %}
+  </ul>
+</nav>

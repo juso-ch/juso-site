@@ -7,6 +7,8 @@ virtualenv env --python=python3
 
 pip install -r requirements.txt
 
+cp local_settings.py.example juso/local_settings.py
+
 python manage.py migrate
 
 # Load a fixture with some example entries

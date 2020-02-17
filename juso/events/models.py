@@ -5,7 +5,8 @@ from feincms3 import plugins
 from feincms3.mixins import LanguageMixin
 from feincms3_meta.models import MetaMixin
 from taggit.managers import TaggableManager
-from feincms3.apps import reverse_app
+from feincms3.apps import reverse_app, apps_urlconf
+from feincms3_sites.middleware import current_site, set_current_site
 
 from juso.people import plugins as people_plugins
 from juso.plugins import download
@@ -42,13 +43,17 @@ class Location(MetaMixin):
 
     website = models.URLField(blank=True, verbose_name=_("website"))
 
-    lng = models.FloatField(verbose_name=_("longitude"))
-    lat = models.FloatField(verbose_name=_("latitude"))
+    lng = models.FloatField(verbose_name=_("longitude"), default=0)
+    lat = models.FloatField(verbose_name=_("latitude"), default=0)
 
     tags = TaggableManager(blank=True)
 
     def __str__(self):
         return self.name
+
+    @property
+    def address(self):
+        return f"{self.street}, {self.zip_code} {self.city}"
 
     class Meta:
         verbose_name = _("location")
@@ -56,21 +61,24 @@ class Location(MetaMixin):
         ordering = ['name']
 
     def get_absolute_url(self):
-        if not self.section:
+        site = current_site()
+        if not self.section or site == self.section.site:
             return reverse_app(
-                [f'1-events'],
+                [f'{site.pk}-events'],
                 'location-detail',
                 kwargs={
                     'slug': self.slug
                 }
             )
-        return reverse_app(
-            [f'{self.section.site_id}-events'],
-            'location-detail',
-            kwargs={
-                'slug': self.slug
-            }
-        )
+        with set_current_site(self.section.site):
+            return '//' + self.section.site.host + reverse_app(
+                [f'{self.section.site.id}-events'],
+                'location-detail',
+                urlconf=apps_urlconf(),
+                kwargs={
+                    'slug': self.slug
+                }
+            )
 
 
 LocationPluginBase = create_plugin_base(Location)
@@ -106,16 +114,30 @@ class Event(ContentMixin):
         ordering = ['-start_date']
 
     def get_absolute_url(self):
-        return reverse_app(
-            [f'{self.section.site_id}-events-{self.namespace}-{self.category}',
-             f'{self.section.site_id}-events-{self.namespace}',
-             f'{self.section.site_id}-events-{self.category}',
-             f'{self.section.site_id}-events'],
-            'event-detail',
-            kwargs={
-                'slug': self.slug
-            }
-        )
+        site = current_site()
+        print(site)
+        if self.section == site:
+            return reverse_app(
+                [f'{site.id}-events-{self.namespace}-{self.category}',
+                 f'{site.id}-events-{self.namespace}',
+                 f'{site.id}-events-{self.category}',
+                 f'{site.id}-events'],
+                'event-detail',
+                kwargs={
+                    'slug': self.slug
+                }
+            )
+        with set_current_site(self.section.site):
+            return '//' + self.section.site.host + reverse_app(
+                [f'{self.section.site.id}-events-{self.namespace}-{self.category}',
+                 f'{self.section.site.id}-events-{self.namespace}',
+                 f'{self.section.site.id}-events-{self.category}',
+                 f'{self.section.site.id}-events'],
+                'event-detail', urlconf=apps_urlconf(),
+                kwargs={
+                    'slug': self.slug
+                }
+            )
 
 
 PluginBase = create_plugin_base(Event)

@@ -1,7 +1,10 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import gettext as _
-from feincms3.apps import reverse_app
+
+from feincms3.apps import reverse_app, apps_urlconf
+from feincms3_sites.middleware import current_site, set_current_site
+
 from feincms3.mixins import LanguageMixin
 
 from juso.sections.models import Section
@@ -39,13 +42,24 @@ class Person(models.Model):
         ordering = ['last_name', 'first_name']
 
     def get_absolute_url(self):
-        return reverse_app(
-            [f'{section.site_id}-people' for section in self.sections.all()],
-            'person-detail',
-            kwargs={
-                'pk': self.pk
-            }
-        )
+        site = current_site()
+        if self.sections.filter(site=site).exists():
+            return reverse_app(
+                [f'{site.id}-people'],
+                'person-detail',
+                kwargs={
+                    'pk': self.pk
+                }
+            )
+        with set_current_site(self.sections.first().site):
+            return '//' + self.sections.first().site.host + reverse_app(
+                [f'{self.sections.first().site.id}-people'],
+                'person-detail',
+                urlconf=apps_urlconf(),
+                kwargs={
+                    'pk': self.pk
+                }
+            )
 
 
 class Team(LanguageMixin):
@@ -72,13 +86,24 @@ class Team(LanguageMixin):
         return f'{self.name} ({self.section})'
 
     def get_absolute_url(self):
-        return reverse_app(
-            (f'{self.section.site_id}-people',),
-            'team-detail',
-            kwargs={
-                'pk': self.pk
-            }
-        )
+        site = current_site()
+        if self.section.site == site:
+            return reverse_app(
+                (f'{self.section.site_id}-people',),
+                'team-detail',
+                kwargs={
+                    'pk': self.pk
+                }
+            )
+        with set_current_site(self.section.site):
+            return '//' + self.section.site.host + reverse_app(
+                [f'{self.section.site.id}-people'],
+                'team-detail',
+                urlconf=apps_urlconf(),
+                kwargs={
+                    'pk': self.pk
+                }
+            )
 
 
 class Membership(models.Model):

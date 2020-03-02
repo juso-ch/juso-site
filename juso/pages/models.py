@@ -3,11 +3,12 @@ from django.db import models, transaction
 from django.utils.translation import gettext_lazy as _
 from feincms3 import plugins
 from feincms3.apps import AppsMixin
-from feincms3.mixins import (LanguageMixin, MenuMixin, RedirectMixin,
-                             TemplateMixin)
+from feincms3.mixins import (MenuMixin, RedirectMixin, TemplateMixin)
 from feincms3_meta.models import MetaMixin
 from feincms3_sites.models import AbstractPage
+from feincms3_sites.middleware import current_site, set_current_site
 
+from juso.models import TranslationMixin
 from juso.plugins import download
 from juso.people import plugins as people_plugins
 from juso.sections.models import get_template_list
@@ -16,7 +17,7 @@ from juso.sections.models import get_template_list
 
 class Page(
     AppsMixin,
-    LanguageMixin,
+    TranslationMixin,
     MetaMixin,
     TemplateMixin,
     RedirectMixin,
@@ -122,6 +123,12 @@ class Page(
             site=self.site,
         ).update(is_landing_page=False)
         return super().save(*args, **kwargs)
+
+    def get_absolute_url(self, *args, **kwargs):
+        site = current_site()
+        if site == self.site:
+            return super().get_absolute_url(*args, **kwargs)
+        return '//' + self.site.host + super().get_absolute_url()
 
     class Meta:
         verbose_name = _("page")

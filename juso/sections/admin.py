@@ -55,12 +55,17 @@ class CategoryAdmin(TreeAdmin):
     list_filter = ['language_code']
     search_fields = ['name', 'slug']
     prepopulated_fields = {"slug": ("name",)}
+
     autocomplete_fields = [
-        'parent'
+        'parent', 'translations'
     ]
 
     fieldsets = (
         (None, {
             "fields": ('name', 'slug', 'language_code', 'parent')
         }),
+        (_("translations"), {
+            'classes': ('collapse',),
+            'fields': ('translations',),
+        })
     )

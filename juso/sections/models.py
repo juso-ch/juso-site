@@ -3,16 +3,18 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext as _
-from feincms3.mixins import LanguageMixin, TemplateMixin
+from feincms3.mixins import TemplateMixin
 from feincms3_meta.models import MetaMixin
 from feincms3_sites.models import Site
 from taggit.managers import TaggableManager
 from tree_queries.models import TreeNode
 
+from juso.models import TranslationMixin
+
 # Create your models here.
 
 
-class Category(LanguageMixin, TreeNode):
+class Category(TranslationMixin, TreeNode):
     name = models.CharField(max_length=200, verbose_name=_("name"))
     slug = models.SlugField(verbose_name=_("slug"))
 
@@ -38,7 +40,7 @@ class Section(TreeNode):
         return self.name
 
 
-class ContentMixin(LanguageMixin, MetaMixin, TemplateMixin):
+class ContentMixin(TranslationMixin, MetaMixin, TemplateMixin):
     title = models.CharField(max_length=200, verbose_name=_("title"))
     slug = models.SlugField(verbose_name=_("slug"))
     author = models.ForeignKey(
@@ -69,6 +71,10 @@ class ContentMixin(LanguageMixin, MetaMixin, TemplateMixin):
     section = models.ForeignKey(
         Section, models.CASCADE,
         verbose_name=_("section"),
+    )
+
+    translations = models.ManyToManyField(
+        "self", verbose_name=_("translations")
     )
 
     def __str__(self):

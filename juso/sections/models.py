@@ -73,10 +73,6 @@ class ContentMixin(TranslationMixin, MetaMixin, TemplateMixin):
         verbose_name=_("section"),
     )
 
-    translations = models.ManyToManyField(
-        "self", verbose_name=_("translations")
-    )
-
     def __str__(self):
         return self.title
 

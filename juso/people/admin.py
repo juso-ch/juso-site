@@ -80,7 +80,7 @@ class TeamAdmin(OrderableAdmin, admin.ModelAdmin):
     ordering_field_hide_input = True
 
     autocomplete_fields = [
-        'section'
+        'section', 'translations'
     ]
 
     inlines = [

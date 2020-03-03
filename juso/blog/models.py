@@ -2,17 +2,17 @@ from content_editor.models import create_plugin_base
 from django.db import models
 from django.utils.translation import gettext as _
 from feincms3 import plugins
-from feincms3.apps import reverse_app, apps_urlconf
+from feincms3.apps import reverse_app
 from feincms3_sites.middleware import current_site, set_current_site
-from feincms3.mixins import LanguageMixin
 
+from juso.models import TranslationMixin
 from juso.plugins import download
 from juso.sections.models import ContentMixin, get_template_list
 
 # Create your models here.
 
 
-class NameSpace(LanguageMixin):
+class NameSpace(TranslationMixin):
     name = models.CharField(max_length=200, verbose_name=_("name"))
     slug = models.SlugField()
 

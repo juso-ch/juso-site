@@ -6,7 +6,9 @@ from feincms3.apps import reverse_app, apps_urlconf
 from feincms3_sites.middleware import current_site, set_current_site
 from feincms3.mixins import LanguageMixin
 
+from fomantic_ui import models as fomantic
 from juso.plugins import download
+from juso.people import plugins as people_plugins
 from juso.sections.models import ContentMixin, get_template_list
 
 # Create your models here.
@@ -101,4 +103,22 @@ class Download(download.Download, PluginBase):
     pass
 
 
-plugins = [RichText, Image, HTML, External, Download]
+class Button(fomantic.Button, PluginBase):
+    pass
+
+
+class Divider(fomantic.Divider, PluginBase):
+    pass
+
+
+class Header(fomantic.Header, PluginBase):
+    pass
+
+
+class Team(people_plugins.TeamPlugin, PluginBase):
+    pass
+
+
+plugins = [
+    RichText, Image, HTML, External, Team, Download, Button, Divider, Header
+]

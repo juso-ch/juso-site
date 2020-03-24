@@ -1,4 +1,4 @@
-{% load sekizai_tags static menus %}
+{% load sekizai_tags static menus feincms3 %}
 {% top_page page as top %}
 
 {% all_menus request.LANGUAGE_CODE top as menus %}
@@ -68,7 +68,7 @@
 
 
 
-      <div class="ui inverted vertical footer segment">
+      <div class="ui teal inverted vertical footer segment">
         <div class="ui container">
           <div class="ui stackable inverted divided equal height stackable grid">
             <div class="three wide column">
@@ -88,8 +88,7 @@
             </div>
             <div class="seven wide column">
               {% block footer %}
-              <h4 class="ui inverted header">Footer Header</h4>
-              <p>Extra space for a call to action inside the footer that could help re-engage users.</p>
+            {% render_region regions "footer" %}
               {% endblock %}
             </div>
           </div>
@@ -107,23 +106,10 @@
     <script src="{% static 'jquery.min.js' %}"></script>
     {% endaddtoblock %}
     {% addtoblock 'js' %}
-    <script src="{% static 'components/visibility.js' %}"></script>
-    {% endaddtoblock %}
-    {% addtoblock 'js' %}
-    <script src="{% static 'components/sidebar.js' %}"></script>
-    {% endaddtoblock %}
-    {% addtoblock 'js' %}
-    <script src="{% static 'components/dropdown.js' %}"></script>
-    {% endaddtoblock %}
-    {% addtoblock 'js' %}
-    <script src="{% static 'components/transition.js' %}"></script>
+    <script src="{% static 'semantic.min.js' %}"></script>
     {% endaddtoblock %}
     <script>
       $(document).ready(function() {
-        // show dropdown on hover
-        $('.ui.dropdown').dropdown({
-          on: 'click'
-        });
 
         // create sidebar and attach to menu open
         $('.ui.sidebar')

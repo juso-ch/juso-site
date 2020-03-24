@@ -3,8 +3,6 @@
 
 {% block content %}
 
-{% render_region regions 'main' %}
-
 <ul>
   {% for article in article_list %}
   <li><a href="{{article.get_absolute_url}}">{{article}}</a></li>

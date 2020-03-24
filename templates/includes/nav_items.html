@@ -3,11 +3,11 @@
 {% for main, children in menu|group_by_tree %}
 {% if children %}
 {% if vertical %}
-<div class="item">
-  {{main.title}}
+<div class="item{% if page and main.id in page.tree_path %} active primary{% endif %}">
+  <a href="{{main.get_absolute_url}}">{{main.title}}</a>
 {% else %}
-<div class="ui dropdown item ">
-  {{main.title}}
+<div class="ui simple dropdown item">
+  <a href="{{main.get_absolute_url}}">{{main.title}}</a>
   <i class="dropdown icon"></i>
 {% endif %}
   <div class="menu">

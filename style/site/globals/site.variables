@@ -1,3 +1,32 @@
 /*******************************
      User Global Variables
 *******************************/
+
+@fontName          : 'Roboto Slab';
+
+@headerFont        : 'Teko', sans-serif;
+@pageFont          : @fontName, serif;
+
+/* This is the single variable that controls them all */
+@emSize   : 18px;
+
+/* The size of page text  */
+@fontSize : 18px;
+
+@importGoogleFonts : false;
+
+/*-------------------
+    Brand Colors
+--------------------*/
+@red              : #CD1719;
+@teal             : #00768C;
+
+@primaryColor        : @red;
+@secondaryColor      : @teal;
+
+@lightPrimaryColor   : @lightRed;
+@lightSecondaryColor : @lightTeal;
+
+
+@highlightBackground      : @lightRed;
+@highlightColor           : @textColor;

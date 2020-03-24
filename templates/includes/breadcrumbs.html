@@ -1,10 +1,18 @@
+  {% if page.ancestors %}
+<div class="ui breadcrumb">
 {% for parent in page.ancestors %}
 {% if forloop.counter > 1 %}
-<i class="far fa-angle-right"></i>
+  <i class="right angle icon divider"></i>
 {% endif %}
-<a href="{{parent.get_absolute_url}}">{{parent.title}}</a>
+<a class="section" href="{{parent.get_absolute_url}}">{{parent.title}}</a>
 {% endfor %}
+  <i class="right angle icon divider"></i>
 {% if obj %}
-<i class="far fa-angle-right"></i>
-<a href="{{page.get_absolute_url}}">{{page.title}}</a>
+<a class="section" href="{{page.get_absolute_url}}">{{page.title}}</a>
+  <i class="right angle icon divider"></i>
+  <div class="active section">{{obj.title}}</div>
+  {% else %}
+  <div class="active section">{{page.title}}</div>
+{% endif %}
+</div>
 {% endif %}

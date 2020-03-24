@@ -75,16 +75,19 @@ class Page(
 
     TEMPLATES = get_template_list('pages', (
         (
-            'default', ('main',)
+            'default', ('main', 'footer')
         ),
         (
-            'sidebar-right', ('main', 'sidebar')
+            'sidebar-right', ('main', 'sidebar', 'footer')
         ),
         (
-            'sidebar-left', ('main', 'sidebar')
+            'sidebar-left', ('main', 'sidebar', 'footer')
         ),
         (
-            'fullwidth', ('main',)
+            'sidebar-both', ('main', 'left', 'right', 'footer')
+        ),
+        (
+            'fullwidth', ('main', 'footer')
         )
     ))
 

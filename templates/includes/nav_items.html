@@ -1,14 +1,18 @@
 {% load menus %}
-{% all_menus request.LANGUAGE_CODE top as menus %}
-<a class="item {% if page == top %}active{% endif %}" href="{{top.get_absolute_url}}">{{top.title}}</a>
-{% for main, children in menus.main|group_by_tree %}
+
+{% for main, children in menu|group_by_tree %}
 {% if children %}
-<div class="ui dropdown item {% if main.id in page.tree_path %}active {% endif %}">
+{% if vertical %}
+<div class="item">
+  {{main.title}}
+{% else %}
+<div class="ui dropdown item ">
   {{main.title}}
   <i class="dropdown icon"></i>
+{% endif %}
   <div class="menu">
     {% for child in children %}
-    <a class="item {% if page and child.id in page.tree_path %}active{% endif %}"
+    <a class="item {% if page and child.id in page.tree_path %} active primary{% endif %}"
        href="{{child.get_absolute_url}}">
       {{child.title}}
     </a>

@@ -135,6 +135,7 @@ USE_TZ = True
 
 STATICFILES_DIRS = [
     "dist/",
+    "node_modules/jquery/dist/",
 ]
 
 STATIC_ROOT = 'static'

@@ -8,6 +8,7 @@ from feincms3.mixins import (LanguageMixin, MenuMixin, RedirectMixin,
 from feincms3_meta.models import MetaMixin
 from feincms3_sites.models import AbstractPage
 
+from fomantic_ui import models as fomantic
 from juso.plugins import download
 from juso.people import plugins as people_plugins
 from juso.sections.models import get_template_list
@@ -168,4 +169,18 @@ class Team(people_plugins.TeamPlugin, PluginBase):
     pass
 
 
-plugins = [RichText, Image, HTML, External, Team, Download]
+class Button(fomantic.Button, PluginBase):
+    pass
+
+
+class Divider(fomantic.Divider, PluginBase):
+    pass
+
+
+class Header(fomantic.Header, PluginBase):
+    pass
+
+
+plugins = [
+    RichText, Image, HTML, External, Team, Download, Button, Divider, Header
+]

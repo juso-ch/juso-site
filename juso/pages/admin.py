@@ -12,6 +12,7 @@ from juso.people import plugins as people_plugins
 from juso.utils import CopyContentMixin
 from juso.pages import models
 
+from fomantic_ui import models as fomantic
 # Register your models here.
 
 
@@ -56,6 +57,9 @@ class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
         plugins.html.HTMLInline.create(models.HTML),
         plugins.external.ExternalInline.create(models.External),
         download.DownloadInline.create(models.Download),
+        fomantic.ButtonInline.create(models.Button),
+        fomantic.DividerInline.create(models.Divider),
+        fomantic.HeaderInline.create(models.Header),
         people_plugins.TeamPluginInline.create(models.Team),
     ]
 

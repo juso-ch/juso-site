@@ -31,6 +31,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'fontawesome_5',
+    'fomantic_ui',
     "sekizai",
     "admin_ordering",
     "feincms3",
@@ -193,6 +195,8 @@ def superuser_callback(user):
 SU_LOGIN_CALLBACK = "juso.settings.superuser_callback"
 
 NOMINATIM_USER_AGENT = 'juso-site'
+
+FONTAWESOME_5_ICON_CLASS = 'semantic_ui'
 
 try:
     from juso.local_settings import *

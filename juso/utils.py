@@ -1,4 +1,7 @@
 from django.utils.translation import gettext as _
+from django.template.loader import render_to_string
+from feincms3.plugins.external import oembed_html
+from django.utils.html import mark_safe
 
 
 def copy_plugins(model_class, old_parent, parent):
@@ -63,3 +66,9 @@ meta_fieldset = (_('meta'), {
         'meta_canonical',
     )
 })
+
+
+def render_embed(plugin, **kwargs):
+    return render_to_string('plugins/embed.html', {
+        'html': mark_safe(oembed_html(plugin.url))
+    })

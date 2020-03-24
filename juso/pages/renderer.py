@@ -27,7 +27,7 @@ renderer.register_string_renderer(
 
 renderer.register_string_renderer(
     pages.Image,
-    lambda plugin: plugins.image.render_image(plugin)
+    lambda plugin: fomantic.render_image(plugin)
 )
 
 renderer.register_string_renderer(

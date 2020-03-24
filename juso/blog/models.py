@@ -93,6 +93,11 @@ class RichText(plugins.richtext.RichText, PluginBase):
 
 class Image(plugins.image.Image, PluginBase):
     caption = models.CharField(_("caption"), max_length=200, blank=True)
+    title = models.CharField(_("title"), max_length=200, blank=True)
+
+    class Meta:
+        verbose_name = _("image")
+        verbose_name_plural = _("images")
 
 
 class HTML(plugins.html.HTML, PluginBase):

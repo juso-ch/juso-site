@@ -51,6 +51,7 @@ class EventAdmin(ContentEditor, CopyContentMixin):
         'author',
         'section',
         'location',
+        'translations',
     ]
 
     search_fields = [
@@ -95,6 +96,12 @@ class EventAdmin(ContentEditor, CopyContentMixin):
                 'meta_canonical',
             )
         }),
+        (_('translations'), {
+            'classes': ('tabbed',),
+            'fields': (
+                'translations',
+            )
+        })
     )
 
     inlines = [
@@ -169,7 +176,7 @@ class LocationAdmin(ContentEditor):
     }
 
     autocomplete_fields = [
-        'section'
+        'section', 'translations'
     ]
 
     fieldsets = (
@@ -190,7 +197,13 @@ class LocationAdmin(ContentEditor):
                 'lat',
                 'lng',
             )
-        })
+        }),
+        (_('translations'), {
+            'classes': ('tabbed',),
+            'fields': (
+                'translations',
+            )
+        }),
     )
 
     inlines = [
@@ -219,3 +232,5 @@ class NamespaceAdmin(admin.ModelAdmin):
     search_fields = [
         'name'
     ]
+
+    autocomplete_fields = ('translations',)

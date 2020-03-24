@@ -37,7 +37,8 @@ class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
         'parent',
         'blog_namespace',
         'category',
-        'redirect_to_page'
+        'redirect_to_page',
+        'translations',
     ]
 
     search_fields = ['title']
@@ -117,7 +118,11 @@ class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
                 'redirect_to_page',
                 'redirect_to_url',
             )
-        })
+        }),
+        (_('translations'), {
+            'classes': ('tabbed',),
+            'fields': ('translations',)
+        }),
     )
 
     mptt_level_indent = 30

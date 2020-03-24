@@ -48,6 +48,7 @@ class ArticleAdmin(ContentEditor, CopyContentMixin):
         'namespace',
         'author',
         'section',
+        'translations',
     ]
 
     search_fields = [
@@ -94,6 +95,12 @@ class ArticleAdmin(ContentEditor, CopyContentMixin):
                 'meta_image_ppoi',
                 'meta_robots',
                 'meta_canonical',
+            )
+        }),
+        (_("translations"), {
+            'classes': ('tabbed', ),
+            'fields': (
+                'translations',
             )
         })
     )
@@ -161,8 +168,10 @@ class NamespaceAdmin(admin.ModelAdmin):
         "slug": ("name",)
     }
 
+    autocomplete_fields = ('translations',)
+
     fieldsets = (
         (None, {
-            'fields': ('name', 'slug', 'language_code')
+            'fields': ('name', 'slug', 'language_code', 'translations')
         }),
     )

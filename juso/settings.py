@@ -31,6 +31,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'fontawesome_5',
+    'fomantic_ui',
     "sekizai",
     "admin_ordering",
     "feincms3",
@@ -133,6 +135,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+STATICFILES_DIRS = [
+    "dist/",
+    "node_modules/jquery/dist/",
+]
+
 STATIC_ROOT = 'static'
 STATIC_URL = '/static/'
 
@@ -189,8 +196,11 @@ SU_LOGIN_CALLBACK = "juso.settings.superuser_callback"
 
 NOMINATIM_USER_AGENT = 'juso-site'
 
+FONTAWESOME_5_ICON_CLASS = 'semantic_ui'
+
 try:
     from juso.local_settings import *
 except:
     pass
+
 

@@ -2,7 +2,15 @@
 {% load feincms3 %}
 
 {% block content %}
-<main>
-  {% render_region regions "main" %}
-</main>
+<div class="ui vertical segment ">
+  <div class="ui container">
+    <div class="ui stackable centered grid">
+        <div class="twelve wide column">
+          <main class="ui basic segment">
+            {% render_region regions "main" %}
+          </main>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

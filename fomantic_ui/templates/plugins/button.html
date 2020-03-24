@@ -1,0 +1,7 @@
+<a href="{{button.target}}"
+   class="ui button {{button.color}} {{button.size}} {% if button.icon.as_html %} icon {% endif %} {% if button.inverted %} inverted {% endif %} {{button.style}}">
+  {% if button.icon %}
+  {{button.icon.as_html}}
+  {% endif %}
+  {{button.text}}
+</a>

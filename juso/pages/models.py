@@ -8,7 +8,11 @@ from feincms3_meta.models import MetaMixin
 from feincms3_sites.models import AbstractPage
 from feincms3_sites.middleware import current_site, set_current_site
 
+
+from fomantic_ui import models as fomantic
+
 from juso.models import TranslationMixin
+
 from juso.plugins import download
 from juso.people import plugins as people_plugins
 from juso.sections.models import get_template_list
@@ -76,16 +80,19 @@ class Page(
 
     TEMPLATES = get_template_list('pages', (
         (
-            'default', ('main',)
+            'default', ('main', 'footer')
         ),
         (
-            'sidebar-right', ('main', 'sidebar')
+            'sidebar-right', ('main', 'sidebar', 'footer')
         ),
         (
-            'sidebar-left', ('main', 'sidebar')
+            'sidebar-left', ('main', 'sidebar', 'footer')
         ),
         (
-            'fullwidth', ('main',)
+            'sidebar-both', ('main', 'left', 'right', 'footer')
+        ),
+        (
+            'fullwidth', ('main', 'footer')
         )
     ))
 
@@ -152,6 +159,7 @@ class RichText(plugins.richtext.RichText, PluginBase):
 
 class Image(plugins.image.Image, PluginBase):
     caption = models.CharField(_("caption"), max_length=200, blank=True)
+    title = models.CharField(_("title"), max_length=200, blank=True)
 
     class Meta:
         verbose_name = _("image")
@@ -172,4 +180,18 @@ class Team(people_plugins.TeamPlugin, PluginBase):
     pass
 
 
-plugins = [RichText, Image, HTML, External, Team, Download]
+class Button(fomantic.Button, PluginBase):
+    pass
+
+
+class Divider(fomantic.Divider, PluginBase):
+    pass
+
+
+class Header(fomantic.Header, PluginBase):
+    pass
+
+
+plugins = [
+    RichText, Image, HTML, External, Team, Download, Button, Divider, Header
+]

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load feincms3 %}
+
+{% block content %}
+<div class="ui vertical segment ">
+  <div class="ui container">
+    <div class="ui centered grid">
+        <div class="column">
+          <main class="ui basic segment">
+            {% render_region regions "main" %}
+          </main>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

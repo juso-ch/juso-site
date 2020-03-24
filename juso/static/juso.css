@@ -1,0 +1,21 @@
+.hidden.menu {
+  display: none;
+}
+
+#sidebar-icon {
+  display: none;
+}
+#menu #brand {
+  color: #CD1719;
+}
+
+@media only screen and (max-width: 700px) {
+  #menu .item,
+  #menu .menu {
+    display: none;
+  }
+  #menu #sidebar-icon,
+  #menu #brand {
+    display: block;
+  }
+}

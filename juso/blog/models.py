@@ -5,8 +5,13 @@ from feincms3 import plugins
 from feincms3.apps import reverse_app
 from feincms3_sites.middleware import current_site, set_current_site
 
+
+from fomantic_ui import models as fomantic
+
 from juso.models import TranslationMixin
+
 from juso.plugins import download
+from juso.people import plugins as people_plugins
 from juso.sections.models import ContentMixin, get_template_list
 
 # Create your models here.
@@ -91,6 +96,11 @@ class RichText(plugins.richtext.RichText, PluginBase):
 
 class Image(plugins.image.Image, PluginBase):
     caption = models.CharField(_("caption"), max_length=200, blank=True)
+    title = models.CharField(_("title"), max_length=200, blank=True)
+
+    class Meta:
+        verbose_name = _("image")
+        verbose_name_plural = _("images")
 
 
 class HTML(plugins.html.HTML, PluginBase):
@@ -101,4 +111,22 @@ class Download(download.Download, PluginBase):
     pass
 
 
-plugins = [RichText, Image, HTML, External, Download]
+class Button(fomantic.Button, PluginBase):
+    pass
+
+
+class Divider(fomantic.Divider, PluginBase):
+    pass
+
+
+class Header(fomantic.Header, PluginBase):
+    pass
+
+
+class Team(people_plugins.TeamPlugin, PluginBase):
+    pass
+
+
+plugins = [
+    RichText, Image, HTML, External, Team, Download, Button, Divider, Header
+]

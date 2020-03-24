@@ -13,6 +13,7 @@ from juso.plugins import download
 from juso.utils import CopyContentMixin, meta_fieldset
 from juso.events import models
 from juso.events.models import Location, Event, NameSpace
+from fomantic_ui import models as fomantic
 # Register your models here.
 
 
@@ -108,6 +109,9 @@ class EventAdmin(ContentEditor, CopyContentMixin):
         plugins.image.ImageInline.create(models.Image),
         plugins.html.HTMLInline.create(models.HTML),
         plugins.external.ExternalInline.create(models.External),
+        fomantic.ButtonInline.create(models.Button),
+        fomantic.DividerInline.create(models.Divider),
+        fomantic.HeaderInline.create(models.Header),
         download.DownloadInline.create(models.Download),
         people_plugins.TeamPluginInline.create(models.Team),
     ]

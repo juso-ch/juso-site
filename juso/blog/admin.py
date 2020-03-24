@@ -4,6 +4,8 @@ from django.utils.translation import gettext as _
 from feincms3 import plugins
 from js_asset import JS
 
+from fomantic_ui import models as fomantic
+from juso.people import plugins as people_plugins
 from juso.plugins import download
 from juso.utils import CopyContentMixin
 from juso.blog import models
@@ -108,7 +110,11 @@ class ArticleAdmin(ContentEditor, CopyContentMixin):
         plugins.image.ImageInline.create(models.Image),
         plugins.html.HTMLInline.create(models.HTML),
         plugins.external.ExternalInline.create(models.External),
+        fomantic.ButtonInline.create(models.Button),
+        fomantic.DividerInline.create(models.Divider),
+        fomantic.HeaderInline.create(models.Header),
         download.DownloadInline.create(models.Download),
+        people_plugins.TeamPluginInline.create(models.Team),
     ]
 
     plugins = models.plugins

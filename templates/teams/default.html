@@ -1,8 +1,59 @@
-<h2>{{team.name}}</h2>
-<ul>
+<div class="ui {{plugin.columns}} stackable cards">
   {% for membership in team.membership_set.all %}
-  <li>
-    {{membership.person.first_name}} {{membership.person.last_name}} - {{membership.title}}
-  </li>
+  <div class="card">
+    {% if membership.person.image %}
+    <div class="image">
+      <img src="{{membership.person.image.url}}">
+    </div>
+    {% endif %}
+    <div class="content">
+      <div class="header">
+        {{membership.person.first_name}} {{membership.person.last_name}}
+      </div>
+      <div class="meta">
+        {{membership.title}}
+      </div>
+      <div class="description">
+        {% if membership.person.email %}
+        <div>
+          <a href="mailto:{{membership.person.email}}">
+            {{membership.person.email}}
+          </a>
+        </div>
+        {% endif %}
+        {% if membership.person.phone %}
+        <div>
+        {{membership.person.phone}}
+        </div>
+        {% endif %}
+        {% if membership.person.homepage %}
+        <div>
+          <a href="{{membership.person.homepage}}">
+            {{membership.person.homepage}}
+          </a>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="extra content">
+      {% if membership.person.facebook %}
+      <a href="{{membership.person.facebook}}" class="ui facebook icon button">
+        <i class="facebook icon"></i>
+      </a>
+      {% endif %}
+      {% if membership.person.twitter %}
+      <a href="{{membership.person.twitter}}" class="ui twitter icon button">
+        <i class="twitter icon"></i>
+      </a>
+      {% endif %}
+      {% if membership.person.instagram %}
+      <a href="{{membership.person.instagram}}" class="ui instagram icon button">
+        <i class="instagram icon"></i>
+      </a>
+      {% endif %}
+    </div>
+  </div>
   {% endfor %}
-</ul>
+</div>
+
+

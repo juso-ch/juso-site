@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load feincms3 %}
+
+{% block content %}
+<div class="ui vertical segment ">
+  <div class="ui container">
+    <div class="ui stackable internally celled centered grid">
+        <div class="eight wide column">
+          <main class="ui basic segment">
+            {% render_region regions "main" %}
+          </main>
+        </div>
+        <div class="four wide column">
+          <aside class="ui basic segment">
+            {% render_region regions "sidebar" %}
+          </aside>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

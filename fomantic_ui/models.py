@@ -194,3 +194,9 @@ def render_header(plugin, **kwargs):
     return render_to_string('plugins/header.html', {
         'header': plugin
     })
+
+
+def render_image(plugin, **kwargs):
+    return render_to_string('plugins/image.html', {
+        'plugin': plugin,
+    })

@@ -32,6 +32,11 @@ class Person(models.Model):
 
     email = models.EmailField(blank=True, verbose_name=_("e-mail"))
     homepage = models.URLField(blank=True, verbose_name=_("homepage"))
+    phone = models.CharField(blank=True, max_length=20, verbose_name=_("phone"))
+
+    facebook = models.URLField(blank=True, verbose_name=_("Facebook"))
+    twitter = models.URLField(blank=True, verbose_name=_("Twitter"))
+    instagram = models.URLField(blank=True, verbose_name=_("Instagram"))
 
     def __str__(self):
         return self.first_name + ' ' + self.last_name

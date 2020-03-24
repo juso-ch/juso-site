@@ -19,6 +19,15 @@ class TeamPlugin(models.Model):
         choices=settings.TEAM_TEMPLATE_CHOICES,
     )
 
+    columns = models.CharField(
+        _("columns"), default="three", max_length=10, choices=(
+            ('two', _("2")),
+            ('three', _("3")),
+            ('four', _("4")),
+            ('five', _("5")),
+        )
+    )
+
     class Meta:
         abstract = True
         verbose_name = "team"
@@ -38,5 +47,6 @@ def render_team(plugin, **kwargs):
     return render_to_string(
         plugin.template_key, {
             'team': plugin.team,
+            'plugin': plugin,
         }
     )

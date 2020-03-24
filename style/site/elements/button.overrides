@@ -1,3 +1,8 @@
 /*******************************
          Site Overrides
 *******************************/
+
+.ui.button, .ui.basic.button, .ui.basic.buttons {
+  text-transform: uppercase;
+  font-family: "Teko";
+}

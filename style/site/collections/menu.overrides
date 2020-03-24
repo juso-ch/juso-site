@@ -9,3 +9,7 @@
 #brand {
   font-size: 1.2rem !important;
 }
+
+.ui.menu .item > a {
+  color: inherit;
+}

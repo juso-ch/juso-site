@@ -1,7 +1,7 @@
 from content_editor.admin import ContentEditorInline
 from django.db import models
-from django.utils.translation import gettext as _
 from django.template.loader import render_to_string
+from django.utils.translation import gettext as _
 from fontawesome_5.fields import IconField
 
 # Create your models here.

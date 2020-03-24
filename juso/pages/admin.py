@@ -7,12 +7,12 @@ from feincms3_sites.admin import SiteAdmin
 from feincms3_sites.models import Site
 from js_asset import JS
 
-from juso.plugins import download
-from juso.people import plugins as people_plugins
-from juso.utils import CopyContentMixin
-from juso.pages import models
-
 from fomantic_ui import models as fomantic
+from juso.pages import models
+from juso.people import plugins as people_plugins
+from juso.plugins import download
+from juso.utils import CopyContentMixin
+
 # Register your models here.
 
 

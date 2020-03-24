@@ -1,7 +1,6 @@
 from django import template
-from django.utils.safestring import mark_safe
 from django.core import serializers
-
+from django.utils.safestring import mark_safe
 
 register = template.Library()
 
@@ -15,4 +14,3 @@ def jsonify(obj, fields=None):
         fields=fields, use_natural_foreign_keys=True,
         use_natural_primary_keys=True,
     )
-

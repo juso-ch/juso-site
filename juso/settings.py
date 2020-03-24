@@ -202,5 +202,3 @@ try:
     from juso.local_settings import *
 except:
     pass
-
-

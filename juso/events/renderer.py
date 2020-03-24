@@ -1,11 +1,11 @@
 from feincms3 import plugins
 from feincms3.renderer import TemplatePluginRenderer
 
-from juso.utils import render_embed
 from fomantic_ui import models as fomantic
+from juso.events import models as events
 from juso.people import plugins as people_plugins
 from juso.plugins import download
-from juso.events import models as events
+from juso.utils import render_embed
 
 renderer = TemplatePluginRenderer()
 

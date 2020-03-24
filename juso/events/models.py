@@ -1,20 +1,17 @@
-from content_editor.models import create_plugin_base, Region
+from content_editor.models import Region, create_plugin_base
 from django.db import models
 from django.utils.translation import gettext as _
 from feincms3 import plugins
+from feincms3.apps import apps_urlconf, reverse_app
 from feincms3_meta.models import MetaMixin
-from taggit.managers import TaggableManager
-from feincms3.apps import reverse_app, apps_urlconf
 from feincms3_sites.middleware import current_site, set_current_site
-
+from taggit.managers import TaggableManager
 
 from fomantic_ui import models as fomantic
-
 from juso.models import TranslationMixin
-
 from juso.people import plugins as people_plugins
 from juso.plugins import download
-from juso.sections.models import ContentMixin, get_template_list, Section
+from juso.sections.models import ContentMixin, Section, get_template_list
 
 # Create your models here.
 

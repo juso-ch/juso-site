@@ -2,18 +2,17 @@ from content_editor.admin import ContentEditor
 from django.conf import settings
 from django.contrib import admin
 from django.utils.translation import gettext as _
+from feincms3 import plugins
+from geopy.geocoders import Nominatim
 from js_asset import JS
 
-from feincms3 import plugins
-
-from geopy.geocoders import Nominatim
-
+from fomantic_ui import models as fomantic
+from juso.events import models
+from juso.events.models import Event, Location, NameSpace
 from juso.people import plugins as people_plugins
 from juso.plugins import download
 from juso.utils import CopyContentMixin, meta_fieldset
-from juso.events import models
-from juso.events.models import Location, Event, NameSpace
-from fomantic_ui import models as fomantic
+
 # Register your models here.
 
 

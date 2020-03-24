@@ -1,17 +1,14 @@
+from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
-from django.shortcuts import render, get_object_or_404
-
 from feincms3.apps import page_for_app_request
 from feincms3.regions import Regions
 from feincms3.shortcuts import render_list
-
 from feincms3_meta.utils import meta_tags
 
 from juso import pages
-
-from juso.sections.models import Section
-from juso.events.renderer import renderer, location_renderer
 from juso.events.models import Event, Location
+from juso.events.renderer import location_renderer, renderer
+from juso.sections.models import Section
 
 # Create your views here.
 

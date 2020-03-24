@@ -1,12 +1,12 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import gettext as _
-
-from feincms3.apps import reverse_app, apps_urlconf
+from feincms3.apps import apps_urlconf, reverse_app
 from feincms3_sites.middleware import current_site, set_current_site
 
 from juso.models import TranslationMixin
 from juso.sections.models import Section
+
 # Create your models here.
 
 

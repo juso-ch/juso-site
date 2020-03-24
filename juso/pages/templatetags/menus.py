@@ -1,7 +1,8 @@
 from collections import defaultdict
-from django import template
-from juso.pages.models import Page
 
+from django import template
+
+from juso.pages.models import Page
 
 register = template.Library()
 

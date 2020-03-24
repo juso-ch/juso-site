@@ -1,7 +1,7 @@
-from django.utils.translation import gettext as _
 from django.template.loader import render_to_string
-from feincms3.plugins.external import oembed_html
 from django.utils.html import mark_safe
+from django.utils.translation import gettext as _
+from feincms3.plugins.external import oembed_html
 
 
 def copy_plugins(model_class, old_parent, parent):

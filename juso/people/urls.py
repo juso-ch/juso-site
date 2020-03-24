@@ -2,7 +2,6 @@ from django.urls import path
 
 from juso.people import views
 
-
 app_name = 'people'
 
 urlpatterns = [

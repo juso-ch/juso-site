@@ -1,7 +1,8 @@
-from django.contrib import admin
-# Register your models here.
-from juso.people.models import Team, Person, Membership
 from admin_ordering.admin import OrderableAdmin
+from django.contrib import admin
+
+# Register your models here.
+from juso.people.models import Membership, Person, Team
 
 
 class TeamInline(admin.TabularInline):

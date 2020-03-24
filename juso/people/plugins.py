@@ -1,6 +1,6 @@
 from content_editor.admin import ContentEditorInline
-from django.db import models
 from django.conf import settings
+from django.db import models
 from django.template.loader import render_to_string
 from django.utils.translation import gettext as _
 

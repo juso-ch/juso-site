@@ -1,13 +1,12 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from feincms3.apps import page_for_app_request
-from feincms3.shortcuts import render_list
 from feincms3.regions import Regions
-
+from feincms3.shortcuts import render_list
 from feincms3_meta.utils import meta_tags
 
 from juso import pages
-
 from juso.people.models import Person, Team
+
 # Create your views here.
 
 

@@ -1,6 +1,7 @@
 from feincms3 import plugins
 from feincms3.renderer import TemplatePluginRenderer
 
+from juso.utils import render_embed
 from juso.people import plugins as people_plugins
 from juso.plugins import download
 from juso.events import models as events
@@ -19,7 +20,7 @@ renderer.register_string_renderer(
 
 renderer.register_string_renderer(
     events.External,
-    lambda plugin: plugins.external.render_external(plugin)
+    lambda plugin: render_embed(plugin)
 )
 
 renderer.register_string_renderer(

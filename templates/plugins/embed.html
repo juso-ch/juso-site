@@ -1,21 +1,15 @@
-{% if "youtube.com" in html or "vimeo" in html %}
+{% if json.provider_name == 'YouTube' or json.provider_name == 'Vimeo' %}
 <div class="ui embed segment">
   {{html}}
 </div>
-{% elif "soundcloud" in html %}
-<div class="ui soundcloud embed segment">
-  {{html}}
-</div>
-{% elif "twitter" in html %}
+{% elif json.provider_name == 'Twitter' %}
 <div class="ui segment stacked">
 {{html}}
 </div>
-{% elif "<img" in html %}
-<div class="ui image">
-{{html}}
-</div>
+{% elif json.type == 'photo' %}
+<img class="ui centered segment basic fitted image" src="{{json.url}}" title="{{json.title}}"/>
 {% else %}
-<div class="ui segment basic">
+<div class="ui embed segment {{json.provider_name}} basic">
 {{html}}
 </div>
 {% endif %}

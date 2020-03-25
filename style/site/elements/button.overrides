@@ -6,3 +6,7 @@
   text-transform: uppercase;
   font-family: "Teko";
 }
+
+.ui.button {
+  margin: 0 .25em .25em 0;
+}

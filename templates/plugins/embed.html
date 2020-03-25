@@ -1,3 +1,15 @@
-<div class="ui embed">
+{% if json.provider_name == 'YouTube' or json.provider_name == 'Vimeo' %}
+<div class="ui embed segment">
   {{html}}
 </div>
+{% elif json.provider_name == 'Twitter' %}
+<div class="ui segment stacked">
+{{html}}
+</div>
+{% elif json.type == 'photo' %}
+<img class="ui centered segment basic fitted image" src="{{json.url}}" title="{{json.title}}"/>
+{% else %}
+<div class="ui embed segment {{json.provider_name}} basic">
+{{html}}
+</div>
+{% endif %}

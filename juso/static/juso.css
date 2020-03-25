@@ -9,6 +9,14 @@
   color: #CD1719;
 }
 
+.ui.embed.SoundCloud {
+  padding-bottom: 21.25%;
+}
+
+.ui.embed.muki {
+  padding-bottom: 97px;
+}
+
 @media only screen and (max-width: 700px) {
   #menu .item,
   #menu .menu {

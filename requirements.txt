@@ -9,6 +9,7 @@ django-ajax-selects==1.9.1
 django-ckeditor==5.9.0
 django-classy-tags==1.0.0
 django-content-editor==2.0.0
+django-fontawesome-5==1.0.18
 django-form-admin==0.5.1
 django-imagefield==0.11.3
 django-js-asset==1.2.2

@@ -1,3 +1,21 @@
-<div class="ui embed">
+{% if "youtube.com" in html or "vimeo" in html %}
+<div class="ui embed segment">
   {{html}}
 </div>
+{% elif "soundcloud" in html %}
+<div class="ui soundcloud embed segment">
+  {{html}}
+</div>
+{% elif "twitter" in html %}
+<div class="ui segment stacked">
+{{html}}
+</div>
+{% elif "<img" in html %}
+<div class="ui image">
+{{html}}
+</div>
+{% else %}
+<div class="ui segment basic">
+{{html}}
+</div>
+{% endif %}

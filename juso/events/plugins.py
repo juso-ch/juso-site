@@ -22,10 +22,12 @@ class EventPlugin(TranslationMixin):
 
     @property
     def columns(self):
-        return number_word(min(
-            self.events.count(),
-            self.count,
-        ))
+        if self.events.exists():
+            return number_word(min(
+                self.events.count(),
+                self.count,
+            ))
+        return self.count
 
     namespace = models.ForeignKey(
         NameSpace, models.SET_NULL, related_name="+",

@@ -1,0 +1,23 @@
+<div class="ui {{plugin.columns}} stackable cards">
+  {% for event in events.all %}
+  <div class="card">
+    {% if event.image %}
+    <a class="image" href="{{event.get_absolute_url}}">
+      <img src="{{event.image.url}}" alt="{{event.title}}"/>
+    </a>
+    {% endif %}
+    <div class="content">
+      <a class="header" href="{{event.get_absolute_url}}">
+        {{event.title}}
+      </a>
+      <a class="meta" href="{{event.get_absolute_url}}">
+        {{event.start_date}} - {{event.end_date}}
+      </a>
+      <a class="description">
+      </a>
+    </div>
+    <div class="extra content">
+    </div>
+  </div>
+  {% endfor %}
+</div>

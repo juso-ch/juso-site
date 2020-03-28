@@ -6,6 +6,7 @@ from fomantic_ui import models as fomantic
 from juso.pages import models as pages
 from juso.people import plugins as people_plugins
 from juso.events import plugins as event_plugins
+from juso.blog import plugins as article_plugins
 from juso.plugins import download
 from juso.utils import render_embed
 
@@ -44,6 +45,11 @@ renderer.register_string_renderer(
 renderer.register_string_renderer(
     pages.EventPlugin,
     lambda plugin: event_plugins.render_events(plugin)
+)
+
+renderer.register_string_renderer(
+    pages.ArticlePlugin,
+    lambda plugin: article_plugins.render_articles(plugin)
 )
 
 renderer.register_string_renderer(

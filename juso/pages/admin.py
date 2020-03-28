@@ -11,6 +11,7 @@ from fomantic_ui import models as fomantic
 from juso.pages import models
 from juso.people import plugins as people_plugins
 from juso.events import plugins as event_plugins
+from juso.blog import plugins as blog_plugins
 from juso.plugins import download
 from juso.utils import CopyContentMixin
 
@@ -64,6 +65,7 @@ class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
         fomantic.HeaderInline.create(models.Header),
         people_plugins.TeamPluginInline.create(models.Team),
         event_plugins.EventPluginInline.create(models.EventPlugin),
+        blog_plugins.ArticlePluginInline.create(models.ArticlePlugin),
     ]
 
     plugins = models.plugins

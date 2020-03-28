@@ -14,7 +14,8 @@ from juso.events.models import Event, NameSpace
 
 class EventPlugin(TranslationMixin):
     events = models.ManyToManyField(
-        Event, related_name="+", verbose_name=_("events"), blank=True
+        Event, related_name="+", verbose_name=_("events"), blank=True,
+        related_query_name='+',
     )
 
     count = models.IntegerField(_("count"), default=3)
@@ -28,7 +29,8 @@ class EventPlugin(TranslationMixin):
 
     namespace = models.ForeignKey(
         NameSpace, models.SET_NULL, related_name="+",
-        verbose_name=_("namespace"), blank=True, null=True
+        verbose_name=_("namespace"), blank=True, null=True,
+        related_query_name="+"
     )
 
     template_key = models.CharField(
@@ -38,11 +40,13 @@ class EventPlugin(TranslationMixin):
 
     category = models.ForeignKey(
         Category, models.SET_NULL, related_name="+",
-        verbose_name=_("category"), blank=True, null=True
+        verbose_name=_("category"), blank=True, null=True,
+        related_query_name="+",
     )
 
     sections = models.ManyToManyField(
-        Section, related_name="+", blank=True
+        Section, related_name="+", blank=True,
+        related_query_name='+',
     )
 
     class Meta:

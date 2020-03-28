@@ -2,7 +2,9 @@
 (function($) {
   $(document).on('content-editor:ready', function() {
     var buttons = [
-      ['_anchor', '<i class="fas fa-anchor"></i>'],
+      ['_header', '<i class="fas fa-heading"></i>'],
+      ['_button', '<i class="fas fa-square"></i>'],
+      ['_divider', '<i class="fas fa-horizontal-line"></i>'],
       ['_richtext', '<i class="fas fa-pencil-alt"></i>'],
       ['_image', '<i class="fas fa-image"></i>'],
       ['_file', '<i class="fas fa-file"></i>'],
@@ -15,6 +17,9 @@
       ['_snippet', '<i class="fas fa-cog"></i>'],
       ['_table', '<i class="fas fa-table"></i>'],
       ['_team', '<i class="fas fa-users"></i>'],
+      ['_person', '<i class="fas fa-user"></i>'],
+      ['_events', '<i class="fas fa-calendar-star"></i>'],
+      
     ]
 
     for (var i = 0; i < buttons.length; ++i) {

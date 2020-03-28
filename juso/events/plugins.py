@@ -27,7 +27,7 @@ class EventPlugin(TranslationMixin):
                 self.events.count(),
                 self.count,
             ))
-        return self.count
+        return number_word(self.count)
 
     namespace = models.ForeignKey(
         NameSpace, models.SET_NULL, related_name="+",

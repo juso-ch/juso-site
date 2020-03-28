@@ -5,6 +5,7 @@ from django.template.loader import render_to_string
 from django.utils.translation import gettext as _
 from django.utils import timezone
 
+from juso.utils import number_word
 from juso.models import TranslationMixin
 
 from juso.sections.models import Category, Section
@@ -17,6 +18,13 @@ class EventPlugin(TranslationMixin):
     )
 
     count = models.IntegerField(_("count"), default=3)
+
+    @property
+    def columns(self):
+        return number_word(min(
+            self.events.count(),
+            self.count,
+        ))
 
     namespace = models.ForeignKey(
         NameSpace, models.SET_NULL, related_name="+",
@@ -47,6 +55,22 @@ class EventPluginInline(ContentEditorInline):
         'namespace'
     ]
 
+    fieldsets = (
+        (None, {
+            'fields': (
+                'events',
+                'language_code',
+                'count',
+                'category',
+                'namespace',
+                'sections',
+                'template_key',
+                'ordering',
+                'region'
+            )
+        }),
+    )
+
 
 def get_event_list(plugin):
     if plugin.events.exists():
@@ -68,6 +92,7 @@ def get_event_list(plugin):
 def render_events(plugin, **kwargs):
     return render_to_string(
         plugin.template_key, {
-            'events': get_event_list(plugin)
+            'events': get_event_list(plugin),
+            'plugin': plugin,
         }
     )

@@ -36,7 +36,7 @@ class EventPlugin(TranslationMixin):
     )
 
     template_key = models.CharField(
-        max_length=100, default='events/default.html',
+        max_length=100, default='events/plugins/default.html',
         choices=settings.EVENT_TEMPLATE_CHOICES,
     )
 

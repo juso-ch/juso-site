@@ -168,6 +168,10 @@ EVENT_TEMPLATE_CHOICES = (
     ('events/plugins/default.html', _("default")),
 )
 
+BLOG_TEMPLATE_CHOICES = (
+    ('blog/plugins/default.html', _("default")),
+)
+
 
 LANGUAGES = (
     ("de", _("German")),

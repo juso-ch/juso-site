@@ -10,7 +10,15 @@
 /* This is the single variable that controls them all */
 @emSize   : 18px;
 
+@h1 : 4rem;
+@h2 : 2.514rem;
+@h3 : 1.981rem;
+@h4 : 1.409rem;
+@h5 : 0.990rem;
+@h6 : 0.838rem;
+
 /* The size of page text  */
+
 @fontSize : 18px;
 
 @importGoogleFonts : false;

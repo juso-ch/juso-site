@@ -124,6 +124,7 @@ class Divider(IconBase):
 
     hidden = models.BooleanField(_("hidden"), default=False)
     section = models.BooleanField(_("section"), default=False)
+    header = models.BooleanField(_("header"), default=False)
 
     class Meta:
         abstract = True
@@ -146,6 +147,7 @@ class DividerInline(ContentEditorInline):
             'fields': (
                 'color',
                 'hidden',
+                'header',
                 'section',
             )
         }),

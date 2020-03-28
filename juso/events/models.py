@@ -56,6 +56,12 @@ class Location(MetaMixin, TranslationMixin):
     def address(self):
         return f"{self.street}, {self.zip_code} {self.city}"
 
+    @property
+    def image(self):
+        if LocationImage.objects.filter(parent=self).exists():
+            return LocationImage.objects.filter(parent=self)[0].image
+        return self.meta_image
+
     class Meta:
         verbose_name = _("location")
         verbose_name_plural = _("locations")
@@ -109,6 +115,12 @@ class Event(ContentMixin):
         verbose_name=_("namespace")
     )
 
+    @property
+    def image(self):
+        if Image.objects.filter(parent=self).exists():
+            return Image.objects.filter(parent=self)[0].image
+        return self.meta_image
+
     class Meta:
         verbose_name = _("event")
         verbose_name_plural = _("events")
@@ -116,8 +128,7 @@ class Event(ContentMixin):
 
     def get_absolute_url(self):
         site = current_site()
-        print(site)
-        if self.section == site:
+        if site == self.section.site:
             return reverse_app(
                 [f'{site.id}-events-{self.namespace}-{self.category}',
                  f'{site.id}-events-{self.namespace}',

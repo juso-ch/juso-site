@@ -2,12 +2,13 @@ from content_editor.models import create_plugin_base
 from django.db import models
 from django.utils.translation import gettext as _
 from feincms3 import plugins
-from feincms3.apps import reverse_app
+from feincms3.apps import reverse_app, apps_urlconf
 from feincms3_sites.middleware import current_site, set_current_site
 
 from fomantic_ui import models as fomantic
 from juso.models import TranslationMixin
 from juso.people import plugins as people_plugins
+from juso.events import plugins as event_plugins
 from juso.plugins import download
 from juso.sections.models import ContentMixin, get_template_list
 
@@ -48,6 +49,12 @@ class Article(ContentMixin):
         verbose_name=_("namespace")
     )
 
+    @property
+    def image(self):
+        if Image.objects.filter(parent=self).exists():
+            return Image.objects.filter(parent=self)[0].image
+        return self.meta_image
+
     def get_absolute_url(self):
         site = current_site()
         if site == self.section.site:
@@ -64,11 +71,12 @@ class Article(ContentMixin):
         with set_current_site(self.section.site):
             site = self.section.site
             return '//' + self.section.site.host + reverse_app(
-                (f'{site.id}-blog-{self.namespace}-{self.category}',
+                [f'{site.id}-blog-{self.namespace}-{self.category or ""}',
                  f'{site.id}-blog-{self.namespace}',
-                 f'{site.id}-blog-{self.category}',
-                 f'{site.id}-blog',),
+                 f'{site.id}-blog-{self.category or ""}',
+                 f'{site.id}-blog'],
                 'article-detail',
+                urlconf=apps_urlconf(),
                 kwargs={
                     'slug': self.slug
                 }
@@ -124,6 +132,11 @@ class Team(people_plugins.TeamPlugin, PluginBase):
     pass
 
 
+class EventPlugin(event_plugins.EventPlugin, PluginBase):
+    pass
+
+
 plugins = [
-    RichText, Image, HTML, External, Team, Download, Button, Divider, Header
+    RichText, Image, HTML, External, Team, Download, Button, Divider, Header,
+    EventPlugin,
 ]

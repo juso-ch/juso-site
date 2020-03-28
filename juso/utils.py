@@ -73,3 +73,20 @@ def render_embed(plugin, **kwargs):
         'json': oembed_json(plugin.url),
         'html': mark_safe(oembed_html(plugin.url)),
     })
+
+
+number_words = {
+    1: 'one',
+    2: 'two',
+    3: 'three',
+    4: 'four',
+    5: 'five',
+    6: 'six',
+    7: 'seven'
+}
+
+
+def number_word(number):
+    if number in number_words.keys():
+        return number_words[number]
+    return ''

@@ -11,6 +11,8 @@ from feincms3_sites.models import AbstractPage
 from fomantic_ui import models as fomantic
 from juso.models import TranslationMixin
 from juso.people import plugins as people_plugins
+from juso.events import plugins as event_plugins
+from juso.blog import plugins as article_plugins
 from juso.plugins import download
 from juso.sections.models import get_template_list
 
@@ -190,6 +192,15 @@ class Header(fomantic.Header, PluginBase):
     pass
 
 
+class EventPlugin(event_plugins.EventPlugin, PluginBase):
+    pass
+
+
+class ArticlePlugin(article_plugins.ArticlePlugin, PluginBase):
+    pass
+
+
 plugins = [
-    RichText, Image, HTML, External, Team, Download, Button, Divider, Header
+    RichText, Image, HTML, External, Team, Download, Button, Divider, Header,
+    EventPlugin, ArticlePlugin,
 ]

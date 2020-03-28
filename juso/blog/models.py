@@ -49,6 +49,12 @@ class Article(ContentMixin):
         verbose_name=_("namespace")
     )
 
+    @property
+    def image(self):
+        if Image.objects.filter(parent=self).exists():
+            return Image.objects.filter(parent=self)[0].image
+        return self.meta_image
+
     def get_absolute_url(self):
         site = current_site()
         if site == self.section.site:

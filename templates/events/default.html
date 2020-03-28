@@ -4,12 +4,18 @@
 {% include 'includes/breadcrumbs.html' with obj=event %}
 {% endblock %}
 
-{% block content %}
-<a href="{{event.location.get_absolute_url}}">
-  {{event.location}}
-</a>
-({{event.location.address}})
-{% render_region regions 'main' %}
-
-
+{% block regions %}
+<div class="twelve wide column">
+  <main class="ui basic segment">
+    {% render_region regions 'main' %}
+  </main>
+</div>
+<div class="four wide column">
+  <div class="ui basic segment">
+    <a href="{{event.location.get_absolute_url}}">
+      {{event.location}}
+    </a>
+    ({{event.location.address}})
+  </div>
+</div>
 {% endblock %}

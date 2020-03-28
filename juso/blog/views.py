@@ -86,6 +86,7 @@ def article_detail(request, slug):
         {
             "page": page,
             "article": article,
+            "title": article.title,
             "meta_tags": meta_tags(
                 [article, page] + ancestors,
                 request=request

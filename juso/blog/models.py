@@ -2,7 +2,7 @@ from content_editor.models import create_plugin_base
 from django.db import models
 from django.utils.translation import gettext as _
 from feincms3 import plugins
-from feincms3.apps import reverse_app
+from feincms3.apps import reverse_app, apps_urlconf
 from feincms3_sites.middleware import current_site, set_current_site
 
 from fomantic_ui import models as fomantic
@@ -71,11 +71,12 @@ class Article(ContentMixin):
         with set_current_site(self.section.site):
             site = self.section.site
             return '//' + self.section.site.host + reverse_app(
-                (f'{site.id}-blog-{self.namespace}-{self.category}',
+                [f'{site.id}-blog-{self.namespace}-{self.category or ""}',
                  f'{site.id}-blog-{self.namespace}',
-                 f'{site.id}-blog-{self.category}',
-                 f'{site.id}-blog',),
+                 f'{site.id}-blog-{self.category or ""}',
+                 f'{site.id}-blog'],
                 'article-detail',
+                urlconf=apps_urlconf(),
                 kwargs={
                     'slug': self.slug
                 }

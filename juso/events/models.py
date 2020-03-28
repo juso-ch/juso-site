@@ -128,8 +128,7 @@ class Event(ContentMixin):
 
     def get_absolute_url(self):
         site = current_site()
-        print(site)
-        if self.section == site:
+        if site == self.section.site:
             return reverse_app(
                 [f'{site.id}-events-{self.namespace}-{self.category}',
                  f'{site.id}-events-{self.namespace}',

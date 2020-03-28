@@ -164,6 +164,10 @@ TEAM_TEMPLATE_CHOICES = (
     ('teams/default.html', _("default")),
 )
 
+EVENT_TEMPLATE_CHOICES = (
+    ('events/plugins/default.html', _("default")),
+)
+
 
 LANGUAGES = (
     ("de", _("German")),

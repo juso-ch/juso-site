@@ -15,12 +15,18 @@ def articles_for_page(page, qs=None):
     qs = qs if qs else models.Article.objects.filter(
         language_code=page.language_code
     )
+
     if page.category:
         qs = qs.filter(category=page.category)
+
     if page.blog_namespace:
         qs = qs.filter(namespace=page.blog_namespace)
-    if hasattr(page.site, 'section'):
+
+    if page.sections.exists():
+        qs = qs.filter(section__in=page.sections.all())
+    elif hasattr(page.site, 'section'):
         qs = qs.filter(section=page.site.section)
+
     return qs
 
 

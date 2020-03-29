@@ -1,0 +1,33 @@
+{% extends "content.html" %}
+
+{% block regions %}
+<div class="twelve wide column">
+  {% for category in featured_categories %}
+  <div class="ui vertical segment">
+  <h2 class="ui header">
+    {{category.name}}
+  </h2>
+  <div class="ui stackable grid">
+    <div class="ten wide column">
+  {{category.articles}}
+    </div>
+    <div class="six wide column">
+  {{category.events}}
+    </div>
+  </div>
+  <a href="{{category.get_absolute_url}}">Mehr...</a>
+  </div>
+  {% endfor %}
+  <div class="ui vertical segment">
+  {% for category in all_categories %}
+  <a href="{{category.get_absolute_url}}">
+  {{category}}
+  </a>
+  {% endfor %}
+  </div>
+</div>
+<div class="four wide column">
+  <aside class="ui segment">
+  </aside>
+</div>
+{% endblock %}

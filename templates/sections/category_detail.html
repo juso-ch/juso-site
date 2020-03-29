@@ -1,0 +1,38 @@
+{% extends 'content.html' %}
+
+{% block breadcrumbs %}
+{% include 'includes/breadcrumbs.html' with obj=category %}
+{% endblock %}
+
+{% block regions %}
+<div class="twelve wide column">
+  <div class="ui three stackable cards">
+    {% for article in articles %}
+    <div class="card">
+      {% if article.image %}
+      <a class="image" href="{{article.get_absolute_url}}">
+        <img src="{{article.image.url}}" alt="{{article.title}}"/>
+      </a>
+      {% endif %}
+      <div class="content">
+        <a class="header" href="{{article.get_absolute_url}}">
+          {{article.title}}
+        </a>
+        <a class="meta" href="{{event.get_absolute_url}}">
+          {{article.category|default:""}}
+        </a>
+        <a class="description">
+        </a>
+      </div>
+      <div class="extra content">
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+<div class="four wide column">
+  {% for event in events %}
+  {% endfor %}
+</div>
+
+{% endblock %}

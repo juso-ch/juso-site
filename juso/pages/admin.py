@@ -41,6 +41,8 @@ class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
         'category',
         'redirect_to_page',
         'translations',
+        'featured_categories',
+        'sections',
     ]
 
     search_fields = ['title']
@@ -102,6 +104,8 @@ class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
                 'application',
                 'category',
                 'blog_namespace',
+                'featured_categories',
+                'sections',
             )
         }),
         (_('meta'), {

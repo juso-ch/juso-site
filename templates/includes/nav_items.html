@@ -11,12 +11,22 @@
   <i class="dropdown icon"></i>
 {% endif %}
   <div class="menu">
+    {% if main.application == 'categories' %}
     {% for child in children %}
-    <a class="item {% if page and child.id in page.tree_path %} active primary{% endif %}"
+    <a class="item {% if category and child == category %} active primary{% endif %}"
        href="{{child.get_absolute_url}}">
       {{child.title}}
     </a>
     {% endfor %}
+    
+    {% else %}
+    {% for child in children %}
+    <a class="item {% if page and child.id in page.tree_path and main.application != "categories" %} active primary{% endif %}"
+       href="{{child.get_absolute_url}}">
+      {{child.title}}
+    </a>
+    {% endfor %}
+    {% endif %}
   </div>
 </div>
 {% else %}

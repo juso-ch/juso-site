@@ -9,14 +9,29 @@ from feincms3_sites.models import Site
 from taggit.managers import TaggableManager
 from tree_queries.models import TreeNode
 
+from feincms3.apps import reverse_app, apps_urlconf
+from feincms3_sites.middleware import current_site, set_current_site
+
 from juso.models import TranslationMixin
 
 # Create your models here.
 
 
-class Category(TranslationMixin, TreeNode):
+class Category(TranslationMixin, MetaMixin, TreeNode):
     name = models.CharField(max_length=200, verbose_name=_("name"))
     slug = models.SlugField(verbose_name=_("slug"))
+
+    @property
+    def title(self):
+        return self.name
+
+    def get_absolute_url(self):
+        site = current_site()
+        return reverse_app(
+            (str(site.id) + '-categories',),
+            'category-detail',
+            kwargs={'slug': self.slug}
+        )
 
     def __str__(self):
         return self.name

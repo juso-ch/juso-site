@@ -70,7 +70,17 @@ class Page(
                     ] if x)
                 )
             },
-        )
+        ),
+        (
+            'categories',
+            _('categories'),
+            {
+                "urlconf": "juso.sections.urls",
+                "app_instance_namespace": lambda page: (
+                    str(page.site_id) + '-' + 'categories'
+                )
+            },
+        ),
     ]
 
     MENUS = (
@@ -111,13 +121,18 @@ class Page(
         verbose_name=_("namespace (event)")
     )
 
-    all_events = models.BooleanField(
-        verbose_name=_("all events"), default=False
+    sections = models.ManyToManyField(
+        "sections.Section", verbose_name=_("sections"), blank=True,
     )
 
     category = models.ForeignKey(
         "sections.Category", models.SET_NULL, blank=True, null=True,
         verbose_name=_("category"),
+    )
+
+    featured_categories = models.ManyToManyField(
+        "sections.Category", blank=True, verbose_name=_("featured categories"),
+        related_name="featured"
     )
 
     @transaction.atomic

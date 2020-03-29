@@ -1,14 +1,39 @@
 {% extends 'events/base.html' %}
 {% load tools %}
 
-{% block content %}
-<script>
-  window.location_list = {{location_list|jsonify}};
-  window.event_list = {{event_list|jsonify}};
-</script>
-<ul>
-{% for event in event_list %}
-<li><a href="{{event.get_absolute_url}}">{{event}}</a></li>
-{% endfor %}
-</ul>
+{% block regions %}
+<div class="twelve wide column">
+  <script>
+    window.location_list = {{location_list|jsonify}};
+window.event_list = {{event_list|jsonify}};
+  </script>
+  <div class="ui three stackable cards">
+    {% for event in event_list %}
+    <div class="card">
+      {% if event.image %}
+      <a class="image" href="{{event.get_absolute_url}}">
+        <img src="{{event.image.url}}" alt="{{event.title}}"/>
+      </a>
+      {% endif %}
+      <div class="content">
+        <a class="header" href="{{event.get_absolute_url}}">
+          {{event.title}}
+        </a>
+        <a class="meta" href="{{event.get_absolute_url}}">
+          {{event.start_date}} - {{event.end_date}}
+        </a>
+        <a class="description">
+        </a>
+      </div>
+      <div class="extra content">
+        <a href="{{event.location.get_absolute_url}}">
+        {{event.location}}
+        </a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+<div class="four wide column">
+</div>
 {% endblock %}

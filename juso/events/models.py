@@ -53,6 +53,10 @@ class Location(MetaMixin, TranslationMixin):
         return self.name
 
     @property
+    def title(self):
+        return self.name
+
+    @property
     def address(self):
         return f"{self.street}, {self.zip_code} {self.city}"
 

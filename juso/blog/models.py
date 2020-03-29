@@ -34,10 +34,10 @@ class Article(ContentMixin):
             'default', ('main',)
         ),
         (
-            'sidebar-right', ('main', 'side')
+            'sidebar-right', ('main', 'sidebar')
         ),
         (
-            'sidebar-left', ('main', 'side')
+            'sidebar-left', ('main', 'sidebar')
         ),
         (
             'fullwidth', ('main',)

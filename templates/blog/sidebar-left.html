@@ -1,7 +1,15 @@
-{% extends 'blog/base.html' %}
+{% extends 'blog/default.html' %}
 {% load feincms3 %}
 
-{% block content %}
-<h1><a href="{{article.get_absolute_url}}">{{article.title}}</a></h1>
-{% render_region regions 'main' %}
+{% block regions %}
+<div class="four wide column">
+  <aside class="ui basic segment">
+    {% render_region regions 'sidebar' %}
+  </aside>
+</div>
+<div class="twelve wide column">
+  <main class="ui basic segment">
+    {% render_region regions 'main' %}
+  </main>
+</div>
 {% endblock %}

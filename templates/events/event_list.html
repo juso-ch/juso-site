@@ -26,6 +26,9 @@ window.event_list = {{event_list|jsonify}};
         </a>
       </div>
       <div class="extra content">
+        <a href="{{event.location.get_absolute_url}}">
+        {{event.location}}
+        </a>
       </div>
     </div>
     {% endfor %}

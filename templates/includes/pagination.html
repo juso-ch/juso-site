@@ -1,0 +1,26 @@
+<div class="ui basic segment">
+  <div class="ui icon buttons pagination">
+    <a class="ui {% if not page.has_previous %} disabled {% endif %}button " href="?page=1">
+      <i class="angle double left icon"></i>
+    </a>
+    {% if page.previous_page_number > 1 %}
+    <a class="ui button" href="?page={{ page.previous_page_number }}">
+      <i class="angle left icon"></i>
+    </a>
+    {% endif %}
+    {% for number in page.paginator.page_range %}
+    <a class="ui {% if number == page.number %} disabled{% endif %} button" href="?page={{number}}">
+      {{number}}
+    </a>
+    {% endfor %}
+    {% if page.next_page_number < page.paginator.num_pages %}
+    <a class="ui button" href="?page={{ page.next_page_number }}">
+      <i class="angle right icon"></i>
+    </a>
+    {% endif %}
+
+    <a class="ui {% if not page.has_next %} disabled {% endif %} button" href="?page={{ page.paginator.num_pages }}">
+      <i class="angle double right icon"></i>
+    </a>
+  </div>
+</div>

@@ -3,7 +3,7 @@
 
 {% block regions %}
 <div class="twelve wide column">
-  <main class="ui {{plugin.columns}} stackable cards">
+  <main class="ui three stackable cards">
     {% for article in article_list %}
     <div class="card">
       {% if article.image %}
@@ -26,6 +26,7 @@
     </div>
     {% endfor %}
   </main>
+  {% include 'includes/pagination.html' with page=article_list%}
 </div>
 <div class="four wide column">
   <aside class="ui segment basic">

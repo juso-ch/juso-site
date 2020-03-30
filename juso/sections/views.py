@@ -42,7 +42,6 @@ def category_list(request):
             "meta_tags": meta_tags([page] + ancestors, request=request),
             'regions': Regions.from_item(
                 page, renderer=pages.renderer.renderer, timeout=60,
-                inherit_from=ancestors
             )
         },
         paginate_by=10,

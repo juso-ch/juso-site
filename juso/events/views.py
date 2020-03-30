@@ -95,7 +95,7 @@ def event_list(request):
                 inherit_from=ancestors
             )
         },
-        paginate_by=20,
+        paginate_by=12,
     )
 
 

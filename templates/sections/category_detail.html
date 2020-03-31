@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block regions %}
-<div class="sixteen wide column">
+<div class="twelve wide column">
   <div class="ui two stackable cards">
     {% for article in articles %}
     <div class="card">
@@ -29,9 +29,43 @@
     </div>
     {% endfor %}
   </div>
+  {% include 'includes/pagination.html' with page=articles %}
+
 </div>
 <div class="four wide column">
-  {% for event in events %}
+  {% regroup events by start_date|date:"E Y" as month_list %}
+  {% for month in month_list %}
+  <div class="ui basic segment">
+    <h3 class="ui dividing header">{{month.grouper}}</h3>
+    <div class="ui divided items">
+      {% for event in month.list %}
+      <div class="item">
+        <div class="content">
+          <a class="ui tiny header" href="{{event.get_absolute_url}}">
+            {{event.title}}
+          </a>
+          <div class="description">
+            <a href="{{event.get_absolute_url}}">
+              <time datetime="{{event.start_date|date:"c"}}">
+              {{event.start_date|date:"d.m. H:i"}}
+              </time>-
+              <time datetime="{{event.end_date|date:"c"}}">
+              {% if event.end_date == event.start_date %}
+              {{event.end_date|date:"H:i"}}
+              {% else %}
+              {{event.end_date|date:"d.m. H:i" }}
+              {% endif %}
+              </time>
+            </a><br/>
+            <a href="{{event.location.get_absolute_url}}">
+              @{{event.location}}
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
   {% endfor %}
 </div>
 

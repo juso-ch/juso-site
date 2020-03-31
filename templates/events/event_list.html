@@ -8,38 +8,46 @@
       {% regroup event_list by start_date|date:"E Y" as month_list %}
 
       <div class="sixteen wide column">
-      {% for month in month_list %}
+        {% for month in month_list %}
         <div class="ui basic segment">
-        <h2 class="ui dividing header">{{month.grouper}}</h2>
-        <div class="ui two horizontal stackable cards">
-          {% for event in month.list %}
-          <div class="card">
-            {% if event.image %}
-            <a class="image" href="{{event.get_absolute_url}}">
-              <img src="{{event.image.url}}" alt="{{event.title}}"/>
-            </a>
-            {% endif %}
-            <div class="content">
-              <a class="header" href="{{event.get_absolute_url}}">
-                {{event.title}}
+          <h2 class="ui dividing header">{{month.grouper}}</h2>
+          <div class="ui divided items">
+            {% for event in month.list %}
+            <div class="item">
+              {% if event.image %}
+              <a class="ui small image" href="{{event.get_absolute_url}}">
+                <img src="{{event.image.url}}" alt="{{event.title}}"/>
               </a>
-              <a class="meta" href="{{event.get_absolute_url}}">
-                {{event.start_date}} - {{event.end_date}}
-              </a>
-              <a class="description">
-              </a>
+              {% endif %}
+              <div class="content">
+                <div class="header"><a href="{{event.get_absolute_url}}">
+                  {{event.title}}
+                  </a>
+                </div>
+                <div class="meta"><a href="{{event.get_absolute_url}}">
+              <time datetime="{{event.start_date|date:"c"}}">
+              {{event.start_date|date:"d.m. H:i"}}
+              </time>-<time datetime="{{event.end_date|date:"c"}}">
+              {% if event.end_date == event.start_date %}
+              {{event.end_date|date:"H:i"}}
+              {% else %}
+              {{event.end_date|date:"d.m. H:i" }}
+              {% endif %}
+              </time>
+                  </a>
+                </div>
+                <div class="description">
+                  <a href="{{event.location.get_absolute_url}}">
+                    {{event.location}}
+                  </a>
+                </div>
+              </div>
             </div>
-            <div class="extra content">
-              <a href="{{event.location.get_absolute_url}}">
-                {{event.location}}
-              </a>
-            </div>
+            {% endfor %}
           </div>
-          {% endfor %}
         </div>
-      </div>
-      {% endfor %}
-  {% include 'includes/pagination.html' with page=event_list%}
+        {% endfor %}
+        {% include 'includes/pagination.html' with page=event_list%}
       </div>
     </div>
   </div>

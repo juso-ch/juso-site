@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404, render
+from django.core.paginator import Paginator
 from django.db.models import Q
 
 from feincms3.apps import page_for_app_request
@@ -22,7 +23,7 @@ def category_list(request):
 
     categories = Category.objects.filter(
         Q(event__in=events) | Q(article__in=articles)
-    ).exclude(pk__in=page.featured_categories.all())
+    ).exclude(pk__in=page.featured_categories.all()).distinct()
 
     featured_categories = page.featured_categories.all()
 
@@ -58,6 +59,9 @@ def category_detail(request, slug):
 
     events = event_list_for_page(page).filter(category=category)
     articles = articles_for_page(page).filter(category=category)
+
+    page_number = request.GET.get('page', 1)
+    articles = Paginator(articles, per_page=6).get_page(page_number)
 
     ancestors = list(page.ancestors().reverse())
 

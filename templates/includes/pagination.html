@@ -1,3 +1,4 @@
+{% if page.has_other_pages %}
 <div class="ui basic segment">
   <div class="ui icon buttons pagination">
     <a class="ui {% if not page.has_previous %} disabled {% endif %}button " href="?page=1">
@@ -24,3 +25,4 @@
     </a>
   </div>
 </div>
+{% endif %}

@@ -15,6 +15,10 @@ class DynamicForm(forms.Form):
             self.fields[field.slug] = get_field_instance(
                 field, request
             )
+        if self.request and not self.request.POST:
+            for field in form.forms.formfield_set.all():
+                if value:=self.request.get(field.slug, ''):
+                    self.fields[field.slug].initial = value
 
 
 class HiddenField(forms.Field):

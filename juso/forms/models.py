@@ -69,6 +69,14 @@ class FormField(PluginBase):
     choices = models.TextField(_("choices"), blank=True)
     initial = models.TextField(_("initial"), max_length=240, blank=True)
 
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = _("form field")
+        verbose_name_plural = _("form fields")
+        ordering = ['ordering']
+
 
 class FormEntry(models.Model):
     form = models.ForeignKey(Form, models.CASCADE)
@@ -76,8 +84,22 @@ class FormEntry(models.Model):
     created = models.DateTimeField(_("created"), auto_now_add=True)
     ip = models.GenericIPAddressField(_("ip address"), blank=True, null=True)
 
+    def __str__(self):
+        return self.form.name
+
+    class Meta:
+        verbose_name = _("form entry")
+        verbose_name_plural = _("form entries")
+
 
 class FormEntryValue(models.Model):
     form_entry = models.ForeignKey(FormEntry, models.CASCADE)
     field = models.ForeignKey(FormField, models.CASCADE)
     value = models.TextField(_("value"), blank=True)
+
+    def __str__(self):
+        return f"{self.field.name}: {self.value}"
+
+    class Meta:
+        verbose_name = _("form entry value")
+        verbose_name_plural = _("form entry values")

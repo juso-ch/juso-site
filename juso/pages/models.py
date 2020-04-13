@@ -15,6 +15,7 @@ from juso.events import plugins as event_plugins
 from juso.blog import plugins as article_plugins
 from juso.plugins import download
 from juso.sections.models import get_template_list
+from juso.forms import plugins as form_plugins
 
 # Create your models here.
 
@@ -215,7 +216,11 @@ class ArticlePlugin(article_plugins.ArticlePlugin, PluginBase):
     pass
 
 
+class FormPlugin(form_plugins.FormPlugin, PluginBase):
+    pass
+
+
 plugins = [
     RichText, Image, HTML, External, Team, Download, Button, Divider, Header,
-    EventPlugin, ArticlePlugin,
+    EventPlugin, ArticlePlugin, FormPlugin
 ]

@@ -21,7 +21,7 @@ class FormFieldInline(ContentEditorInline):
         (_("advanced"), {
             'classes': ('collapse',),
             'fields': (
-                'chesoices',
+                'choices',
                 'initial',
                 'help_text',
             )

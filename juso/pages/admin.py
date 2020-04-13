@@ -12,6 +12,7 @@ from juso.pages import models
 from juso.people import plugins as people_plugins
 from juso.events import plugins as event_plugins
 from juso.blog import plugins as blog_plugins
+from juso.forms import plugins as form_plugins
 from juso.plugins import download
 from juso.utils import CopyContentMixin
 
@@ -68,6 +69,7 @@ class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
         people_plugins.TeamPluginInline.create(models.Team),
         event_plugins.EventPluginInline.create(models.EventPlugin),
         blog_plugins.ArticlePluginInline.create(models.ArticlePlugin),
+        form_plugins.FormPluginInline.create(models.FormPlugin),
     ]
 
     plugins = models.plugins

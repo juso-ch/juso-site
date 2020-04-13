@@ -1,5 +1,22 @@
 [
 {
+    "model": "auth.user",
+    "fields": {
+        "password": "pbkdf2_sha256$180000$9urK1E7amKvT$VhLpy7skWhAF+0N1hJP7oivivVjPnEVshHaFrdXqNws=",
+        "last_login": "2020-04-13T13:59:09.472Z",
+        "is_superuser": true,
+        "username": "admin",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2020-04-13T13:59:04.804Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
     "model": "feincms3_sites.site",
     "pk": 1,
     "fields": {
@@ -9,6 +26,21 @@
         "is_managed_re": true,
         "host_re": "^127\\.0\\.0\\.1:8000$",
         "default_language": ""
+    }
+},
+{
+    "model": "sections.section",
+    "pk": 1,
+    "fields": {
+        "parent": null,
+        "name": "JUSO Schweiz",
+        "site": 1,
+        "slug": "juso-schweiz",
+        "users": [
+            [
+                "admin"
+            ]
+        ]
     }
 }
 ]

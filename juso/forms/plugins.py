@@ -21,8 +21,17 @@ class FormPluginInline(ContentEditorInline):
 def render_form(form_plugin, request=None):
     form = form_plugin.form.get_instance(request)
 
-    return render_to_string(
-        'forms/form.html', {
-            'form': form
-        }
-    )
+    form_html = render_to_string('forms/form.html', {
+        'form': form
+    })
+
+    script = render_to_string('forms/script.html', {
+        'form': form
+    })
+
+    return f"""
+<div class="form-wrapper" id="form-wrapper-{form_plugin.id}">
+{form_html}
+</div>
+{script}
+"""

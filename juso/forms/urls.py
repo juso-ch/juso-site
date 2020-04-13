@@ -5,5 +5,5 @@ from juso.forms import views
 app_name = "forms"
 
 urlpatterns = [
-    path('<pk:pk>/', views.form_detail, name="form-detail"),
+    path('<int:pk>/', views.form_view, name="form-detail"),
 ]

@@ -5,10 +5,14 @@ from django.utils.translation import gettext_lazy as _
 
 from feincms3 import plugins
 from feincms3.mixins import TemplateMixin
+from feincms3.apps import apps_urlconf, reverse_app
+from feincms3_sites.middleware import current_site, set_current_site
+from feincms3.cleanse import CleansedRichTextField
 
 # Create your models here.
 from juso.sections.models import get_template_list, ContentMixin
 from juso.forms.forms import get_form_instance
+from juso.utils import number_word
 
 INPUT_TYPES = (
     ('text', _("text")),
@@ -36,8 +40,11 @@ class Form(ContentMixin):
     ))
 
     submit = models.CharField(max_length=200)
-    success_message = models.TextField(_("success message"), blank=True)
+    success_message = CleansedRichTextField(_("success message"), blank=True)
     success_redirect = models.URLField(_("success redirect"), blank=True)
+
+    email = models.EmailField(_("e-mail"), blank=True)
+    webhook = models.URLField(_("webhook"), max_length=1200, blank=True)
 
     def get_instance(self, request):
         return get_form_instance(self, request)
@@ -47,6 +54,16 @@ class Form(ContentMixin):
         verbose_name_plural = _("forms")
         ordering = ['title']
 
+    def get_absolute_url(self):
+        site = current_site()
+        return reverse_app(
+            [f'{site.pk}-forms'],
+            'form-detail',
+            kwargs = {
+                'pk': self.pk
+            }
+        )
+
 
 PluginBase = create_plugin_base(Form)
 
@@ -55,6 +72,10 @@ class RichText(plugins.richtext.RichText, PluginBase):
     class Meta:
         verbose_name = _("rich text")
         verbose_name = _("rich text")
+
+
+SIZES = ((number_word(i), _(number_word(i))) for i in range(1, 17))
+
 
 
 class FormField(PluginBase):
@@ -68,6 +89,7 @@ class FormField(PluginBase):
     help_text = models.CharField(_("help text"), max_length=240, blank=True)
     choices = models.TextField(_("choices"), blank=True)
     initial = models.TextField(_("initial"), max_length=240, blank=True)
+    size = models.TextField(_("size"), default="eighteen", choices=SIZES)
 
     def __str__(self):
         return self.name
@@ -85,7 +107,7 @@ class FormEntry(models.Model):
     ip = models.GenericIPAddressField(_("ip address"), blank=True, null=True)
 
     def __str__(self):
-        return self.form.name
+        return f"{self.form.title}: {self.created}"
 
     class Meta:
         verbose_name = _("form entry")
@@ -93,7 +115,10 @@ class FormEntry(models.Model):
 
 
 class FormEntryValue(models.Model):
-    form_entry = models.ForeignKey(FormEntry, models.CASCADE)
+    form_entry = models.ForeignKey(
+        FormEntry, models.CASCADE,
+        related_name="fields", verbose_name=_("fields")
+    )
     field = models.ForeignKey(FormField, models.CASCADE)
     value = models.TextField(_("value"), blank=True)
 

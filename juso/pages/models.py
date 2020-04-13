@@ -82,6 +82,14 @@ class Page(
                 )
             },
         ),
+    (
+        'forms',
+        _("forms"),
+        {
+            'urlconf': "juso.forms.urls",
+            'app_instance_namespace': lambda page: str(page.site_id) + '-' + 'forms'
+        }
+    ),
     ]
 
     MENUS = (

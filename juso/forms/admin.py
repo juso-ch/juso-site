@@ -21,6 +21,7 @@ class FormFieldInline(ContentEditorInline):
         (_("advanced"), {
             'classes': ('collapse',),
             'fields': (
+                'size',
                 'choices',
                 'initial',
                 'help_text',
@@ -77,6 +78,8 @@ class FormAdmin(ContentEditor, CopyContentMixin):
                 'submit',
                 'success_message',
                 'success_redirect',
+                'webhook',
+                'email',
             )
         }),
         (_('meta'), {

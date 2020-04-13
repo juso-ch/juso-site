@@ -1,28 +1,29 @@
 from __future__ import annotations
 
 from django import forms
+from django.forms import widgets
 from juso.forms import models
 
 
 class DynamicForm(forms.Form):
 
     def __init__(self, *args, form: models.Form, request, **kwargs):
-        super().__init__(*args, **kwargs)
         self.form = form
         self.request = request
+        super().__init__(*args, **kwargs)
 
-        for field in form.forms_formfield_set.all():
+        for field in self.form.forms_formfield_set.all():
             self.fields[field.slug] = get_field_instance(
                 field, request
             )
-        if self.request and not self.request.POST:
-            for field in form.forms.formfield_set.all():
-                if value:=self.request.get(field.slug, ''):
-                    self.fields[field.slug].initial = value
 
 
 class HiddenField(forms.Field):
     widget = forms.HiddenInput
+
+
+class CustomChoiceField(forms.ChoiceField):
+    widget = widgets.ChoiceWidget
 
 
 def get_form_instance(form: models.Form, request=None):
@@ -30,16 +31,18 @@ def get_form_instance(form: models.Form, request=None):
     Returns a `forms.Form` instance  with the fields
     defined by the `models.Form` instance.
     """
-    form = DynamicForm(request=request, form=form)
+    dynamic_form = DynamicForm(request=request, form=form)
 
     if request and request.POST:
-        form = DynamicForm(
+        dynamic_form = DynamicForm(
             request=request,
             form=form,
             data=request.POST
         )
+    for field in dynamic_form:
+        print(field.__dict__)
 
-    return form
+    return dynamic_form
 
 
 def get_field_instance(field, request):
@@ -53,7 +56,7 @@ def get_field_instance(field, request):
         instance = cls(
             required=field.required,
             help_text=field.help_text,
-            choices=field.choices.split('\n'),
+            choices=((l.strip(), l.strip()) for l in field.choices.split('\n')),
             initial=field.initial,
         )
     else:
@@ -62,9 +65,7 @@ def get_field_instance(field, request):
             help_text=field.help_text,
             initial=field.initial,
         )
-
-    if request and field.slug in request.GET:
-        instance.initial = request.GET.get(field.slug)
+    instance.size = field.size
 
     return instance
 

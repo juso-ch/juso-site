@@ -2,6 +2,7 @@ from django.shortcuts import (get_list_or_404, get_object_or_404, redirect,
                               render)
 from feincms3.regions import Regions
 from feincms3_meta.utils import meta_tags
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 from juso.pages.models import Page
 from juso.pages.renderer import renderer
@@ -23,7 +24,7 @@ def get_landing_page(request):
         is_landing_page=True,
     )[0]
 
-
+@ensure_csrf_cookie
 def page_detail(request, path=None):
     if path is None and not Page.objects.active().filter(path='/').exists():
         return redirect(get_landing_page(request).path)

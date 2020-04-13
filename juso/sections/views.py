@@ -1,17 +1,15 @@
-from django.shortcuts import get_object_or_404, render
 from django.core.paginator import Paginator
 from django.db.models import Q
-
+from django.shortcuts import get_object_or_404, render
 from feincms3.apps import page_for_app_request
 from feincms3.regions import Regions
 from feincms3.shortcuts import render_list
 from feincms3_meta.utils import meta_tags
 
-from juso.sections.models import Category
 from juso import pages
-
-from juso.events.views import event_list_for_page
 from juso.blog.views import articles_for_page
+from juso.events.views import event_list_for_page
+from juso.sections.models import Category
 
 
 def category_list(request):

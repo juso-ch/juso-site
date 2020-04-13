@@ -1,17 +1,15 @@
 from content_editor.models import create_plugin_base
-
 from django.db import models, transaction
 from django.utils.translation import gettext_lazy as _
-
 from feincms3 import plugins
-from feincms3.mixins import TemplateMixin
 from feincms3.apps import apps_urlconf, reverse_app
-from feincms3_sites.middleware import current_site, set_current_site
 from feincms3.cleanse import CleansedRichTextField
+from feincms3.mixins import TemplateMixin
+from feincms3_sites.middleware import current_site, set_current_site
 
-# Create your models here.
-from juso.sections.models import get_template_list, ContentMixin
 from juso.forms.forms import get_form_instance
+# Create your models here.
+from juso.sections.models import ContentMixin, get_template_list
 from juso.utils import number_word
 
 INPUT_TYPES = (

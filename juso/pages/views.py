@@ -1,8 +1,8 @@
 from django.shortcuts import (get_list_or_404, get_object_or_404, redirect,
                               render)
+from django.views.decorators.csrf import ensure_csrf_cookie
 from feincms3.regions import Regions
 from feincms3_meta.utils import meta_tags
-from django.views.decorators.csrf import ensure_csrf_cookie
 
 from juso.pages.models import Page
 from juso.pages.renderer import renderer

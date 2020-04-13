@@ -8,11 +8,11 @@ from feincms3_sites.models import Site
 from js_asset import JS
 
 from fomantic_ui import models as fomantic
+from juso.blog import plugins as blog_plugins
+from juso.events import plugins as event_plugins
+from juso.forms import plugins as form_plugins
 from juso.pages import models
 from juso.people import plugins as people_plugins
-from juso.events import plugins as event_plugins
-from juso.blog import plugins as blog_plugins
-from juso.forms import plugins as form_plugins
 from juso.plugins import download
 from juso.utils import CopyContentMixin
 

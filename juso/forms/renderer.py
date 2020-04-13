@@ -1,9 +1,8 @@
+from django.template.loader import render_to_string
 from feincms3 import plugins
 from feincms3.renderer import TemplatePluginRenderer
 
-from django.template.loader import render_to_string
 from juso.forms import models
-
 
 renderer = TemplatePluginRenderer()
 

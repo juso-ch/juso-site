@@ -1,5 +1,12 @@
 # juso-site
 
+## Docker
+
+```
+docker-compose build
+docker-compose up
+```
+
 Installation
 
 ```

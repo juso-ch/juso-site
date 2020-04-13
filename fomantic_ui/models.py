@@ -28,7 +28,7 @@ class ColorField(models.CharField):
         kwargs['choices'] = self.choices
         kwargs['blank'] = True
 
-        super(models.CharField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
 
 class SizeField(models.CharField):
@@ -48,7 +48,7 @@ class SizeField(models.CharField):
         kwargs['choices'] = self.choices
         kwargs['blank'] = True
 
-        super(models.CharField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
 
 class SemanticBase(models.Model):

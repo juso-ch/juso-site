@@ -134,3 +134,6 @@ node_modules/
 
 .env.prod
 first_run.lock
+
+.vim
+

@@ -23,6 +23,14 @@
 
     {% render_block 'css' %}
 
+    {% addtoblock 'js' %}
+    <script src="{% static 'forms/js.cookie.min.js' %}"></script>
+    {% endaddtoblock %}
+
+    {% addtoblock 'js' %}
+    <script src="{% static 'forms/forms.js' %}"></script>
+    {% endaddtoblock %}
+
   </head>
   <body>
 

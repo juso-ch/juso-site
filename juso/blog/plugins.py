@@ -4,11 +4,10 @@ from django.db import models
 from django.template.loader import render_to_string
 from django.utils.translation import gettext as _
 
-from juso.utils import number_word
-from juso.models import TranslationMixin
-
-from juso.sections.models import Category, Section
 from juso.blog.models import Article, NameSpace
+from juso.models import TranslationMixin
+from juso.sections.models import Category, Section
+from juso.utils import number_word
 
 
 class ArticlePlugin(TranslationMixin):

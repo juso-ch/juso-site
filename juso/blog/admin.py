@@ -7,8 +7,8 @@ from js_asset import JS
 from fomantic_ui import models as fomantic
 from juso.blog import models
 from juso.blog.models import Article, NameSpace
-from juso.people import plugins as people_plugins
 from juso.events import plugins as event_plugins
+from juso.people import plugins as people_plugins
 from juso.plugins import download
 from juso.utils import CopyContentMixin
 

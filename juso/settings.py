@@ -141,7 +141,7 @@ STATICFILES_DIRS = [
     "node_modules/jquery/dist/",
 ]
 
-STATIC_ROOT = 'static'
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = '/static/'
 
 # Configure django-ckeditor
@@ -181,7 +181,7 @@ LANGUAGES = (
 )
 LANGUAGE_CODE = 'de'
 
-MEDIA_ROOT = 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 AUTHENTICATION_BACKENDS = [
@@ -206,6 +206,23 @@ SU_LOGIN_CALLBACK = "juso.settings.superuser_callback"
 NOMINATIM_USER_AGENT = 'juso-site'
 
 FONTAWESOME_5_ICON_CLASS = 'semantic_ui'
+
+SECRET_KEY = os.environ.get("SECRET_KEY", 'changeme')
+
+DEBUG = int(os.environ.get("DEBUG", default=0))
+
+ALLOWED_HOSTS = ['*']
+
+DATABASES = {
+    "default": {
+        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": os.environ.get("POSTGRES_DB", os.path.join(BASE_DIR, "db.sqlite3")),
+        "USER": os.environ.get("POSTGRES_USER", "user"),
+        "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "password"),
+        "HOST": os.environ.get("SQL_HOST", "localhost"),
+        "PORT": os.environ.get("SQL_PORT", "5432"),
+    }
+}
 
 try:
     from juso.local_settings import *

@@ -1,0 +1,32 @@
+<form class="ui form {% if form.errors %}error{% endif %}" action="{{form.form.get_absolute_url}}" id="form-{{form.form.id}}">
+  {% if form.non_field_errors %}
+  <div class="ui error message">
+    <ul class="list">
+      {{form.non_field_errors}}
+    </ul>
+  </div>
+  {% endif %}
+  <div class="ui grid fields">
+  {% for field in form %}
+  {% if field.is_hidden %}
+  {{field}}
+  {% else %}
+  <div class="field {{field.field.size}} wide {% if field.errors %}error{% endif %}">
+    <label>
+      {{field.label}}
+    </label>
+    {{field}}
+      <small>{{field.help_text}}</small>
+    {% if field.errors %}
+    <div class="ui error message">
+      {{field.errors}}
+    </div>
+    {% endif %}
+  </div>
+  {% endif %}
+  {% endfor %}
+  </div>
+  <button id="submit_{{form.form.id}}" type="submit" class="ui submit button">
+    {{form.form.submit}}
+  </button>
+</form>

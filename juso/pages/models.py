@@ -9,10 +9,11 @@ from feincms3_sites.middleware import current_site, set_current_site
 from feincms3_sites.models import AbstractPage
 
 from fomantic_ui import models as fomantic
+from juso.blog import plugins as article_plugins
+from juso.events import plugins as event_plugins
+from juso.forms import plugins as form_plugins
 from juso.models import TranslationMixin
 from juso.people import plugins as people_plugins
-from juso.events import plugins as event_plugins
-from juso.blog import plugins as article_plugins
 from juso.plugins import download
 from juso.sections.models import get_template_list
 
@@ -81,6 +82,14 @@ class Page(
                 )
             },
         ),
+    (
+        'forms',
+        _("forms"),
+        {
+            'urlconf': "juso.forms.urls",
+            'app_instance_namespace': lambda page: str(page.site_id) + '-' + 'forms'
+        }
+    ),
     ]
 
     MENUS = (
@@ -215,7 +224,11 @@ class ArticlePlugin(article_plugins.ArticlePlugin, PluginBase):
     pass
 
 
+class FormPlugin(form_plugins.FormPlugin, PluginBase):
+    pass
+
+
 plugins = [
     RichText, Image, HTML, External, Team, Download, Button, Divider, Header,
-    EventPlugin, ArticlePlugin,
+    EventPlugin, ArticlePlugin, FormPlugin
 ]

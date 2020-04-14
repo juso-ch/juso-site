@@ -3,8 +3,8 @@ from feincms3.renderer import TemplatePluginRenderer
 
 from fomantic_ui import models as fomantic
 from juso.blog import models as blog
-from juso.people import plugins as people_plugins
 from juso.events import plugins as event_plugins
+from juso.people import plugins as people_plugins
 from juso.plugins import download
 from juso.utils import render_embed
 

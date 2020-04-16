@@ -50,7 +50,11 @@ class Entry(TranslationMixin):
 
 
 class GlossaryContent(RichText):
-    entries = models.ManyToManyField(Entry, verbose_name=_("entries"))
+    entries = models.ManyToManyField(
+        Entry, verbose_name=_("entries"),
+        related_name="%(app_label)s_%(class)s_related",
+        related_query_name="%(app_label)s_%(class)ss",
+    )
     glossary_text = models.TextField(blank=True)
 
     class Meta:

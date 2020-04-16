@@ -11,7 +11,7 @@
   {% if field.is_hidden %}
   {{field}}
   {% else %}
-  <div class="field {{field.field.size}} wide {% if field.errors %}error{% endif %}">
+  <div class="field {{field.field.size}} wide {% if field.errors %}error{% endif %} {% if field.field.required %} required{% endif %}">
     <label>
       {{field.label}}
     </label>

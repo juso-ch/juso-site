@@ -19,6 +19,11 @@ renderer.register_string_renderer(
 )
 
 renderer.register_string_renderer(
+    pages.GlossaryRichText,
+    lambda plugin: mark_safe(plugin.glossary_text)
+)
+
+renderer.register_string_renderer(
     pages.HTML,
     lambda plugin: plugins.html.render_html(plugin)
 )

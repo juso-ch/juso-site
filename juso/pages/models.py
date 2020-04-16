@@ -15,6 +15,7 @@ from juso.forms import plugins as form_plugins
 from juso.models import TranslationMixin
 from juso.people import plugins as people_plugins
 from juso.plugins import download
+from juso.glossary.models import GlossaryContent
 from juso.sections.models import get_template_list
 
 # Create your models here.
@@ -88,6 +89,14 @@ class Page(
         {
             'urlconf': "juso.forms.urls",
             'app_instance_namespace': lambda page: str(page.site_id) + '-' + 'forms'
+        }
+    ),
+    (
+        'glossary',
+        _("glossary"),
+        {
+            'urlconf': "juso.glossary.urls",
+            'app_instance_namespace': lambda page: str(page.site_id) + '-' + 'glossary'
         }
     ),
     ]
@@ -172,13 +181,16 @@ PluginBase = create_plugin_base(Page)
 class External(plugins.external.External, PluginBase):
     class Meta:
         verbose_name = _("external")
-        verbose_name = _("external")
 
 
 class RichText(plugins.richtext.RichText, PluginBase):
     class Meta:
         verbose_name = _("rich text")
-        verbose_name = _("rich text")
+
+
+class GlossaryRichText(GlossaryContent, PluginBase):
+    class Meta:
+        verbose_name = _("glossary text")
 
 
 class Image(plugins.image.Image, PluginBase):
@@ -230,5 +242,5 @@ class FormPlugin(form_plugins.FormPlugin, PluginBase):
 
 plugins = [
     RichText, Image, HTML, External, Team, Download, Button, Divider, Header,
-    EventPlugin, ArticlePlugin, FormPlugin
+    EventPlugin, ArticlePlugin, FormPlugin, GlossaryRichText,
 ]

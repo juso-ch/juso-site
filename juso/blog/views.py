@@ -1,3 +1,5 @@
+from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
+
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, render
 from feincms3.apps import page_for_app_request
@@ -7,6 +9,7 @@ from feincms3_meta.utils import meta_tags
 
 from juso import pages
 from juso.blog import models
+from juso.search import consume
 from juso.blog.renderer import renderer
 
 # Create your views here.
@@ -35,10 +38,23 @@ def article_list(request):
     page = page_for_app_request(request)
     page.activate_language(request)
 
+    article_list = articles_for_page(page)
+
+    if request.GET.get('q', ''):
+        vector = SearchVector('title', weight='A')\
+                + SearchVector('category', weight='B')\
+                + SearchVector('blog_richtext_set__text', weight='A')\
+                + SearchVector('blog_glossaryrichtext_set__text', weight='A')
+        query = consume(request.GET['q'])
+        q = request.GET['q']
+        article_list = article_list.annotate(
+            rank=SearchRank(vector, query)
+        ).filter(rank__gte=0.1).order_by('-rank')
+
     ancestors = list(page.ancestors().reverse())
     return render_list(
         request,
-        articles_for_page(page),
+        article_list,
         {
             'page': page,
             "meta_tags": meta_tags([page] + ancestors, request=request),

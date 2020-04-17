@@ -3,7 +3,7 @@ import re
 from django.utils.translation import gettext as _
 from django.db import models
 from feincms3.plugins.richtext import RichText
-
+from juso.sections.models import Category
 from juso.models import TranslationMixin
 
 # Create your models here.
@@ -35,7 +35,7 @@ class Entry(TranslationMixin):
 
     pattern = models.CharField(_("pattern"), max_length=200, blank=True)
     content = models.TextField(blank=True)
-
+    category = models.ForeignKey(Category, models.SET_NULL, null=True, blank=True)
 
     class Meta:
         ordering = ['name']

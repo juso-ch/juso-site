@@ -28,11 +28,21 @@ class GlossaryEntryAdmin(admin.ModelAdmin):
 
     fieldsets = (
         (None, {
-            'fields': ['name', 'content']
+            'fields': [
+                'name',
+                'content',
+                'category',
+                'language_code',
+                'translations',
+            ]
         }),
         (_("advanced"), {
             'fields': ['auto_pattern', 'pattern', 'slug'],
             'classes': ['collapse'],
         })
     )
+
+    autocomplete_fields = [
+        'category', 'translations'
+    ]
 

@@ -6,6 +6,7 @@ from feincms3.shortcuts import render_list
 from feincms3_meta.utils import meta_tags
 
 from juso import pages
+from juso.search import consume
 from juso.glossary.models import Entry
 # Create your views here.
 
@@ -22,11 +23,14 @@ def glossary(request):
     if 'q' in request.GET and request.GET['q']:
         vector = SearchVector('name', weight='A')\
                 + SearchVector('content', weight='B')
-        query = SearchQuery(request.GET['q'])
+        query = consume(request.GET['q'])
+        print(query)
         q = request.GET['q']
+        print(q)
+
         entries = entries.annotate(
             rank=SearchRank(vector, query)
-        ).filter(rank__gte=0.2).order_by('-rank')
+        ).filter(rank__gte=0.1).order_by('-rank')
 
 
     return render_list(

@@ -6,6 +6,7 @@
 <div class="eight wide column">
   {% if search %}
   <h2 class="ui header">Resultate für: {{search}}</h2>
+  <a href="?">Suche zurücksetzen</a>
   {% else %}
   <h2>{{page.title}}</h2>
   {% endif %}
@@ -27,6 +28,7 @@
       <a href="#{{entry.slug}}">
         <h3 id="{{entry.slug}}" class="ui header">{{entry}}</h3>
       </a>
+      {{entry.rank}}
       <p>{{entry.content}}</p>
     </section>
     {% endfor %}

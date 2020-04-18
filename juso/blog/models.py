@@ -11,6 +11,7 @@ from juso.models import TranslationMixin
 from juso.people import plugins as people_plugins
 from juso.plugins import download
 from juso.sections.models import ContentMixin, get_template_list
+from juso.glossary.models import GlossaryContent
 
 # Create your models here.
 
@@ -99,6 +100,11 @@ class RichText(plugins.richtext.RichText, PluginBase):
     pass
 
 
+class GlossaryRichText(GlossaryContent, PluginBase):
+    class Meta:
+        verbose_name = _("glossary text")
+
+
 class Image(plugins.image.Image, PluginBase):
     caption = models.CharField(_("caption"), max_length=200, blank=True)
     title = models.CharField(_("title"), max_length=200, blank=True)
@@ -138,5 +144,5 @@ class EventPlugin(event_plugins.EventPlugin, PluginBase):
 
 plugins = [
     RichText, Image, HTML, External, Team, Download, Button, Divider, Header,
-    EventPlugin,
+    EventPlugin, GlossaryContent,
 ]

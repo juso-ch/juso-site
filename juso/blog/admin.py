@@ -11,6 +11,7 @@ from juso.events import plugins as event_plugins
 from juso.people import plugins as people_plugins
 from juso.plugins import download
 from juso.utils import CopyContentMixin
+from juso.glossary.admin import GlossaryContentInline
 
 # Register your models here.
 
@@ -116,6 +117,7 @@ class ArticleAdmin(ContentEditor, CopyContentMixin):
         fomantic.HeaderInline.create(models.Header),
         download.DownloadInline.create(models.Download),
         people_plugins.TeamPluginInline.create(models.Team),
+        GlossaryContentInline.create(models.GlossaryRichText),
         event_plugins.EventPluginInline.create(models.EventPlugin),
     ]
 

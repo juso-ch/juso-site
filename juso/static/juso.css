@@ -27,3 +27,8 @@
     display: block;
   }
 }
+
+.glossary {
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+}

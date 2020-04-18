@@ -1,3 +1,4 @@
+from django.utils.html import mark_safe
 from feincms3 import plugins
 from feincms3.renderer import TemplatePluginRenderer
 
@@ -13,6 +14,11 @@ renderer = TemplatePluginRenderer()
 renderer.register_string_renderer(
     blog.RichText,
     lambda plugin: plugins.richtext.render_richtext(plugin)
+)
+
+renderer.register_string_renderer(
+    blog.GlossaryRichText,
+    lambda plugin: mark_safe(plugin.glossary_text)
 )
 
 renderer.register_string_renderer(

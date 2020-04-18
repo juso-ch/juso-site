@@ -7,10 +7,9 @@
       ['_divider', '<i class="fas fa-horizontal-rule"></i>'],
       ['_richtext', '<i class="fas fa-pencil-alt"></i>'],
       ['_image', '<i class="fas fa-image"></i>'],
-      ['_file', '<i class="fas fa-file"></i>'],
-      ['_download', '<i class="fas fa-download"></i>'],
       ['_external', '<i class="fas fa-film"></i>'],
       ['_html', '<i class="fas fa-code"></i>'],
+      ['_formplugin', '<i class="fas fa-poll"></i>'],
 
       ['_gallery', '<i class="fas fa-images"></i>'],
       ['_slide', '<i class="fas fa-image"></i>'],

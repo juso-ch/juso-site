@@ -1,0 +1,39 @@
+{% extends 'content.html' %}
+
+{% load feincms3 %}
+
+{% block regions %}
+<div class="eight wide column">
+  {% if search %}
+  <h2 class="ui header">Resultate für: {{search}}</h2>
+  <a href="?">Suche zurücksetzen</a>
+  {% else %}
+  <h2>{{page.title}}</h2>
+  {% endif %}
+</div>
+<div class="six wide column right floated">
+    <form action="" method="get">
+      <div class="ui search fluid">
+        <div class="ui icon input">
+          <input class="prompt" type="text" name="q" value="{{search}}"/>
+          <i class="search icon"></i>
+        </div>
+      </div>
+    </form>
+</div>
+<div class="sixteen wide column">
+  <main class="ui section">
+    {% for entry in entry_list %}
+    <section class="ui segment vertical">
+      <a href="#{{entry.slug}}">
+        <h3 id="{{entry.slug}}" class="ui header">{{entry}}</h3>
+      </a>
+      {{entry.rank}}
+      <p>{{entry.content}}</p>
+    </section>
+    {% endfor %}
+  </main>
+  {% include 'includes/pagination.html' with page=entry_list%}
+</div>
+{% endblock %}
+

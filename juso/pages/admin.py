@@ -15,6 +15,7 @@ from juso.pages import models
 from juso.people import plugins as people_plugins
 from juso.plugins import download
 from juso.utils import CopyContentMixin
+from juso.glossary.admin import GlossaryContentInline
 
 # Register your models here.
 
@@ -69,6 +70,7 @@ class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
         people_plugins.TeamPluginInline.create(models.Team),
         event_plugins.EventPluginInline.create(models.EventPlugin),
         blog_plugins.ArticlePluginInline.create(models.ArticlePlugin),
+        GlossaryContentInline.create(models.GlossaryRichText),
         form_plugins.FormPluginInline.create(models.FormPlugin),
     ]
 

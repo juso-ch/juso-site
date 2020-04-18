@@ -107,3 +107,28 @@ class FormAdmin(ContentEditor, CopyContentMixin):
     ]
 
     plugins = [FormField, RichText]
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super().get_form(request, obj, **kwargs)
+
+        if 'section' not in form.base_fields:
+            return form
+
+        section_field = form.base_fields['section']
+
+        sections = request.user.section_set.all()
+        section_field.initial = sections[0]
+
+        return form
+
+    def has_delete_permission(self, request, obj=None):
+        if obj is None or request.user.is_superuser:
+            return super().has_change_permission(request, obj)
+        sections = request.user.section_set.all()
+        return obj.section in sections
+
+    def has_change_permission(self, request, obj=None):
+        if obj is None or request.user.is_superuser:
+            return super().has_change_permission(request, obj)
+        sections = request.user.section_set.all()
+        return obj.section in sections

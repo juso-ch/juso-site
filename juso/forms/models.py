@@ -27,6 +27,7 @@ INPUT_TYPES = (
     ('multi', _("multiple choice")),
     ('url', _("url")),
     ('hidden', _("hidden")),
+    ('section', _("section")),
 )
 
 
@@ -82,12 +83,13 @@ class FormField(PluginBase):
         _("type"), choices=INPUT_TYPES,
         max_length=140
     )
+
     slug = models.SlugField()
     required = models.BooleanField(_("required"))
     help_text = models.CharField(_("help text"), max_length=240, blank=True)
     choices = models.TextField(_("choices"), blank=True)
     initial = models.TextField(_("initial"), max_length=240, blank=True)
-    size = models.TextField(_("size"), default="eighteen", choices=SIZES)
+    size = models.TextField(_("size"), default="sixteen", choices=SIZES)
 
     def __str__(self):
         return self.name
@@ -96,6 +98,9 @@ class FormField(PluginBase):
         verbose_name = _("form field")
         verbose_name_plural = _("form fields")
         ordering = ['ordering']
+        indexes = [
+            models.Index(fields=('parent', 'slug'))
+        ]
 
 
 class FormEntry(models.Model):

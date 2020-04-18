@@ -16,7 +16,9 @@ class FormPlugin(models.Model):
         abstract = True
 
 class FormPluginInline(ContentEditorInline):
-    pass
+    autocomplete_fields = [
+        'form'
+    ]
 
 
 def render_form(form_plugin, request=None):

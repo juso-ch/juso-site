@@ -4,6 +4,7 @@ from django import forms
 from django.forms import widgets
 
 from juso.forms import models
+from juso.sections.models import Section
 
 
 class DynamicForm(forms.Form):
@@ -60,6 +61,15 @@ def get_field_instance(field, request):
             choices=((l.strip(), l.strip()) for l in field.choices.split('\n')),
             initial=field.initial,
         )
+    elif field.input_type == 'section':
+        instance = cls(
+            required=field.required,
+            help_text=field.help_text,
+            initial=field.initial,
+            queryset=Section.objects.filter(
+                name__in=(l.strip() for l in field.choices.split('\n'))
+            ) if field.choices else Section.objects.all()
+        )
     else:
         instance = cls(
             required=field.required,
@@ -86,7 +96,8 @@ INPUT_TYPES = {
     'multi': forms.MultipleChoiceField,
     'time': forms.TimeField,
     'url': forms.URLField,
-    'hidden': HiddenField
+    'hidden': HiddenField,
+    'section': forms.ModelChoiceField,
 }
 
 

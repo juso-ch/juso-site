@@ -5,13 +5,13 @@
 {% endblock %}
 
 {% block regions %}
-<main class="ui basic segment">
+<article class="event">
   {% render_region regions 'main' %}
-</main>
-<aside>
+</article>
+<article class="location">
   <a href="{{event.location.get_absolute_url}}">
     {{event.location}}
   </a>
   ({{event.location.address}})
-</aside>
+</article>
 {% endblock %}

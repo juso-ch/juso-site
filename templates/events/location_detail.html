@@ -12,14 +12,14 @@
 </script>
 {% endaddtoblock %}
 
-<main>
+<article class="loaction">
   <address>
     {{location.street}}<br/>
     {{location.zip_code}} {{location.city}}<br/>
   </address>
   {% render_region regions 'main' %}
-</main>
-<aside class="events">
+</article>
+<article class="events">
   {% for event in location.event_set.all %}
   <div class="card">
     {% if event.image %}
@@ -41,5 +41,5 @@
     </div>
   </div>
   {% endfor %}
-</aside>
+</article>
 {% endblock %}

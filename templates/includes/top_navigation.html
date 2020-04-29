@@ -1,1 +1,8 @@
-
+{% load menus %}
+<ul>
+{% for main, children in menu|group_by_tree %}
+<li>
+{{main}}
+</li>
+{% endfor %}
+</ul>

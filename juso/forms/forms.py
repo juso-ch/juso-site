@@ -41,8 +41,6 @@ def get_form_instance(form: models.Form, request=None):
             form=form,
             data=request.POST
         )
-    for field in dynamic_form:
-        print(field.__dict__)
 
     return dynamic_form
 

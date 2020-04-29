@@ -1,0 +1,15 @@
+{% load menus %}
+{% for main, children in menu|group_by_tree %}
+{% if main.in_meta %}
+<div class="meta-menu">
+  <h4>{{main}}</h4>
+  <ul>
+    <li>
+      {% for child in children %}
+      {{child}}
+      {% endfor %}
+    </li>
+  </ul>
+</div>
+{% endif %}
+{% endfor %}

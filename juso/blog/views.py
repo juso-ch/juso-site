@@ -57,7 +57,7 @@ def article_list(request):
         article_list,
         {
             'page': page,
-            'header_image': page.header_image,
+            'header_image': page.get_header_image(),
             "meta_tags": meta_tags([page] + ancestors, request=request),
             'regions': Regions.from_item(
                 page, renderer=pages.renderer.renderer, timeout=60,
@@ -83,7 +83,7 @@ def category_list(request, slug):
         articles,
         {
             'page': page,
-            'header_image': page.header_image,
+            'header_image': page.get_header_image(),
             "meta_tags": meta_tags([page] + ancestors, request=request),
             'regions': Regions.from_item(
                 page, renderer=pages.renderer.renderer, timeout=60,
@@ -111,7 +111,7 @@ def article_detail(request, slug):
         {
             "page": page,
             "article": article,
-            'header_image': article.header_image or page.header_image,
+            'header_image': article.get_header_image() or page.get_header_image(),
             "title": article.title,
             "meta_tags": meta_tags(
                 [article, page] + ancestors,

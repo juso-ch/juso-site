@@ -45,6 +45,13 @@ class Category(TranslationMixin, MetaMixin, TreeNode):
             kwargs={'slug': self.slug}
         )
 
+    def get_header_image(self):
+        if self.header_image:
+            return self.header_image
+        if self.parent:
+            return self.parent.get_header_image()
+        return None
+
     def __str__(self):
         return self.name
 
@@ -109,6 +116,13 @@ class ContentMixin(TranslationMixin, MetaMixin, TemplateMixin):
 
     def __str__(self):
         return self.title
+
+    def get_header_image(self):
+        if self.header_image:
+            return self.header_image
+        if self.category:
+            return self.category.get_header_image()
+        return None
 
     class Meta:
         abstract = True

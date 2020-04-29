@@ -39,6 +39,7 @@ def glossary(request):
         {
             'page': page,
             'meta_tags': meta_tags([page] + ancestors, request=request),
+            'header_image': page.get_header_image(),
             'regions': Regions.from_item(
                 page, renderer=pages.renderer.renderer, timeout=60,
                 inherit_from=ancestors

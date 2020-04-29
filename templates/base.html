@@ -25,30 +25,24 @@
 
     {% render_block 'css' %}
 
-    {% addtoblock 'js' %}
-    <script src="{% static 'forms/js.cookie.min.js' %}"></script>
-    {% endaddtoblock %}
-
-    {% addtoblock 'js' %}
-    <script src="{% static 'forms/forms.js' %}"></script>
-    {% endaddtoblock %}
 
   </head>
   <body>
 
     <nav role="mobile">
+      {% include 'includes/mobile_menu.html' with menu=menus.main %}
     </nav>
 
-    <nav role="top" class="top-nav">
+    <nav role="top" class="top">
       {% include 'includes/top_navigation.html' with menu=menus.top %}
     </nav>
 
-    <nav role="buttons" class="button-nav">
+    <nav role="buttons" class="button">
       {% include 'includes/nav_buttons.html' with menu=menus.buttons %}
     </nav>
 
-    <nav role="main" class="main-nav">
-      {% include 'includes/main_navigation.html' with menu=menus.main button=menus.buttons %}
+    <nav role="main" class="main" id="mainNavigation">
+      {% include 'includes/main_navigation.html' with menu=menus.main buttons=menus.buttons %}
     </nav>
 
 
@@ -88,6 +82,18 @@
     </footer>
 
     {% render_block 'js' %}
+
+    {% addtoblock 'js' %}
+    <script src="{% static 'forms/js.cookie.min.js' %}"></script>
+    {% endaddtoblock %}
+
+    {% addtoblock 'js' %}
+    <script src="{% static 'forms/forms.js' %}"></script>
+    {% endaddtoblock %}
+
+    {% addtoblock 'js' %}
+    <script src="{% static 'sticky.js' %}"></script>
+    {% endaddtoblock %}
 
     {% addtoblock 'js' %}
     <script src="https://kit.fontawesome.com/7655daeee1.js" crossorigin="anonymous">

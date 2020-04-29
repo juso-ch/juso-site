@@ -1,0 +1,17 @@
+{% load menus %}
+<ul>
+{% for main, children in menu|group_by_tree %}
+<li>
+  <a href="{{main.get_absolute_url}}">
+{{main}}
+  </a>
+</li>
+{% endfor %}
+</ul>
+<div class="buttons">
+  {% for button in buttons %}
+  <a href="{{button.get_absolute_url}}">
+    {{button}}
+  </a>
+  {% endfor %}
+</div>

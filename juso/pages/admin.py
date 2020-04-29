@@ -135,6 +135,10 @@ class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
             'classes': ('tabbed',),
             'fields': ('translations',)
         }),
+        (_('advanced'), {
+            'classes': ('tabbed',),
+            'fields': ('in_meta', 'is_navigation')
+        })
     )
 
     mptt_level_indent = 30

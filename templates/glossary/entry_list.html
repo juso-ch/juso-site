@@ -8,17 +8,17 @@
     <input type="text" name="q" value="{{search}}"/>
   </form>
 </div>
-<main class="ui section">
+<article class="glossary-list">
   {% for entry in entry_list %}
-  <section class="ui segment vertical">
+  <section class="glossary-entry" id="{{entry.slug}}">
     <a href="#{{entry.slug}}">
-      <h3 id="{{entry.slug}}" class="ui header">{{entry}}</h3>
+      <h3>{{entry}}</h3>
     </a>
     {{entry.rank}}
     <p>{{entry.content}}</p>
   </section>
   {% endfor %}
-</main>
+</article>
 {% include 'includes/pagination.html' with page=entry_list%}
 <aside>
   Vielleicht ein Inhaltsverzeichnis?

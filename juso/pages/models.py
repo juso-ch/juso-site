@@ -185,6 +185,10 @@ class Page(
         related_name="featured"
     )
 
+    in_meta = models.BooleanField(_("in meta menu"), default=False)
+
+    is_navigation = models.BooleanField(_("display navigation"), default=False)
+
     @transaction.atomic
     def save(self, *args, **kwargs):
         if not self.is_landing_page:
@@ -204,6 +208,17 @@ class Page(
 
     def get_category_color(self):
         return self.category.color if self.category else settings.DEFAULT_COLOR
+
+    def get_header_image(self):
+        header_image = None
+        if self.header_image:
+            header_image = self.header_image
+        if self.parent:
+            header_image = header_image or self.parent.get_header_image()
+        if self.category:
+            header_image = header_image or self.category.get_header_image()
+        print(header_image)
+        return header_image
 
     class Meta:
         verbose_name = _("page")

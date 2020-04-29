@@ -6,10 +6,13 @@ from feincms3 import plugins
 from geopy.geocoders import Nominatim
 from js_asset import JS
 
-from fomantic_ui import models as fomantic
+from juso.forms import plugins as form_plugins
+from juso.admin import ButtonInline
 from juso.events import models
 from juso.events.models import Event, Location, NameSpace
+from juso.events import plugins as event_plugins
 from juso.people import plugins as people_plugins
+from juso.blog import plugins as blog_plugins
 from juso.plugins import download
 from juso.utils import CopyContentMixin, meta_fieldset
 
@@ -81,6 +84,8 @@ class EventAdmin(ContentEditor, CopyContentMixin):
                 'section',
                 'namespace',
                 'template_key',
+                'header_image',
+                'header_image_ppoi'
             )
         }),
         (_('meta'), {
@@ -108,11 +113,12 @@ class EventAdmin(ContentEditor, CopyContentMixin):
         plugins.image.ImageInline.create(models.Image),
         plugins.html.HTMLInline.create(models.HTML),
         plugins.external.ExternalInline.create(models.External),
-        fomantic.ButtonInline.create(models.Button),
-        fomantic.DividerInline.create(models.Divider),
-        fomantic.HeaderInline.create(models.Header),
         download.DownloadInline.create(models.Download),
         people_plugins.TeamPluginInline.create(models.Team),
+        blog_plugins.ArticlePluginInline.create(models.ArticlePlugin),
+        event_plugins.EventPluginInline.create(models.EventPlugin),
+        ButtonInline.create(models.Button),
+        form_plugins.FormPluginInline.create(models.FormPlugin),
     ]
 
     plugins = models.plugins
@@ -195,6 +201,8 @@ class LocationAdmin(ContentEditor):
                 'slug',
                 'lat',
                 'lng',
+                'header_image',
+                'header_image_ppoi'
             )
         }),
         (_('translations'), {

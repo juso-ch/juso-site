@@ -9,7 +9,9 @@ from juso.forms.models import Form
 class FormPlugin(models.Model):
     form = models.ForeignKey(
         Form, models.CASCADE,
-        verbose_name=_("form")
+        verbose_name=_("form"),
+        related_name="+",
+        related_query_name="+",
     )
 
     class Meta:

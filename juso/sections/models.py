@@ -1,16 +1,18 @@
 from content_editor.models import Region, Template
 from django.contrib.auth.models import User
+from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext as _
-from feincms3.apps import apps_urlconf, reverse_app
+from feincms3.apps import reverse_app
 from feincms3.mixins import TemplateMixin
 from feincms3_meta.models import MetaMixin
-from feincms3_sites.middleware import current_site, set_current_site
+from feincms3_sites.middleware import current_site
 from feincms3_sites.models import Site
 from taggit.managers import TaggableManager
 from tree_queries.models import TreeNode
 
+from imagefield.fields import ImageField
 from juso.models import TranslationMixin
 
 # Create your models here.
@@ -19,6 +21,17 @@ from juso.models import TranslationMixin
 class Category(TranslationMixin, MetaMixin, TreeNode):
     name = models.CharField(max_length=200, verbose_name=_("name"))
     slug = models.SlugField(verbose_name=_("slug"))
+    color = models.CharField(
+        max_length=7, verbose_name=_("color"),
+        default=settings.DEFAULT_COLOR,
+    )
+
+    header_image = ImageField(
+        _("header image"), formats={
+            'full': ['default', 'darken', ('crop', (1920, 900))],
+            'mobile': ['default', ('crop', (740, 600))]
+        }, auto_add_fields=True, blank=True, null=True
+    )
 
     @property
     def title(self):
@@ -60,6 +73,13 @@ class ContentMixin(TranslationMixin, MetaMixin, TemplateMixin):
     author = models.ForeignKey(
         User, models.SET_NULL, null=True, blank=True,
         verbose_name=_("author")
+    )
+
+    header_image = ImageField(
+        _("header image"), formats={
+            'full': ['default', 'darken', ('crop', (1920, 900))],
+            'mobile': ['default', ('crop', (740, 600))]
+        }, auto_add_fields=True, blank=True, null=True
     )
 
     publication_date = models.DateTimeField(

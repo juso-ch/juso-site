@@ -6,11 +6,15 @@ from feincms3.apps import apps_urlconf, reverse_app
 from feincms3_meta.models import MetaMixin
 from feincms3_sites.middleware import current_site, set_current_site
 from taggit.managers import TaggableManager
+from imagefield.fields import ImageField
 
-from fomantic_ui import models as fomantic
 from juso.models import TranslationMixin
+from juso.events import plugins as event_plugins
 from juso.people import plugins as people_plugins
+from juso.forms import plugins as form_plugins
+from juso.blog import plugins as blog_plugins
 from juso.plugins import download
+from juso.models import Button
 from juso.sections.models import ContentMixin, Section, get_template_list
 
 # Create your models here.
@@ -36,6 +40,13 @@ class Location(MetaMixin, TranslationMixin):
     city = models.CharField(max_length=100, verbose_name=_("city"))
     zip_code = models.CharField(max_length=20, verbose_name=_("zip code"))
     country = models.CharField(max_length=200, verbose_name=_("country"))
+
+    header_image = ImageField(
+        _("header image"), formats={
+            'full': ['default', 'darken', ('crop', (1920, 900))],
+            'mobile': ['default', ('crop', (740, 600))]
+        }, auto_add_fields=True, blank=True, null=True
+    )
 
     section = models.ForeignKey(
         Section, models.SET_NULL, blank=True, null=True,
@@ -188,18 +199,23 @@ class Team(people_plugins.TeamPlugin, PluginBase):
     pass
 
 
-class Button(fomantic.Button, PluginBase):
+class Button(Button, PluginBase):
     pass
 
 
-class Divider(fomantic.Divider, PluginBase):
+class ArticlePlugin(blog_plugins.ArticlePlugin, PluginBase):
     pass
 
 
-class Header(fomantic.Header, PluginBase):
+class EventPlugin(event_plugins.EventPlugin, PluginBase):
+    pass
+
+
+class FormPlugin(form_plugins.FormPlugin, PluginBase):
     pass
 
 
 plugins = [
-    RichText, Image, HTML, External, Team, Download, Button, Divider, Header
+    RichText, Image, HTML, External, Team, Download, Button, ArticlePlugin,
+    EventPlugin, FormPlugin,
 ]

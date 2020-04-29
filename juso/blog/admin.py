@@ -4,10 +4,12 @@ from django.utils.translation import gettext as _
 from feincms3 import plugins
 from js_asset import JS
 
-from fomantic_ui import models as fomantic
+from juso.admin import ButtonInline
+from juso.blog import plugins as blog_plugins
 from juso.blog import models
 from juso.blog.models import Article, NameSpace
 from juso.events import plugins as event_plugins
+from juso.forms import plugins as form_plugins
 from juso.people import plugins as people_plugins
 from juso.plugins import download
 from juso.utils import CopyContentMixin
@@ -85,6 +87,8 @@ class ArticleAdmin(ContentEditor, CopyContentMixin):
                 'section',
                 'namespace',
                 'template_key',
+                'header_image',
+                'header_image_ppoi'
             )
         }),
         (_('meta'), {
@@ -112,13 +116,13 @@ class ArticleAdmin(ContentEditor, CopyContentMixin):
         plugins.image.ImageInline.create(models.Image),
         plugins.html.HTMLInline.create(models.HTML),
         plugins.external.ExternalInline.create(models.External),
-        fomantic.ButtonInline.create(models.Button),
-        fomantic.DividerInline.create(models.Divider),
-        fomantic.HeaderInline.create(models.Header),
+        ButtonInline.create(models.Button),
         download.DownloadInline.create(models.Download),
         people_plugins.TeamPluginInline.create(models.Team),
         GlossaryContentInline.create(models.GlossaryRichText),
+        blog_plugins.ArticlePluginInline.create(models.ArticlePlugin),
         event_plugins.EventPluginInline.create(models.EventPlugin),
+        form_plugins.FormPluginInline.create(models.FormPlugin),
     ]
 
     plugins = models.plugins

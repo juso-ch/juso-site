@@ -11,9 +11,15 @@ class GlossaryContentInline(RichTextInline):
         'entries'
     ]
 
-    fields = [
-        'text', 'entries', 'region', 'ordering'
-    ]
+    fieldsets = (
+        (None, {
+            'fields':  ['text', 'entries', 'region', 'ordering',]
+        }),
+        (_("advanced"), {
+            'fields': ['update_glossary', 'glossary_text'],
+            'classes': ['collapse']
+        })
+    )
 
 
 @admin.register(Entry)

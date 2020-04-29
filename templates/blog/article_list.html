@@ -2,35 +2,28 @@
 {% load feincms3 %}
 
 {% block regions %}
-<div class="twelve wide column">
-  <main class="ui three stackable cards">
-    {% for article in article_list %}
-    <div class="card">
-      {% if article.image %}
-      <a class="image" href="{{article.get_absolute_url}}">
-        <img src="{{article.image.url}}" alt="{{article.title}}"/>
+<article class="cards">
+  {% for article in article_list %}
+  <div class="card">
+    {% if article.image %}
+    <a class="image" href="{{article.get_absolute_url}}">
+      <img src="{{article.image.url}}" alt="{{article.title}}"/>
+    </a>
+    {% endif %}
+    <div class="content">
+      <a class="header" href="{{article.get_absolute_url}}">
+        {{article.title}}
       </a>
-      {% endif %}
-      <div class="content">
-        <a class="header" href="{{article.get_absolute_url}}">
-          {{article.title}}
-        </a>
-        <a class="meta" href="{{event.get_absolute_url}}">
-          {{article.category|default:""}}
-        </a>
-        <a class="description">
-        </a>
-      </div>
-      <div class="extra content">
-      </div>
+      <a class="meta" href="{{event.get_absolute_url}}">
+        {{article.category|default:""}}
+      </a>
+      <a class="description">
+      </a>
     </div>
-    {% endfor %}
-  </main>
-  {% include 'includes/pagination.html' with page=article_list%}
-</div>
-<div class="four wide column">
-  <aside class="ui segment basic">
-    {% render_region regions 'side' %}
-  </aside>
-</div>
+    <div class="extra content">
+    </div>
+  </div>
+  {% endfor %}
+</article>
+{% include 'includes/pagination.html' with page=article_list%}
 {% endblock %}

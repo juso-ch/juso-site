@@ -2,14 +2,10 @@
 {% load feincms3 %}
 
 {% block regions %}
-<div class="twelve wide column">
-  <main class="ui basic segment">
-    {% render_region regions "main" %}
-  </main>
-</div>
-<div class="four wide column">
-  <aside class="ui basic segment">
-    {% render_region regions "sidebar" %}
-  </aside>
-</div>
+<main>
+  {% render_region regions "main" %}
+</main>
+<aside>
+  {% render_region regions "sidebar" %}
+</aside>
 {% endblock %}

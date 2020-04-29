@@ -5,7 +5,6 @@ from django.template.loader import render_to_string
 from django.utils import timezone
 from django.utils.translation import gettext as _
 
-from juso.events.models import Event, NameSpace
 from juso.models import TranslationMixin
 from juso.sections.models import Category, Section
 from juso.utils import number_word
@@ -13,7 +12,7 @@ from juso.utils import number_word
 
 class EventPlugin(TranslationMixin):
     events = models.ManyToManyField(
-        Event, related_name="+", verbose_name=_("events"), blank=True,
+        "events.Event", related_name="+", verbose_name=_("events"), blank=True,
         related_query_name='+',
     )
 
@@ -29,7 +28,7 @@ class EventPlugin(TranslationMixin):
         return number_word(self.count)
 
     namespace = models.ForeignKey(
-        NameSpace, models.SET_NULL, related_name="+",
+        "events.NameSpace", models.SET_NULL, related_name="+",
         verbose_name=_("namespace"), blank=True, null=True,
         related_query_name="+"
     )
@@ -52,6 +51,8 @@ class EventPlugin(TranslationMixin):
 
     class Meta:
         abstract = True
+
+
 
 
 class EventPluginInline(ContentEditorInline):
@@ -80,6 +81,8 @@ class EventPluginInline(ContentEditorInline):
 def get_event_list(plugin):
     if plugin.events.exists():
         return plugin.events.all()
+    from juso.events.models import Event
+
     events = Event.objects.filter(
         language_code=plugin.language_code,
         end_date__gte=timezone.now()

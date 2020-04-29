@@ -38,6 +38,7 @@ def category_list(request):
             'page': page,
             'featured_categories': featured_categories,
             'all_categories': categories.all(),
+            "header_image": page.header_image,
             "meta_tags": meta_tags([page] + ancestors, request=request),
             'regions': Regions.from_item(
                 page, renderer=pages.renderer.renderer, timeout=60,
@@ -72,6 +73,7 @@ def category_detail(request, slug):
             "events": events,
             "category": category,
             "title": category.name,
+            "header_image": category.header_image or page.header_image,
             "meta_tags": meta_tags(
                 [category, page] + ancestors,
                 request=request

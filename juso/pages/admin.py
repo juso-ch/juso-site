@@ -7,7 +7,6 @@ from feincms3_sites.admin import SiteAdmin
 from feincms3_sites.models import Site
 from js_asset import JS
 
-from fomantic_ui import models as fomantic
 from juso.blog import plugins as blog_plugins
 from juso.events import plugins as event_plugins
 from juso.forms import plugins as form_plugins
@@ -16,6 +15,7 @@ from juso.people import plugins as people_plugins
 from juso.plugins import download
 from juso.utils import CopyContentMixin
 from juso.glossary.admin import GlossaryContentInline
+from juso.admin import ButtonInline
 
 # Register your models here.
 
@@ -64,9 +64,7 @@ class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
         plugins.html.HTMLInline.create(models.HTML),
         plugins.external.ExternalInline.create(models.External),
         download.DownloadInline.create(models.Download),
-        fomantic.ButtonInline.create(models.Button),
-        fomantic.DividerInline.create(models.Divider),
-        fomantic.HeaderInline.create(models.Header),
+        ButtonInline.create(models.Button),
         people_plugins.TeamPluginInline.create(models.Team),
         event_plugins.EventPluginInline.create(models.EventPlugin),
         blog_plugins.ArticlePluginInline.create(models.ArticlePlugin),
@@ -91,6 +89,8 @@ class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
                 'language_code',
                 'template_key',
                 'is_landing_page',
+                'header_image',
+                'header_image_ppoi'
             ),
         }),
         (_('path'), {

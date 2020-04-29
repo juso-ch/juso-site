@@ -1,67 +1,67 @@
-from django.utils.html import mark_safe
-from feincms3 import plugins
 from feincms3.renderer import TemplatePluginRenderer
 
-from fomantic_ui import models as fomantic
 from juso.blog import models as blog
 from juso.events import plugins as event_plugins
 from juso.people import plugins as people_plugins
 from juso.plugins import download
-from juso.utils import render_embed
+from juso.blog import plugins as article_plugins
+from juso.forms import plugins as form_plugins
+
+from juso import renderer as r
 
 renderer = TemplatePluginRenderer()
 
 renderer.register_string_renderer(
     blog.RichText,
-    lambda plugin: plugins.richtext.render_richtext(plugin)
+    r.render_richtext
 )
 
 renderer.register_string_renderer(
     blog.GlossaryRichText,
-    lambda plugin: mark_safe(plugin.glossary_text)
+    r.render_glossarytext
 )
 
 renderer.register_string_renderer(
     blog.HTML,
-    lambda plugin: plugins.html.render_html(plugin)
+    r.render_html
 )
 
 renderer.register_string_renderer(
     blog.External,
-    lambda plugin: render_embed(plugin)
-)
-
-renderer.register_string_renderer(
-    blog.Button,
-    lambda plugin: fomantic.render_button(plugin)
+    r.render_embed
 )
 
 renderer.register_string_renderer(
     blog.Image,
-    lambda plugin: fomantic.render_image(plugin)
+    r.render_image,
 )
 
 renderer.register_string_renderer(
     blog.Download,
-    lambda plugin: download.render_download(plugin)
-)
-
-renderer.register_string_renderer(
-    blog.Divider,
-    lambda plugin: fomantic.render_divider(plugin)
-)
-
-renderer.register_string_renderer(
-    blog.Header,
-    lambda plugin: fomantic.render_header(plugin)
+    download.render_download
 )
 
 renderer.register_string_renderer(
     blog.Team,
-    lambda plugin: people_plugins.render_team(plugin)
+    people_plugins.render_team
 )
 
 renderer.register_string_renderer(
     blog.EventPlugin,
-    lambda plugin: event_plugins.render_events(plugin)
+    event_plugins.render_events
+)
+
+renderer.register_string_renderer(
+    blog.ArticlePlugin,
+    article_plugins.render_articles
+)
+
+renderer.register_string_renderer(
+    blog.Button,
+    r.render_block
+)
+
+renderer.register_string_renderer(
+    blog.FormPlugin,
+    form_plugins.render_form,
 )

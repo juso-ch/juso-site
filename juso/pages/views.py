@@ -41,6 +41,7 @@ def page_detail(request, path=None):
         page.template.template_name,
         {
             "page": page,
+            "header_image": page.header_image,
             "meta_tags": meta_tags([page] + ancestors, request=request),
             "regions": Regions.from_item(
                 page, renderer=renderer, timeout=60,

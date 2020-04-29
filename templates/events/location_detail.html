@@ -8,42 +8,38 @@
 {% addtoblock 'js' %}
 <script>
   window.__location = JSON.parse("{{location|jsonify|escapejs}}");
-window.__events = JSON.parse("{{location.event_set.all|jsonify|escapejs}}");
+  window.__events = JSON.parse("{{location.event_set.all|jsonify|escapejs}}");
 </script>
 {% endaddtoblock %}
 
-<div class="ten wide column">
-  <main class="ui basic segment">
-    <address>
-      {{location.street}}<br/>
-      {{location.zip_code}} {{location.city}}<br/>
-    </address>
-    {% render_region regions 'main' %}
-  </main>
-</div>
-<div class="six wide column">
-  <div class="ui one stackable horizontal cards">
-    {% for event in location.event_set.all %}
-    <div class="card">
-      {% if event.image %}
-      <a class="image" href="{{event.get_absolute_url}}">
-        <img src="{{event.image.url}}" alt="{{event.title}}"/>
+<main>
+  <address>
+    {{location.street}}<br/>
+    {{location.zip_code}} {{location.city}}<br/>
+  </address>
+  {% render_region regions 'main' %}
+</main>
+<aside class="events">
+  {% for event in location.event_set.all %}
+  <div class="card">
+    {% if event.image %}
+    <a class="image" href="{{event.get_absolute_url}}">
+      <img src="{{event.image.url}}" alt="{{event.title}}"/>
+    </a>
+    {% endif %}
+    <div class="content">
+      <a class="header" href="{{event.get_absolute_url}}">
+        {{event.title}}
       </a>
-      {% endif %}
-      <div class="content">
-        <a class="header" href="{{event.get_absolute_url}}">
-          {{event.title}}
-        </a>
-        <a class="meta" href="{{event.get_absolute_url}}">
-        </a>
-        <a class="description">
-        </a>
-      </div>
-      <div class="extra content">
-          {{event.start_date}} - {{event.end_date}}
-      </div>
+      <a class="meta" href="{{event.get_absolute_url}}">
+      </a>
+      <a class="description">
+      </a>
     </div>
-    {% endfor %}
+    <div class="extra content">
+      {{event.start_date}} - {{event.end_date}}
+    </div>
   </div>
-</div>
+  {% endfor %}
+</aside>
 {% endblock %}

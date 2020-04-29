@@ -1,5 +1,6 @@
 from content_editor.models import create_plugin_base
 from django.db import models, transaction
+from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 from feincms3 import plugins
 from feincms3.apps import AppsMixin
@@ -8,7 +9,12 @@ from feincms3_meta.models import MetaMixin
 from feincms3_sites.middleware import current_site, set_current_site
 from feincms3_sites.models import AbstractPage
 
-from fomantic_ui import models as fomantic
+from imagefield.fields import ImageField
+
+from PIL import ImageOps, ImageEnhance
+from imagefield.processing import register
+
+from juso import models as juso
 from juso.blog import plugins as article_plugins
 from juso.events import plugins as event_plugins
 from juso.forms import plugins as form_plugins
@@ -19,6 +25,22 @@ from juso.glossary.models import GlossaryContent
 from juso.sections.models import get_template_list
 
 # Create your models here.
+
+
+@register
+def grayscale(get_image):
+    def processor(image, context):
+        image = get_image(image, context)
+        return ImageOps.grayscale(image)
+    return processor
+
+
+@register
+def darken(get_image):
+    def processor(image, context):
+        image = get_image(image, context)
+        return ImageEnhance.Brightness(image).enhance(0.5)
+    return processor
 
 
 class Page(
@@ -103,7 +125,10 @@ class Page(
 
     MENUS = (
         ("main", _("main navigation")),
+        ("top", _("top navigation")),
+        ("buttons", _("button navigation")),
         ("footer", _("footer navigation")),
+        ("quicklink", _("quickinks")),
     )
 
     TEMPLATES = get_template_list('pages', (
@@ -148,6 +173,13 @@ class Page(
         verbose_name=_("category"),
     )
 
+    header_image = ImageField(
+        _("header image"), formats={
+            'full': ['default', 'darken', ('crop', (1920, 900))],
+            'mobile': ['default', ('crop', (740, 600))]
+        }, auto_add_fields=True, blank=True, null=True
+    )
+
     featured_categories = models.ManyToManyField(
         "sections.Category", blank=True, verbose_name=_("featured categories"),
         related_name="featured"
@@ -169,6 +201,9 @@ class Page(
         if site == self.site:
             return super().get_absolute_url(*args, **kwargs)
         return '//' + self.site.host + super().get_absolute_url()
+
+    def get_category_color(self):
+        return self.category.color if self.category else settings.DEFAULT_COLOR
 
     class Meta:
         verbose_name = _("page")
@@ -216,15 +251,7 @@ class Team(people_plugins.TeamPlugin, PluginBase):
     pass
 
 
-class Button(fomantic.Button, PluginBase):
-    pass
-
-
-class Divider(fomantic.Divider, PluginBase):
-    pass
-
-
-class Header(fomantic.Header, PluginBase):
+class Button(juso.Button, PluginBase):
     pass
 
 
@@ -241,6 +268,6 @@ class FormPlugin(form_plugins.FormPlugin, PluginBase):
 
 
 plugins = [
-    RichText, Image, HTML, External, Team, Download, Button, Divider, Header,
+    RichText, Image, HTML, External, Team, Download, Button,
     EventPlugin, ArticlePlugin, FormPlugin, GlossaryRichText,
 ]

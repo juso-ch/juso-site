@@ -53,6 +53,7 @@ def location_detail(request, slug):
             'page': page,
             'location': location,
             'title': location.name,
+            'header_image': location.header_image or page.header_image,
             'event_list': location.event_set.filter(
                 end_date__gte=timezone.now(),
             ),
@@ -86,6 +87,7 @@ def event_list(request):
                 event__in=event_list,
             ).distinct(),
             'page': page,
+            'header_image': page.header_image,
             'meta_tags': meta_tags(
                 [page] + ancestors,
                 request=request
@@ -116,6 +118,7 @@ def event_detail(request, slug):
         {
             'page': page,
             'event': event,
+            'header_image': event.header_image or page.header_image,
             'title': event.title,
             'meta_tags': meta_tags(
                 [event, page] + ancestors,
@@ -149,6 +152,7 @@ def event_list_for_section(request, pk):
         event_list_for_page(page),
         {
             'page': page,
+            'header_image': page.header_image,
             'meta_tags': meta_tags(
                 [page] + ancestors,
                 request=request

@@ -5,13 +5,17 @@ from feincms3 import plugins
 from feincms3.apps import apps_urlconf, reverse_app
 from feincms3_sites.middleware import current_site, set_current_site
 
-from fomantic_ui import models as fomantic
+from imagefield.fields import ImageField
+
+from juso import models as juso
 from juso.events import plugins as event_plugins
+from juso.forms import plugins as form_plugins
 from juso.models import TranslationMixin
 from juso.people import plugins as people_plugins
 from juso.plugins import download
 from juso.sections.models import ContentMixin, get_template_list
 from juso.glossary.models import GlossaryContent
+from .plugins import ArticlePlugin
 
 # Create your models here.
 
@@ -122,15 +126,7 @@ class Download(download.Download, PluginBase):
     pass
 
 
-class Button(fomantic.Button, PluginBase):
-    pass
-
-
-class Divider(fomantic.Divider, PluginBase):
-    pass
-
-
-class Header(fomantic.Header, PluginBase):
+class Button(juso.Button, PluginBase):
     pass
 
 
@@ -142,7 +138,15 @@ class EventPlugin(event_plugins.EventPlugin, PluginBase):
     pass
 
 
+class ArticlePlugin(ArticlePlugin, PluginBase):
+    pass
+
+
+class FormPlugin(form_plugins.FormPlugin, PluginBase):
+    pass
+
+
 plugins = [
-    RichText, Image, HTML, External, Team, Download, Button, Divider, Header,
-    EventPlugin, GlossaryContent,
+    RichText, Image, HTML, External, Team, Download, Button,
+    EventPlugin, GlossaryContent, FormPlugin, ArticlePlugin
 ]

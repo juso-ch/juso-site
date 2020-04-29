@@ -11,9 +11,12 @@ from juso.models import TranslationMixin
 
 def update_glossary(html, entries):
     for entry in entries.all():
-        repl = ("<span class=\"glossary\""
-                f"data-tooltip=\"{entry.content}\">\g<name></span>"
-               )
+        repl = (f"<label for=\"gl-{entry.pk}\" class=\"glossary\">"
+                r"\g<name></label>"
+                f"<input type=\"checkbox\" id=\"gl-{entry.pk}\" class=\"toggle\">"
+                "<span class=\"glossary-content\">"
+                f"<dfn>{entry.name}</dfn>: "
+                f"{entry.content}</span>")
         html = re.sub(
             entry.pattern,
             repl,
@@ -55,6 +58,7 @@ class GlossaryContent(RichText):
         related_name="%(app_label)s_%(class)s_related",
         related_query_name="%(app_label)s_%(class)ss",
     )
+    update_glossary = models.BooleanField(default=True)
     glossary_text = models.TextField(blank=True)
 
     class Meta:
@@ -62,10 +66,12 @@ class GlossaryContent(RichText):
 
 
     def save(self, *args, **kwargs):
-        if self.id:
-            self.glossary_text = update_glossary(self.text, self.entries)
-        else:
-            super().save(*args, **kwargs)
-            self.glossary_text = update_glossary(self.text, self.entries)
+        print(self.update_glossary)
+        if self.update_glossary:
+            if self.id:
+                self.glossary_text = update_glossary(self.text, self.entries)
+            else:
+                super().save(*args, **kwargs)
+                self.glossary_text = update_glossary(self.text, self.entries)
+            self.update_glossary = False
         super().save()
-

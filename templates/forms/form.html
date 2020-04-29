@@ -1,12 +1,12 @@
-<form class="ui form {% if form.errors %}error{% endif %}" action="{{form.form.get_absolute_url}}" id="form-{{form.form.id}}">
+<form class="form {% if form.errors %}error{% endif %}" action="{{form.form.get_absolute_url}}" id="form-{{form.form.id}}">
   {% if form.non_field_errors %}
-  <div class="ui error message">
-    <ul class="list">
+  <div class="error message">
+    <ul>
       {{form.non_field_errors}}
     </ul>
   </div>
   {% endif %}
-  <div class="ui grid fields">
+  <div class="fields">
   {% for field in form %}
   {% if field.is_hidden %}
   {{field}}
@@ -18,7 +18,7 @@
     {{field}}
       <small>{{field.help_text}}</small>
     {% if field.errors %}
-    <div class="ui error message">
+    <div class="error message">
       {{field.errors}}
     </div>
     {% endif %}
@@ -26,7 +26,7 @@
   {% endif %}
   {% endfor %}
   </div>
-  <button id="submit_{{form.form.id}}" type="submit" class="ui submit button">
+  <button id="submit_{{form.form.id}}" type="submit" class="button">
     {{form.form.submit}}
   </button>
 </form>

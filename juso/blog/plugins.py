@@ -4,7 +4,6 @@ from django.db import models
 from django.template.loader import render_to_string
 from django.utils.translation import gettext as _
 
-from juso.blog.models import Article, NameSpace
 from juso.models import TranslationMixin
 from juso.sections.models import Category, Section
 from juso.utils import number_word
@@ -12,7 +11,7 @@ from juso.utils import number_word
 
 class ArticlePlugin(TranslationMixin):
     articles = models.ManyToManyField(
-        Article, related_name='+', related_query_name='+',
+        "blog.Article", related_name='+', related_query_name='+',
         verbose_name=_("articles"), blank=True
     )
 
@@ -28,7 +27,7 @@ class ArticlePlugin(TranslationMixin):
         return number_word(self.count)
 
     namespace = models.ForeignKey(
-        NameSpace, models.SET_NULL, related_name='+',
+        "blog.NameSpace", models.SET_NULL, related_name='+',
         verbose_name=_("namespace"), blank=True, null=True,
     )
 
@@ -77,6 +76,8 @@ class ArticlePluginInline(ContentEditorInline):
 def get_article_list(plugin):
     if plugin.articles.exists():
         return plugin.articles.all()
+    from juso.blog.models import Article
+
     articles = Article.objects.filter(
         language_code=plugin.language_code,
     )

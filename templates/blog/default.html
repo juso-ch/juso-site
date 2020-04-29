@@ -6,9 +6,7 @@
 {% endblock %}
 
 {% block regions %}
-<div class="twelve wide column">
-  <main class="ui basic segment">
-{% render_region regions 'main' %}
-  </main>
-</div>
+<article class="article">
+  {% render_region regions 'main' %}
+</article>
 {% endblock %}

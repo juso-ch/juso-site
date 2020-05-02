@@ -80,10 +80,6 @@ class Migration(migrations.Migration):
             model_name='button',
             name='inverted',
         ),
-        migrations.RemoveField(
-            model_name='button',
-            name='size',
-        ),
         migrations.AlterField(
             model_name='button',
             name='color',

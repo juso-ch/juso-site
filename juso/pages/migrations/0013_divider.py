@@ -4,8 +4,6 @@ import django.db.models.deletion
 import fontawesome_5.fields
 from django.db import migrations, models
 
-import fomantic_ui.models
-
 
 class Migration(migrations.Migration):
 
@@ -20,8 +18,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('text', models.CharField(max_length=240, verbose_name='Text')),
                 ('inverted', models.BooleanField(default=False, verbose_name='inverted')),
-                ('color', fomantic_ui.models.ColorField(blank=True, choices=[('red', 'red'), ('orange', 'orange'), ('yellow', 'yellow'), ('olive', 'olive'), ('green', 'green'), ('teal', 'teal'), ('violett', 'violett'), ('purple', 'purple'), ('pink', 'pink'), ('brown', 'brown'), ('grey', 'grey'), ('black', 'black')], max_length=20)),
-                ('size', fomantic_ui.models.SizeField(blank=True, choices=[('tiny', 'tiny'), ('small', 'small'), ('medium', 'medium'), ('large', 'large'), ('big', 'big'), ('huge', 'huge'), ('massive', 'massive')], max_length=20)),
+                ('color', models.CharField(blank=True, choices=[('red', 'red')], max_length=20)),
                 ('icon', fontawesome_5.fields.IconField(blank=True, max_length=60)),
                 ('alignment', models.CharField(blank=True, choices=[('left aligned', 'left aligned'), ('right aligned', 'right aligned')], max_length=30, verbose_name='alignment')),
                 ('hidden', models.BooleanField(default=False, verbose_name='hidden')),

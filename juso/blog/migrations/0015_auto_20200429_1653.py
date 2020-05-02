@@ -59,15 +59,6 @@ class Migration(migrations.Migration):
             model_name='button',
             name='inverted',
         ),
-        migrations.RemoveField(
-            model_name='button',
-            name='size',
-        ),
-        migrations.AlterField(
-            model_name='button',
-            name='color',
-            field=juso.models.ColorField(blank=True, choices=[('red', 'red'), ('orange', 'orange'), ('yellow', 'yellow'), ('olive', 'olive'), ('green', 'green'), ('teal', 'teal'), ('violett', 'violett'), ('purple', 'purple'), ('pink', 'pink'), ('brown', 'brown'), ('grey', 'grey'), ('black', 'black')], max_length=20),
-        ),
         migrations.AlterField(
             model_name='button',
             name='style',

@@ -4,6 +4,7 @@ import django.db.models.deletion
 import fontawesome_5.fields
 from django.db import migrations, models
 
+import fomantic_ui.models
 
 
 class Migration(migrations.Migration):
@@ -19,7 +20,8 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('text', models.CharField(max_length=240, verbose_name='Text')),
                 ('inverted', models.BooleanField(default=False, verbose_name='inverted')),
-                ('color', models.CharField(blank=True, choices=[('red', 'red')], max_length=20)),
+                ('color', fomantic_ui.models.ColorField(blank=True, choices=[('red', 'red')], max_length=20)),
+                ('size', fomantic_ui.models.SizeField(blank=True, choices=[('tiny', 'tiny')], max_length=20)),
                 ('icon', fontawesome_5.fields.IconField(blank=True, max_length=60)),
                 ('style', models.CharField(blank=True, choices=[('', 'none'), ('basic', 'basic'), ('primary', 'primary'), ('tertiary', 'tertiary')], default='', max_length=20, verbose_name='style')),
                 ('target', models.CharField(max_length=800, verbose_name='Ziel')),

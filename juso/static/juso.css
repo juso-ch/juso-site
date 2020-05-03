@@ -20,6 +20,8 @@
 
   --container-width: min(1200px, 94vw);
   --container-outer-width: min(1200px, 100vw);
+
+  --container-padding: calc(calc(var(--container-width) - var(--container-outer-width)) / 2);
   --navbar-height: 60px;
   --navbar-offset: 80px;
 
@@ -320,8 +322,12 @@ nav.main.sticky {
   color: var(--text-color);
   font-size: 0.8em;
   box-shadow: var(--box-shadow);
+  margin-left: var(--container-padding);
+  margin-right: var(--container-padding);
+  /**
   padding-left: calc((100vw - var(--container-outer-width))/2);
   padding-right: calc((100vw - var(--container-outer-width))/2);
+  **/
   font-size: min(max(14px, calc(7px + 1vw)), 20px);
 }
 

@@ -20,7 +20,9 @@
   </div>
   <div class="menu">
     <h2>
+      <a href="{{top.get_absolute_url}}">
       <img class="logo-mobile" src="{% logo %}"/>
+      </a>
     </h2>
     {% for element in menu %}
     <a href="{{element.get_absolute_url}}">{{element.title}}</a>

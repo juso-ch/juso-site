@@ -1,6 +1,7 @@
 from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
 
 from django.core.paginator import Paginator
+from django.utils import timezone
 from django.shortcuts import get_object_or_404, render
 from feincms3.apps import page_for_app_request
 from feincms3.regions import Regions
@@ -31,7 +32,7 @@ def articles_for_page(page, qs=None):
     elif hasattr(page.site, 'section'):
         qs = qs.filter(section=page.site.section)
 
-    return qs
+    return qs.filter(publication_date__lte=timezone.now())
 
 
 def article_list(request):

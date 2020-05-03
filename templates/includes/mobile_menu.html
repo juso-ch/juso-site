@@ -28,4 +28,9 @@
     <a href="{{element.get_absolute_url}}">{{element.title}}</a>
     {% endfor %}
   </div>
+  <div class="small-bottom-bar">
+    {% for item in footer %}
+    <a href="{{item.get_absolute_url}}">{{item}}</a>
+    {% endfor %}
+  </div>
 </div>

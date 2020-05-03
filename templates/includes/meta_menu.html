@@ -2,14 +2,24 @@
 {% for main, children in menu|group_by_tree %}
 {% if main.in_meta %}
 <div class="meta-menu">
-  <h4>{{main}}</h4>
-  <ul>
-    <li>
+  <h4><a href="{{main.get_absolute_url}}">{{main}}</a></h4>
+  <div>
       {% for child in children %}
+      <a href="{{child.get_absolute_url}}">
       {{child}}
+      </a>
       {% endfor %}
-    </li>
-  </ul>
+  </div>
 </div>
 {% endif %}
 {% endfor %}
+<div class="meta-menu">
+  <h4>Quicklinks</h4>
+  <div>
+      {% for main in quicklinks %}
+      <a href="{{main.get_absolute_url}}">
+      {{main}}
+      </a>
+      {% endfor %}
+  </div>
+</div>

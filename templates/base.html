@@ -30,7 +30,7 @@
   <body>
 
     <nav id="mobile-menu" role="mobile">
-      {% include 'includes/mobile_menu.html' with menu=menus.main buttons=menus.buttons %}
+      {% include 'includes/mobile_menu.html' with menu=menus.main buttons=menus.buttons footer=menus.footer %}
     </nav>
 
     <nav role="main" class="main" id="mainNavigation">
@@ -79,11 +79,11 @@
 
     <footer>
       {% block footer %}
-      <nav role="meta">
-        {% include 'includes/meta_menu.html' with menu=menus.main quicklinks=menus.quicklinks%}
+      <nav role="meta" class="meta">
+        {% include 'includes/meta_menu.html' with menu=menus.main quicklinks=menus.quicklink%}
       </nav>
 
-      <nav role="footer">
+      <nav role="footer" class="footer">
         {% include 'includes/footer_menu.html' with menu=menus.footer %}
       </nav>
 

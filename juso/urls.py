@@ -18,6 +18,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import include, path
+from juso import views
 
 urlpatterns = [
     path(
@@ -39,6 +40,10 @@ urlpatterns = [
         'reset/done/',
         auth_views.PasswordResetCompleteView.as_view(),
         name='password_reset_complete',
+    ),
+    path(
+        'logo/<slug:language>/<slug:slug>.svg',
+        views.logo, name="logo"
     ),
     path('su/', include('django_su.urls')),
     path('admin/', admin.site.urls),

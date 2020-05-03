@@ -1,4 +1,4 @@
-{% load sekizai_tags static menus feincms3 %}
+{% load sekizai_tags static menus feincms3 tools %}
 {% top_page page as top %}
 
 {% all_menus request.LANGUAGE_CODE top as menus %}
@@ -33,10 +33,18 @@
       {% include 'includes/mobile_menu.html' with menu=menus.main buttons=menus.buttons %}
     </nav>
 
-      <nav role="main" class="main" id="mainNavigation">
-        <a class="brand" href="{{top.get_absolute_url}}">{{top.title}}</a>
-        {% include 'includes/main_navigation.html' with menu=menus.main buttons=menus.buttons %}
-      </nav>
+    <nav role="main" class="main" id="mainNavigation">
+      <div class="branding">
+        <a class="brand" href="{{top.get_absolute_url}}">
+          <img class="logo logo-category" src="{% logo page.category %}"/>
+          <img class="logo logo-white" src="{% logo %}"/>
+          <span class="name">
+          {{top.title}}
+          </span>
+        </a>
+      </div>
+      {% include 'includes/main_navigation.html' with menu=menus.main buttons=menus.buttons %}
+    </nav>
 
     <header
       {% if header_image %}
@@ -47,9 +55,9 @@
       {% endif %}
       >
       <div class="top-bar">
-      <nav role="top" class="top">
-        {% include 'includes/top_navigation.html' with menu=menus.top %}
-      </nav>
+        <nav role="top" class="top">
+          {% include 'includes/top_navigation.html' with menu=menus.top %}
+        </nav>
 
       <nav role="buttons" class="buttons">
         {% include 'includes/nav_buttons.html' with menu=menus.buttons %}

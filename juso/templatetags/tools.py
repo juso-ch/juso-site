@@ -1,3 +1,4 @@
+from django.shortcuts import reverse
 from django import template
 from django.core import serializers
 from django.utils.safestring import mark_safe
@@ -21,3 +22,15 @@ def jsonify(obj, fields=None):
 @register.simple_tag
 def categories(language_code):
     return Category.objects.filter(language_code=language_code)
+
+
+@register.simple_tag
+def logo(category=None):
+    if category:
+        return reverse('logo', kwargs={
+            'language':category.language_code,
+            'slug':category.slug
+        })
+    return reverse('logo', kwargs={
+        'language': 'no', 'slug': 'default'
+    })

@@ -1,3 +1,4 @@
+{% load tools %}
 <input type="checkbox" id="fab" autocomplete="off"/>
 <label id="fab-button" class="menu-btn" for="fab">
 </label>
@@ -11,8 +12,16 @@
     </a>
     {% endfor %}
   </div>
+  <div class="small-top-bar">
+    <a class="current" href="#">DE</a>
+    <a href="#">IT</a>
+    <a href="#">Fr</a>
+    <a href="#">Medien</a>
+  </div>
   <div class="menu">
-    <h2>{{top.title}}</h2>
+    <h2>
+      <img class="logo-mobile" src="{% logo %}"/>
+    </h2>
     {% for element in menu %}
     <a href="{{element.get_absolute_url}}">{{element.title}}</a>
     {% endfor %}

@@ -223,6 +223,7 @@ class Page(
     class Meta:
         verbose_name = _("page")
         verbose_name_plural = _("page")
+        ordering = ['position']
 
 
 PluginBase = create_plugin_base(Page)

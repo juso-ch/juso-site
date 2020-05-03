@@ -31,6 +31,7 @@ class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
         'language_code',
         "template_key",
         'application',
+        "position",
     ]
     actions = ['copy_selected']
 

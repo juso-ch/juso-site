@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block regions %}
-<article class="article">
+<article class="{{article.category.slug}} article">
   {% render_region regions 'main' %}
 </article>
 {% endblock %}

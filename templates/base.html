@@ -29,22 +29,14 @@
   </head>
   <body>
 
-    <nav role="mobile">
-      {% include 'includes/mobile_menu.html' with menu=menus.main %}
+    <nav id="mobile-menu" role="mobile">
+      {% include 'includes/mobile_menu.html' with menu=menus.main buttons=menus.buttons %}
     </nav>
 
-    <nav role="top" class="top">
-      {% include 'includes/top_navigation.html' with menu=menus.top %}
-    </nav>
-
-    <nav role="buttons" class="button">
-      {% include 'includes/nav_buttons.html' with menu=menus.buttons %}
-    </nav>
-
-    <nav role="main" class="main" id="mainNavigation">
-      {% include 'includes/main_navigation.html' with menu=menus.main buttons=menus.buttons %}
-    </nav>
-
+      <nav role="main" class="main" id="mainNavigation">
+        <a class="brand" href="{{top.get_absolute_url}}">{{top.title}}</a>
+        {% include 'includes/main_navigation.html' with menu=menus.main buttons=menus.buttons %}
+      </nav>
 
     <header
       {% if header_image %}
@@ -54,6 +46,16 @@
       class="container"
       {% endif %}
       >
+      <div class="top-bar">
+      <nav role="top" class="top">
+        {% include 'includes/top_navigation.html' with menu=menus.top %}
+      </nav>
+
+      <nav role="buttons" class="buttons">
+        {% include 'includes/nav_buttons.html' with menu=menus.buttons %}
+      </nav>
+      </div>
+
       {% block header %}
       <h1 class="ui primary center aligned header">
         {{title|default:page.title}}
@@ -70,7 +72,7 @@
     <footer>
       {% block footer %}
       <nav role="meta">
-      {% include 'includes/meta_menu.html' with menu=menus.main quicklinks=menus.quicklinks%}
+        {% include 'includes/meta_menu.html' with menu=menus.main quicklinks=menus.quicklinks%}
       </nav>
 
       <nav role="footer">

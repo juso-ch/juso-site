@@ -1,6 +1,6 @@
 <div class="card-plugin">
   {% for article in articles.all %}
-  <div class="card">
+  <div class="{{article.category.slug}} card">
     {% if article.image %}
     <a class="image" href="{{article.get_absolute_url}}">
       <img src="{{article.image.url}}" alt="{{article.title}}"/>

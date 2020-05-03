@@ -9,7 +9,7 @@
   <h2>{{month.grouper}}</h2>
   <div class="events">
     {% for event in month.list %}
-    <div class="event item">
+    <div class="{{event.category.slug}} event item">
       {% if event.image %}
       <a class="image" href="{{event.get_absolute_url}}">
         <img src="{{event.image.url}}" alt="{{event.title}}"/>

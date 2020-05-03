@@ -1,0 +1,5 @@
+{% for button in menu %}
+<a href="{{button.get_absolute_url}}" class="button">
+  {{button.title}}
+</a>
+{% endfor %}

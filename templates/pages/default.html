@@ -2,7 +2,7 @@
 {% load feincms3 %}
 
 {% block regions %}
-<article>
+<article class="{{page.category.slug}}">
   {% render_region regions "main" %}
 </article>
 {% if page.is_navigation %}

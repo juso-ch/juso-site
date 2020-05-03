@@ -10,8 +10,10 @@
 </ul>
 <div class="buttons">
   {% for button in buttons %}
-  <a href="{{button.get_absolute_url}}">
+  <a class="button" href="{{button.get_absolute_url}}">
+    <span>
     {{button}}
+    </span>
   </a>
   {% endfor %}
 </div>

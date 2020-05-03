@@ -1,6 +1,6 @@
 <div class="event-plugin">
   {% for event in events.all %}
-  <div class="card">
+  <div class="{{event.category.slug}} card">
     {% if event.image %}
     <a class="image" href="{{event.get_absolute_url}}">
       <img src="{{event.image.url}}" alt="{{event.title}}"/>

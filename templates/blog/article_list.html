@@ -4,7 +4,7 @@
 {% block regions %}
 <article class="cards">
   {% for article in article_list %}
-  <div class="card">
+  <div class="{{article.category.slug}} card">
     {% if article.image %}
     <a class="image" href="{{article.get_absolute_url}}">
       <img src="{{article.image.url}}" alt="{{article.title}}"/>

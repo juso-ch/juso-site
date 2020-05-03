@@ -5,7 +5,7 @@ window.onscroll = function() {checkSticky()};
 var header = document.getElementById("mainNavigation");
 
 // Get the offset position of the navbar
-var sticky = header.offsetTop;
+var sticky = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--navbar-offset'));
 
 // Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
 function checkSticky() {
@@ -15,3 +15,5 @@ function checkSticky() {
     header.classList.remove("sticky");
   }
 } 
+
+checkSticky();

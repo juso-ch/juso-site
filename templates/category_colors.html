@@ -1,0 +1,13 @@
+{% load tools cache %}
+{% cache 600 categories page.language_code %}
+{% categories page.language_code as category_list %}
+<style>
+{% for category in category_list %}
+{% if category.color %}
+.{{category.slug}} {
+  --highlight-color: {{category.color}};
+}
+{% endif %}
+{% endfor %}
+</style>
+{% endcache %}

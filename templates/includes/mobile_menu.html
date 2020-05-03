@@ -1,2 +1,20 @@
-
-
+<input type="checkbox" id="fab" value="" autocomplete="off" checked="false"/>
+<label id="fab-button" class="menu-btn" for="fab">
+</label>
+<div class="nav-panel">
+  <div class="buttons">
+    {% for button in buttons %}
+    <a href="{{button.get_absolute_url}}" class="button">
+      <span>
+      {{button.title}}
+      </span>
+    </a>
+    {% endfor %}
+  </div>
+  <div class="menu">
+    <h2>{{top.title}}</h2>
+    {% for element in menu %}
+    <a href="{{element.get_absolute_url}}">{{element.title}}</a>
+    {% endfor %}
+  </div>
+</div>

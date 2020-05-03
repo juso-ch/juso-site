@@ -23,7 +23,7 @@ class Category(TranslationMixin, MetaMixin, TreeNode):
     slug = models.SlugField(verbose_name=_("slug"))
     color = models.CharField(
         max_length=7, verbose_name=_("color"),
-        default=settings.DEFAULT_COLOR,
+        blank=True,
     )
 
     header_image = ImageField(

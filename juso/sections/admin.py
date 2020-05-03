@@ -63,9 +63,12 @@ class CategoryAdmin(TreeAdmin):
     fieldsets = (
         (None, {
             "fields": (
-                'name', 'slug', 'language_code', 'parent'
+                'name', 'slug',
+                'language_code',
+                'parent',
                 'header_image',
-                'header_image_ppoi'
+                'header_image_ppoi',
+                'color',
             )
         }),
         (_("translations"), {

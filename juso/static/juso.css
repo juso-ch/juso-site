@@ -1,6 +1,11 @@
 /*
  * Define Colors
  */
+
+@import url('klima.css');
+@import url('folsom.css');
+@import url('graph.css');
+
 :root {
   --red: #ED2E38;
   --anthrazit: #262626;
@@ -25,10 +30,14 @@
   --navbar-height: 60px;
   --navbar-offset: 80px;
 
-  --body-font: 'Open Sans', sans-serif;
+  --body-font: 'Klima', sans-serif;
   --title-font: 'Montserrat', sans-serif;
-  --button-font: 'Open Sans', sans-serif;
-  --menu-font: 'Montserrat', sans-serif;
+  --button-font: 'Klima', sans-serif;
+  --menu-font: 'Klima', sans-serif;
+
+  --menu-weight: 900;
+  --button-weight: 900;
+
   --box-shadow: rgba(0, 0, 0, 0.4) 0 4px 8px;
 }
 
@@ -86,13 +95,20 @@ a.button {
   text-decoration: none;
   text-transform: uppercase;
   font-family: var(--button-font);
-  font-weight: bold;
+  font-weight: var(--button-weight);
 }
 
 
 nav {
   font-family: var(--menu-font);
-  font-weight: bold;
+  font-weight: var(--menu-weight);
+  text-transform: uppercase;
+}
+
+nav.top > a {
+  text-decoration: none;
+  font-size: 0.7em;
+  font-weight: normal;
 }
 
 /*
@@ -126,7 +142,7 @@ header.background-image {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  height: calc(30vh + (10vw - 10px));
+  height: calc(40vh + (12vw - 10px));
 }
 
 header.background-image h1::after {
@@ -140,6 +156,10 @@ header > h1  {
 
 .branding {
   flex: 1 0 auto;
+}
+
+.branding img.logo {
+  margin: auto;
 }
 
 .logo {
@@ -297,7 +317,7 @@ nav.main {
   display: flex;
   justify-content: space-between;
   align-items: stretch;
-  font-family: var(--title-font);
+  font-family: var(--menu-font);
   text-transform: uppercase;
   color: var(--light-color);
   font-size: min(max(18px, calc(10px + 1vw)), 26px);
@@ -324,10 +344,6 @@ nav.main.sticky {
   box-shadow: var(--box-shadow);
   margin-left: var(--container-padding);
   margin-right: var(--container-padding);
-  /**
-  padding-left: calc((100vw - var(--container-outer-width))/2);
-  padding-right: calc((100vw - var(--container-outer-width))/2);
-  **/
   font-size: min(max(14px, calc(7px + 1vw)), 20px);
 }
 
@@ -386,9 +402,6 @@ nav > ul {
   align-items: center;
 }
 
-
-
-
 /***Footer***/
 
 footer {
@@ -444,7 +457,7 @@ nav.footer > a {
   font-family: var(--body-font);
   font-weight: normal;
   text-decoration: none;
-  font-size: 0.8em;
+  font-size: 0.7em;
   margin-left: 1em;
   margin-right: 1em;
 }
@@ -461,7 +474,7 @@ nav.footer > a {
     transform: translate(-50%, 0);
     transform: translate(-50%,-50%);  
     height: 50px;
-    background-color: white;
+    background-color: var(--white);
     padding-top: 13px;
     border-radius: 25px;
     box-shadow: rgba(0, 0, 0, 0.4) 4px 4px 10px;
@@ -572,6 +585,8 @@ nav.footer > a {
   .small-top-bar > a, .small-bottom-bar > a {
     text-decoration: none;
     text-transform: uppercase;
+    font-weight: normal;
+    font-family: 0.7em;
   }
   .small-top-bar > a.current {
     text-decoration: underline;

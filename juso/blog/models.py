@@ -58,7 +58,7 @@ class Article(ContentMixin):
     def image(self):
         if Image.objects.filter(parent=self).exists():
             return Image.objects.filter(parent=self)[0].image
-        return self.meta_image
+        return self.header_image or self.meta_image
 
     def get_absolute_url(self):
         site = current_site()

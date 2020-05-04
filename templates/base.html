@@ -27,7 +27,7 @@
 
 
   </head>
-  <body>
+  <body class="{{page.category.slug}}">
 
     <nav id="mobile-menu" role="mobile">
       {% include 'includes/mobile_menu.html' with menu=menus.main buttons=menus.buttons footer=menus.footer %}
@@ -36,8 +36,8 @@
     <nav role="main" class="main" id="mainNavigation">
       <div class="branding">
         <a class="brand" href="{{top.get_absolute_url}}">
-          <img class="logo logo-category" src="{% logo page.category %}"/>
-          <img class="logo logo-white" src="{% logo %}"/>
+          <span class="logo">
+          </span>
           <span class="name">
           {{top.title}}
           </span>

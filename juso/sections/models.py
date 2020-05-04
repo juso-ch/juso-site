@@ -85,7 +85,8 @@ class ContentMixin(TranslationMixin, MetaMixin, TemplateMixin):
     header_image = ImageField(
         _("header image"), formats={
             'full': ['default', 'darken', ('crop', (1920, 900))],
-            'mobile': ['default', ('crop', (740, 600))]
+            'square': ['default', ('crop', (920, 920))],
+            'mobile': ['default', ('crop', (740, 600))],
         }, auto_add_fields=True, blank=True, null=True
     )
 

@@ -1,9 +1,9 @@
-<ul>
 {% for child in page.children.all %}
-<li>
-  <a href="{{child.get_absolute_url}}">
-{{child}}
+<a href="{{child.get_absolute_url}}" class="nav-item {{child.category.slug}}">
+    <img src="{{child.get_header_image.square}}">
+    <div class="overlay"></div>
+    <div class="info">
+      <span>{{child.title}}</span>
+    </div>
   </a>
-</li>
 {% endfor %}
-</ul>

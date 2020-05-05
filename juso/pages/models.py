@@ -100,9 +100,7 @@ class Page(
             _('categories'),
             {
                 "urlconf": "juso.sections.urls",
-                "app_instance_namespace": lambda page: (
-                    str(page.site_id) + '-' + 'categories'
-                )
+                "required_fields": ['collection'],
             },
         ),
     (
@@ -121,6 +119,14 @@ class Page(
             'app_instance_namespace': lambda page: str(page.site_id) + '-' + 'glossary'
         }
     ),
+    (
+        'collection',
+        _("collection"),
+        {
+            'urlconf': "juso.link_collections.urls",
+            'app_instance_namespace': lambda page: str(page.slug) + '-collections'
+        }
+    )
     ]
 
     MENUS = (
@@ -171,6 +177,11 @@ class Page(
     category = models.ForeignKey(
         "sections.Category", models.SET_NULL, blank=True, null=True,
         verbose_name=_("category"),
+    )
+
+    collection = models.ForeignKey(
+        "link_collections.Collection", models.CASCADE, blank=True,
+        null=True, verbose_name=_("collection")
     )
 
     header_image = ImageField(

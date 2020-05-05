@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-05 22:43+0200\n"
+"POT-Creation-Date: 2020-05-05 22:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -491,7 +491,8 @@ msgstr "Namensraum (blog)"
 msgid "namespace (event)"
 msgstr "Namensraum (events)"
 
-#: juso/pages/models.py:174 juso/people/models.py:21 juso/sections/models.py:70
+#: juso/pages/models.py:174 juso/people/models.py:21 juso/sections/apps.py:7
+#: juso/sections/models.py:70
 msgid "sections"
 msgstr "Sektionen"
 
@@ -667,3 +668,26 @@ msgstr "Italienisch"
 msgid "copy selected"
 msgstr "Ausgewählte duplizieren"
 
+#: templates/admin/base.html:35
+msgid "Welcome,"
+msgstr "Willkommen,"
+
+#: templates/admin/base.html:40
+msgid "View site"
+msgstr "Website"
+
+#: templates/admin/base.html:45
+msgid "Documentation"
+msgstr "Dokumentation"
+
+#: templates/admin/base.html:49
+msgid "Change password"
+msgstr "Passwort ändern"
+
+#: templates/admin/base.html:51
+msgid "Log out"
+msgstr "Abmelden"
+
+#: templates/admin/base.html:61
+msgid "Home"
+msgstr "Start"

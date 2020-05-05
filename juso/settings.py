@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "juso.people",
     "juso.forms",
     "juso.glossary",
+    "juso.link_collections",
 ]
 
 MIDDLEWARE = [

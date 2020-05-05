@@ -13,10 +13,8 @@
     {% endfor %}
   </div>
   <div class="small-top-bar">
-    <a class="current" href="#">DE</a>
-    <a href="#">IT</a>
-    <a href="#">Fr</a>
-    <a href="#">Medien</a>
+    {% include 'includes/translations.html' with page=page obj=obj %}
+    {% include 'includes/top_navigation.html' with menu=top %}
   </div>
   <div class="menu">
     <h2>

@@ -1,0 +1,5 @@
+{% load translations %}
+{% translations page obj as translations %}
+{% for translation in translations %}
+<a href="{{translation.1.get_absolute_url}}">{{translation.0}}</a>
+{% endfor %}

@@ -112,6 +112,7 @@ def article_detail(request, slug):
         {
             "page": page,
             "article": article,
+            "obj": article,
             'header_image': article.get_header_image() or page.get_header_image(),
             "title": article.title,
             "meta_tags": meta_tags(

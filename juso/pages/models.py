@@ -232,6 +232,13 @@ class Page(
         print(header_image)
         return header_image
 
+    def get_translation_for(self, language_code):
+        if r:=super().get_translation_for(language_code):
+            return r
+        if self.parent:
+            return self.parent.get_translation_for(language_code)
+        return None
+
     class Meta:
         verbose_name = _("page")
         verbose_name_plural = _("page")

@@ -52,6 +52,7 @@ def location_detail(request, slug):
         {
             'page': page,
             'location': location,
+            'obj': location,
             'title': location.name,
             'header_image': location.get_header_image() or page.get_header_image(),
             'event_list': location.event_set.filter(
@@ -118,6 +119,7 @@ def event_detail(request, slug):
         {
             'page': page,
             'event': event,
+            'obj': event,
             'header_image': event.header_image or page.header_image,
             'title': event.title,
             'meta_tags': meta_tags(

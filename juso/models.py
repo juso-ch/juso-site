@@ -10,6 +10,12 @@ class TranslationMixin(LanguageMixin):
         blank=True
     )
 
+
+    def get_translation_for(self, language_code):
+        qs = self.translations.filter(language_code=language_code)
+        if qs.exists():
+            return qs[0]
+
     class Meta:
         abstract = True
 

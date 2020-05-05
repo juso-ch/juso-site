@@ -71,7 +71,10 @@ class Article(ContentMixin):
                 'article-detail',
                 kwargs={
                     'slug': self.slug
-                }
+                },
+                languages=[
+                    self.language_code
+                ]
             )
         with set_current_site(self.section.site):
             site = self.section.site
@@ -84,7 +87,10 @@ class Article(ContentMixin):
                 urlconf=apps_urlconf(),
                 kwargs={
                     'slug': self.slug
-                }
+                },
+                languages=[
+                    self.language_code
+                ]
             )
 
     class Meta:

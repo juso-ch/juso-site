@@ -138,7 +138,13 @@ nav {
   text-transform: uppercase;
 }
 
+nav.top {
+  display: flex;
+  justify-content: flex-start;
+}
+
 nav.top > a {
+  margin: 0 1em;
   text-decoration: none;
   font-size: 0.7em;
   font-weight: normal;

@@ -23,6 +23,13 @@ def jsonify(obj, fields=None):
 def categories(language_code):
     return Category.objects.filter(language_code=language_code)
 
+@register.simple_tag
+def edit_url(obj):
+    return reverse(
+        f'admin:{obj._meta.app_label}_{obj._meta.model_name}',
+        args=(obj.pk,)
+    )
+
 
 @register.simple_tag
 def logo(category=None):

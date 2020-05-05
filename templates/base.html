@@ -30,7 +30,7 @@
   <body class="{{page.category.slug}}">
 
     <nav id="mobile-menu" role="mobile">
-      {% include 'includes/mobile_menu.html' with menu=menus.main buttons=menus.buttons footer=menus.footer %}
+      {% include 'includes/mobile_menu.html' with menu=menus.main buttons=menus.buttons footer=menus.footer top=menus.top %}
     </nav>
 
     <nav role="main" class="main" id="mainNavigation">
@@ -57,6 +57,7 @@
       <div class="top-bar">
         <nav role="top" class="top">
           {% include 'includes/top_navigation.html' with menu=menus.top %}
+          {% include 'includes/translations.html' with page=page obj=obj %}
         </nav>
 
       <nav role="buttons" class="buttons">

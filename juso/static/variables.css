@@ -1,0 +1,42 @@
+
+:root {
+  --red: #ED2E38;
+  --anthrazit: #262626;
+  --violett: #6217AD;
+  --green: #4FA743;
+  --orange: #FFB100;
+  --white: #FFFFFF;
+
+  --primary-color: var(--red);
+  --light-color: var(--white);
+
+
+  /**
+   * Dark mode
+  **/
+  --text-color: var(--anthrazit);
+  --background-color:var(--white);
+  --highlight-color: var(--primary-color);
+
+  --footer-background-color: var(--anthrazit);
+  --footer-text-color: var(--white);
+
+  --container-width: min(1200px, 94vw);
+  --container-outer-width: min(1200px, 100vw);
+
+  --outer-padding: calc((100vw - var(--container-outer-width))/2);
+  --inner-padding: calc((100vw - var(--container-width))/2);
+
+  --navbar-height: 60px;
+  --navbar-offset: 80px;
+
+  --body-font: 'Klima', sans-serif;
+  --title-font: 'Montserrat', sans-serif;
+  --button-font: 'Klima', sans-serif;
+  --menu-font: 'Klima', sans-serif;
+
+  --menu-weight: 900;
+  --button-weight: 900;
+
+  --box-shadow: rgba(0, 0, 0, 0.4) 0 4px 8px;
+}

@@ -189,3 +189,6 @@ class SiteAdmin(SiteAdmin):
 admin.site.unregister(Site)
 admin.site.register(Site, SiteAdmin)
 admin.site.register(models.Page, PageAdmin)
+
+admin.site.site_header = _("JUSO Schweiz")
+admin.site.site_title = _("JUSO Admin")

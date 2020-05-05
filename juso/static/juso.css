@@ -5,93 +5,15 @@
 @import url('klima.css');
 @import url('folsom.css');
 @import url('graph.css');
+@import url('variables.css');
 
-:root {
-  --red: #ED2E38;
-  --anthrazit: #262626;
-  --violett: #6217AD;
-  --green: #4FA743;
-  --orange: #FFB100;
-  --white: #FFFFFF;
-
-  --primary-color: var(--red);
-  --light-color: var(--white);
-
-
-  /**
-   * Dark mode
-  **/
-  --text-color: var(--anthrazit);
-  --background-color:var(--white);
-  --highlight-color: var(--primary-color);
-
-  --footer-background-color: var(--anthrazit);
-  --footer-text-color: var(--white);
-
-  --container-width: min(1200px, 94vw);
-  --container-outer-width: min(1200px, 100vw);
-
-  --outer-padding: calc((100vw - var(--container-outer-width))/2);
-  --inner-padding: calc((100vw - var(--container-width))/2);
-
-  --navbar-height: 60px;
-  --navbar-offset: 80px;
-
-  --body-font: 'Klima', sans-serif;
-  --title-font: 'Montserrat', sans-serif;
-  --button-font: 'Klima', sans-serif;
-  --menu-font: 'Klima', sans-serif;
-
-  --menu-weight: 900;
-  --button-weight: 900;
-
-  --box-shadow: rgba(0, 0, 0, 0.4) 0 4px 8px;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-  --text-color: var(--white);
-  --background-color:var(--anthrazit);
-  --footer-background-color: black;
-  --footer-text-color: grey;
-  }
-  img {
-    opacity: .75;
-    transition: opacity .5s ease-in-out;
-  }
-  img:hover {
-    opacity: 1;
-  }
-}
-
+@import url('darkmode.css');
 
 /*
  * Basic styles
  */
+@import url('base.css');
 
-body {
-  font-size: 16px;
-  font-size: clamp(16px, 4vw, 22px);
-  font-family: var(--body-font);
-  counter-reset: glossary;
-  background-color: var(--background-color);
-  color: var(--text-color);
-} 
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--title-font);
-  font-weight: 800;
-  text-transform: uppercase;
-  display: inline-block;
-}
-
-h5 {
-  font-style: italic;
-}
-
-h4, h5, h6 {
-  font-weight: 400;
-}
 
 h1::after {
   background-color: var(--highlight-color);

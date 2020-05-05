@@ -41,14 +41,14 @@ INSTALLED_APPS = [
     "imagefield",
     "taggit",
     "juso",
-    "juso.sections",
-    "juso.blog",
-    "juso.pages",
-    "juso.events",
-    "juso.people",
-    "juso.forms",
-    "juso.glossary",
-    "juso.link_collections",
+    "juso.sections.apps.SectionsConfig",
+    "juso.blog.apps.BlogConfig",
+    "juso.pages.apps.PagesConfig",
+    "juso.events.apps.EventsConfig",
+    "juso.people.apps.PeopleConfig",
+    "juso.forms.apps.FormsConfig",
+    "juso.glossary.apps.GlossaryConfig",
+    "juso.link_collections.apps.LinkCollectionsConfig",
 ]
 
 MIDDLEWARE = [
@@ -213,6 +213,11 @@ DATABASES = {
 
 
 DEFAULT_COLOR = "#ff000"
+
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+)
 
 try:
     from juso.local_settings import *

@@ -233,7 +233,8 @@ class Page(
         return header_image
 
     def get_translation_for(self, language_code):
-        if r:=super().get_translation_for(language_code):
+        r = super().get_translation_for(language_code)
+        if r:
             return r
         if self.parent:
             return self.parent.get_translation_for(language_code)

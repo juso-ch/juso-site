@@ -27,8 +27,6 @@
     {% endfor %}
   </div>
   <div class="small-bottom-bar">
-    {% for item in footer %}
-    <a href="{{item.get_absolute_url}}">{{item}}</a>
-    {% endfor %}
+        {% include 'includes/footer_menu.html' with menu=footer %}
   </div>
 </div>

@@ -95,11 +95,15 @@
     {% render_block 'js' %}
 
     {% addtoblock 'js' %}
-    <script src="{% static 'forms/js.cookie.min.js' %}"></script>
+    <script src="{% static 'js.cookie.min.js' %}"></script>
     {% endaddtoblock %}
 
     {% addtoblock 'js' %}
     <script src="{% static 'forms/forms.js' %}"></script>
+    {% endaddtoblock %}
+
+    {% addtoblock 'js' %}
+    <script src="{% static 'theming.js' %}"></script>
     {% endaddtoblock %}
 
     {% addtoblock 'js' %}

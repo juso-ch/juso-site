@@ -1,15 +1,32 @@
-@media (prefers-color-scheme: dark) {
-  :root {
+body.theme-change {
+  transition: all 200ms ease-in-out;
+}
+
+body.dark{
   --text-color: var(--white);
   --background-color:var(--anthrazit);
   --footer-background-color: black;
   --footer-text-color: grey;
-  }
-  img {
-    opacity: .75;
-    transition: opacity .5s ease-in-out;
-  }
-  img:hover {
-    opacity: 1;
-  }
+}
+body.dark img {
+  opacity: .75;
+  transition: opacity .5s ease-in-out;
+}
+body.dark img:hover {
+  opacity: 1;
+}
+
+.toggle-theme {
+  margin: 0 1em;
+}
+#theme-sun {
+  display: none;
+}
+
+body.dark #theme-sun {
+  display: inherit;
+}
+
+body.dark #theme-moon {
+  display: none;
 }

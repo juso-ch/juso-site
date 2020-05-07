@@ -26,11 +26,26 @@ services:
     volumes:
       - static_volume:/home/app/web/static/
       - media_volume:/home/app/web/media/
-    ports:
-      - 1337:80
+    networks:
+      - web
+      - default
+    restart: always
+    expose:
+      - 80
     depends_on:
       - web
+    labels:
+      - "traefik.docker.network=web"
+      - "traefik.enable=true"
+      - "traefik.basic.frontend.rule=Host:dev.juso.ch"
+      - "traefik.basic.port=80"
+      - "traefik.basic.protocol=http"
+
 volumes:
   postgres_data:
   static_volume:
   media_volume:
+
+networks:
+  web:
+    external: true

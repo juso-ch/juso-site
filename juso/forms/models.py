@@ -73,7 +73,14 @@ class RichText(plugins.richtext.RichText, PluginBase):
         verbose_name = _("rich text")
 
 
-SIZES = ((number_word(i), _(number_word(i))) for i in range(1, 17))
+SIZES = (
+    ('one', _("one")),
+    ('one-half', _("one half")),
+    ('one-third', _("one third")),
+    ('one-fourth', _("one fouth")),
+    ('three-fourths', _("thre fourths")),
+    ('two-thirds', _("two thirds")),
+)
 
 
 
@@ -89,7 +96,7 @@ class FormField(PluginBase):
     help_text = models.CharField(_("help text"), max_length=240, blank=True)
     choices = models.TextField(_("choices"), blank=True)
     initial = models.TextField(_("initial"), max_length=240, blank=True)
-    size = models.TextField(_("size"), default="sixteen", choices=SIZES)
+    size = models.TextField(_("size"), default="one", choices=SIZES)
 
     def __str__(self):
         return self.name

@@ -1,0 +1,57 @@
+
+
+@media (min-width: 600px){
+  form.form {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    column-gap: 1em;
+  }
+}
+
+form.form > .message {
+  grid-column: span 12;
+  font-size: 0.9rem;
+}
+
+form.form > button {
+  grid-column: span 12;
+  width: 100%;
+  margin-top: 0.8em;
+  font-size: 1rem;
+}
+
+.field.one {
+  grid-column: span 12;
+}
+
+.field.two-thirds {
+  grid-column: span 9;
+}
+
+.field.three-fourths {
+  grid-column: span 8;
+}
+
+.field.one-half {
+  grid-column: span 6;
+}
+
+.field.one-third {
+  grid-column: span 4;
+}
+
+.field.one-fourth {
+  grid-column: span 3;
+}
+
+.field > label {
+  display: block;
+  font-size: 0.9rem;
+}
+
+.field > input, .field > select {
+  width: 100%;
+  margin-bottom: 0.3rem;
+  font-size: 1em;
+  padding: 0.1em 0.2em;
+}

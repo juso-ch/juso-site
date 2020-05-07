@@ -8,6 +8,7 @@
 @import url('variables.css');
 
 @import url('darkmode.css');
+@import url('forms.css');
 
 /*
  * Basic styles
@@ -43,6 +44,19 @@ a:visited {
 .card {
   border-radius: 3px;
   box-shadow: var(--box-shadow);
+  display: flex;
+  flex-direction: column;
+}
+
+.card > .content {
+  padding: 1rem 1rem;
+  flex: 1 0;
+}
+
+.card > .content.extra {
+  font-size: 0.8em;
+  display: flex;
+  align-items: center;
 }
 
 .card img{
@@ -121,14 +135,22 @@ nav.subsites > a:hover > div.info {
 /*
  * Buttons
  */
-a.button {
+a.button, button {
   padding: 1em 2em;
+  border: none;
+  border-radius: 3px;
+  box-shadow: var(--box-shadow);
+  cursor: pointer;
   background-color: var(--primary-color);
   color: var(--light-color);
   text-decoration: none;
   text-transform: uppercase;
   font-family: var(--button-font);
   font-weight: var(--button-weight);
+}
+
+a.button:hover, button:hover {
+  filter: brightness(0.9);
 }
 
 
@@ -340,12 +362,12 @@ img {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 80%;
-  z-index: 3;
 }
 
-.text-image > .centered > span {
+.highlight-text {
   background-color: var(--highlight-color);
   padding: 0.5rem 0;
+  color: var(--light-color);
   -webkit-box-shadow: 1rem 0px 0px var(--highlight-color) -1rem 0px 0px var(--highlight-color);
   box-shadow: 1rem 0px 0px var(--highlight-color), -1rem 0px 0px var(--highlight-color);
   -webkit-box-decoration-break: clone;
@@ -363,6 +385,11 @@ img {
   opacity: 0.1;
   width: 100%;
   height: 100%;
+  transition: opacity 200ms ease-in-out;
+}
+
+.overlay:hover {
+  opacity: 0.5;
 }
 
 nav > ul {
@@ -393,6 +420,11 @@ nav.main {
 
 nav.main .buttons {
   display: none;
+}
+
+nav.main .buttons > .button {
+  border-radius: 0;
+  box-shadow: none;
 }
 
 nav.main.sticky span.name {
@@ -444,6 +476,8 @@ nav.buttons {
 
 nav.buttons > a.button {
   padding: 0.4em 1.2em;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .buttons > a:nth-child(1) {
@@ -600,8 +634,13 @@ nav.footer > a {
 
   .nav-panel .buttons {
     height: 3rem;
+    border-radius: 0px;
   }
 
+  .nav-panel > .buttons > a.button {
+    border-radius: 0 0 0 0;
+    box-shadow: none;
+  }
 
   .nav-panel > .buttons > a.button:nth-child(1) {
     border-radius: 3px 0 0 0;

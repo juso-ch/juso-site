@@ -6,26 +6,24 @@
     </ul>
   </div>
   {% endif %}
-  <div class="fields">
   {% for field in form %}
   {% if field.is_hidden %}
   {{field}}
   {% else %}
-  <div class="field {{field.field.size}} wide {% if field.errors %}error{% endif %} {% if field.field.required %} required{% endif %}">
+  <div class="field {{field.field.size}} {% if field.errors %}error{% endif %} {% if field.field.required %} required{% endif %}">
     <label>
       {{field.label}}
     </label>
+    <small>{{field.help_text}}</small>
     {{field}}
-      <small>{{field.help_text}}</small>
     {% if field.errors %}
     <div class="error message">
       {{field.errors}}
     </div>
     {% endif %}
+    {% endif %}
   </div>
-  {% endif %}
-  {% endfor %}
-  </div>
+    {% endfor %}
   <button id="submit_{{form.form.id}}" type="submit" class="button">
     {{form.form.submit}}
   </button>

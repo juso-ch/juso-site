@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.prod
-    command: gunicorn juso.wsgi:application --bind 0.0.0.0:8000
+    command: uvicorn juso.asgi:application --bind 0.0.0.0:8000
     volumes:
       - static_volume:/home/app/web/static/
       - media_volume:/home/app/web/media/

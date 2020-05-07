@@ -60,6 +60,14 @@ class Article(ContentMixin):
             return Image.objects.filter(parent=self)[0].image
         return self.header_image or self.meta_image
 
+    @property
+    def tagline(self):
+        if RichText.objects.filter(parent=self).exists():
+            return RichText.objects.filter(parent=self)[0].text
+        if self.meta_description:
+            return self.meta_description
+        return '<p></p>'
+
     def get_absolute_url(self):
         site = current_site()
         if site == self.section.site:

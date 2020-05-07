@@ -48,6 +48,8 @@ class ArticlePlugin(TranslationMixin):
 
     class Meta:
         abstract = True
+        verbose_name = _("article plugin")
+        verbose_name_plural = _("article plugins")
 
 
 class ArticlePluginInline(ContentEditorInline):

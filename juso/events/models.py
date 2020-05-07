@@ -29,6 +29,8 @@ class NameSpace(TranslationMixin):
 
     class Meta:
         ordering = ['name']
+        verbose_name = _("namespace")
+        verbose_name_plural = _("namespaces")
 
 
 class Location(MetaMixin, TranslationMixin):

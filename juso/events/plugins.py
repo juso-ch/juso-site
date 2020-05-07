@@ -51,6 +51,8 @@ class EventPlugin(TranslationMixin):
 
     class Meta:
         abstract = True
+        verbose_name = _("event plugin")
+        verbose_name_plural = _("event plugins")
 
 
 

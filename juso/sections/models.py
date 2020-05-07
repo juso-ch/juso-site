@@ -33,6 +33,10 @@ class Category(TranslationMixin, MetaMixin, TreeNode):
         }, auto_add_fields=True, blank=True, null=True
     )
 
+    class Meta:
+        verbose_name = _("category")
+        verbose_name_plural = _("categories")
+
     @property
     def title(self):
         return self.name

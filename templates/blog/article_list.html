@@ -6,21 +6,25 @@
   {% for article in article_list %}
   <div class="{{article.category.slug}} card">
     {% if article.image %}
-    <a class="image" href="{{article.get_absolute_url}}">
-      <img src="{{article.image.url}}" alt="{{article.title}}"/>
-    </a>
-    {% endif %}
-    <div class="content">
-      <a class="header" href="{{article.get_absolute_url}}">
-        {{article.title}}
-      </a>
-      <a class="meta" href="{{event.get_absolute_url}}">
-        {{article.category|default:""}}
-      </a>
-      <a class="description">
+    <div class="heading">
+      <a class="text-image" href="{{article.get_absolute_url}}">
+        <img src="{{article.image.url}}" alt="{{article.title}}"/>
+        <div class="overlay"></div>
+        <div class="centered" href="{{article.get_absolute_url}}">
+          <h3 class="highlight-text">
+            {{article.title}}
+          </h3>
+        </div>
       </a>
     </div>
+    {% endif %}
+    <div class="content">
+      {{article.tagline|truncatewords_html:"40"|safe}}
+    </div>
     <div class="extra content">
+      <a href="{{article.get_absolute_url}}" class="button">
+        Weiterlesen
+      </a>
     </div>
   </div>
   {% endfor %}

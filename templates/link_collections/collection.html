@@ -10,19 +10,19 @@
     <link rel="stylesheet" type="text/css" href="{% static 'sanitize.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'juso.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'collections.css' %}">
-{% include 'category_colors.html' %}
+    {% include 'category_colors.html' %}
 
   </head>
-    <body>
+  <body>
 
-      <div class="logo"></div>
-      <h1>{{page.title}}</h1>
+    <div class="logo"></div>
+    <h1>{{page.title}}</h1>
 
-      <article class="collection">
-        {% for link in collection.link_set.all %}
-        <a href="{{link.target}}" class="link {{link.category.slug}}">{{link.text}}</a>
-        {% endfor %}
-      </article>
+    <article class="collection">
+      {% for link in collection.link_set.all %}
+      <a href="{{link.target}}" class="link {{link.category.slug}}">{{link.text}}</a>
+      {% endfor %}
+    </article>
 
-    </body>
+  </body>
 </html>

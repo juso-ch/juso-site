@@ -1,5 +1,5 @@
-body.theme-change {
-  transition: all 200ms ease-in-out;
+body.theme-change, body.theme-change .nav-panel {
+  transition: all 400ms ease-in-out;
 }
 
 body.dark{

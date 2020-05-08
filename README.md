@@ -39,14 +39,10 @@ pip install -r requirements.txt
 
 cp local_settings.py.example juso/local_settings.py
 
-npm install
-
-npx gulp build
-
 python manage.py migrate
 
 # Load a fixture with some example entries
-python manage.py loaddata example
+python manage.py loaddata site
 
 python manage.py runserver
 

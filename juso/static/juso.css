@@ -238,6 +238,10 @@ header > h1  {
   mask-repeat: no-repeat;
   mask-position: center;
   mask-image: url('logo.svg');
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  -webkit-mask-image: url('logo.svg');
 }
 
 .branding .logo {

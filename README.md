@@ -7,6 +7,29 @@ docker-compose build
 docker-compose up
 ```
 
+### Deployment
+Copy `.env.dev` to `.env.prod` and change the passwords.
+
+Build images and run them
+```
+docker-compose -f docker-compose.prod.yml up --build -d
+```
+
+Run database migrations
+```
+docker-compose -f docker-compose.prod.yml exec web python manage.py migrate
+```
+
+Collect static files
+```
+docker-compose -f docker-compose.prod.yml exec web python manage.py collectstatic --no-input
+```
+On first run only, create a superuser and a default site.
+```
+docker-compose -f docker-compose.prod.yml exec web python manage.py createsuperuser
+docker-compose -f docker-compose.prod.yml exec web python manage.py shell
+```
+
 Installation
 
 ```

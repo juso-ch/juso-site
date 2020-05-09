@@ -249,7 +249,6 @@ nav.top > a {
 
 header.page {
   display: flex;
-  height: calc(20vh + (5vw - 10px));
   flex-direction: column;
   justify-content: space-between;
   margin-top: calc(-1 * calc(var(--navbar-height) + var(--navbar-offset)));
@@ -266,7 +265,7 @@ header.page {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  height: 30vmax;
+  min-height: 30vmax;
 }
 
 main, header.page, footer, nav.main {
@@ -280,7 +279,7 @@ header.background-image h1::after {
 }
 
 header.page > h1  {
-  font-size: clamp(42px, 8vw, 55px);
+  font-size: clamp(34px, 4vw, 53px);
   margin-bottom: min(calc(var(--inner-padding) - 0.1em), 1rem);
   line-height: 1em;
 }

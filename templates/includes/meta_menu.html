@@ -4,11 +4,13 @@
 <div class="meta-menu">
   <h4><a href="{{main.get_absolute_url}}">{{main}}</a></h4>
   <div>
-      {% for child in children %}
-      <a href="{{child.get_absolute_url}}">
+    {% for child in children %}
+    {% if child.in_meta %}
+    <a href="{{child.get_absolute_url}}">
       {{child}}
-      </a>
-      {% endfor %}
+    </a>
+    {% endif %}
+    {% endfor %}
   </div>
 </div>
 {% endif %}
@@ -16,10 +18,10 @@
 <div class="meta-menu">
   <h4>Quicklinks</h4>
   <div>
-      {% for main in quicklinks %}
-      <a href="{{main.get_absolute_url}}">
+    {% for main, children in quicklinks|group_by_tree %}
+    <a href="{{main.get_absolute_url}}">
       {{main}}
-      </a>
-      {% endfor %}
+    </a>
+    {% endfor %}
   </div>
 </div>

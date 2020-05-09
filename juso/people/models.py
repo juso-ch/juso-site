@@ -4,6 +4,7 @@ from django.utils.translation import gettext as _
 from feincms3.apps import apps_urlconf, reverse_app
 from feincms3_sites.middleware import current_site, set_current_site
 
+from imagefield.fields import ImageField
 from juso.models import TranslationMixin
 from juso.sections.models import Section
 
@@ -21,9 +22,12 @@ class Person(models.Model):
         verbose_name=_("sections")
     )
 
-    image = models.ImageField(
+    image = ImageField(
         _("image"), blank=True, null=True,
-        upload_to='people/'
+        upload_to='people/', auto_add_fields=True,
+        formats={
+            'square': ['default', ('crop', (900, 900))],
+        }
     )
 
     first_name = models.CharField(max_length=100, verbose_name=_("first name"))

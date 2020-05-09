@@ -183,3 +183,19 @@ class NamespaceAdmin(admin.ModelAdmin):
             'fields': ('name', 'slug', 'language_code', 'translations')
         }),
     )
+
+class WPImportMappingInline(admin.TabularInline):
+    model = models.NamespaceMapping
+    extra = 3
+
+    autocomplete_fields = ['target']
+
+@admin.register(models.WPImport)
+class WPImportAdmin(admin.ModelAdmin):
+    autocomplete_fields = [
+        'section', 'default_namespace'
+    ]
+
+    inlines = [
+        WPImportMappingInline
+    ]

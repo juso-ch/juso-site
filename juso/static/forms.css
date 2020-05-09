@@ -24,11 +24,11 @@ form.form > button {
   grid-column: span 12;
 }
 
-.field.two-thirds {
+.field.three-fourths {
   grid-column: span 9;
 }
 
-.field.three-fourths {
+.field.two-thirds {
   grid-column: span 8;
 }
 

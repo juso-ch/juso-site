@@ -16,35 +16,26 @@ def category_list(request):
     page = page_for_app_request(request)
     page.activate_language(request)
 
-    events = event_list_for_page(page)
-    articles = articles_for_page(page)
+    category_list = page.categorylinking_set.all()
 
-    categories = Category.objects.filter(
-        Q(event__in=events) | Q(article__in=articles)
-    ).exclude(pk__in=page.featured_categories.all()).distinct()
-
-    featured_categories = page.featured_categories.all()
-
-    for category in featured_categories:
-        category.events = events.filter(category=category)[:5]
-        category.articles = articles.filter(category=category)[:4]
+    edit = request.user.is_authenticated and\
+            request.user.section_set.filter(pk=page.site.section.pk).exists()
 
     ancestors = list(page.ancestors().reverse())
 
     return render_list(
         request,
-        categories,
+        category_list,
         {
             'page': page,
-            'featured_categories': featured_categories,
-            'all_categories': categories.all(),
+            'edit': edit,
             "header_image": page.get_header_image(),
             "meta_tags": meta_tags([page] + ancestors, request=request),
             'regions': Regions.from_item(
                 page, renderer=pages.renderer.renderer, timeout=60,
             )
         },
-        paginate_by=10,
+        paginate_by=100
     )
 
 
@@ -58,9 +49,10 @@ def category_detail(request, slug):
 
     events = event_list_for_page(page).filter(category=category)
     articles = articles_for_page(page).filter(category=category)
+    description = page.categorylinking_set.get(category=category).description
 
     page_number = request.GET.get('page', 1)
-    articles = Paginator(articles, per_page=6).get_page(page_number)
+    articles = Paginator(articles, per_page=12).get_page(page_number)
 
     ancestors = list(page.ancestors().reverse())
 
@@ -72,6 +64,8 @@ def category_detail(request, slug):
             "articles": articles,
             "events": events,
             "category": category,
+            'obj': category,
+            'description': description,
             "title": category.name,
             "header_image": category.get_header_image() or page.get_header_image(),
             "meta_tags": meta_tags(

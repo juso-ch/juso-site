@@ -29,6 +29,8 @@ class Category(TranslationMixin, MetaMixin, TreeNode):
     header_image = ImageField(
         _("header image"), formats={
             'full': ['default', 'darken', ('crop', (1920, 900))],
+            'square': ['default', ('crop', (900, 900))],
+            'card': ['default', ('crop', (900, 600))],
             'mobile': ['default', ('crop', (740, 600))]
         }, auto_add_fields=True, blank=True, null=True
     )
@@ -46,6 +48,9 @@ class Category(TranslationMixin, MetaMixin, TreeNode):
         return reverse_app(
             (str(site.id) + '-categories',),
             'category-detail',
+            languages=[
+                self.language_code
+            ],
             kwargs={'slug': self.slug}
         )
 
@@ -80,7 +85,7 @@ class Section(TreeNode):
 
 class ContentMixin(TranslationMixin, MetaMixin, TemplateMixin):
     title = models.CharField(max_length=200, verbose_name=_("title"))
-    slug = models.SlugField(verbose_name=_("slug"))
+    slug = models.SlugField(verbose_name=_("slug"), max_length=180)
     author = models.ForeignKey(
         User, models.SET_NULL, null=True, blank=True,
         verbose_name=_("author")
@@ -90,6 +95,7 @@ class ContentMixin(TranslationMixin, MetaMixin, TemplateMixin):
         _("header image"), formats={
             'full': ['default', 'darken', ('crop', (1920, 900))],
             'square': ['default', ('crop', (920, 920))],
+            'card': ['default', ('crop', (900, 600))],
             'mobile': ['default', ('crop', (740, 600))],
         }, auto_add_fields=True, blank=True, null=True
     )

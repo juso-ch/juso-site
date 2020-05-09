@@ -1,4 +1,4 @@
-<form class="form {% if form.errors %}error{% endif %}" action="{{form.form.get_absolute_url}}" id="form-{{form.form.id}}">
+<form class="form {% if form.form.fullwidth %}full{% endif %} {% if form.errors %}error{% endif %}" action="{{form.form.get_absolute_url}}" id="form-{{form.form.id}}">
   {% if form.non_field_errors %}
   <div class="error message">
     <ul>
@@ -23,8 +23,8 @@
     {% endif %}
     {% endif %}
   </div>
-    {% endfor %}
-  <button id="submit_{{form.form.id}}" type="submit" class="button">
+  {% endfor %}
+  <button id="submit_{{form.form.id}}" type="submit" class="button field {{form.form.size}}">
     {{form.form.submit}}
   </button>
 </form>

@@ -10,10 +10,15 @@
 @import url('darkmode.css');
 @import url('forms.css');
 
+@import url('base.css');
+
+figure {
+  margin: 1em 0;
+}
+
 /*
  * Basic styles
  */
-@import url('base.css');
 
 
 h1::after {
@@ -29,13 +34,22 @@ a:visited {
   color: inherit;
 }
 
-.text > p {
-  width: 65%;
+.text > p, .wrapper > *, figure > img, figure > figcaption {
+  max-width: 65%;
+}
+
+figure.full {
+  clear: both;
+}
+
+.wrapper > .full, figure.full > img, figure.full > figcaption {
+  max-width: 100%;
+  clear: both;
 }
 
 .cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 2fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(var(--container-width), 400px), 1fr));
   grid-gap: 1rem;
   margin-top: 2rem;
   margin-bottom: 2rem;
@@ -48,15 +62,50 @@ a:visited {
   flex-direction: column;
 }
 
+.card.horizontal{
+  flex-direction: row;
+}
+
+.social-media {
+  margin-top: 1em;
+}
+
+.social-media > a {
+  margin: 0.2em;
+}
+
 .card > .content {
   padding: 1rem 1rem;
   flex: 1 0;
 }
 
+.card > .content > p:last-child {
+  margin: 0;
+}
+
+
 .card > .content.extra {
   font-size: 0.8em;
   display: flex;
   align-items: center;
+  flex: 0 0;
+}
+
+.card.horizontal > img {
+  flex: 1 0 50%;
+}
+
+.card.horizontal > .content {
+  flex: 1 0 50%;
+}
+
+.card.horizontal > .content > section {
+  display: flex;
+  flex-direction: column;
+}
+
+.card.horizontal > .content > section > a {
+  margin: 0 0 0.2em 0;
 }
 
 .card img{
@@ -64,13 +113,21 @@ a:visited {
   overflow: hidden;
 }
 
+main > article {
+  margin-bottom: 1em;
+}
+
 /** Page navigation **/
 nav.subsites {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
   grid-gap: 1rem;
   margin-top: 2rem;
   margin-bottom: 2rem;
+}
+
+nav.subsites > a > div.info > div{
+  max-width: 80%;
 }
 
 nav.subsites > a > div.info {
@@ -118,8 +175,16 @@ nav.subsites > a:hover > div.overlay {
 }
 
 nav.subsites > a > div.info > span {
-  background-color: var(--primary-color);
+  background-color: var(--highlight-color);
   padding: 0.2em 0.5em;
+  color: var(--light-color);
+  -webkit-box-shadow: 1rem 0px 0px var(--highlight-color) -1rem 0px 0px var(--highlight-color);
+  box-shadow: 1rem 0px 0px var(--highlight-color), -1rem 0px 0px var(--highlight-color);
+  -webkit-box-decoration-break: clone;
+  -moz-box-decoration-break: clone;
+  box-decoration-break: clone;
+  line-height: 2em;
+  display: inline;
 }
 
 nav.subsites > a:hover > img {
@@ -136,7 +201,7 @@ nav.subsites > a:hover > div.info {
  * Buttons
  */
 a.button, button {
-  padding: 1em 2em;
+  padding: 0.5em 1em;
   border: none;
   border-radius: 3px;
   box-shadow: var(--box-shadow);
@@ -147,12 +212,18 @@ a.button, button {
   text-transform: uppercase;
   font-family: var(--button-font);
   font-weight: var(--button-weight);
+  display: inline-block;
+  line-height: 1em;
 }
 
 a.button:hover, button:hover {
   filter: brightness(0.9);
 }
 
+
+.button.icon {
+  padding: 0.2em;
+}
 
 nav {
   font-family: var(--menu-font);
@@ -176,20 +247,12 @@ nav.top > a {
  * Header
  */
 
-header {
+header.page {
   display: flex;
   height: calc(20vh + (5vw - 10px));
   flex-direction: column;
   justify-content: space-between;
   margin-top: calc(-1 * calc(var(--navbar-height) + var(--navbar-offset)));
-}
-
-main, header, footer, nav.main {
-  padding-left: var(--inner-padding);
-  padding-right: var(--inner-padding);
-}
-
-header.background-image {
   color: var(--light-color);
   background-position-x: center;
   background-position-y: center;
@@ -203,16 +266,23 @@ header.background-image {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  height: max(40vw, 25vh);
+  height: 30vmax;
 }
+
+main, header.page, footer, nav.main {
+  padding-left: var(--inner-padding);
+  padding-right: var(--inner-padding);
+}
+
 
 header.background-image h1::after {
   content: none;
 }
 
-header > h1  {
+header.page > h1  {
   font-size: clamp(42px, 8vw, 55px);
-  margin-bottom: 0;
+  margin-bottom: min(calc(var(--inner-padding) - 0.1em), 1rem);
+  line-height: 1em;
 }
 
 .branding {
@@ -300,6 +370,7 @@ nav#mobile-menu .logo {
   vertical-align: baseline;
   position: relative; 
   padding-bottom: 1em;
+
 }
 
 .glossary + .toggle {
@@ -326,14 +397,14 @@ nav#mobile-menu .logo {
   .glossary-content {
     display: none;
   }
-  .text > p {
-    width: 100%;
+  .text > p, .wrapper > *, figure > img, figure > figcaption {
+    max-width: 100%;
+    clear: both;
   }
 
   .toggle:checked + .glossary-content {
     display: block;
     float: left;
-    left: 1rem;
     clear: both;
     width: 95%;
     margin: 1rem 2.5%;
@@ -362,7 +433,7 @@ img {
 /* Centered text */
 .text-image > .centered{
   position: absolute;
-  top: 75%;
+  top: 65%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 80%;
@@ -377,7 +448,9 @@ img {
   -webkit-box-decoration-break: clone;
   -moz-box-decoration-break: clone;
   box-decoration-break: clone;
-  line-height: 2em;
+  line-height: 2.4em;
+  display: inline;
+  hyphens: auto;
 }
 
 
@@ -392,7 +465,7 @@ img {
   transition: opacity 200ms ease-in-out;
 }
 
-.overlay:hover {
+.card .heading:hover  .overlay {
   opacity: 0.5;
 }
 
@@ -505,6 +578,8 @@ nav > ul {
 /***Footer***/
 
 footer {
+  clear: both;
+  margin-top: 1em;
   background-color: var(--footer-background-color);
   color: var(--footer-text-color);
   padding-bottom: 4em;

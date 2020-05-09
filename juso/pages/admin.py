@@ -7,6 +7,7 @@ from feincms3_sites.admin import SiteAdmin
 from feincms3_sites.models import Site
 from js_asset import JS
 
+from admin_ordering.admin import OrderableAdmin
 from juso.blog import plugins as blog_plugins
 from juso.events import plugins as event_plugins
 from juso.forms import plugins as form_plugins
@@ -18,6 +19,17 @@ from juso.glossary.admin import GlossaryContentInline
 from juso.admin import ButtonInline
 
 # Register your models here.
+
+class CategoryLinkingInline(OrderableAdmin, admin.TabularInline):
+    model = models.CategoryLinking
+
+    ordering_field = 'order'
+    ordering_field_hide_input = True
+
+    autocomplete_fields = [
+        'category'
+    ]
+
 
 
 class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
@@ -72,6 +84,7 @@ class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
         blog_plugins.ArticlePluginInline.create(models.ArticlePlugin),
         GlossaryContentInline.create(models.GlossaryRichText),
         form_plugins.FormPluginInline.create(models.FormPlugin),
+        CategoryLinkingInline,
     ]
 
     plugins = models.plugins
@@ -155,6 +168,12 @@ class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
             }, static=False),
             'admin/plugin_buttons.js',
         )
+
+    def get_inline_instances(self, request, obj=None):
+        inlines = super().get_inline_instances(request, obj)
+        if obj and obj.application == 'categories':
+            return inlines
+        return inlines[:-1]
 
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)

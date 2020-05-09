@@ -75,10 +75,12 @@ class FormAdmin(ContentEditor, CopyContentMixin):
             'classes': ('tabbed', ),
             'fields': (
                 'submit',
+                'size',
                 'success_message',
                 'success_redirect',
                 'webhook',
                 'email',
+                'fullwidth',
             )
         }),
         (_('meta'), {

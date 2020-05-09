@@ -1,0 +1,20 @@
+{% if plugin.title %}
+<h2>{{plugin.title}}</h2>
+{% endif %}
+<section class="article-list">
+  <ul>
+    {% for article in article_list %}
+    <li>
+    <a href="{{article.get_absolute_url}}">
+      <span class="title">
+      {{article.title}}
+      </span>
+    </a>
+      vom
+      <time datetime="{{article.publication_date|date:"c"}}">
+        {{article.publication_date|date:"d.m.Y"}}
+      </time>
+    </li>
+    {% endfor %}
+  </ul>
+</section>

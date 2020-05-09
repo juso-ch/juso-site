@@ -156,6 +156,7 @@ EVENT_TEMPLATE_CHOICES = (
 
 BLOG_TEMPLATE_CHOICES = (
     ('blog/plugins/default.html', _("default")),
+    ('blog/plugins/simple_list.html', _("list")),
 )
 
 

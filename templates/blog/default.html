@@ -6,7 +6,13 @@
 {% endblock %}
 
 {% block regions %}
+<aside class="breadcrumbs">
+  <a href="{{page.get_absolute_url}}">{{page}}</a>
+</aside>
 <article class="{{article.category.slug}} article">
   {% render_region regions 'main' %}
 </article>
+{% if edit %}
+<a class="button" href="{% url 'admin:blog_article_change' article.pk %}">Bearbeiten</a>
+{% endif %}
 {% endblock %}

@@ -45,8 +45,6 @@ def group_by_tree(iterable):
                 parent = None
                 children = []
             parent = element
-            if getattr(parent, "application") == 'categories':
-                children += parent.featured_categories.all()
             depth = element.tree_depth
         else:
             children.append(element)

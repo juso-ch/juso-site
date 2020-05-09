@@ -1,23 +1,45 @@
-<div class="card-plugin">
-  {% for article in articles.all %}
-  <div class="{{article.category.slug}} card">
+{% if plugin.title %}
+<h2>{{plugin.title}}</h2>
+{% endif %}
+<section class="cards">
+  {% for article in article_list %}
+  <article class="{{article.category.slug}} card">
     {% if article.image %}
-    <a class="image" href="{{article.get_absolute_url}}">
-      <img src="{{article.image.url}}" alt="{{article.title}}"/>
-    </a>
+    <header class="heading">
+      <a class="text-image" href="{{article.get_absolute_url}}">
+        <img src="{{article.image.card}}" alt="{{article.title}}"/>
+        <div class="overlay"></div>
+        <div class="centered">
+          <h3 class="highlight-text">
+            {{article.title}}
+          </h3>
+        </div>
+      </a>
+    </header>
     {% endif %}
     <div class="content">
-      <a class="header" href="{{article.get_absolute_url}}">
-        {{article.title}}
-      </a>
-      <a class="meta" href="{{event.get_absolute_url}}">
-        {{article.category|default:""}}
-      </a>
-      <a class="description">
-      </a>
+      <time datetime="{{article.publication_date|date:"c"}}">
+      {{article.publication_date|date:"d.m.Y"}}
+      </time>
+      {% if namespace %}
+      <div class="namespace">
+        {{article.namespace.name}}
+      </div>
+      {% endif %}
+      {% if enable_category %}
+      <div class="category">
+        <a href="{{article.category.get_absolute_url}}">
+          {{article.category.name}}
+        </a>
+      </div>
+      {% endif %}
+      {{article.tagline|truncatewords_html:"40"|safe}}
     </div>
     <div class="extra content">
+      <a href="{{article.get_absolute_url}}" class="button">
+        Weiterlesen
+      </a>
     </div>
-  </div>
+  </article>
   {% endfor %}
-</div>
+</section>

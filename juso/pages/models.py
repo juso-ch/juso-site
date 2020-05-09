@@ -2,7 +2,7 @@ from content_editor.models import create_plugin_base
 from django.db import models, transaction
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
-from feincms3 import plugins
+from feincms3 import plugins as feincms3_plugins
 from feincms3.apps import AppsMixin
 from feincms3.mixins import MenuMixin, RedirectMixin, TemplateMixin
 from feincms3_meta.models import MetaMixin
@@ -62,7 +62,7 @@ class Page(
                     (str(x) for x in [
                         page.site_id,
                         page.application,
-                        page.blog_namespace,
+                        page.blog_namespace.name,
                         page.category
                     ] if x))
             }
@@ -89,7 +89,7 @@ class Page(
                     (str(x) for x in [
                         page.site_id,
                         page.application,
-                        page.event_namespace,
+                        page.event_namespace.name,
                         page.category,
                     ] if x)
                 )
@@ -100,7 +100,7 @@ class Page(
             _('categories'),
             {
                 "urlconf": "juso.sections.urls",
-                "required_fields": ['collection'],
+                'app_instance_namespace': lambda page: str(page.site_id) + '-' + 'categories'
             },
         ),
     (
@@ -124,6 +124,7 @@ class Page(
         _("collection"),
         {
             'urlconf': "juso.link_collections.urls",
+            "required_fields": ['collection'],
             'app_instance_namespace': lambda page: str(page.slug) + '-collections'
         }
     )
@@ -249,12 +250,12 @@ class Page(
 PluginBase = create_plugin_base(Page)
 
 
-class External(plugins.external.External, PluginBase):
+class External(feincms3_plugins.external.External, PluginBase):
     class Meta:
         verbose_name = _("external")
 
 
-class RichText(plugins.richtext.RichText, PluginBase):
+class RichText(feincms3_plugins.richtext.RichText, PluginBase):
     class Meta:
         verbose_name = _("rich text")
 
@@ -264,9 +265,10 @@ class GlossaryRichText(GlossaryContent, PluginBase):
         verbose_name = _("glossary text")
 
 
-class Image(plugins.image.Image, PluginBase):
+class Image(feincms3_plugins.image.Image, PluginBase):
     caption = models.CharField(_("caption"), max_length=200, blank=True)
     title = models.CharField(_("title"), max_length=200, blank=True)
+    fullwidth = models.BooleanField(_("full width"), default=False)
 
     class Meta:
         verbose_name = _("image")
@@ -277,7 +279,7 @@ class Download(download.Download, PluginBase):
     pass
 
 
-class HTML(plugins.html.HTML, PluginBase):
+class HTML(feincms3_plugins.html.HTML, PluginBase):
     class Meta:
         verbose_name = _("HTML")
         verbose_name_plural = _("HTML")
@@ -301,6 +303,20 @@ class ArticlePlugin(article_plugins.ArticlePlugin, PluginBase):
 
 class FormPlugin(form_plugins.FormPlugin, PluginBase):
     pass
+
+
+class CategoryLinking(models.Model):
+    page = models.ForeignKey(Page, models.CASCADE)
+    category = models.ForeignKey("sections.Category", models.CASCADE)
+
+    description = feincms3_plugins.richtext.CleansedRichTextField()
+    order = models.IntegerField(default=10)
+
+    def __str__(self):
+        return self.category.name
+
+    class Meta:
+        ordering = ['order']
 
 
 plugins = [

@@ -1,3 +1,4 @@
+{% load menus %}
 {% load tools %}
 <input type="checkbox" id="fab" autocomplete="off"/>
 <label id="fab-button" class="menu-btn" for="fab">
@@ -22,7 +23,7 @@
         <span class="logo"></span>
       </a>
     </h2>
-    {% for element in menu %}
+    {% for element, children in menu|group_by_tree %}
     <a href="{{element.get_absolute_url}}">{{element.title}}</a>
     {% endfor %}
   </div>

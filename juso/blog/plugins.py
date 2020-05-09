@@ -15,6 +15,8 @@ class ArticlePlugin(TranslationMixin):
         verbose_name=_("articles"), blank=True
     )
 
+    title = models.CharField(_("title"), blank=True, max_length=180)
+
     count = models.IntegerField(_("count"), default=3)
 
     @property
@@ -61,6 +63,7 @@ class ArticlePluginInline(ContentEditorInline):
     fieldsets = (
         (None, {
             'fields': (
+                'title',
                 'articles',
                 'language_code',
                 'count',
@@ -96,7 +99,7 @@ def get_article_list(plugin):
 def render_articles(plugin, **kwargs):
     return render_to_string(
         plugin.template_key, {
-            'articles': get_article_list(plugin),
+            'article_list': get_article_list(plugin),
             'plugin': plugin,
         }
     )

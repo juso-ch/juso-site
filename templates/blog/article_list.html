@@ -1,33 +1,25 @@
 {% extends 'blog/base.html' %}
-{% load feincms3 %}
+
+{% load feincms3 sekizai_tags  %}
 
 {% block regions %}
-<article class="cards">
-  {% for article in article_list %}
-  <div class="{{article.category.slug}} card">
-    {% if article.image %}
-    <div class="heading">
-      <a class="text-image" href="{{article.get_absolute_url}}">
-        <img src="{{article.image.url}}" alt="{{article.title}}"/>
-        <div class="overlay"></div>
-        <div class="centered" href="{{article.get_absolute_url}}">
-          <h3 class="highlight-text">
-            {{article.title}}
-          </h3>
-        </div>
-      </a>
-    </div>
-    {% endif %}
-    <div class="content">
-      {{article.tagline|truncatewords_html:"40"|safe}}
-    </div>
-    <div class="extra content">
-      <a href="{{article.get_absolute_url}}" class="button">
-        Weiterlesen
-      </a>
-    </div>
-  </div>
+<form class="filter">
+  {% for category in category_list %}
+  <input
+      type="checkbox"
+      name="category"
+      id="{{category.slug}}"
+      value="{{category.slug}}"
+      ><label for="{{category.slug}}">{{category}}</label>
   {% endfor %}
-</article>
+  <div class="field">
+    <label for="search">Suche</label>
+  <input type="text" name="search">
+  </div>
+
+  <button type="submit">Anwenden</button>
+</form>
+
+{% include 'blog/plugins/default.html' with enable_category=True %}
 {% include 'includes/pagination.html' with page=article_list%}
 {% endblock %}

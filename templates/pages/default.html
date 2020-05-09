@@ -10,4 +10,7 @@
   {% include 'pages/page_subnav.html' with page=page %}
 </nav>
 {% endif %}
+{% if edit %}
+<a class="button" href="{% url 'admin:pages_page_change' page.pk %}">Bearbeiten</a>
+{% endif %}
 {% endblock %}

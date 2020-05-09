@@ -1,0 +1,20 @@
+{% extends "content.html" %}
+{% load feincms3 %}
+
+{% block regions %}
+{% render_region regions 'main' %}
+<nav role="subsites" class="subsites">
+{% for child in categorylinking_list %}
+<a href="{{child.category.get_absolute_url}}" class="nav-item {{child.category.slug}}">
+    <img src="{{child.category.get_header_image.square}}">
+    <div class="overlay"></div>
+    <div class="info">
+      <span>{{child.category.name}}</span>
+    </div>
+  </a>
+{% endfor %}
+</nav>
+{% if edit %}
+<a class="button" href="{% url 'admin:pages_page_change' page.pk %}">Bearbeiten</a>
+{% endif %}
+{% endblock %}

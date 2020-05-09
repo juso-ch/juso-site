@@ -34,6 +34,9 @@ def page_detail(request, path=None):
         path=f"/{path}/" if path else '/',
     )
 
+    edit = request.user.is_authenticated and\
+            request.user.section_set.filter(pk=page.site.section.pk).exists()
+
     page.activate_language(request)
     ancestors = list(page.ancestors().reverse())
     return render(
@@ -41,11 +44,11 @@ def page_detail(request, path=None):
         page.template.template_name,
         {
             "page": page,
+            "edit": edit,
             "header_image": page.get_header_image(),
             "meta_tags": meta_tags([page] + ancestors, request=request),
             "regions": Regions.from_item(
                 page, renderer=renderer, timeout=60,
-                inherit_from=page.ancestors().reverse(),
             ),
         },
     )

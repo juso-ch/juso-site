@@ -1,1 +1,5 @@
-<img class="ui centered segment basic fitted image" src="{{plugin.image.url}}" alt="{{plugin.caption}}" title="{{plugin.title}}"/>
+<figure class="{% if plugin.fullwidth %}full{%endif%}">
+  <img class="" src="{{plugin.image.url}}" alt="{{plugin.caption}}" title="{{plugin.title}}"/>
+
+  <figcaption>{{plugin.caption}}</figcaption>
+</figure>

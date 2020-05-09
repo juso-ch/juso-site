@@ -31,14 +31,25 @@ INPUT_TYPES = (
 )
 
 
+SIZES = (
+    ('one', _("one")),
+    ('one-half', _("one half")),
+    ('one-third', _("one third")),
+    ('one-fourth', _("one fouth")),
+    ('three-fourths', _("thre fourths")),
+    ('two-thirds', _("two thirds")),
+)
+
+
 class Form(ContentMixin):
     TEMPLATES = get_template_list('form', (
         (
             'default', ('fields', 'handlers'),
         ),
     ))
-
+    fullwidth = models.BooleanField(_("full width"))
     submit = models.CharField(max_length=200)
+    size = models.TextField(_("size"), default="one", choices=SIZES)
     success_message = CleansedRichTextField(_("success message"), blank=True)
     success_redirect = models.URLField(_("success redirect"), blank=True)
 
@@ -71,16 +82,6 @@ class RichText(plugins.richtext.RichText, PluginBase):
     class Meta:
         verbose_name = _("rich text")
         verbose_name = _("rich text")
-
-
-SIZES = (
-    ('one', _("one")),
-    ('one-half', _("one half")),
-    ('one-third', _("one third")),
-    ('one-fourth', _("one fouth")),
-    ('three-fourths', _("thre fourths")),
-    ('two-thirds', _("two thirds")),
-)
 
 
 

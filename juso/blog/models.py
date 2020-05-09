@@ -25,7 +25,7 @@ class NameSpace(TranslationMixin):
     slug = models.SlugField()
 
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.language_code})"
 
     class Meta:
         verbose_name = _("name space")
@@ -56,8 +56,6 @@ class Article(ContentMixin):
 
     @property
     def image(self):
-        if Image.objects.filter(parent=self).exists():
-            return Image.objects.filter(parent=self)[0].image
         return self.header_image or self.meta_image
 
     @property
@@ -72,8 +70,8 @@ class Article(ContentMixin):
         site = current_site()
         if site == self.section.site:
             return reverse_app(
-                (f'{site.id}-blog-{self.namespace}-{self.category}',
-                 f'{site.id}-blog-{self.namespace}',
+                (f'{site.id}-blog-{self.namespace.name}-{self.category}',
+                 f'{site.id}-blog-{self.namespace.name}',
                  f'{site.id}-blog-{self.category}',
                  f'{site.id}-blog',),
                 'article-detail',
@@ -87,8 +85,8 @@ class Article(ContentMixin):
         with set_current_site(self.section.site):
             site = self.section.site
             return '//' + self.section.site.host + reverse_app(
-                [f'{site.id}-blog-{self.namespace}-{self.category or ""}',
-                 f'{site.id}-blog-{self.namespace}',
+                [f'{site.id}-blog-{self.namespace.name}-{self.category or ""}',
+                 f'{site.id}-blog-{self.namespace.name}',
                  f'{site.id}-blog-{self.category or ""}',
                  f'{site.id}-blog'],
                 'article-detail',
@@ -105,6 +103,28 @@ class Article(ContentMixin):
         verbose_name = _("article")
         verbose_name_plural = _("articles")
         ordering = ['-publication_date']
+
+
+class WPImport(models.Model):
+    slug = models.SlugField(unique=True)
+    import_file = models.FileField(_("wordpress file"))
+    section = models.ForeignKey('sections.Section', models.CASCADE)
+    default_namespace = models.ForeignKey(
+        NameSpace, models.CASCADE, related_name='+'
+    )
+    completed = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.slug
+
+
+class NamespaceMapping(models.Model):
+    wp_import = models.ForeignKey(WPImport, models.CASCADE, related_name='mappings')
+    nicename = models.CharField(_("name"), max_length=100)
+    target = models.ForeignKey(NameSpace, models.CASCADE, related_name="+")
+
+    def __str__(self):
+        return self.nicename
 
 
 PluginBase = create_plugin_base(Article)
@@ -126,6 +146,7 @@ class GlossaryRichText(GlossaryContent, PluginBase):
 class Image(plugins.image.Image, PluginBase):
     caption = models.CharField(_("caption"), max_length=200, blank=True)
     title = models.CharField(_("title"), max_length=200, blank=True)
+    fullwidth = models.BooleanField(_("full width"), default=False)
 
     class Meta:
         verbose_name = _("image")
@@ -162,5 +183,5 @@ class FormPlugin(form_plugins.FormPlugin, PluginBase):
 
 plugins = [
     RichText, Image, HTML, External, Team, Download, Button,
-    EventPlugin, GlossaryContent, FormPlugin, ArticlePlugin
+    EventPlugin, GlossaryRichText, FormPlugin, ArticlePlugin
 ]

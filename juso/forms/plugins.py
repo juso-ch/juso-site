@@ -35,7 +35,7 @@ def render_form(form_plugin, request=None):
     })
 
     return f"""
-<div class="form-wrapper" id="form-wrapper-{form_plugin.id}">
+<div class="wrapper" id="form-wrapper-{form_plugin.id}">
 {form_html}
 </div>
 {script}

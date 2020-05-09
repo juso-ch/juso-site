@@ -25,7 +25,7 @@ class NameSpace(TranslationMixin):
     slug = models.SlugField()
 
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.language_code})"
 
     class Meta:
         ordering = ['name']
@@ -183,6 +183,7 @@ class RichText(plugins.richtext.RichText, PluginBase):
 class Image(plugins.image.Image, PluginBase):
     caption = models.CharField(_("caption"), max_length=200, blank=True)
     title = models.CharField(_("title"), max_length=200, blank=True)
+    fullwidth = models.BooleanField(_("full width"), default=False)
 
     class Meta:
         verbose_name = _("image")

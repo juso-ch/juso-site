@@ -9,6 +9,7 @@ from feincms3.shortcuts import render_list
 from feincms3_meta.utils import meta_tags
 
 from juso import pages
+from juso.sections.models import Category
 from juso.blog import models
 from juso.search import consume
 from juso.blog.renderer import renderer
@@ -40,14 +41,22 @@ def article_list(request):
     page.activate_language(request)
 
     article_list = articles_for_page(page)
+    category_list = Category.objects.filter(
+        article__in=article_list
+    ).distinct()
 
-    if request.GET.get('q', ''):
+    if request.GET.get('category', None):
+        article_list = article_list.filter(
+            category__slug__in=request.GET.getlist('category')
+        )
+
+    if request.GET.get('search', ''):
         vector = SearchVector('title', weight='A')\
                 + SearchVector('category', weight='B')\
                 + SearchVector('blog_richtext_set__text', weight='A')\
                 + SearchVector('blog_glossaryrichtext_set__text', weight='A')
-        query = consume(request.GET['q'])
-        q = request.GET['q']
+        query = consume(request.GET['search'])
+        q = request.GET['search']
         article_list = article_list.annotate(
             rank=SearchRank(vector, query)
         ).filter(rank__gte=0.1).order_by('-rank')
@@ -59,6 +68,7 @@ def article_list(request):
         {
             'page': page,
             'header_image': page.get_header_image(),
+            'category_list': category_list,
             "meta_tags": meta_tags([page] + ancestors, request=request),
             'regions': Regions.from_item(
                 page, renderer=pages.renderer.renderer, timeout=60,
@@ -105,6 +115,8 @@ def article_detail(request, slug):
     )
 
     ancestors = list(page.ancestors().reverse())
+    edit = request.user.is_authenticated and \
+            request.user.section_set.filter(pk=article.section.pk).exists()
 
     return render(
         request,
@@ -113,6 +125,7 @@ def article_detail(request, slug):
             "page": page,
             "article": article,
             "obj": article,
+            'edit': edit,
             'header_image': article.get_header_image() or page.get_header_image(),
             "title": article.title,
             "meta_tags": meta_tags(

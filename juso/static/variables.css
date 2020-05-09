@@ -21,7 +21,7 @@
   --footer-background-color: var(--anthrazit);
   --footer-text-color: var(--white);
 
-  --container-width: min(1200px, 94vw);
+  --container-width: min(1180px, 94vw);
   --container-outer-width: min(1200px, 100vw);
 
   --outer-padding: calc((100vw - var(--container-outer-width))/2);

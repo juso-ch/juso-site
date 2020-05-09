@@ -92,6 +92,8 @@ def get_article_list(plugin):
 
     if plugin.sections.exists():
         articles = articles.filter(section__in=plugin.sections.all())
+    if plugin.namespace:
+        articles = articles.filter(namespace=plugin.namespace)
 
     return articles[:plugin.count]
 

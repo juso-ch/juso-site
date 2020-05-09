@@ -1,6 +1,7 @@
 from content_editor.models import create_plugin_base
 from django.db import models, transaction
 from django.utils.translation import gettext_lazy as _
+from django.shortcuts import reverse
 from feincms3 import plugins
 from feincms3.apps import apps_urlconf, reverse_app
 from feincms3.cleanse import CleansedRichTextField
@@ -65,10 +66,8 @@ class Form(ContentMixin):
         ordering = ['title']
 
     def get_absolute_url(self):
-        site = current_site()
-        return reverse_app(
-            [f'{site.pk}-forms'],
-            'form-detail',
+        return reverse(
+            'forms:form-detail',
             kwargs = {
                 'pk': self.pk
             }

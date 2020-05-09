@@ -47,6 +47,7 @@ urlpatterns = [
     ),
     path('su/', include('django_su.urls')),
     path('admin/', admin.site.urls),
+    path('forms/', include('juso.forms.urls')),
     path('', include('juso.pages.urls'))
 ]
 

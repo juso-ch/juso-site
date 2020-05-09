@@ -103,31 +103,23 @@ class Page(
                 'app_instance_namespace': lambda page: str(page.site_id) + '-' + 'categories'
             },
         ),
-    (
-        'forms',
-        _("forms"),
-        {
-            'urlconf': "juso.forms.urls",
-            'app_instance_namespace': lambda page: str(page.site_id) + '-' + 'forms'
-        }
-    ),
-    (
-        'glossary',
-        _("glossary"),
-        {
-            'urlconf': "juso.glossary.urls",
-            'app_instance_namespace': lambda page: str(page.site_id) + '-' + 'glossary'
-        }
-    ),
-    (
-        'collection',
-        _("collection"),
-        {
-            'urlconf': "juso.link_collections.urls",
-            "required_fields": ['collection'],
-            'app_instance_namespace': lambda page: str(page.slug) + '-collections'
-        }
-    )
+        (
+            'glossary',
+            _("glossary"),
+            {
+                'urlconf': "juso.glossary.urls",
+                'app_instance_namespace': lambda page: str(page.site_id) + '-' + 'glossary'
+            }
+        ),
+        (
+            'collection',
+            _("collection"),
+            {
+                'urlconf': "juso.link_collections.urls",
+                "required_fields": ['collection'],
+                'app_instance_namespace': lambda page: str(page.slug) + '-collections'
+            }
+        )
     ]
 
     MENUS = (

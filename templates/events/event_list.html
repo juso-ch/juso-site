@@ -4,44 +4,39 @@
 {% block content %}
 {% regroup event_list by start_date|date:"E Y" as month_list %}
 
-<article class="month">
+<section class="events">
   {% for month in month_list %}
   <h2>{{month.grouper}}</h2>
-  <div class="events">
+  <section class="cards events month">
     {% for event in month.list %}
-    <div class="{{event.category.slug}} event item">
+    <article class="{{event.category.slug}} card horizontal">
       {% if event.image %}
       <a class="image" href="{{event.get_absolute_url}}">
         <img src="{{event.image.url}}" alt="{{event.title}}"/>
       </a>
       {% endif %}
       <div class="content">
-        <div class="header"><a href="{{event.get_absolute_url}}">
+        <header class="header"><a href="{{event.get_absolute_url}}">
             {{event.title}}
           </a>
-        </div>
-        <div class="meta"><a href="{{event.get_absolute_url}}">
-            <time datetime="{{event.start_date|date:"c"}}">
-              {{event.start_date|date:"d.m. H:i"}}
-            </time>-<time datetime="{{event.end_date|date:"c"}}">
-              {% if event.end_date == event.start_date %}
-              {{event.end_date|date:"H:i"}}
-              {% else %}
-              {{event.end_date|date:"d.m. H:i" }}
-              {% endif %}
-            </time>
-          </a>
-        </div>
-        <div class="description">
-          <a href="{{event.location.get_absolute_url}}">
-            {{event.location}}
-          </a>
-        </div>
+        </header>
+        <section>
+          <time datetime="{{event.start_date|date:"c"}}">
+            {{event.start_date|date:"d.m. H:i"}}
+          </time>-<time datetime="{{event.end_date|date:"c"}}">
+            {% if event.end_date == event.start_date %}
+            {{event.end_date|date:"H:i"}}
+            {% else %}
+            {{event.end_date|date:"d.m. H:i" }}
+            {% endif %}
+          </time>
+        </section>
       </div>
-    </div>
+    </article>
     {% endfor %}
-</article>
-{% endfor %}
+  </section>
+  {% endfor %}
+</section>
 {% include 'includes/pagination.html' with page=event_list%}
 <script>
   window.location_list = {{location_list|jsonify}};

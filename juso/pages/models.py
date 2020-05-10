@@ -89,7 +89,6 @@ class Page(
                     (str(x) for x in [
                         page.site_id,
                         page.application,
-                        page.event_namespace.name,
                         page.category,
                     ] if x)
                 )

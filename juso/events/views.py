@@ -102,13 +102,16 @@ def event_list(request):
     )
 
 
-def event_detail(request, slug):
+def event_detail(request, year, month, day, slug):
     page = page_for_app_request(request)
     page.activate_language(request)
 
     event = get_object_or_404(
         event_list_for_page(page, past_events=True),
-        slug=slug
+        slug=slug, section=page.site.section,
+        start_date__year=year,
+        start_date__month=month,
+        start_date__day=day,
     )
 
     ancestors = list(page.ancestors().reverse())
@@ -120,7 +123,7 @@ def event_detail(request, slug):
             'page': page,
             'event': event,
             'obj': event,
-            'header_image': event.header_image or page.header_image,
+            'header_image': event.get_header_image() or page.get_header_image(),
             'title': event.title,
             'meta_tags': meta_tags(
                 [event, page] + ancestors,

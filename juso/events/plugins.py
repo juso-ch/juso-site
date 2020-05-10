@@ -16,6 +16,7 @@ class EventPlugin(TranslationMixin):
         related_query_name='+',
     )
 
+    title = models.CharField(_("title"), blank=True, max_length=180)
     count = models.IntegerField(_("count"), default=3)
 
     @property
@@ -45,16 +46,14 @@ class EventPlugin(TranslationMixin):
     )
 
     sections = models.ManyToManyField(
-        Section, related_name="+", blank=True,
-        related_query_name='+',
+        Section, blank=True,
+        related_name='%(app_label)s_%(class)s',
     )
 
     class Meta:
         abstract = True
         verbose_name = _("event plugin")
         verbose_name_plural = _("event plugins")
-
-
 
 
 class EventPluginInline(ContentEditorInline):
@@ -68,6 +67,7 @@ class EventPluginInline(ContentEditorInline):
             'fields': (
                 'events',
                 'language_code',
+                'title',
                 'count',
                 'category',
                 'namespace',

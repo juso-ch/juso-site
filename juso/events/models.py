@@ -121,6 +121,7 @@ class Event(ContentMixin):
 
     start_date = models.DateTimeField(_("start date"))
     end_date = models.DateTimeField(_("end date"))
+    slug = models.SlugField(max_length=180)
 
     location = models.ForeignKey(
         Location, models.SET_NULL,
@@ -136,12 +137,22 @@ class Event(ContentMixin):
     def image(self):
         if Image.objects.filter(parent=self).exists():
             return Image.objects.filter(parent=self)[0].image
-        return self.meta_image
+        return self.header_image or self.meta_image
 
     class Meta:
         verbose_name = _("event")
         verbose_name_plural = _("events")
         ordering = ['start_date']
+        indexes = [
+            models.Index(fields=[
+                'start_date', 'slug', 'section',
+            ])
+        ]
+        constraints = [
+            models.UniqueConstraint(fields=[
+                'slug', 'start_date', 'section'
+            ], name="unique_slugs_for_section_and_date")
+        ]
 
     def get_absolute_url(self):
         site = current_site()
@@ -153,7 +164,10 @@ class Event(ContentMixin):
                  f'{site.id}-events'],
                 'event-detail',
                 kwargs={
-                    'slug': self.slug
+                    'slug': self.slug,
+                    'day': self.start_date.day,
+                    'month': self.start_date.month,
+                    'year': self.start_date.year,
                 }
             )
         with set_current_site(self.section.site):
@@ -164,7 +178,10 @@ class Event(ContentMixin):
                  f'{self.section.site.id}-events'],
                 'event-detail', urlconf=apps_urlconf(),
                 kwargs={
-                    'slug': self.slug
+                    'slug': self.slug,
+                    'day': self.start_date.day,
+                    'month': self.start_date.month,
+                    'year': self.start_date.year,
                 }
             )
 

@@ -9,7 +9,10 @@ urlpatterns = [
     path('section/<int:pk>/',
          views.event_list_for_section,
          name="section-event-list"),
-    path('<slug:slug>/', views.event_detail, name="event-detail"),
+    path(
+        '<int:year>/<int:month>/<int:day>/<slug:slug>/',
+        views.event_detail, name="event-detail"
+    ),
     path('location/<slug:slug>/',
          views.location_detail,
          name="location-detail")

@@ -35,12 +35,23 @@ class SectionAdmin(TreeAdmin):
         })
     )
 
-    def get_queryset(self, request):
-        qs = super().get_queryset(request)
+    def has_delete_permission(self, request, obj=None):
+        if obj is None:
+            return super().has_change_permission(request, obj)
         if request.user.is_superuser:
-            return qs
+            return True
         sections = request.user.section_set.all()
-        return qs.filter(pk__in=sections)
+        return obj in sections
+
+    def has_change_permission(self, request, obj=None):
+        if obj is None:
+            return super().has_change_permission(request, obj)
+
+        if request.user.is_superuser:
+            return True
+
+        sections = request.user.section_set.all()
+        return obj in sections
 
     search_fields = ['name']
 

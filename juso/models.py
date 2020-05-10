@@ -65,6 +65,17 @@ class Button(AbstractBlock):
         ('secondary', _("secondary"))
     ), default='', blank=True)
 
+    align = models.CharField(
+        _("alignment"), max_length=30, blank=True, choices=(
+            ('', _("default")),
+            ('center', _("center")),
+            ('right', _("right")),
+            ('block', _("block")),
+        )
+    )
+
+    line_break = models.BooleanField(_("break"), default=True)
+
     target = models.CharField(_("target"), max_length=800)
 
     class Meta:

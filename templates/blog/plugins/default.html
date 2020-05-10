@@ -18,8 +18,15 @@
     </header>
     {% endif %}
     <div class="content">
+      {{article.tagline|truncatewords_html:"40"|safe}}
+    </div>
+    <div class="extra content">
+      <a href="{{article.get_absolute_url}}" class="button">
+        Weiterlesen
+      </a>
+      <div class="info">
       <time datetime="{{article.publication_date|date:"c"}}">
-      {{article.publication_date|date:"d.m.Y"}}
+        {{article.publication_date|date:"d.m.Y"}}
       </time>
       {% if namespace %}
       <div class="namespace">
@@ -32,14 +39,15 @@
           {{article.category.name}}
         </a>
       </div>
+      </div>
       {% endif %}
-      {{article.tagline|truncatewords_html:"40"|safe}}
-    </div>
-    <div class="extra content">
-      <a href="{{article.get_absolute_url}}" class="button">
-        Weiterlesen
-      </a>
     </div>
   </article>
   {% endfor %}
 </section>
+{% if plugin.all_articles %}
+<a class="button center" href="{{plugin.all_articles.get_absolute_url}}">
+  {{plugin.all_articles_override|default:plugin.all_articles.title}}
+</a>
+<div class="break"></div>
+{% endif %}

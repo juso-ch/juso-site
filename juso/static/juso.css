@@ -59,7 +59,8 @@ figure.full {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(var(--container-width), 400px), 1fr));
   grid-gap: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
 }
 
 .cards.events {
@@ -79,6 +80,9 @@ figure.full {
 
 .cards.events > .card > .content {
   flex: 1 0 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .card {
@@ -115,6 +119,7 @@ figure.full {
   display: flex;
   align-items: center;
   flex: 0 0;
+  justify-content: space-between;
 }
 
 .card.horizontal > img {
@@ -128,6 +133,8 @@ figure.full {
 .card.horizontal > .content > section {
   display: flex;
   flex-direction: column;
+  flex: 1 0;
+  justify-content: space-between;
 }
 
 .card.horizontal > .content > section > a {
@@ -141,6 +148,31 @@ figure.full {
 
 main > article {
   margin-bottom: 1em;
+}
+
+main > article > section {
+  margin-bottom: 1em;
+}
+
+.button.center {
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
+
+.button.right {
+  margin-left: 100%;
+  transform: translateX(-100%);
+  margin-right: -100%;
+}
+
+.button.block {
+  display: block;
+  text-align: center;
+}
+
+.button-wrapper.break::after {
+  display: block;
+  content: "\A";
 }
 
 /** Page navigation **/
@@ -240,6 +272,7 @@ a.button, button {
   font-weight: var(--button-weight);
   display: inline-block;
   line-height: 1em;
+  margin: 0.5em 0;
 }
 
 a.button:hover, button:hover {
@@ -799,4 +832,40 @@ nav.footer > a {
   nav.footer {
     display: none;
   }
+}
+
+.pagination {
+  display: inline-flex;
+  align-items: center;
+}
+
+.pagination > a {
+  background: var(--primary-color);
+  padding: 0.3em 0.8em;
+  color: var(--light-color);
+  margin: 0 1pt;
+  text-decoration: none;
+  box-shadow: var(--box-shadow);
+}
+
+.pagination > span {
+  margin: 0.3em 0.8em;
+  text-decoration: underline;
+}
+
+.pagination > a:first-child {
+  border-radius: 3px 0 0 3px;
+}
+
+.pagination > a:last-child {
+  border-radius: 0 3px 3px 0;
+}
+
+.action {
+  align-self: end;
+}
+
+.action > a.button{
+  margin-top: auto;
+  margin-bottom: 0;
 }

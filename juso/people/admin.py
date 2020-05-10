@@ -51,12 +51,18 @@ class PersonAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
         if obj is None:
             return super().has_change_permission(request, obj)
+        if request.user.is_superuser:
+            return True
         sections = request.user.section_set.all()
         return obj.sections.filter(pk__in=sections) or obj.sections.count() == 0
 
     def has_change_permission(self, request, obj=None):
         if obj is None:
             return super().has_change_permission(request, obj)
+
+        if request.user.is_superuser:
+            return True
+
         sections = request.user.section_set.all()
         return obj.sections.filter(pk__in=sections) or obj.sections.count() == 0
 

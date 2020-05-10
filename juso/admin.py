@@ -25,7 +25,7 @@ class ButtonInline(ContentEditorInline):
         }),
         (_("display"), {
             'classes': ('collapse',),
-            'fields': ('color', 'style')
+            'fields': ('color', 'style', 'line_break', 'align')
         })
     )
 

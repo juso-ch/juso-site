@@ -11,8 +11,8 @@ from juso.utils import number_word
 
 class ArticlePlugin(TranslationMixin):
     articles = models.ManyToManyField(
-        "blog.Article", related_name='+', related_query_name='+',
-        verbose_name=_("articles"), blank=True
+        "blog.Article", related_name='%(app_label)s_%(class)s',
+        verbose_name=_("articles"), blank=True,
     )
 
     title = models.CharField(_("title"), blank=True, max_length=180)
@@ -48,33 +48,54 @@ class ArticlePlugin(TranslationMixin):
         blank=True
     )
 
+    all_articles = models.ForeignKey(
+        "pages.Page", models.CASCADE, related_name="+",
+        blank=True, verbose_name=_("page with all articles"),
+        null=True,
+    )
+
+    all_articles_override = models.CharField(
+        _("all article link text"), max_length=180,
+        blank=True,
+    )
+
     class Meta:
         abstract = True
         verbose_name = _("article plugin")
         verbose_name_plural = _("article plugins")
 
+    def __str__(self):
+        return self.title or _("articles")
+
 
 class ArticlePluginInline(ContentEditorInline):
     autocomplete_fields = [
         'articles', 'category', 'sections',
-        'namespace'
+        'namespace', 'all_articles',
     ]
 
     fieldsets = (
         (None, {
             'fields': (
                 'title',
-                'articles',
-                'language_code',
                 'count',
                 'category',
                 'namespace',
-                'sections',
-                'template_key',
                 'ordering',
                 'region'
             )
         }),
+        (_("advanced"), {
+            'classes': ('collapse',),
+            'fields': (
+                'articles',
+                'sections',
+                'language_code',
+                'template_key',
+                'all_articles',
+                'all_articles_override',
+            )
+        })
     )
 
 
@@ -92,6 +113,8 @@ def get_article_list(plugin):
 
     if plugin.sections.exists():
         articles = articles.filter(section__in=plugin.sections.all())
+    else:
+        articles = articles.filter(section=plugin.parent.site.section)
 
     if plugin.namespace:
         articles = articles.filter(namespace=plugin.namespace)

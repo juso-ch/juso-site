@@ -1,3 +1,7 @@
-<a href="{{button.target}}" class="button {{button.style}} {{button.color}}">
+<a href="{{button.target}}" class="button {{button.style}} {{button.color}} {{button.align}}">
   {{button.text}}
 </a>
+
+{% if button.line_break %} 
+<div class="break"></div>
+{% endif %}

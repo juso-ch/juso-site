@@ -17,4 +17,9 @@
     </li>
     {% endfor %}
   </ul>
+  {% if plugin.all_articles %}
+  <a class="button more" href="{{plugin.all_articles.get_absolute_url}}">
+    {{plugin.all_articles_override|default:plugin.all_articles.title}}
+  </a>
+  {% endif %}
 </section>

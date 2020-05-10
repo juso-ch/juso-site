@@ -57,7 +57,7 @@ class ArticleAdmin(ContentEditor, CopyContentMixin):
 
     search_fields = [
         'title',
-        'description'
+        'blog_richtext_set__text',
     ]
 
     prepopulated_fields = {

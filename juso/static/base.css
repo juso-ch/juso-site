@@ -7,11 +7,16 @@ body {
   color: var(--text-color);
 } 
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, header {
   font-family: var(--title-font);
   font-weight: 800;
   text-transform: uppercase;
   display: inline-block;
+  margin-bottom: 0.4em;
+}
+
+header > a {
+  text-decoration: none;
 }
 
 h5 {

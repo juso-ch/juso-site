@@ -15,14 +15,12 @@
   </div>
   <div class="small-top-bar">
     {% include 'includes/translations.html' with page=page obj=obj %}
-    {% include 'includes/top_navigation.html' with menu=top %}
+    {% include 'includes/top_navigation.html' with menu=top_menu %}
   </div>
   <div class="menu">
-    <h2>
-      <a href="{{top.get_absolute_url}}">
+      <a class="branding" href="{{top.get_absolute_url}}">
         <span class="logo"></span>
       </a>
-    </h2>
     {% for element, children in menu|group_by_tree %}
     <a href="{{element.get_absolute_url}}">{{element.title}}</a>
     {% endfor %}

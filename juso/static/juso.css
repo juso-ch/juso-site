@@ -21,21 +21,14 @@ figure {
  */
 
 
-h1::after {
+h1::after, h2::after {
   background-color: var(--highlight-color);
-  width: calc(100% + 2rem);
+  width: min(calc(100% + 1em), calc(100vw - 2 * var(--inner-padding)));
   height: 0.4rem;
   content: "";
   display: block;
 }
 
-h2::after {
-  background-color: var(--highlight-color);
-  width: calc(100% + 2rem);
-  height: 0.4rem;
-  content: "";
-  display: block;
-}
 
 a:link,
 a:visited {
@@ -115,7 +108,6 @@ figure.full {
 
 
 .card > .content.extra {
-  font-size: 0.8em;
   display: flex;
   align-items: center;
   flex: 0 0;
@@ -178,7 +170,7 @@ main > article > section {
 /** Page navigation **/
 nav.subsites {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(40vw, 270px), 1fr));
   grid-gap: 1rem;
   margin-top: 2rem;
   margin-bottom: 2rem;
@@ -383,9 +375,11 @@ header.page > h1  {
   background-color: var(--highlight-color);
 }
 
-nav#mobile-menu .menu h2 {
+nav#mobile-menu .menu .branding {
   flex: 1 0;
   align-self: stretch;
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
 
 nav#mobile-menu .logo {

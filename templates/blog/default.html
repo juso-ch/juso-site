@@ -6,9 +6,6 @@
 {% endblock %}
 
 {% block regions %}
-<aside class="breadcrumbs">
-  <a href="{{page.get_absolute_url}}">{{page}}</a>
-</aside>
 <article class="{{article.category.slug}} article">
   {% render_region regions 'main' %}
 </article>

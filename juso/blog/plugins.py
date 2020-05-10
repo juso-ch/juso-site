@@ -44,7 +44,7 @@ class ArticlePlugin(TranslationMixin):
     )
 
     sections = models.ManyToManyField(
-        Section, related_name='+', related_query_name='+',
+        Section, related_name='%(app_label)s_%(class)s',
         blank=True
     )
 
@@ -92,6 +92,7 @@ def get_article_list(plugin):
 
     if plugin.sections.exists():
         articles = articles.filter(section__in=plugin.sections.all())
+
     if plugin.namespace:
         articles = articles.filter(namespace=plugin.namespace)
 

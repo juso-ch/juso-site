@@ -106,9 +106,11 @@ class Article(ContentMixin):
 
 
 class WPImport(models.Model):
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(_("slug"), unique=True)
     import_file = models.FileField(_("wordpress file"))
-    section = models.ForeignKey('sections.Section', models.CASCADE)
+    section = models.ForeignKey(
+        'sections.Section', models.CASCADE
+    )
     default_namespace = models.ForeignKey(
         NameSpace, models.CASCADE, related_name='+'
     )

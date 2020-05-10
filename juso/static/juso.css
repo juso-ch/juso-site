@@ -449,7 +449,7 @@ nav#mobile-menu .logo {
   .glossary-content {
     display: none;
   }
-  .text > p, .wrapper > *, figure > img, figure > figcaption {
+  .text > p, .text > ul, .text > ol, .wrapper > *, figure > img, figure > figcaption {
     max-width: 100%;
     clear: both;
   }

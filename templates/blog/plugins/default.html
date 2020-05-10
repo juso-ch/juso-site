@@ -16,6 +16,17 @@
         </div>
       </a>
     </header>
+    {% else %}
+    <header class="heading no-image">
+      <div class="overlay"></div>
+      <a class="text-image" href="{{article.get_absolute_url}}">
+        <div class="centered">
+          <h3 class="highlight-text">
+            {{article.title}}
+          </h3>
+        </div>
+      </a>
+    </header>
     {% endif %}
     <div class="content">
       {{article.tagline|truncatewords_html:"40"|safe}}
@@ -25,20 +36,20 @@
         Weiterlesen
       </a>
       <div class="info">
-      <time datetime="{{article.publication_date|date:"c"}}">
-        {{article.publication_date|date:"d.m.Y"}}
-      </time>
-      {% if namespace %}
-      <div class="namespace">
-        {{article.namespace.name}}
-      </div>
-      {% endif %}
-      {% if enable_category %}
-      <div class="category">
-        <a href="{{article.category.get_absolute_url}}">
-          {{article.category.name}}
-        </a>
-      </div>
+        <time datetime="{{article.publication_date|date:"c"}}">
+          {{article.publication_date|date:"d.m.Y"}}
+        </time>
+        {% if namespace %}
+        <div class="namespace">
+          {{article.namespace.name}}
+        </div>
+        {% endif %}
+        {% if enable_category %}
+        <div class="category">
+          <a href="{{article.category.get_absolute_url}}">
+            {{article.category.name}}
+          </a>
+        </div>
       </div>
       {% endif %}
     </div>

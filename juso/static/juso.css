@@ -29,12 +29,20 @@ h1::after {
   display: block;
 }
 
+h2::after {
+  background-color: var(--highlight-color);
+  width: calc(100% + 2rem);
+  height: 0.4rem;
+  content: "";
+  display: block;
+}
+
 a:link,
 a:visited {
   color: inherit;
 }
 
-.text > p, .wrapper > *, figure > img, figure > figcaption {
+.text > p, .text > ul, .text > ol, .wrapper > *, figure > img, figure > figcaption {
   max-width: 65%;
 }
 
@@ -51,8 +59,26 @@ figure.full {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(var(--container-width), 400px), 1fr));
   grid-gap: 1rem;
-  margin-top: 2rem;
   margin-bottom: 2rem;
+}
+
+.cards.events {
+  display: flex;
+  flex-direction: column;
+}
+
+.cards.events > .card > .image {
+  flex: 1 0 30%;
+  min-width: 80px;
+}
+
+.cards.events > .card > .image > img {
+  height: 100%;
+  object-fit: cover;
+}
+
+.cards.events > .card > .content {
+  flex: 1 0 70%;
 }
 
 .card {

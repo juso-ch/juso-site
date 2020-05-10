@@ -10,8 +10,7 @@ class FormPlugin(models.Model):
     form = models.ForeignKey(
         Form, models.CASCADE,
         verbose_name=_("form"),
-        related_name="+",
-        related_query_name="+",
+        related_name='%(app_label)s_%(class)s',
     )
 
     class Meta:

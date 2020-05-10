@@ -89,6 +89,10 @@ figure.full {
   flex-direction: row;
 }
 
+.card.horizontal img {
+  border-radius: 3px 0 0 3px;
+}
+
 .social-media {
   margin-top: 1em;
 }

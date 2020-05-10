@@ -466,6 +466,12 @@ nav#mobile-menu .logo {
     margin: 1rem 2.5%;
     position: relative; 
   }
+  .cards.events > .card > .image {
+    flex: 1 0 40%;
+  }
+  .cards.events > .card > .content {
+    flex: 1 0 60%;
+  }
 }
 
 img {

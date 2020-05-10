@@ -16,9 +16,23 @@
         </a>
       </header>
       <section>
+        <time>
         {{event.start_date}} - {{event.end_date}}
+        </time>
+        <div class="location">
+          {{event.location|default:""}}
+        </div>
+        <div class="action">
+          <a href="{{event.get_absolute_url}}" class="button">Mehr Infos</a>
+        </div>
       </section>
     </div>
   </article>
   {% endfor %}
 </section>
+{% if plugin.all_events %}
+<a class="button center" href="{{plugin.all_events.get_absolute_url}}">
+  {{plugin.all_events_override|default:plugin.all_events.title}}
+</a>
+<div class="break"></div>
+{% endif %}

@@ -5,6 +5,7 @@ from django.template.loader import render_to_string
 from django.utils import timezone
 from django.utils.translation import gettext as _
 
+from feincms3_sites.middleware import current_site
 from juso.models import TranslationMixin
 from juso.sections.models import Category, Section
 from juso.utils import number_word
@@ -18,6 +19,17 @@ class EventPlugin(TranslationMixin):
 
     title = models.CharField(_("title"), blank=True, max_length=180)
     count = models.IntegerField(_("count"), default=3)
+
+    all_events = models.ForeignKey(
+        "pages.Page", models.CASCADE, related_name="+",
+        blank=True, verbose_name=_("page with all events"),
+        null=True,
+    )
+
+    all_events_override = models.CharField(
+        _("all events link text"), max_length=180,
+        blank=True,
+    )
 
     @property
     def columns(self):
@@ -50,6 +62,9 @@ class EventPlugin(TranslationMixin):
         related_name='%(app_label)s_%(class)s',
     )
 
+    def __str__(self):
+        return self.title or _("events")
+
     class Meta:
         abstract = True
         verbose_name = _("event plugin")
@@ -71,10 +86,17 @@ class EventPluginInline(ContentEditorInline):
                 'count',
                 'category',
                 'namespace',
-                'sections',
-                'template_key',
                 'ordering',
                 'region'
+            )
+        }),
+        (_("advanced"), {
+            'classes': ('collapse',),
+            'fields': (
+                'sections',
+                'template_key',
+                'all_events',
+                'all_events_override',
             )
         }),
     )
@@ -95,6 +117,8 @@ def get_event_list(plugin):
 
     if plugin.sections.exists():
         events = events.filter(section__in=plugin.sections.all())
+    else:
+        events = events.filter(section__site=current_site())
 
     return events[:plugin.count]
 

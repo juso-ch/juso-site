@@ -1,26 +1,28 @@
 {% if page.has_other_pages %}
 <div class="pagination">
-  <a class="{% if not page.has_previous %} disabled {% endif %}button " href="?page=1">
-    <i class="angle double left icon"></i>
+  <a class="" href="?page=1">
+    <i class="fas fa-fast-backward"></i>
   </a>
-  {% if page.previous_page_number > 1 %}
-  <a class="ui button" href="?page={{ page.previous_page_number }}">
-    <i class="angle left icon"></i>
-  </a>
-  {% endif %}
-  {% for number in page.paginator.page_range %}
-  <a class="{% if number == page.number %} disabled{% endif %} button" href="?page={{number}}">
-    {{number}}
-  </a>
-  {% endfor %}
-  {% if page.next_page_number < page.paginator.num_pages %}
-  <a class="button" href="?page={{ page.next_page_number }}">
-    <i class="angle right icon"></i>
-  </a>
+
+  {% if page.number|add:'-2' > 1 %}
+  <a href="?page={{ page.number|add:'-3' }}">&hellip;</a>
   {% endif %}
 
-  <a class="{% if not page.has_next %} disabled {% endif %} button" href="?page={{ page.paginator.num_pages }}">
-    <i class="angle double right icon"></i>
+
+  {% for i in page.paginator.page_range %}
+  {% if page.number == i %}
+  <span>{{ i }}</span> 
+  {% elif i > page.number|add:'-3' and i < page.number|add:'3' %}
+  <a href="?page={{ i }}">{{ i }}</a>
+  {% endif %}
+  {% endfor %}
+
+  {% if page.paginator.num_pages > page.number|add:'2' %}
+  <a href="?page={{ page.number|add:'3' }}">&hellip;</a>
+  {% endif %}
+
+  <a class="" href="?page={{ page.paginator.num_pages }}">
+    <i class="fas fa-fast-forward"></i>
   </a>
 </div>
 {% endif %}

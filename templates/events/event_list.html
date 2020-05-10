@@ -4,6 +4,15 @@
 {% block content %}
 {% regroup event_list by start_date|date:"E Y" as month_list %}
 
+<section class="filter">
+  <a href="?">Alle</a>
+  {% if page.sections.exists %}
+  {% for section in page.sections.all %}
+  <a href="?section={{section.slug}}">{{section}}</a>
+  {% endfor %}
+  {% endif %}
+</section>
+
 <section class="events">
   {% for month in month_list %}
   <h2>{{month.grouper}}</h2>

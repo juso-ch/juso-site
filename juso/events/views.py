@@ -80,6 +80,9 @@ def event_list(request):
 
     event_list = event_list_for_page(page)
 
+    if 'section' in request.GET:
+        event_list = event_list.filter(section__slug=request.GET['section'])
+
     return render_list(
         request,
         event_list,

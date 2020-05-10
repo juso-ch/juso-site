@@ -615,6 +615,10 @@ nav.buttons > a.button {
   box-shadow: none;
 }
 
+.buttons > a.button {
+  margin: 0;
+}
+
 .buttons > a:nth-child(1) {
   --primary-color: var(--red);
 }

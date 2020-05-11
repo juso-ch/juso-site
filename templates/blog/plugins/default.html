@@ -4,17 +4,23 @@
 <section class="cards">
   {% for article in article_list %}
   <article class="{{article.category.slug}} card">
-    {% if article.image %}
-    <header class="heading">
+    {% if article.header_image %}
+    <header class="heading no-image">
+      <img src="{{article.header_image.card}}" alt="{{article.title}}"/>
+      <div class="overlay"></div>
       <a class="text-image" href="{{article.get_absolute_url}}">
-        <img src="{{article.image.card}}" alt="{{article.title}}"/>
-        <div class="overlay"></div>
         <div class="centered">
           <h3 class="highlight-text">
             {{article.title}}
           </h3>
         </div>
       </a>
+      <div class="tag">
+        <a href="{{article.category.get_absolute_url}}">
+          {{article.category.title}}
+        </a>
+      </div>
+    </header>
     </header>
     {% else %}
     <header class="heading no-image">
@@ -26,6 +32,11 @@
           </h3>
         </div>
       </a>
+      <div class="tag">
+        <a href="{{article.category.get_absolute_url}}">
+          {{article.category.title}}
+        </a>
+      </div>
     </header>
     {% endif %}
     <div class="content">
@@ -44,14 +55,7 @@
           {{article.namespace.name}}
         </div>
         {% endif %}
-        {% if enable_category %}
-        <div class="category">
-          <a href="{{article.category.get_absolute_url}}">
-            {{article.category.name}}
-          </a>
-        </div>
       </div>
-      {% endif %}
     </div>
   </article>
   {% endfor %}

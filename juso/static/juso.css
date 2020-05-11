@@ -893,3 +893,11 @@ nav.footer > a {
   position: relative;
 }
 
+header > .title {
+  font-weight: 300;
+  font-size: 0.8em;
+}
+
+.card.horizontal > .content > section {
+  font-size: 0.8em;
+}

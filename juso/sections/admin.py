@@ -30,7 +30,6 @@ class SectionAdmin(TreeAdmin):
         (None, {
             'fields': ('name', 'users', 'parent')
         }),
-        MetaMixin.admin_fieldset(),
         (_("advanced"), {
             'classes': ('collapse',),
             'fields': ('slug', 'site')
@@ -84,6 +83,7 @@ class CategoryAdmin(TreeAdmin):
                 'color',
             )
         }),
+        MetaMixin.admin_fieldset(),
         (_("translations"), {
             'classes': ('collapse',),
             'fields': ('translations',),

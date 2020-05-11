@@ -1,4 +1,4 @@
-{% load menus %}
+{% load menus i18n %}
 {% load tools %}
 <input type="checkbox" id="fab" autocomplete="off"/>
 <label id="fab-button" class="menu-btn" for="fab">
@@ -19,7 +19,7 @@
   </div>
   <div class="menu">
       <a class="branding" href="{{top.get_absolute_url}}">
-        <span class="logo"></span>
+        <span class="logo" aria-label="{% trans 'Logo' %}"></span>
       </a>
     {% for element, children in menu|group_by_tree %}
     <a href="{{element.get_absolute_url}}">{{element.title}}</a>

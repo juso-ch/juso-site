@@ -1,4 +1,4 @@
-{% load sekizai_tags static menus feincms3 tools %}
+{% load sekizai_tags static menus feincms3 tools i18n %}
 {% top_page page as top %}
 
 {% all_menus request.LANGUAGE_CODE top as menus %}
@@ -29,14 +29,14 @@
   </head>
   <body class="{{page.category.slug}}">
 
-    <nav id="mobile-menu" role="mobile">
+    <nav id="mobile-menu">
       {% include 'includes/mobile_menu.html' with menu=menus.main buttons=menus.buttons footer=menus.footer top_menu=menus.top %}
     </nav>
 
     <nav role="main" class="main" id="mainNavigation">
       <div class="branding">
         <a class="brand" href="{{top.get_absolute_url}}">
-          <span class="logo">
+          <span class="logo" aria-label="{% trans 'Logo' %}">
           </span>
           <span class="name">
           {{top.title}}
@@ -80,7 +80,7 @@
 
     <footer>
       {% block footer %}
-      <nav role="meta" class="meta">
+      <nav class="meta">
         {% include 'includes/meta_menu.html' with menu=menus.main quicklinks=menus.quicklink%}
       </nav>
 

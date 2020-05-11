@@ -50,11 +50,6 @@
         <time datetime="{{article.publication_date|date:"c"}}">
           {{article.publication_date|date:"d.m.Y"}}
         </time>
-        {% if namespace %}
-        <div class="namespace">
-          {{article.namespace.name}}
-        </div>
-        {% endif %}
       </div>
     </div>
   </article>

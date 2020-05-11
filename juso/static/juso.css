@@ -898,6 +898,7 @@ header > .title {
 
 header.heading > img {
   position: absolute;
+  height: 100%;
 }
 
 header.heading {

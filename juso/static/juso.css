@@ -482,7 +482,6 @@ img {
 /** Images with overlay text **/
 
 .text-image {
-  position: relative;
   text-align: center;
   display: block;
   width: 100%;

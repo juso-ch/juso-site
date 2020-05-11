@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-11 21:49+0200\n"
+"POT-Creation-Date: 2020-05-11 22:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,7 +37,7 @@ msgstr "Übersetzungen"
 msgid "blog"
 msgstr "Blog"
 
-#: juso/blog/models.py:24 juso/blog/models.py:121 juso/events/models.py:24
+#: juso/blog/models.py:24 juso/blog/models.py:126 juso/events/models.py:24
 #: juso/events/models.py:38 juso/forms/models.py:88 juso/glossary/models.py:30
 #: juso/link_collections/models.py:14 juso/people/models.py:74
 #: juso/sections/models.py:23 juso/sections/models.py:73
@@ -73,34 +73,56 @@ msgstr "Slug"
 
 #: juso/blog/models.py:106
 msgid "wordpress file"
-msgstr ""
+msgstr "Wordpress Datei"
 
-#: juso/blog/models.py:141 juso/pages/models.py:261
+#: juso/blog/models.py:108 juso/events/models.py:55 juso/forms/models.py:31
+#: juso/link_collections/models.py:12 juso/people/models.py:78
+#: juso/sections/models.py:82 juso/sections/models.py:129
+msgid "section"
+msgstr "Sektion"
+
+#: juso/blog/models.py:112
+msgid "default namespace"
+msgstr "Standard Namensraum"
+
+#: juso/blog/models.py:114
+msgid "completed"
+msgstr "Fertig"
+
+#: juso/blog/models.py:120
+msgid "wordpress import"
+msgstr "Wordpress import"
+
+#: juso/blog/models.py:121
+msgid "wordpress imports"
+msgstr "Wordpress importe"
+
+#: juso/blog/models.py:146 juso/pages/models.py:261
 msgid "glossary text"
 msgstr "Glossar Text"
 
-#: juso/blog/models.py:145 juso/events/models.py:106 juso/events/models.py:197
+#: juso/blog/models.py:150 juso/events/models.py:106 juso/events/models.py:197
 #: juso/pages/models.py:265
 msgid "caption"
 msgstr "Titel"
 
-#: juso/blog/models.py:146 juso/blog/plugins.py:18 juso/events/models.py:198
+#: juso/blog/models.py:151 juso/blog/plugins.py:18 juso/events/models.py:198
 #: juso/events/plugins.py:20 juso/pages/models.py:266 juso/people/models.py:123
 #: juso/sections/models.py:91
 msgid "title"
 msgstr "Titel"
 
-#: juso/blog/models.py:147 juso/events/models.py:199 juso/forms/models.py:51
+#: juso/blog/models.py:152 juso/events/models.py:199 juso/forms/models.py:51
 #: juso/pages/models.py:267
 msgid "full width"
-msgstr ""
+msgstr "volle breite"
 
-#: juso/blog/models.py:150 juso/events/models.py:202 juso/forms/models.py:25
+#: juso/blog/models.py:155 juso/events/models.py:202 juso/forms/models.py:25
 #: juso/pages/models.py:270 juso/people/models.py:26
 msgid "image"
 msgstr "Bild"
 
-#: juso/blog/models.py:151 juso/events/models.py:37 juso/events/models.py:203
+#: juso/blog/models.py:156 juso/events/models.py:37 juso/events/models.py:203
 #: juso/pages/models.py:271
 msgid "images"
 msgstr "Bilder"
@@ -117,7 +139,7 @@ msgstr "Kategorie"
 
 #: juso/blog/plugins.py:53
 msgid "page with all articles"
-msgstr ""
+msgstr "Seite mit allen Artikeln"
 
 #: juso/blog/plugins.py:58
 msgid "all article link text"
@@ -166,12 +188,6 @@ msgstr "Land"
 #: juso/sections/models.py:99
 msgid "header image"
 msgstr "Header Bild"
-
-#: juso/events/models.py:55 juso/forms/models.py:31
-#: juso/link_collections/models.py:12 juso/people/models.py:78
-#: juso/sections/models.py:82 juso/sections/models.py:129
-msgid "section"
-msgstr "Sektion"
 
 #: juso/events/models.py:58
 msgid "website"

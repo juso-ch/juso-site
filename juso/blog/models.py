@@ -103,17 +103,22 @@ class Article(ContentMixin):
 
 class WPImport(models.Model):
     slug = models.SlugField(_("slug"), unique=True)
-    import_file = models.FileField(_("wordpress file"))
+    import_file = models.FileField(verbose_name=_("wordpress file"))
     section = models.ForeignKey(
-        'sections.Section', models.CASCADE
+        'sections.Section', models.CASCADE, verbose_name=_("section")
     )
     default_namespace = models.ForeignKey(
-        NameSpace, models.CASCADE, related_name='+'
+        NameSpace, models.CASCADE, related_name='+',
+        verbose_name=_("default namespace")
     )
-    completed = models.BooleanField(default=False)
+    completed = models.BooleanField(default=False, verbose_name=_("completed"))
 
     def __str__(self):
         return self.slug
+
+    class Meta:
+        verbose_name = _("wordpress import")
+        verbose_name_plural = _("wordpress imports")
 
 
 class NamespaceMapping(models.Model):

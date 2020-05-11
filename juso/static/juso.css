@@ -454,7 +454,7 @@ nav#mobile-menu .logo {
   .glossary-content {
     display: none;
   }
-  .text > p, .text > ul, .text > ol, .wrapper > *, figure > img, figure > figcaption {
+  .text > p, .text > h1, .text > h2, .text > h3, .text > h4, .text > h5 , .text > h6, .text > ul, .text > ol, .wrapper > *, figure > img, figure > figcaption {
     max-width: 100%;
     clear: both;
   }
@@ -820,6 +820,7 @@ nav.footer > a {
     display: flex;
     justify-content: space-around;
     margin-top: 0.3em;
+    font-size: 0.7em;
   }
   .small-top-bar {
     margin-top: 0.3em;
@@ -891,3 +892,4 @@ nav.footer > a {
   align-items: center;
   position: relative;
 }
+

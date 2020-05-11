@@ -655,7 +655,7 @@ footer {
 
 footer > nav {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: start;
   flex-wrap: wrap;
 }
 

@@ -1,5 +1,6 @@
 from content_editor.models import Region, Template
 from django.contrib.auth.models import User
+from django.urls import NoReverseMatch
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
@@ -45,14 +46,17 @@ class Category(TranslationMixin, MetaMixin, TreeNode):
 
     def get_absolute_url(self):
         site = current_site()
-        return reverse_app(
-            (str(site.id) + '-categories',),
-            'category-detail',
-            languages=[
-                self.language_code
-            ],
-            kwargs={'slug': self.slug}
-        )
+        try:
+            return reverse_app(
+                (str(site.id) + '-categories',),
+                'category-detail',
+                languages=[
+                    self.language_code
+                ],
+                kwargs={'slug': self.slug}
+            )
+        except NoReverseMatch:
+            return '#'
 
     def get_header_image(self):
         if self.header_image:

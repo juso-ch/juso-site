@@ -120,6 +120,7 @@ figure.full {
 
 .card.horizontal > img {
   flex: 1 0 50%;
+  object-fit: cover;
 }
 
 .card.horizontal > .content {

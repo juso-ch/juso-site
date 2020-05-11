@@ -842,6 +842,15 @@ nav.footer > a {
   nav.footer {
     display: none;
   }
+
+  nav.meta h4 {
+    font-size: 2rem;
+  }
+
+  .meta-menu > div > a {
+    font-size: 1.5rem;
+    padding-bottom: 0.5rem;
+  }
 }
 
 .pagination {

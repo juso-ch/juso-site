@@ -193,9 +193,14 @@ class Page(
 
     is_navigation = models.BooleanField(_("display navigation"), default=False)
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._is_landing_page = self.is_landing_page
+
     @transaction.atomic
     def save(self, *args, **kwargs):
-        if not self.is_landing_page:
+        if not self.is_landing_page or\
+           self._is_landing_page == self.is_landing_page:
             return super().save(*args, **kwargs)
         Page.objects.filter(
             is_landing_page=True,

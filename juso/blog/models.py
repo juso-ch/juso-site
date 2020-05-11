@@ -55,10 +55,6 @@ class Article(ContentMixin):
     )
 
     @property
-    def image(self):
-        return self.header_image or self.meta_image
-
-    @property
     def tagline(self):
         if RichText.objects.filter(parent=self).exists():
             return RichText.objects.filter(parent=self)[0].text

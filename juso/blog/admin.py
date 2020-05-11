@@ -2,6 +2,7 @@ from content_editor.admin import ContentEditor
 from django.contrib import admin
 from django.utils.translation import gettext as _
 from feincms3 import plugins
+from feincms3_meta.models import MetaMixin
 from js_asset import JS
 
 from juso.admin import ButtonInline
@@ -91,18 +92,7 @@ class ArticleAdmin(ContentEditor, CopyContentMixin):
                 'header_image_ppoi'
             )
         }),
-        (_('meta'), {
-            'classes': ('tabbed', ),
-            'fields': (
-                'meta_title',
-                'meta_author',
-                'meta_description',
-                'meta_image',
-                'meta_image_ppoi',
-                'meta_robots',
-                'meta_canonical',
-            )
-        }),
+        MetaMixin.admin_fieldset(),
         (_("translations"), {
             'classes': ('tabbed', ),
             'fields': (

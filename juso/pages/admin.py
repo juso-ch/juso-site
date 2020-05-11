@@ -5,6 +5,7 @@ from feincms3 import plugins
 from feincms3.admin import TreeAdmin
 from feincms3_sites.admin import SiteAdmin
 from feincms3_sites.models import Site
+from feincms3_meta.models import MetaMixin
 from js_asset import JS
 
 from admin_ordering.admin import OrderableAdmin
@@ -128,18 +129,7 @@ class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
                 'collection',
             )
         }),
-        (_('meta'), {
-            'classes': ('tabbed', ),
-            'fields': (
-                'meta_title',
-                'meta_author',
-                'meta_description',
-                'meta_image',
-                'meta_image_ppoi',
-                'meta_robots',
-                'meta_canonical',
-            )
-        }),
+        MetaMixin.admin_fieldset(),
         (_('redirect'), {
             'classes': ('tabbed',),
             'fields': (

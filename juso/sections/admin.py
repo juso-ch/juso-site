@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.utils.translation import gettext as _
 from feincms3.admin import TreeAdmin
+from feincms3_meta.models import MetaMixin
 
 from juso.sections.models import Category, Section
 
@@ -29,6 +30,7 @@ class SectionAdmin(TreeAdmin):
         (None, {
             'fields': ('name', 'users', 'parent')
         }),
+        MetaMixin.admin_fieldset(),
         (_("advanced"), {
             'classes': ('collapse',),
             'fields': ('slug', 'site')

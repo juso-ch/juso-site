@@ -881,16 +881,10 @@ nav.footer > a {
   margin-bottom: 0;
 }
 
-.no-image::after {
+.heading::after {
   padding-bottom: 66.66%;
   content: "";
   display: block;
-}
-
-.no-image {
-  display: flex;
-  align-items: center;
-  position: relative;
 }
 
 header > .title {
@@ -900,4 +894,21 @@ header > .title {
 
 .card.horizontal > .content > section {
   font-size: 0.8em;
+}
+
+header.heading > img {
+  position: absolute;
+}
+
+header.heading {
+  position: relative;
+  display: flex;
+}
+
+.heading > .tag > a {
+  position: absolute;
+  left: 1em;
+  top: 1em;
+  color: var(--light-color);
+  text-decoration: none;
 }

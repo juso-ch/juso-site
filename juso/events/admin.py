@@ -3,6 +3,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.utils.translation import gettext as _
 from feincms3 import plugins
+from feincms3_meta.models import MetaMixin
 from geopy.geocoders import Nominatim
 from js_asset import JS
 
@@ -14,7 +15,7 @@ from juso.events import plugins as event_plugins
 from juso.people import plugins as people_plugins
 from juso.blog import plugins as blog_plugins
 from juso.plugins import download
-from juso.utils import CopyContentMixin, meta_fieldset
+from juso.utils import CopyContentMixin
 
 # Register your models here.
 
@@ -88,18 +89,7 @@ class EventAdmin(ContentEditor, CopyContentMixin):
                 'header_image_ppoi'
             )
         }),
-        (_('meta'), {
-            'classes': ('tabbed',),
-            'fields': (
-                'meta_title',
-                'meta_author',
-                'meta_description',
-                'meta_image',
-                'meta_image_ppoi',
-                'meta_robots',
-                'meta_canonical',
-            )
-        }),
+        MetaMixin.admin_fieldset(),
         (_('translations'), {
             'classes': ('tabbed',),
             'fields': (
@@ -193,7 +183,6 @@ class LocationAdmin(ContentEditor):
                 'country',
             )
         }),
-        meta_fieldset,
         (_('advanced'), {
             'classes': ('tabbed',),
             'fields': (
@@ -205,6 +194,7 @@ class LocationAdmin(ContentEditor):
                 'header_image_ppoi'
             )
         }),
+        MetaMixin.admin_fieldset(),
         (_('translations'), {
             'classes': ('tabbed',),
             'fields': (

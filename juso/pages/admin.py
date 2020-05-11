@@ -171,7 +171,7 @@ class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
 
     def get_inline_instances(self, request, obj=None):
         inlines = super().get_inline_instances(request, obj)
-        if obj and obj.application == 'categories':
+        if hasattr(obj, 'pk') and models.Page.objects.get(pk=obj.pk).application == 'categories':
             return inlines
         return inlines[:-1]
 

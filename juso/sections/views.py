@@ -49,7 +49,10 @@ def category_detail(request, slug):
 
     events = event_list_for_page(page).filter(category=category)
     articles = articles_for_page(page).filter(category=category)
-    description = page.categorylinking_set.get(category=category).description
+    description = ''
+
+    if page.categorylinking_set.filter(category=category).exists():
+        description = page.categorylinking_set.get(category=category).description
 
     page_number = request.GET.get('page', 1)
     articles = Paginator(articles, per_page=12).get_page(page_number)

@@ -1,5 +1,5 @@
 {% extends 'blog/base.html' %}
-{% load feincms3 %}
+{% load feincms3 i18n %}
 
 {% block breadcrumbs %}
 {% include 'includes/breadcrumbs.html' with obj=article %}
@@ -10,6 +10,8 @@
   {% render_region regions 'main' %}
 </article>
 {% if edit %}
-<a class="button" href="{% url 'admin:blog_article_change' article.pk %}">Bearbeiten</a>
+<a class="button" href="{% url 'admin:blog_article_change' article.pk %}">
+  {% trans "Edit" %}
+</a>
 {% endif %}
 {% endblock %}

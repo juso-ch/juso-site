@@ -1,4 +1,4 @@
-{% load menus %}
+{% load menus i18n %}
 {% for main, children in menu|group_by_tree %}
 {% if main.in_meta %}
 <div class="meta-menu">
@@ -16,7 +16,7 @@
 {% endif %}
 {% endfor %}
 <div class="meta-menu">
-  <h4>Quicklinks</h4>
+  <h4>{% trans "Quicklinks" %}</h4>
   <div>
     {% for main, children in quicklinks|group_by_tree %}
     <a href="{{main.get_absolute_url}}">

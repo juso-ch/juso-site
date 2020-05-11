@@ -1,3 +1,4 @@
+{% load i18n %}
 {% if plugin.title %}
 <h2>{{plugin.title}}</h2>
 {% endif %}
@@ -44,7 +45,7 @@
     </div>
     <div class="extra content">
       <a href="{{article.get_absolute_url}}" class="button">
-        Weiterlesen
+        {% trans "read more" %}
       </a>
       <div class="info">
         <time datetime="{{article.publication_date|date:"c"}}">

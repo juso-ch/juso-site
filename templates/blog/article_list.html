@@ -1,6 +1,6 @@
 {% extends 'blog/base.html' %}
 
-{% load feincms3 sekizai_tags  %}
+{% load feincms3 sekizai_tags i18n %}
 
 {% block regions %}
 <form class="filter">
@@ -13,11 +13,11 @@
       ><label for="{{category.slug}}">{{category}}</label>
   {% endfor %}
   <div class="field">
-    <label for="search">Suche</label>
+    <label for="search">{% trans "Search" %}</label>
   <input type="text" name="search">
   </div>
 
-  <button type="submit">Anwenden</button>
+  <button type="submit">{% trans "Apply" %}</button>
 </form>
 
 {% include 'blog/plugins/default.html' with enable_category=True %}

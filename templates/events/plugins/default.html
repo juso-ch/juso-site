@@ -23,7 +23,9 @@
           {{event.location|default:""}}
         </div>
         <div class="action">
-          <a href="{{event.get_absolute_url}}" class="button">Mehr Infos</a>
+          <a href="{{event.get_absolute_url}}" class="button">
+            {% trans "more info" %}
+          </a>
         </div>
       </section>
     </div>

@@ -1,5 +1,5 @@
 {% extends 'pages/base.html' %}
-{% load feincms3 %}
+{% load feincms3 i18n %}
 
 {% block regions %}
 <article class="{{page.category.slug}}">
@@ -11,6 +11,8 @@
 </nav>
 {% endif %}
 {% if edit %}
-<a class="button" href="{% url 'admin:pages_page_change' page.pk %}">Bearbeiten</a>
+<a class="button" href="{% url 'admin:pages_page_change' page.pk %}">
+  {% trans 'Edit' %}
+</a>
 {% endif %}
 {% endblock %}

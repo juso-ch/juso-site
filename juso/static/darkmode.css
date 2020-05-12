@@ -9,11 +9,31 @@ body.dark{
   --background-color:var(--anthrazit);
   --footer-background-color: black;
   --footer-text-color: grey;
---tamaro-bg-color: var(--anthrazit);
---tamaro-block-header-color: var(--white);
---tamaro-text-color: var(--white);
---tamaro-label-checkable-color: var(--white);
+  --tamaro-bg-color: var(--anthrazit);
+  --tamaro-block-header-color: var(--white);
+  --tamaro-text-color: var(--white);
+  --tamaro-label-checkable-color: var(--white);
 }
+
+body.tamaro-widget-overlay-outer.dark footer {
+  background-color: black;
+  color: grey;
+}
+
+body.tamaro-widget-overlay-outer.dark footer nav.footer {
+  border-top: grey solid;
+}
+
+body.tamaro-widget-overlay-outer.dark nav.main.sticky,
+body.tamaro-widget-overlay-outer.dark .nav-panel {
+  background-color: #262626;
+  color: #ffffff;
+}
+
+body.tamaro-widget-overlay-outer.dark nav#mobile-menu .logo{
+  background-color: #ffffff;
+}
+
 body.dark img {
   opacity: .75;
   transition: opacity .5s ease-in-out;

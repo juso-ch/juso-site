@@ -30,6 +30,8 @@ services:
       - web
       - default
     restart: always
+    ports:
+      - 8337:80
     expose:
       - 80
     depends_on:

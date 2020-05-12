@@ -1,4 +1,5 @@
-FROM nginx:1.17.4-alpine
+FROM sacovo/nginx-pagespeed
 
-RUN rm /etc/nginx/conf.d/default.conf
-COPY nginx.conf /etc/nginx/conf.d
+RUN mkdir /var/nginx_cache
+RUN rm /usr/local/nginx/conf/nginx.conf
+COPY nginx.conf /usr/local/nginx/conf/nginx.conf

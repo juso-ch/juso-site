@@ -231,7 +231,6 @@ nav.subsites > a > div.overlay {
   background-color: var(--highlight-color);
   opacity: 0.2;
   transition: 300ms ease-in-out;
-  border-radius: 3px 3px 0 0;
 }
 
 nav.subsites > a:hover > div.overlay {
@@ -535,6 +534,7 @@ img {
   width: 100%;
   height: 100%;
   transition: opacity 200ms ease-in-out;
+  border-radius: 3px 3px 0 0;
 }
 
 .card .heading:hover  .overlay {

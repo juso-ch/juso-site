@@ -231,6 +231,7 @@ nav.subsites > a > div.overlay {
   background-color: var(--highlight-color);
   opacity: 0.2;
   transition: 300ms ease-in-out;
+  border-radius: 3px 3px 0 0;
 }
 
 nav.subsites > a:hover > div.overlay {
@@ -835,7 +836,7 @@ nav.footer > a {
   }
 
   .small-bottom-bar {
-    margin-top: 2rem;
+    margin-top: 3rem;
     margin-bottom: 0.5em;
   }
 
@@ -916,6 +917,7 @@ header > .title {
 header.heading > img {
   position: absolute;
   height: 100%;
+  width: 100%;
 }
 
 header.heading {

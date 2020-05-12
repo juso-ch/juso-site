@@ -93,6 +93,7 @@ figure.full {
 
 .card.horizontal{
   flex-direction: row;
+  margin-top: 0.5em;
 }
 
 .card.horizontal img {

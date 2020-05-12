@@ -19,14 +19,14 @@ body.dark img:hover {
 .toggle-theme {
   margin: 0 1em;
 }
-#theme-sun {
+.toggle-theme.light {
   display: none;
 }
 
-body.dark #theme-sun {
+body.dark .toggle-theme.light {
   display: inherit;
 }
 
-body.dark #theme-moon {
+body.dark .toggle-theme.dark {
   display: none;
 }

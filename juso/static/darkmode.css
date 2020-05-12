@@ -18,7 +18,9 @@ body.dark img:hover {
 
 .toggle-theme {
   margin: 0 1em;
+  font-size: 0.7em;
 }
+
 .toggle-theme.light {
   display: none;
 }

@@ -9,11 +9,10 @@
 
   --primary-color: var(--red);
   --light-color: var(--white);
+  --tamaro-primary-color: var(--primary-color);
+  --tamaro-bg-color: var(--background-color);
+  --tamaro-primary-color__hover: #d52932;
 
-
-  /**
-   * Dark mode
-  **/
   --text-color: var(--anthrazit);
   --background-color:var(--white);
   --highlight-color: var(--primary-color);

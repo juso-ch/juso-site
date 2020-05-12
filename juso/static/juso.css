@@ -932,3 +932,17 @@ header.heading {
   color: var(--light-color);
   text-decoration: none;
 }
+
+.rnw-widget-container {
+  max-width: 726px;
+  margin: 3em auto;
+}
+
+main #tamaro-widget.tamaro-widget.tamaro-widget {
+  font-family: var(--body-font);
+}
+main #tamaro-widget.tamaro-widget span, main #tamaro-widget.tamaro-widget .widget-content .widget-block .widget-block-header .title .position {
+  font-family: var(--title-font);
+  text-transform: uppercase;
+  font-weight: 800;
+}

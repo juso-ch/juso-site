@@ -3,10 +3,16 @@ body.theme-change, body.theme-change .nav-panel {
 }
 
 body.dark{
+  background-color: #262626;
+  color: #ffffff;
   --text-color: var(--white);
   --background-color:var(--anthrazit);
   --footer-background-color: black;
   --footer-text-color: grey;
+--tamaro-bg-color: var(--anthrazit);
+--tamaro-block-header-color: var(--white);
+--tamaro-text-color: var(--white);
+--tamaro-label-checkable-color: var(--white);
 }
 body.dark img {
   opacity: .75;

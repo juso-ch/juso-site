@@ -66,6 +66,11 @@ figure.full {
   min-width: 80px;
 }
 
+.cards.team > .card > .image {
+  flex: 1 0 50%;
+  min-width: 80px;
+}
+
 .cards.events > .card > .image > img {
   height: 100%;
   object-fit: cover;
@@ -118,8 +123,9 @@ figure.full {
   justify-content: space-between;
 }
 
-.card.horizontal > img {
-  flex: 1 0 50%;
+.card.horizontal > .image > img {
+  height: 100%;
+  width: 100%;
   object-fit: cover;
 }
 

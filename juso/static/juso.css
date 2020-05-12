@@ -635,15 +635,15 @@ nav.buttons > a.button {
 }
 
 .buttons > a:nth-child(1) {
-  --primary-color: var(--red);
+  background-color: var(--red);
 }
 
 .buttons > a:nth-child(2) {
-  --primary-color: var(--violett);
+  background-color: var(--violett);
 }
 
 .buttons > a:nth-child(3) {
-  --primary-color: var(--green);
+  background-color: var(--green);
 }
 
 nav > ul {

@@ -618,6 +618,7 @@ nav.main > ul > li:last-child {
 
 nav.buttons {
   display: flex;
+  box-shadow: var(--box-shadow);
 }
 
 nav.buttons > a.button {

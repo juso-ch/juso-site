@@ -73,6 +73,7 @@ figure.full {
 
 .cards.events > .card > .image > img {
   height: 100%;
+  width: 100%;
   object-fit: cover;
 }
 

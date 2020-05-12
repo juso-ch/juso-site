@@ -5,7 +5,7 @@
 <section class="cards events">
   {% for event in events.all %}
   <article class="{{event.category.slug}} card horizontal">
-    {% if event.image %}
+    {% if event.get_header_image %}
     <a class="image" href="{{event.get_absolute_url}}">
       <img src="{{event.get_header_image.card}}" alt="{{event.title}}"/>
     </a>

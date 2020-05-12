@@ -19,9 +19,9 @@
   <section class="cards events month">
     {% for event in month.list %}
     <article class="{{event.category.slug}} card horizontal">
-      {% if event.image %}
+      {% if event.get_header_image %}
       <a class="image" href="{{event.get_absolute_url}}">
-        <img src="{{event.image.url}}" alt="{{event.title}}"/>
+        <img src="{{event.get_header_image.card}}" alt="{{event.title}}"/>
       </a>
       {% endif %}
       <div class="content">

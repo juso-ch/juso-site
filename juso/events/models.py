@@ -1,6 +1,6 @@
 from content_editor.models import Region, create_plugin_base
 from django.db import models
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 from feincms3 import plugins
 from feincms3.apps import apps_urlconf, reverse_app
 from feincms3_meta.models import MetaMixin

@@ -1,6 +1,6 @@
 import re
 
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 from django.db import models
 from feincms3.plugins.richtext import RichText
 from juso.sections.models import Category

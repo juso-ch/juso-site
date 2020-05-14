@@ -4,7 +4,7 @@ from django.urls import NoReverseMatch
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 from feincms3.apps import reverse_app
 from feincms3.mixins import TemplateMixin
 from feincms3_meta.models import MetaMixin

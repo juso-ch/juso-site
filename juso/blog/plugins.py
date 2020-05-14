@@ -2,7 +2,7 @@ from content_editor.admin import ContentEditorInline
 from django.conf import settings
 from django.db import models
 from django.template.loader import render_to_string
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 
 from juso.models import TranslationMixin
 from juso.sections.models import Category, Section

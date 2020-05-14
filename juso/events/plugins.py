@@ -3,7 +3,7 @@ from django.conf import settings
 from django.db import models
 from django.template.loader import render_to_string
 from django.utils import timezone
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 
 from feincms3_sites.middleware import current_site
 from juso.models import TranslationMixin

@@ -54,6 +54,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'feincms3_sites.middleware.site_middleware',
     'feincms3_sites.middleware.default_language_middleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'feincms3.apps.apps_middleware',

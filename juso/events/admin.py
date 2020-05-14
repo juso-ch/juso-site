@@ -1,7 +1,7 @@
 from content_editor.admin import ContentEditor
 from django.conf import settings
 from django.contrib import admin
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 from feincms3 import plugins
 from feincms3_meta.models import MetaMixin
 from geopy.geocoders import Nominatim

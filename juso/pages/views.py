@@ -34,6 +34,9 @@ def page_detail(request, path=None):
         path=f"/{path}/" if path else '/',
     )
 
+    if page.redirect_to_url or page.redirect_to_page:
+        return redirect(page.redirect_to_url or page.redirect_to_page)
+
     edit = request.user.is_authenticated and\
             request.user.section_set.filter(pk=page.site.section.pk).exists()
 

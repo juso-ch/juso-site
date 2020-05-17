@@ -32,6 +32,11 @@ class GlossaryEntryAdmin(admin.ModelAdmin):
         "slug": ("name",),
     }
 
+    list_filter = [
+        'category', 'language_code'
+    ]
+
+
     fieldsets = (
         (None, {
             'fields': [

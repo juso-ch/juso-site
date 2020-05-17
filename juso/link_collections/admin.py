@@ -25,6 +25,10 @@ class CollectionAdmin(admin.ModelAdmin):
         LinkInline
     ]
 
+    list_filter = [
+        'section',
+    ]
+
     autocomplete_fields = [
         'section'
     ]

@@ -30,7 +30,6 @@ class EventAdmin(ContentEditor, CopyContentMixin):
         'location',
         'category',
         'language_code',
-        'namespace',
     ]
 
     list_filter = [
@@ -229,5 +228,24 @@ class NamespaceAdmin(admin.ModelAdmin):
     search_fields = [
         'name'
     ]
+    list_display = [
+        'name',
+        'slug',
+        'language_code',
+    ]
+
+    list_filter = [
+        'language_code'
+    ]
+
+    prepopulated_fields = {
+        "slug": ("name",)
+    }
 
     autocomplete_fields = ('translations',)
+
+    fieldsets = (
+        (None, {
+            'fields': ('name', 'slug', 'language_code', 'translations')
+        }),
+    )

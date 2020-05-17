@@ -25,7 +25,6 @@ class ArticleAdmin(ContentEditor, CopyContentMixin):
     list_display = [
         'title',
         'slug',
-        'author',
         'publication_date',
         'category',
         'section',

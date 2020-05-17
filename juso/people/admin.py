@@ -48,6 +48,10 @@ class PersonAdmin(admin.ModelAdmin):
         'last_name',
     ]
 
+    list_filter = [
+        'sections', 'teams'
+    ]
+
     def has_delete_permission(self, request, obj=None):
         if obj is None:
             return super().has_change_permission(request, obj)
@@ -80,7 +84,8 @@ class TeamAdmin(OrderableAdmin, admin.ModelAdmin):
     ]
 
     list_filter = [
-        'section'
+        'section',
+        'language_code',
     ]
 
     ordering_field = ['order']

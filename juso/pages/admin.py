@@ -219,9 +219,11 @@ class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
             form = DuplicateForm(request.POST, page=page)
 
             if form.is_valid():
+                old_pk = page.pk
                 new_root = page
                 language_code = form.cleaned_data['language_code']
                 site = form.cleaned_data['site']
+                link_translations = form.cleaned_data['link_translations']
                 children = page.children.all()
 
                 new_root.pk = None
@@ -233,14 +235,24 @@ class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
                 new_root.title = form.cleaned_data['new_title']
                 new_root.save()
 
+                if link_translations:
+                    new_root.translations.add(
+                        old_pk
+                    )
+                    new_root.save()
+
                 def copy_children(page, children):
                     for child in children:
                         new_children = child.children.all()
                         child.parent=page
+                        old_pk = child.pk
                         child.pk = None
                         child.language_code = language_code
                         child.site = site
                         child.save()
+                        if link_translations:
+                            child.translations.add(old_pk)
+                            child.save()
                         copy_children(child, new_children)
 
                 copy_children(new_root, children)
@@ -265,6 +277,7 @@ class DuplicateForm(forms.Form):
     new_slug = forms.CharField()
     new_path = forms.CharField()
     new_title = forms.CharField()
+    link_translations = forms.BooleanField()
 
     def __init__(self, *args, **kwargs):
         self.page = kwargs.pop('page')

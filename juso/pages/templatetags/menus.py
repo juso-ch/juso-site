@@ -23,30 +23,19 @@ def all_menus(language_code, top_page):
     ).filter(
         language_code=language_code
     ).extra(
-        where=["tree_depth>=1 and tree_depth<=2"]
+        where=["tree_depth=1"]
     )
 
     for page in pages:
         menus[page.menu].append(page)
+
     return menus
 
 
 @register.filter
 def group_by_tree(iterable):
-    parent = None
-    children = []
 
-    depth = -1
+    iterable = sorted(iterable, key=lambda p: p.position)
 
     for element in iterable:
-        if parent is None or element.tree_depth == depth:
-            if parent:
-                yield parent, children
-                parent = None
-                children = []
-            parent = element
-            depth = element.tree_depth
-        else:
-            children.append(element)
-    if parent:
-        yield parent, children
+        yield element, element.children.all()

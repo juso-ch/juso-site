@@ -1,4 +1,8 @@
 from content_editor.admin import ContentEditor
+from django import forms
+from django.urls import path
+from django.shortcuts import render, redirect, reverse
+from django.conf import settings
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 from feincms3 import plugins
@@ -46,7 +50,7 @@ class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
         'application',
         "position",
     ]
-    actions = ['copy_selected']
+    actions = ['open_duplicate_form']
 
     prepopulated_fields = {'slug': ('title',)}
 
@@ -89,6 +93,9 @@ class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
     ]
 
     plugins = models.plugins
+    readonly_fields = [
+        'app_instance_namespace'
+    ]
 
     fieldsets = (
         (None, {
@@ -127,6 +134,7 @@ class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
                 'featured_categories',
                 'sections',
                 'collection',
+                'app_instance_namespace',
             )
         }),
         MetaMixin.admin_fieldset(),
@@ -182,6 +190,86 @@ class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
             return qs
         sections = request.user.section_set.all()
         return qs.filter(site__section__in=sections)
+
+    def open_duplicate_form(self, request, queryset):
+        return redirect(
+            reverse(
+                'admin:pages_Page_duplicate_page_tree',
+                kwargs={'pk': queryset[0].pk},
+            )
+        )
+    open_duplicate_form.short_description =  _("Duplicate page-tree")
+
+    def get_urls(self):
+        urls = super().get_urls()
+        return [
+            path(
+                '<int:pk>/duplicate/',
+                self.admin_site.admin_view(
+                    self.duplicate_page_tree
+                ),
+                name="pages_Page_duplicate_page_tree"
+            )
+        ] + urls
+
+    def duplicate_page_tree(self, request, pk):
+        page = models.Page.objects.get(pk=pk)
+        form = DuplicateForm(page=page)
+        if request.method == 'POST':
+            form = DuplicateForm(request.POST, page=page)
+
+            if form.is_valid():
+                new_root = page
+                language_code = form.cleaned_data['language_code']
+                site = form.cleaned_data['site']
+                children = page.children.all()
+
+                new_root.pk = None
+                new_root.language_code = language_code
+                new_root.site = site
+                new_root.slug = form.cleaned_data['new_slug']
+                new_root.path = form.cleaned_data['new_path']
+                new_root.static_path = True
+                new_root.title = form.cleaned_data['new_title']
+                new_root.save()
+
+                def copy_children(page, children):
+                    for child in children:
+                        new_children = child.children.all()
+                        child.parent=page
+                        child.pk = None
+                        child.language_code = language_code
+                        child.site = site
+                        child.save()
+                        copy_children(child, new_children)
+
+                copy_children(new_root, children)
+
+                return redirect('admin:pages_page_changelist')
+        context = dict(
+            self.admin_site.each_context(request),
+            form=form,
+            title=_("Duplicate Page-Tree"),
+            app_label="pages",
+            opts=models.Page._meta,
+            model=models.Page,
+        )
+
+        return render(request, 'admin/duplicate_page_tree.html', context)
+
+
+class DuplicateForm(forms.Form):
+
+    language_code = forms.ChoiceField(choices=settings.LANGUAGES)
+    site = forms.ModelChoiceField(Site.objects.all())
+    new_slug = forms.CharField()
+    new_path = forms.CharField()
+    new_title = forms.CharField()
+
+    def __init__(self, *args, **kwargs):
+        self.page = kwargs.pop('page')
+
+        super().__init__(*args, **kwargs)
 
 
 class SiteAdmin(SiteAdmin):

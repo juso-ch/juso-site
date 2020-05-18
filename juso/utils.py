@@ -32,6 +32,11 @@ class CopyContentMixin():
         parent = old_parent
         parent.pk = None
         parent.id = None
+
+        if hasattr(parent, 'app_instance_namespace'):
+            parent.app_instance_namespace = ''
+            parent.application = ''
+
         parent.save()
 
         duplicated.append(old_pk)

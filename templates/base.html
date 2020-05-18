@@ -29,8 +29,9 @@
   </head>
   <body class="{{page.category.slug}}">
 
+    {% button_menu request.LANGUAGE_CODE top as buttons %}
     <nav id="mobile-menu">
-      {% include 'includes/mobile_menu.html' with menu=menus.main buttons=menus.buttons footer=menus.footer top_menu=menus.top %}
+      {% include 'includes/mobile_menu.html' with menu=menus.main buttons=buttons footer=menus.footer top_menu=menus.top %}
     </nav>
 
     <nav role="main" class="main" id="mainNavigation">
@@ -43,7 +44,7 @@
           </span>
         </a>
       </div>
-      {% include 'includes/main_navigation.html' with menu=menus.main buttons=menus.buttons %}
+      {% include 'includes/main_navigation.html' with menu=menus.main buttons=buttons %}
     </nav>
 
     <header

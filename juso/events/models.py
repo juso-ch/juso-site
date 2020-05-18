@@ -172,7 +172,8 @@ class Event(ContentMixin):
                  f'{self.section.site.id}-events-{self.namespace}',
                  f'{self.section.site.id}-events-{self.category}',
                  f'{self.section.site.id}-events'],
-                'event-detail', urlconf=apps_urlconf(),
+                'event-detail',
+                urlconf=apps_urlconf(),
                 kwargs={
                     'slug': self.slug,
                     'day': self.start_date.day,

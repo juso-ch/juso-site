@@ -366,26 +366,21 @@ header.page > h1  {
   margin: auto;
 }
 
-.logo {
-  mask-size: contain;
-  mask-repeat: no-repeat;
-  mask-position: center;
-  mask-image: url('logo.svg');
-  -webkit-mask-size: contain;
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  -webkit-mask-image: url('logo.svg');
+.logo svg {
+  height: 100%;
+  width: 100%;
+  fill: currentColor;
 }
 
 .branding .logo {
-  background-color: var(--light-color);
+  color: var(--light-color);
   height: 3em;
   padding: 1px 4px;
   flex: 1 0;
 }
 
 .sticky .logo{
-  background-color: var(--highlight-color);
+  color: var(--highlight-color);
 }
 
 nav#mobile-menu .menu .branding {
@@ -398,7 +393,7 @@ nav#mobile-menu .menu .branding {
 nav#mobile-menu .logo {
   height: 3em;
   display: block;
-  background-color: var(--text-color);
+  color: var(--text-color);
 }
 
 /*

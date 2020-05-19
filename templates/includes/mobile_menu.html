@@ -19,7 +19,9 @@
   </div>
   <div class="menu">
       <a class="branding" href="{{top.get_absolute_url}}">
-        <span class="logo" aria-label="{% trans 'Logo' %}"></span>
+        <span class="logo" aria-label="{% trans 'Logo' %}">
+          {% include 'includes/logo.svg' %}
+        </span>
       </a>
     {% for element, children in menu|group_by_tree %}
     <a href="{{element.get_absolute_url}}">{{element.title}}</a>

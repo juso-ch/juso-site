@@ -286,7 +286,8 @@ a.button:hover, button:hover {
 
 
 .button.icon {
-  padding: 0.2em;
+  padding: 0.4em;
+  margin: 0 0.3em;
 }
 
 nav {
@@ -941,3 +942,7 @@ main #tamaro-widget.tamaro-widget span, main #tamaro-widget.tamaro-widget .widge
   text-transform: uppercase;
   font-weight: 800;
 }
+
+
+/**Forms***/
+

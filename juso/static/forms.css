@@ -4,12 +4,10 @@ form.form {
   padding: 0.3rem;
 }
 
-@media (min-width: 600px){
-  form.form {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    column-gap: 1em;
-  }
+form.form {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: 1em;
 }
 
 form.form > .message {
@@ -30,28 +28,34 @@ form .field {
   margin-top: 0.4em;
 }
 
-.field.one {
+.field {
   grid-column: span 12;
 }
 
-.field.three-fourths {
-  grid-column: span 9;
-}
+@media (min-width: 420px) {
+  .field.one {
+    grid-column: span 12;
+  }
 
-.field.two-thirds {
-  grid-column: span 8;
-}
+  .field.three-fourths {
+    grid-column: span 9;
+  }
 
-.field.one-half {
-  grid-column: span 6;
-}
+  .field.two-thirds {
+    grid-column: span 8;
+  }
 
-.field.one-third {
-  grid-column: span 4;
-}
+  .field.one-half {
+    grid-column: span 6;
+  }
 
-.field.one-fourth {
-  grid-column: span 3;
+  .field.one-third {
+    grid-column: span 4;
+  }
+
+  .field.one-fourth {
+    grid-column: span 3;
+  }
 }
 
 .field > label {
@@ -112,7 +116,7 @@ form .field {
 }
 
 .field > small {
-	font-size: 0.6em;
+  font-size: 0.6em;
   margin-top: 0em;
 }
 

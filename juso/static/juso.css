@@ -350,7 +350,7 @@ header.page > h1  {
 }
 
 .branding {
-  flex: 1 0 auto;
+  flex: 2 0;
 }
 
 .brand {

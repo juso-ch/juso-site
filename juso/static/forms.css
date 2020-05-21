@@ -27,6 +27,7 @@ form .field {
   position: relative;
   margin-bottom: 1em;
   padding-top: 0.5em;
+  margin-top: 0.4em;
 }
 
 .field.one {

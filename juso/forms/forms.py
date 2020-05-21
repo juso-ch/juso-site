@@ -24,6 +24,18 @@ class HiddenField(forms.Field):
     widget = forms.HiddenInput
 
 
+class DateField(forms.DateField):
+    widget = forms.DateInput(attrs={
+        'type': 'date'
+    })
+
+
+class DateTimeField(forms.DateTimeField):
+    widget = forms.DateTimeInput(attrs={
+        'type': 'datetime'
+    })
+
+
 class CustomChoiceField(forms.ChoiceField):
     widget = widgets.ChoiceWidget
 
@@ -86,8 +98,8 @@ INPUT_TYPES = {
     'text': forms.CharField,
     'boolean': forms.BooleanField,
     'choice': forms.ChoiceField,
-    'date': forms.DateField,
-    'datetime': forms.DateTimeField,
+    'date': DateField,
+    'datetime': DateTimeField,
     'decimal': forms.DecimalField,
     'email': forms.EmailField,
     'file': forms.FileField,

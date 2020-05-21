@@ -11,11 +11,11 @@
   {{field}}
   {% else %}
   <div class="field {{field.field.size}} {% if field.errors %}error{% endif %} {% if field.field.required %} required{% endif %}">
-    <label>
+    {{field}}
+    <label for="{{field.id_for_label}}">
       {{field.label}}
     </label>
     <small>{{field.help_text}}</small>
-    {{field}}
     {% if field.errors %}
     <div class="error message">
       {{field.errors}}

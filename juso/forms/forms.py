@@ -55,6 +55,7 @@ def get_field_instance(field, request):
     if field.input_type in ['choice', 'multi']:
         instance = cls(
             required=field.required,
+            label=field.name,
             help_text=field.help_text,
             choices=((l.strip(), l.strip()) for l in field.choices.split('\n')),
             initial=field.initial,
@@ -62,6 +63,7 @@ def get_field_instance(field, request):
     elif field.input_type == 'section':
         instance = cls(
             required=field.required,
+            label=field.name,
             help_text=field.help_text,
             initial=field.initial,
             queryset=Section.objects.filter(
@@ -71,6 +73,7 @@ def get_field_instance(field, request):
     else:
         instance = cls(
             required=field.required,
+            label=field.name,
             help_text=field.help_text,
             initial=field.initial,
         )

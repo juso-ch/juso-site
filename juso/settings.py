@@ -197,7 +197,6 @@ CSRF_COOKIE_SAMESITE = 'strict'
 CSRF_COOKIE_SECURE = True
 
 SESSION_COOKIE_NAME = '__Secure-sessionid'
-CSRF_COOKIE_NAME = '__Secure-csrftoken'
 
 SU_LOGIN_CALLBACK = "juso.settings.superuser_callback"
 

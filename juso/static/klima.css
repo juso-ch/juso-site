@@ -1,18 +1,21 @@
 @font-face {
   font-family: Klima;
   src: url('fonts/klima-regular-web.woff2');
+  font-display: swap;
 }
 
 @font-face {
   font-family: Klima;
   src: url('fonts/klima-bold-web.woff2');
   font-weight: bold;
+  font-display: swap;
 }
 
 @font-face {
   font-family: Klima;
   src: url('fonts/klima-regular-italic-web.woff2');
   font-style: italic;
+  font-display: swap;
 }
 
 @font-face {
@@ -20,10 +23,12 @@
   src: url('fonts/klima-bold-italic-web.woff2');
   font-style: italic;
   font-weight: bold;
+  font-display: swap;
 }
 
 @font-face {
   font-family: Klima;
   src: url('fonts/klima-ultra-web.woff2');
   font-weight: 900;
+  font-display: swap;
 }

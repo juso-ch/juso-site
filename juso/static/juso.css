@@ -771,8 +771,6 @@ nav.footer > a {
     box-shadow: rgba(0, 0, 0, 0.3) 0 -4px 5px;
     color: var(--text-color);
     transform: translate(0, calc(100% - 3rem));
-    opacity: 0.98;
-
   }
 
   .nav-panel .buttons {

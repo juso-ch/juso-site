@@ -187,6 +187,9 @@ SU_LOGOUT_REDIRECT_URL = "/admin/"
 def superuser_callback(user):
     return user.is_superuser
 
+SESSION_COOKIE_SECURE = True
+
+CSRF_COOKIE_SECURE = True
 
 SU_LOGIN_CALLBACK = "juso.settings.superuser_callback"
 

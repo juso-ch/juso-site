@@ -189,6 +189,11 @@ def superuser_callback(user):
 
 SESSION_COOKIE_SECURE = True
 
+
+LANGUAGE_COOKIE_SECURE = True
+LANGUAGE_COOKIE_SAMESITE = 'strict'
+
+CSRF_COOKIE_SAMESITE = 'strict'
 CSRF_COOKIE_SECURE = True
 
 SU_LOGIN_CALLBACK = "juso.settings.superuser_callback"

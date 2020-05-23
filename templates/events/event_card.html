@@ -46,9 +46,11 @@
             <i class="fa fa-calendar"></i> iCal
           </a>
         </div>
+        {% if event.location %}
         <a href="{{event.location.maps}}" class="button" target="_blank">
           {% trans "route" %}
         </a>
+        {% endif %}
         <a href="{{event.get_absolute_url}}" class="button">
           {% trans "more info" %}
         </a>

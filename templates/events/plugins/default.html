@@ -4,33 +4,7 @@
 {% endif %}
 <section class="cards events">
   {% for event in events.all %}
-  <article class="{{event.category.slug}} card horizontal">
-    {% if event.get_header_image %}
-    <a class="image" href="{{event.get_absolute_url}}">
-      <img src="{{event.get_header_image.card}}" alt="{{event.title}}"/>
-    </a>
-    {% endif %}
-    <div class="content">
-      <header class="header" >
-        <a href="{{event.get_absolute_url}}">
-          {{event.title}}
-        </a>
-      </header>
-      <section>
-        <time>
-        {{event.start_date}} - {{event.end_date}}
-        </time>
-        <div class="location">
-          {{event.location|default:""}}
-        </div>
-        <div class="action">
-          <a href="{{event.get_absolute_url}}" class="button">
-            {% trans "more info" %}
-          </a>
-        </div>
-      </section>
-    </div>
-  </article>
+  {% include 'events/event_card.html' %}
   {% endfor %}
 </section>
 {% if plugin.all_events %}

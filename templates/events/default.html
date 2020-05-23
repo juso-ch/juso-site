@@ -1,11 +1,45 @@
 {% extends 'events/base.html' %}
-{% load feincms3 %}
+{% load feincms3 i18n %}
 {% block breadcrumbs %}
 {% include 'includes/breadcrumbs.html' with obj=event %}
 {% endblock %}
 
 {% block regions %}
 <article class="{{event.category.slug}} event">
+  <div class="bar">
+    <div class="event-info">
+    <time datetime="{{event.start_date|date:"c"}}">
+      {{event.start_date|date:"d.m. H:i"}}
+    </time>-<time datetime="{{event.end_date|date:"c"}}">
+      {% if event.end_date == event.start_date %}
+      {{event.end_date|date:"H:i"}}
+      {% else %}
+      {{event.end_date|date:"d.m. H:i" }}
+      {% endif %}
+    </time>
+    - <a href="{{event.location.get_absolute_url}}">{{event.location}}</a>
+    </div>
+  <div class="action">
+    <label class="button" for="{{event.pk}}_calenders">
+      {% trans "add to calendar" %}
+    </label>
+    <input type="checkbox" id="{{event.pk}}_calenders" class="calendar-toggle">
+    <div class="calendar-links">
+      <a href="{{event.google_calendar}}" target="_blank">
+        <i class="fa fa-google"></i> Google
+      </a>
+      <a href="{{event.outlook}}" target="_blank">
+        <i class="fa fa-microsoft"></i> Outlook
+      </a>
+      <a href="{{event.ical_link}}" target="_blank">
+        <i class="fa fa-calendar"></i> iCal
+      </a>
+    </div>
+    <a href="{{event.location.maps}}" class="button" target="_blank">
+      {% trans "route" %}
+    </a>
+  </div>
+  </div>
   {% render_region regions 'main' %}
 </article>
 <article class="location">

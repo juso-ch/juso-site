@@ -229,6 +229,8 @@ LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'),
 )
 
+MAPS_URL = "https://www.google.com/maps/dir/Current+Location/{location.lat},{location.lng}"
+
 try:
     from juso.local_settings import *
 except:

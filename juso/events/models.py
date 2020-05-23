@@ -1,6 +1,10 @@
 from content_editor.models import Region, create_plugin_base
+import urllib
+import uuid
 from django.db import models
+from django.conf import settings
 from django.utils.translation import gettext_lazy as _
+from django.utils.timezone import datetime
 from feincms3 import plugins
 from feincms3.apps import apps_urlconf, reverse_app
 from feincms3_meta.models import MetaMixin
@@ -62,6 +66,9 @@ class Location(MetaMixin, TranslationMixin):
 
     tags = TaggableManager(blank=True)
 
+    def maps(self):
+        return settings.MAPS_URL.format(location=self)
+
     def __str__(self):
         return self.name
 
@@ -116,6 +123,7 @@ class Event(ContentMixin):
     start_date = models.DateTimeField(_("start date"))
     end_date = models.DateTimeField(_("end date"))
     slug = models.SlugField(max_length=180)
+    uuid = models.UUIDField(default=uuid.uuid4)
 
     location = models.ForeignKey(
         Location, models.SET_NULL,
@@ -149,6 +157,51 @@ class Event(ContentMixin):
                 'slug', 'start_date', 'section'
             ], name="unique_slugs_for_section_and_date")
         ]
+
+    def google_calendar(self):
+        start = self.start_date.strftime('%Y%m%dT%H%M00')
+        end = self.end_date.strftime('%Y%m%dT%H%M00')
+        query = urllib.parse.urlencode({
+            'action': 'TEMPLATE',
+            'dates': f'{start}/{end}',
+            'text': f"{self.title} ({self.section.name})" ,
+            'location': self.location.address + ", " + self.location.country,
+            'details': f"https://{self.section.site.host}{self.get_absolute_url()}",
+        })
+        return f'https://www.google.com/calendar/render?{query}'
+
+    def outlook(self):
+        start = self.start_date.strftime('%Y%m%dT%H%M00')
+        end = self.end_date.strftime('%Y%m%dT%H%M00')
+        query = urllib.parse.urlencode({
+            'path': '/calendar/action/compose',
+            'rru': 'addevent',
+            'startdt': start,
+            'enddt': end,
+            'subject': f"{self.title} ({self.section.name})" ,
+            'location': self.location.address + ", " + self.location.country,
+            'body': f"https://{self.section.site.host}{self.get_absolute_url()}",
+        })
+        return f"https://outlook.live.com/owa/?{query}"
+
+    def ical_link(self):
+        return "data:text/calendar;charset=utf8," + urllib.parse.quote(self.ical())
+
+    def ical(self):
+        start = self.start_date.strftime('%Y%m%dT%H%M00')
+        end = self.end_date.strftime('%Y%m%dT%H%M00')
+        return f"""BEGIN:VCALENDAR
+VERSION:2.0
+BEGIN:VEVENT
+UID:{self.uuid}
+SUMMARY:{self.title}
+DTSTART;TZID=UTC:{start}
+DTEND;TZID=UTC:{end}
+DESCRIPTION:https://{self.section.site.host}{self.get_absolute_url()}
+LOCATION:{self.location.address}, {self.location.country}
+END:VEVENT
+END:VCALENDAR
+        """
 
     def get_absolute_url(self):
         site = current_site()

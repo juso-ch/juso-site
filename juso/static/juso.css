@@ -254,7 +254,7 @@ nav.subsites > a:hover > div.info {
 /*
  * Buttons
  */
-a.button, button {
+.button, button, a.button {
   padding: 0.5em 1em;
   border: none;
   border-radius: 3px;
@@ -876,12 +876,16 @@ nav.footer > a {
 }
 
 .action {
+  position: relative;
   align-self: end;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: end;
 }
 
-.action > a.button{
-  margin-top: auto;
-  margin-bottom: 0;
+.action > .button{
+  margin: 0.1em;
 }
 
 .heading::after {
@@ -926,12 +930,54 @@ header.heading {
 main #tamaro-widget.tamaro-widget.tamaro-widget {
   font-family: var(--body-font);
 }
+
 main #tamaro-widget.tamaro-widget span, main #tamaro-widget.tamaro-widget .widget-content .widget-block .widget-block-header .title .position {
   font-family: var(--title-font);
   text-transform: uppercase;
   font-weight: 800;
 }
 
+.card > .content > section > .description {
+  flex: 1 0 auto;
+}
 
-/**Forms***/
+.calendar-links {
+  position: absolute;
+  left: 0;
+  background: var(--background-color);
+  transition: transform 200ms ease-in;
+  padding: 0.5em 0.8em;
+  color: var(-text-color);
+  transform: scale(0);
+  box-shadow: var(--box-shadow);
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+}
 
+.calendar-links > a {
+  margin: 0.2em 0;
+  text-decoration: none;
+}
+
+.calendar-links > a:hover {
+  text-decoration: underline;
+}
+
+.calendar-links > a > svg {
+  margin-right: 0.5em ;
+}
+
+.calendar-toggle:checked + .calendar-links {
+  transform: scale(1) translateY(calc(-2.4em));
+}
+
+.calendar-toggle {
+  display: none;
+}
+
+.event > .bar {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}

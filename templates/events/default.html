@@ -17,7 +17,9 @@
       {{event.end_date|date:"d.m. H:i" }}
       {% endif %}
     </time>
+    {% if event.location %}
     - <a href="{{event.location.get_absolute_url}}">{{event.location}}</a>
+    {% endif %}
     </div>
   <div class="action">
     <label class="button" for="{{event.pk}}_calenders">
@@ -35,9 +37,11 @@
         <i class="fa fa-calendar"></i> iCal
       </a>
     </div>
+    {% if event.location %}
     <a href="{{event.location.maps}}" class="button" target="_blank">
       {% trans "route" %}
     </a>
+    {% endif %}
   </div>
   </div>
   {% render_region regions 'main' %}

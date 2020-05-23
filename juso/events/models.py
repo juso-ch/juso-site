@@ -158,6 +158,11 @@ class Event(ContentMixin):
             ], name="unique_slugs_for_section_and_date")
         ]
 
+    def get_address(self):
+        if self.location:
+            return self.location.address + ", " + self.location.country
+        return ''
+
     def google_calendar(self):
         start = self.start_date.strftime('%Y%m%dT%H%M00')
         end = self.end_date.strftime('%Y%m%dT%H%M00')
@@ -165,7 +170,7 @@ class Event(ContentMixin):
             'action': 'TEMPLATE',
             'dates': f'{start}/{end}',
             'text': f"{self.title} ({self.section.name})" ,
-            'location': self.location.address + ", " + self.location.country,
+            'location': self.get_address(),
             'details': f"https://{self.section.site.host}{self.get_absolute_url()}",
         })
         return f'https://www.google.com/calendar/render?{query}'
@@ -179,7 +184,7 @@ class Event(ContentMixin):
             'startdt': start,
             'enddt': end,
             'subject': f"{self.title} ({self.section.name})" ,
-            'location': self.location.address + ", " + self.location.country,
+            'location': self.get_address(),
             'body': f"https://{self.section.site.host}{self.get_absolute_url()}",
         })
         return f"https://outlook.live.com/owa/?{query}"
@@ -193,12 +198,12 @@ class Event(ContentMixin):
         return f"""BEGIN:VCALENDAR
 VERSION:2.0
 BEGIN:VEVENT
-UID:{self.uuid}
+UID:{self.pk}
 SUMMARY:{self.title}
 DTSTART;TZID=UTC:{start}
 DTEND;TZID=UTC:{end}
-DESCRIPTION:https://{self.section.site.host}{self.get_absolute_url()}
-LOCATION:{self.location.address}, {self.location.country}
+DESCRIPTION:https://{self.section.site.host}{self.get_absolute_url}
+LOCATION:{self.get_address()}
 END:VEVENT
 END:VCALENDAR
         """

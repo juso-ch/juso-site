@@ -368,7 +368,7 @@ header.page > h1  {
 .branding .logo {
   color: var(--light-color);
   height: 3em;
-  padding: 1px 4px;
+  padding: 5px;
   flex: 1 0;
 }
 

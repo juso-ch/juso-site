@@ -24,33 +24,29 @@
       </div>
       <div class="location">
         <a href="{{event.location.get_absolute_url}}">
-        {{event.location|default:""}}
+        {{event.location|default:""}}</a>
+
+        {% if event.location %}
+        | <a href="{{event.location.maps}}" target="_blank">
+          <i class="fa fa-map"></i> {% trans "Route" %}
         </a>
+        {% endif %}
       </div>
       <div class="description">
 
       </div>
       <div class="action">
-        <label class="button" for="{{event.pk}}_calenders">
-          {% trans "add to calendar" %}
-        </label>
-        <input type="checkbox" id="{{event.pk}}_calenders" class="calendar-toggle">
-        <div class="calendar-links">
-          <a href="{{event.google_calendar}}" target="_blank">
-            <i class="fa fa-google"></i> Google
-          </a>
-          <a href="{{event.outlook}}" target="_blank">
-            <i class="fa fa-microsoft"></i> Outlook
-          </a>
-          <a href="{{event.ical_link}}" target="_blank">
-            <i class="fa fa-calendar"></i> iCal
-          </a>
-        </div>
-        {% if event.location %}
-        <a href="{{event.location.maps}}" class="button" target="_blank">
-          {% trans "route" %}
+      <div class="calendar-links">
+        <a cla href="{{event.google_calendar}}" target="_blank">
+          <i class="fa fa-google"></i><span>Google</span>
         </a>
-        {% endif %}
+        <a href="{{event.outlook}}" target="_blank">
+          <i class="fa fa-microsoft"></i><span>Outlook</span>
+        </a>
+        <a href="{{event.ical_link}}" target="_blank">
+          <i class="fa fa-calendar"></i><span>iCal</span>
+        </a>
+      </div>
         <a href="{{event.get_absolute_url}}" class="button">
           {% trans "more info" %}
         </a>

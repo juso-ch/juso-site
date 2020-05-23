@@ -361,6 +361,7 @@ header.page > h1  {
 .logo svg {
   height: 100%;
   width: 100%;
+  min-width: 30px;
   fill: currentColor;
 }
 
@@ -467,6 +468,16 @@ nav#mobile-menu .logo {
   }
   .cards.events > .card > .content {
     flex: 1 0 60%;
+  }
+}
+
+@media (max-width: 420px) {
+  .calendar-links > a > span {
+    display: none;
+  }
+  .calendar-links > a > svg {
+    margin-right: 0.3em;
+    margin-left: 0.3em;
   }
 }
 
@@ -876,12 +887,11 @@ nav.footer > a {
 }
 
 .action {
-  position: relative;
-  align-self: end;
+  align-self: stretch;
   display: flex;
   flex-wrap: wrap;
   align-items: end;
-  justify-content: end;
+  justify-content: space-between;
 }
 
 .action > .button{
@@ -941,43 +951,22 @@ main #tamaro-widget.tamaro-widget span, main #tamaro-widget.tamaro-widget .widge
   flex: 1 0 auto;
 }
 
-.calendar-links {
-  position: absolute;
-  left: 0;
-  background: var(--background-color);
-  transition: transform 200ms ease-in;
-  padding: 0.5em 0.8em;
-  color: var(-text-color);
-  transform: scale(0);
-  box-shadow: var(--box-shadow);
-  border-radius: 3px;
-  display: flex;
-  flex-direction: column;
-}
-
-.calendar-links > a {
-  margin: 0.2em 0;
-  text-decoration: none;
-}
-
-.calendar-links > a:hover {
-  text-decoration: underline;
-}
-
-.calendar-links > a > svg {
-  margin-right: 0.5em ;
-}
-
-.calendar-toggle:checked + .calendar-links {
-  transform: scale(1) translateY(calc(-2.4em));
-}
-
-.calendar-toggle {
-  display: none;
-}
-
 .event > .bar {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+}
+
+.action.small {
+  font-size: 0.6em;
+}
+
+.calendar-links > a{
+  text-decoration: none;
+}
+
+.calendar-links > a > span {
+  margin-left: 0.3em;
+  margin-right: 0.8em;
+  text-decoration: underline;
 }

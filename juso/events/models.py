@@ -115,8 +115,9 @@ class LocationImage(plugins.image.Image, LocationPluginBase):
 
 def ical_calendar(queryset):
     begin = ("BEGIN:VCALENDAR\r\n"
-            "VERSION:2.0\r\n"
-            "PRODID:JUSO\r\n")
+             "VERSION:2.0\r\n"
+             "METHOD:PUBLISH\r\n"
+             "PRODID:JUSO\r\n")
     events = ''.join(
                 e.ical_event() for e in queryset
             )

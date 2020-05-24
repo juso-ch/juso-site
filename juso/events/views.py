@@ -1,12 +1,13 @@
 from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
+from django.http.response import HttpResponse
 from feincms3.apps import page_for_app_request
 from feincms3.regions import Regions
 from feincms3.shortcuts import render_list
 from feincms3_meta.utils import meta_tags
 
 from juso import pages
-from juso.events.models import Event, Location
+from juso.events.models import Event, Location, ical_calendar
 from juso.events.renderer import location_renderer, renderer
 from juso.sections.models import Section
 
@@ -103,6 +104,24 @@ def event_list(request):
         },
         paginate_by=12,
     )
+
+def event_list_ical(request):
+    page = page_for_app_request(request)
+    page.activate_language(request)
+
+    ancestors = list(page.ancestors().reverse())
+
+    event_list = event_list_for_page(page)
+
+    if 'section' in request.GET:
+        event_list = event_list.filter(section__slug=request.GET['section'])
+
+    calendar = ical_calendar(event_list)
+
+    response = HttpResponse(calendar, content_type="text/ical")
+
+    return response
+
 
 
 def event_detail(request, year, month, day, slug):

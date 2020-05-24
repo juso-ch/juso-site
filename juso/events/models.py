@@ -4,7 +4,7 @@ import uuid
 from django.db import models
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
-from django.utils.timezone import datetime
+from django.utils.timezone import datetime, now
 from feincms3 import plugins
 from feincms3.apps import apps_urlconf, reverse_app
 from feincms3_meta.models import MetaMixin
@@ -113,6 +113,15 @@ class LocationImage(plugins.image.Image, LocationPluginBase):
     caption = models.CharField(_("caption"), max_length=200, blank=True)
 
 
+def ical_calendar(queryset):
+    begin = ("BEGIN:VCALENDAR\r\n"
+            "VERSION:2.0\r\n"
+            "PRODID:JUSO\r\n")
+    events = ''.join(
+                e.ical_event() for e in queryset
+            )
+    return begin + events + "END:VCALENDAR\r\n"
+
 class Event(ContentMixin):
     TEMPLATES = get_template_list('events', (
         (
@@ -190,23 +199,23 @@ class Event(ContentMixin):
         return f"https://outlook.live.com/owa/?{query}"
 
     def ical_link(self):
-        return "data:text/calendar;charset=utf8," + urllib.parse.quote(self.ical())
+        return "data:text/calendar;charset=utf8," + urllib.parse.quote(ical_calendar([self]))
 
-    def ical(self):
+
+    def ical_event(self):
         start = self.start_date.strftime('%Y%m%dT%H%M00')
         end = self.end_date.strftime('%Y%m%dT%H%M00')
-        return f"""BEGIN:VCALENDAR
-VERSION:2.0
-BEGIN:VEVENT
-UID:{self.pk}
-SUMMARY:{self.title}
-DTSTART;TZID=UTC:{start}
-DTEND;TZID=UTC:{end}
-DESCRIPTION:https://{self.section.site.host}{self.get_absolute_url}
-LOCATION:{self.get_address()}
-END:VEVENT
-END:VCALENDAR
-        """
+        timestamp = now().strftime('%Y%m%dT%H%M00')
+        return ("BEGIN:VEVENT\r\n"
+                f"UID:{self.uuid}\r\n"
+                f"DTSTAMP:{timestamp}Z\r\n"
+                f"SUMMARY:{self.title}\r\n"
+                f"DTSTART:{start}Z\r\n"
+                f"DTEND:{end}Z\r\n"
+                f"DESCRIPTION:https://{self.section.site.host}{self.get_absolute_url()}\r\n"
+                f"LOCATION:{self.get_address()}\r\n"
+                "END:VEVENT\r\n")
+
 
     def get_absolute_url(self):
         site = current_site()

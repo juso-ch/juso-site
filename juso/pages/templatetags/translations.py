@@ -23,7 +23,7 @@ def translation_head(page, obj=None, scheme='https:'):
     if obj:
         yield obj.language_code, scheme + '//' +\
                 page.site.host + obj.get_absolute_url()
-        for translation in obj.tranlsations.all():
+        for translation in obj.translations.all():
             uri = translation.get_absolute_url()
             if uri.startswith('//'):
                 uri = scheme + uri

@@ -42,7 +42,7 @@ services:
     labels:
       - "traefik.docker.network=web"
       - "traefik.enable=true"
-      - "traefik.basic.frontend.rule=Host:dev.juso.ch"
+      - "traefik.basic.frontend.rule=Host:dev.juso.ch,ag.dev.juso.ch"
       - "traefik.basic.port=80"
       - "traefik.basic.protocol=http"
 

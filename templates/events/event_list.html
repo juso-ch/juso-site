@@ -23,7 +23,14 @@
   </section>
   {% endfor %}
 </section>
+<section class="foot">
 {% include 'includes/pagination.html' with page=event_list%}
+<div class="ical field">
+<input type="text" id="ical_url" value="https://{{page.site.host}}{{page.path}}ical/">
+  <label for="ical_url">{% trans 'iCal-Link for Google Calendar, etc.:' %}</label>
+<small>{% trans 'Subscribe to these events in your calendar-app with this link' %}</small>
+</div>
+</section>
 <script>
   window.location_list = {{location_list|jsonify}};
   window.event_list = {{event_list|jsonify}};

@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
 from django.http.response import HttpResponse
+from django.contrib.sitemaps import Sitemap
 from feincms3.apps import page_for_app_request
 from feincms3.regions import Regions
 from feincms3.shortcuts import render_list
@@ -55,7 +56,7 @@ def location_detail(request, slug):
             'location': location,
             'obj': location,
             'title': location.name,
-            'header_image': location.get_header_image() or page.get_header_image(),
+            'header_image': location.header_image or page.get_header_image(),
             'event_list': location.event_set.filter(
                 end_date__gte=timezone.now(),
             ),
@@ -192,3 +193,16 @@ def event_list_for_section(request, pk):
         },
         paginate_by=20,
     )
+
+class EventSitemap(Sitemap):
+    changefreq = 'monthly'
+
+    def __init__(self, blog_page):
+        self.page = blog_page
+        super().__init__()
+
+    def items(self):
+        return event_list_for_page(self.page)
+
+    def lastmod(self, obj):
+        return obj.edited_date

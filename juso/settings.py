@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sitemaps',
     "sekizai",
     "admin_ordering",
     "feincms3",
@@ -187,16 +188,18 @@ SU_LOGOUT_REDIRECT_URL = "/admin/"
 def superuser_callback(user):
     return user.is_superuser
 
-SESSION_COOKIE_SECURE = True
 
+DEBUG = int(os.environ.get("DEBUG", default=0))
 
-LANGUAGE_COOKIE_SECURE = True
+LANGUAGE_COOKIE_SECURE = not DEBUG
 LANGUAGE_COOKIE_SAMESITE = 'strict'
 
 CSRF_COOKIE_SAMESITE = 'strict'
-CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = not DEBUG
 
+SESSION_COOKIE_SECURE = not DEBUG
 SESSION_COOKIE_NAME = '__Secure-sessionid'
+SESSION_COOKIE_SAMESITE = 'Lax'
 
 SU_LOGIN_CALLBACK = "juso.settings.superuser_callback"
 
@@ -206,7 +209,6 @@ FONTAWESOME_5_ICON_CLASS = 'semantic_ui'
 
 SECRET_KEY = os.environ.get("SECRET_KEY", 'changeme')
 
-DEBUG = int(os.environ.get("DEBUG", default=0))
 
 ALLOWED_HOSTS = ['*']
 

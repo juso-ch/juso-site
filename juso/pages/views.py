@@ -1,9 +1,15 @@
 from django.shortcuts import (get_list_or_404, get_object_or_404, redirect,
                               render)
+from django.contrib.sitemaps import Sitemap
+from django.contrib.sitemaps.views import sitemap as sitemap_view
 from django.views.decorators.csrf import ensure_csrf_cookie
 from feincms3.regions import Regions
 from feincms3_meta.utils import meta_tags
+from feincms3_sites.middleware import current_site
 
+from juso.blog.views import ArticleSitemap
+from juso.events.views import EventSitemap
+from juso.sections.views import CategorySitemap
 from juso.pages.models import Page
 from juso.pages.renderer import renderer
 
@@ -55,3 +61,42 @@ def page_detail(request, path=None):
             ),
         },
     )
+
+
+def sitemap_index(request, path='/'):
+    sitemaps = {}
+
+    top_page = get_object_or_404(
+        Page.objects.active(),
+        path=f"/{path}/" if path else '/',
+    )
+
+    sitemaps['pages'] = PageSitemap(top_page)
+
+    for blog_page in top_page.descendants(include_self=True).filter(application='blog'):
+        sitemaps[blog_page.slug] = ArticleSitemap(blog_page)
+
+    for event_page in top_page.descendants(include_self=True).filter(application='events'):
+        sitemaps[event_page.slug] = EventSitemap(event_page)
+
+    for category_page in top_page.descendants(include_self=True).filter(application='categories'):
+        sitemaps[category_page.slug] = CategorySitemap(category_page)
+
+    return sitemap_view(
+        request, sitemaps,
+    )
+
+
+class PageSitemap(Sitemap):
+
+    changefreq = 'monthly'
+
+    def __init__(self, top_page):
+        self.top_page = top_page
+        super().__init__()
+
+    def items(self):
+        return self.top_page.descendants(include_self=True)
+
+    def lastmod(self, obj):
+        return obj.lastmod

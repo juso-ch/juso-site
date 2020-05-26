@@ -313,7 +313,7 @@ header.page {
   background-position-y: center;
   background-repeat: no-repeat;
   background-attachment: scroll;
-  background-image: none;
+  background-image: linear-gradient(var(--anthrazit), var(--red));
   background-size: auto;
   background-origin: padding-box;
   background-clip: border-box;
@@ -330,7 +330,7 @@ main, header.page, footer, nav.main {
 }
 
 
-header.background-image h1::after {
+header.page h1::after {
   content: none;
 }
 
@@ -739,7 +739,7 @@ nav.footer > a {
   nav.main, .top-bar {
     display: none;
   }
-  header.background-image {
+  header.page {
     margin-top: 0;
     justify-content: flex-end;
   }
@@ -886,6 +886,15 @@ nav.footer > a {
   border-radius: 0 3px 3px 0;
 }
 
+.foot {
+  display: flex;
+  justify-content: space-between;
+}
+
+.foot > .ical {
+  align-self: end;
+}
+
 .action {
   align-self: stretch;
   display: flex;
@@ -969,4 +978,11 @@ main #tamaro-widget.tamaro-widget span, main #tamaro-widget.tamaro-widget .widge
   margin-left: 0.3em;
   margin-right: 0.8em;
   text-decoration: underline;
+}
+
+.ical > input#ical_url {
+  font-size: 0.6em;
+  width: 30em;
+  max-width: 90vw;
+  display: block;
 }

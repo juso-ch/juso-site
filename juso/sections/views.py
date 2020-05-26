@@ -1,5 +1,6 @@
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.contrib.sitemaps import Sitemap
 from django.shortcuts import get_object_or_404, render
 from feincms3.apps import page_for_app_request
 from feincms3.regions import Regions
@@ -80,3 +81,14 @@ def category_detail(request, slug):
                 timeout=60, inherit_from=ancestors)
         },
     )
+
+
+class CategorySitemap(Sitemap):
+    changefreq = 'monthly'
+
+    def __init__(self, page):
+        self.page = page
+        super().__init__()
+
+    def items(self):
+        return self.page.categorylinking_set.all()

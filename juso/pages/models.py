@@ -193,6 +193,8 @@ class Page(
 
     is_navigation = models.BooleanField(_("display navigation"), default=False)
 
+    lastmod = models.DateTimeField(_("lastmod"), auto_now=True)
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._is_landing_page = self.is_landing_page
@@ -310,6 +312,9 @@ class CategoryLinking(models.Model):
 
     def __str__(self):
         return self.category.name
+
+    def get_absolute_url(self):
+        return self.page.get_absolute_url() + self.category.slug + '/'
 
     class Meta:
         ordering = ['order']

@@ -1,5 +1,5 @@
-{% if page.has_other_pages %}
 <div class="pagination">
+{% if page.has_other_pages %}
   <a class="" href="?page=1">
     &#8676;
   </a>
@@ -24,5 +24,5 @@
   <a class="" href="?page={{ page.paginator.num_pages }}">
     &#8677;
   </a>
-</div>
 {% endif %}
+</div>

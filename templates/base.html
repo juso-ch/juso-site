@@ -58,7 +58,7 @@
       style="background-image: url('{{header_image.full}}')"
       class="background-image page"
       {% else %}
-      class="container"
+      class="page"
       {% endif %}
       >
       <div class="top-bar">
@@ -115,6 +115,10 @@
 
     {% addtoblock 'js' %}
     <script src="{% static 'sticky.js' %}"></script>
+    {% endaddtoblock %}
+
+    {% addtoblock 'js' %}
+    <script src="{% static 'tools.js' %}"></script>
     {% endaddtoblock %}
   </body>
 </html>

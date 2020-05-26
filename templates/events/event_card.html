@@ -22,16 +22,18 @@
           {% endif %}
         </time>
       </div>
+        {% if event.location %}
       <div class="location">
         <a href="{{event.location.get_absolute_url}}">
         {{event.location|default:""}}</a>
 
-        {% if event.location %}
+        {% if event.location.is_physical %}
         | <a href="{{event.location.maps}}" target="_blank">
           <i class="fa fa-map"></i> {% trans "Route" %}
         </a>
         {% endif %}
       </div>
+        {% endif %}
       <div class="description">
 
       </div>

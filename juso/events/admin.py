@@ -187,6 +187,7 @@ class LocationAdmin(ContentEditor):
             'fields': (
                 'section',
                 'slug',
+                'is_physical',
                 'lat',
                 'lng',
                 'header_image',

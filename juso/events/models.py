@@ -46,6 +46,10 @@ class Location(MetaMixin, TranslationMixin):
     city = models.CharField(max_length=100, verbose_name=_("city"))
     zip_code = models.CharField(max_length=20, verbose_name=_("zip code"))
     country = models.CharField(max_length=200, verbose_name=_("country"))
+    is_physical = models.BooleanField(
+        verbose_name=_("is physical"),
+        default=True,
+    )
 
     header_image = ImageField(
         _("header image"), formats={

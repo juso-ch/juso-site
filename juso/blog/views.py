@@ -1,5 +1,7 @@
 from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
-
+from django.contrib.syndication.views import Feed
+from django.contrib.sitemaps import Sitemap
+from django.contrib.sitemaps.views import sitemap
 from django.core.paginator import Paginator
 from django.utils import timezone
 from django.shortcuts import get_object_or_404, render
@@ -140,3 +142,75 @@ def article_detail(request, slug):
                 timeout=60, inherit_from=ancestors)
         },
     )
+
+
+class ArticleSitemap(Sitemap):
+    changefreq = 'never'
+
+    def __init__(self, blog_page):
+        self.page = blog_page
+        super().__init__()
+
+    def items(self):
+        return articles_for_page(self.page)
+
+    def lastmod(self, obj):
+        return obj.edited_date
+
+
+class ArticleFeed(Feed):
+
+    ttl = 6 * 60
+
+    def get_object(self, request, *args, **kwargs):
+        page = page_for_app_request(request)
+        page.activate_language(request)
+        return page
+
+    def title(self, obj):
+        return obj.title
+
+    def link(self, obj):
+        return obj.site.host + obj.get_absolute_url()
+
+    def feed_url(self, obj):
+        return obj.get_absolute_url() + "rss/"
+
+    def description(self, obj):
+        return obj.meta_description
+
+    def categories(self, obj):
+        if obj.category:
+            return obj.category.name
+        return [x for x in articles_for_page(obj).values_list(
+            'category__name', flat=True
+        ) if x is not None]
+
+    def items(self, obj):
+        return articles_for_page(obj)
+
+    def item_title(self, item):
+        return item.title
+
+    def item_description(self, item):
+        return item.tagline
+
+    def item_author_name(self, item):
+        if item.author:
+            return item.author.full_name
+        return ''
+
+    def item_author_email(self, item):
+        if item.author:
+            return item.author.email
+        return ''
+
+    def item_pubdate(self, item):
+        return item.publication_date
+
+    def item_updateddate(self, item):
+        return item.edited_date
+
+    def item_categories(self, item):
+        return [item.category.name] if item.category else None
+

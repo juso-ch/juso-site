@@ -1,6 +1,7 @@
 from django.shortcuts import (get_list_or_404, get_object_or_404, redirect,
                               render)
 from django.contrib.sitemaps import Sitemap
+from django.views.decorators.cache import cache_page
 from django.contrib.sitemaps.views import sitemap as sitemap_view
 from django.views.decorators.csrf import ensure_csrf_cookie
 from feincms3.regions import Regions
@@ -29,6 +30,7 @@ def get_landing_page(request):
         Page.objects.active(),
         is_landing_page=True,
     )[0]
+
 
 @ensure_csrf_cookie
 def page_detail(request, path=None):

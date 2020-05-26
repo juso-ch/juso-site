@@ -233,6 +233,14 @@ LOCALE_PATHS = (
 
 MAPS_URL = "https://www.google.com/maps/dir/Current+Location/{location.lat},{location.lng}"
 
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': 'cache:11211',
+    }
+}
+
 try:
     from juso.local_settings import *
 except:

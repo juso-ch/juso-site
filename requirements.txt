@@ -78,3 +78,4 @@ wrapt==1.11.2
 xlsxdocument==1.3.5
 python-dateutil
 langdetect
+python-memcached

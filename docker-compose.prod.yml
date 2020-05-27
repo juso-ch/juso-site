@@ -2,9 +2,7 @@ version: '3.7'
 
 services:
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile.prod
+    image: sacovo/juso-site
     command: gunicorn -w 4 -k uvicorn.workers.UvicornH11Worker juso.asgi:application --bind 0.0.0.0:8000
     volumes:
       - static_volume:/home/app/web/static/
@@ -42,7 +40,7 @@ services:
     labels:
       - "traefik.docker.network=web"
       - "traefik.enable=true"
-      - "traefik.basic.frontend.rule=Host:dev.juso.ch,ag.dev.juso.ch"
+    # - "traefik.basic.frontend.rule=Host:example.com"
       - "traefik.basic.port=80"
       - "traefik.basic.protocol=http"
 

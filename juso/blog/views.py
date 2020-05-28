@@ -165,6 +165,7 @@ class ArticleFeed(Feed):
     def get_object(self, request, *args, **kwargs):
         page = page_for_app_request(request)
         page.activate_language(request)
+        self.limit = request.GET.get('limit', 30)
         return page
 
     def title(self, obj):
@@ -187,7 +188,7 @@ class ArticleFeed(Feed):
         ) if x is not None]
 
     def items(self, obj):
-        return articles_for_page(obj)
+        return articles_for_page(obj)[:self.limit]
 
     def item_title(self, item):
         return item.title

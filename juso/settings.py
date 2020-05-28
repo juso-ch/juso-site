@@ -188,6 +188,8 @@ SU_LOGOUT_REDIRECT_URL = "/admin/"
 def superuser_callback(user):
     return user.is_superuser
 
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 DEBUG = int(os.environ.get("DEBUG", default=0))
 

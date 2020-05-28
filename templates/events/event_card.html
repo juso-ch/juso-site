@@ -28,7 +28,7 @@
         {{event.location|default:""}}</a>
 
         {% if event.location.is_physical %}
-        | <a href="{{event.location.maps}}" target="_blank">
+        | <a rel="noopener" href="{{event.location.maps}}" target="_blank">
           <i class="fa fa-map"></i> {% trans "Route" %}
         </a>
         {% endif %}
@@ -39,13 +39,13 @@
       </div>
       <div class="action">
       <div class="calendar-links">
-        <a cla href="{{event.google_calendar}}" target="_blank">
+        <a rel="noopener" href="{{event.google_calendar}}" target="_blank">
           <i class="fa fa-google"></i><span>Google</span>
         </a>
-        <a href="{{event.outlook}}" target="_blank">
+        <a rel="noopener" href="{{event.outlook}}" target="_blank">
           <i class="fa fa-microsoft"></i><span>Outlook</span>
         </a>
-        <a href="{{event.ical_link}}" target="_blank">
+        <a rel="noopener" href="{{event.ical_link}}" target="_blank">
           <i class="fa fa-calendar"></i><span>iCal</span>
         </a>
       </div>

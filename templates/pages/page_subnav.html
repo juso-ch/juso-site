@@ -1,11 +1,11 @@
 {% for child in page.children.all %}
 <a href="{{child.get_absolute_url}}" class="nav-item {{child.category.slug}}">
-    <img src="{{child.get_header_image.square}}">
-    <div class="overlay"></div>
-    <div class="info">
-      <div>
-        <h3 class="highlight-text">{{child.title}}</h3>
-      </div>
+  <img src="{{child.get_header_image.square}}" alt="{{child.title}}">
+  <div class="overlay"></div>
+  <div class="info">
+    <div>
+      <h3 class="highlight-text">{{child.title}}</h3>
     </div>
-  </a>
+  </div>
+</a>
 {% endfor %}

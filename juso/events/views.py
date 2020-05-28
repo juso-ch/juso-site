@@ -117,6 +117,8 @@ def event_list_ical(request):
     if 'section' in request.GET:
         event_list = event_list.filter(section__slug=request.GET['section'])
 
+    event_list = event_list[:int(request.GET.get('limit', '30'))]
+
     calendar = ical_calendar(event_list)
 
     response = HttpResponse(calendar, content_type="text/ical")

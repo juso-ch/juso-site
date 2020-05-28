@@ -174,7 +174,7 @@ main > article > section {
 /** Page navigation **/
 nav.subsites {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(40vw, 270px), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(40vw, 290px), 1fr));
   grid-gap: 1rem;
   margin-top: 2rem;
   margin-bottom: 2rem;
@@ -308,6 +308,7 @@ header.page {
   flex-direction: column;
   justify-content: space-between;
   margin-top: calc(-1 * calc(var(--navbar-height) + var(--navbar-offset)));
+  margin-bottom: 40px;
   color: var(--light-color);
   background-position-x: center;
   background-position-y: center;

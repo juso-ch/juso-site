@@ -134,6 +134,6 @@ node_modules/
 
 .env.prod
 first_run.lock
+docker-compose.hosts.yml
 
 .vim
-

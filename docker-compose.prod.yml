@@ -14,14 +14,17 @@ services:
     depends_on:
       - db
       - cache
+    restart: always
   cache:
     image: memcached:alpine
+    restart: always
   db:
     image: postgres:12.0-alpine
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
       - ./.env.prod
+    restart: always
   nginx:
     build: ./nginx
     volumes:

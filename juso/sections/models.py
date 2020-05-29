@@ -1,5 +1,8 @@
 from content_editor.models import Region, Template
+import textwrap
 from django.contrib.auth.models import User
+from django.core.files.storage import get_storage_class
+from django.core import files
 from django.urls import NoReverseMatch
 from django.conf import settings
 from django.db import models
@@ -12,9 +15,15 @@ from feincms3_sites.middleware import current_site
 from feincms3_sites.models import Site
 from taggit.managers import TaggableManager
 from tree_queries.models import TreeNode
+from io import BytesIO
 
 from imagefield.fields import ImageField
 from juso.models import TranslationMixin
+
+from PIL import Image
+from PIL import ImageFont
+from PIL import ImageDraw
+from PIL import ImageColor
 
 # Create your models here.
 
@@ -101,8 +110,68 @@ class ContentMixin(TranslationMixin, MetaMixin, TemplateMixin):
             'square': ['default', ('crop', (920, 920))],
             'card': ['default', ('crop', (900, 600))],
             'mobile': ['default', ('crop', (740, 600))],
+            'some': ['default', ('crop', (1200, 630))],
         }, auto_add_fields=True, blank=True, null=True
     )
+
+    generated_meta_image = models.ImageField(
+        _("generated meta image"), upload_to='meta',
+        blank=True, null=True,
+    )
+
+
+    @property
+    def image(self):
+        if (settings.DEBUG or not self.generated_meta_image) and self.get_header_image():
+            orig = self.get_header_image()
+            img = Image.open(
+                get_storage_class()().open(
+                    self.get_header_image().some[1:].partition('/')[2]
+                )
+            )
+            draw = ImageDraw.Draw(img)
+            font = ImageFont.truetype('juso/static/fonts/Montserrat-ExtraBold.ttf', int(1200/30))
+            color = ImageColor.getcolor(self.get_color(), 'RGB')
+
+            title = textwrap.wrap(self.title.upper(), 30, break_long_words=True)
+            line = 0
+            line_space = 10
+            padding_top = 5
+            padding_bottom = 14
+            padding_side = 15
+            line_height = int(1200/30) + line_space + padding_bottom + padding_top
+            width = 1200
+            height = 600
+
+            text_top = height - len(title) * line_height - line_height / 2
+
+            text_color = color
+            fill_color = (255, 255, 255)
+            border_color = color
+
+            for text in title:
+                line += 1
+                size = font.getsize_multiline(text)
+                x = 30
+                y = text_top + line * line_height
+                draw.rectangle(
+                    [x - padding_side, y - padding_top, x + size[0] + padding_side, y + size[1] + padding_bottom],
+                    fill=fill_color, outline=border_color, width=3
+                )
+                draw.text(
+                    (x, y), text, text_color, font=font,
+                )
+
+            f = BytesIO()
+
+            img.save(f, format="JPEG", quality=100)
+
+            self.generated_meta_image.save(
+                orig.some.split('/')[-1], files.File(f)
+            )
+
+        return self.generated_meta_image
+
 
     publication_date = models.DateTimeField(
         default=timezone.now, verbose_name=_("publication date")
@@ -138,6 +207,11 @@ class ContentMixin(TranslationMixin, MetaMixin, TemplateMixin):
         if self.category:
             return self.category.get_header_image()
         return None
+
+    def get_color(self):
+        if self.category:
+            return self.category.color or settings.DEFAULT_COLOR
+        return settings.DEFAULT_COLOR
 
     class Meta:
         abstract = True

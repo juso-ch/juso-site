@@ -292,11 +292,13 @@ nav.top {
   justify-content: flex-start;
 }
 
-nav.top > a {
+nav.top a {
   margin: 0 1em;
-  text-decoration: none;
+  text-decoration: underline;
   font-size: 0.7em;
   font-weight: normal;
+  text-transform: none;
+  vertical-align: top;
 }
 
 /*
@@ -375,6 +377,11 @@ header.page > h1  {
 
 .sticky .logo{
   color: var(--highlight-color);
+}
+
+nav.sticky.main > ul {
+  margin-right: 2em;
+  margin-left: 0;
 }
 
 nav#mobile-menu .menu .branding {
@@ -608,6 +615,7 @@ nav.main.sticky > .buttons {
 
 nav.main > ul {
   flex: 2 0 auto;
+  margin-left: 2em;
 }
 
 nav > ul > li > a, a.brand {
@@ -647,7 +655,7 @@ nav.buttons > a.button {
 
 nav > ul {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
 }
 

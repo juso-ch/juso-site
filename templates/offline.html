@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+{% load static i18n%}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% trans 'Offline' %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'sanitize.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'montserrat.css' %}">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'apple-touch-icon.png' %}" >
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon-16x16.png' %}">
+    <link rel="manifest" href="{% url 'pages:manifest' %}">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'sanitize.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'montserrat.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'klima.css' %}">
+
+    <style>
+:root {
+  --anthrazit: #262626;
+  --white: #FFFFFF;
+  --text-color: var(--anthrazit);
+  --background-color:var(--white);
+  --title-font: 'Montserrat', sans-serif;
+  --body-font: 'Klima', sans-serif;
+}
+
+body {
+  color: var(--text-color);
+  background-color: var(--background-color);
+  font-family: var(--title-font);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  font-family: var(--body-font);
+  font-size: 16px;
+  font-size: clamp(14px, 2vw, 22px);
+}
+
+h1 {
+  text-transform: uppercase;
+  font-weight: 800;
+  font-size: 2em;
+  text-align: center;
+}
+ul {
+  line-height: 2;
+}
+a, a:visited {
+  color: var(--text-color);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: var(--white);
+    --background-color:var(--anthrazit);
+  }
+}
+
+    </style>
+  </head>
+  <body>
+    <h1>{% trans 'Du bist Offline!' %}</h1>
+    <span>{% trans 'Seiten, die du offline lesen kannst:' %}</span>
+    <ul id="cached-sites">
+    </ul>
+
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/service-worker.js');
+        });
+      }
+
+      function appendSite(url, title){
+        a = document.createElement('a');
+        a.href = url;
+        a.appendChild(document.createTextNode(title));
+        li = document.createElement('li');
+        li.appendChild(a);
+
+        document.getElementById('cached-sites').appendChild(
+          li
+        );
+      }
+      caches.open('documents').then(function(cache){
+        cache.keys().then(keys => {
+          for(var i = keys.length - 1; i >= 0; i--){
+            if(keys[i].url.endsWith('offline.html')){
+              continue;
+            }
+            cache.match(keys[i]).then(response => {
+              appendSite(response.url, response.url);
+            });
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
+

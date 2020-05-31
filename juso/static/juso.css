@@ -292,7 +292,7 @@ nav.top {
   justify-content: flex-start;
 }
 
-nav.top a {
+nav.top a, nav.top span {
   margin: 0 1em;
   text-decoration: underline;
   font-size: 0.7em;
@@ -301,6 +301,13 @@ nav.top a {
   vertical-align: top;
 }
 
+div.translations a, div.translations span {
+  margin: 0 0.3em;
+}
+
+div.translations span{
+  text-decoration: none;
+}
 /*
  * Header
  */
@@ -989,9 +996,14 @@ main #tamaro-widget.tamaro-widget span, main #tamaro-widget.tamaro-widget .widge
   text-decoration: underline;
 }
 
+.ical {
+  position: relative;
+}
+
 .ical > input#ical_url {
   font-size: 0.6em;
   width: 30em;
   max-width: 90vw;
   display: block;
+  margin-top: 1em;
 }

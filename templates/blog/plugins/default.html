@@ -17,9 +17,11 @@
         </div>
       </a>
       <div class="tag">
+        {% if article.category %}
         <a href="{{article.category.get_absolute_url}}">
           {{article.category.title}}
         </a>
+        {% endif %}
       </div>
     </header>
     </header>

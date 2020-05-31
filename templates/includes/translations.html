@@ -3,5 +3,8 @@
 <div class="translations">
 {% for translation in translations %}
 <a href="{{translation.1.get_absolute_url}}">{{translation.0}}</a>
+{% if not forloop.last %}
+<span>/</span>
+{% endif %}
 {% endfor %}
 </div>

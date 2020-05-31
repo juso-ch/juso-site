@@ -19,27 +19,9 @@
   </address>
   {% render_region regions 'main' %}
 </article>
-<article class="events">
+<article class="cards events">
   {% for event in location.event_set.all %}
-  <div class="card">
-    {% if event.image %}
-    <a class="image" href="{{event.get_absolute_url}}">
-      <img src="{{event.image.url}}" alt="{{event.title}}"/>
-    </a>
-    {% endif %}
-    <div class="content">
-      <a class="header" href="{{event.get_absolute_url}}">
-        {{event.title}}
-      </a>
-      <a class="meta" href="{{event.get_absolute_url}}">
-      </a>
-      <a class="description">
-      </a>
-    </div>
-    <div class="extra content">
-      {{event.start_date}} - {{event.end_date}}
-    </div>
-  </div>
+  {% include 'events/event_card.html' %}
   {% endfor %}
 </article>
 {% endblock %}

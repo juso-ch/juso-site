@@ -189,8 +189,7 @@ def superuser_callback(user):
     return user.is_superuser
 
 #USE_X_FORWARDED_HOST = True
-#SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_PROXY_NAME', 'traefik')
 DEBUG = int(os.environ.get("DEBUG", default=0))
 
 #LANGUAGE_COOKIE_SECURE = not DEBUG
@@ -226,7 +225,7 @@ DATABASES = {
 }
 
 
-DEFAULT_COLOR = "#ff0000"
+DEFAULT_COLOR = "#eb141f"
 
 
 LOCALE_PATHS = (

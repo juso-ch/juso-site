@@ -122,55 +122,57 @@ class ContentMixin(TranslationMixin, MetaMixin, TemplateMixin):
 
     @property
     def image(self):
-        if (settings.DEBUG or not self.generated_meta_image) and self.get_header_image():
-            orig = self.get_header_image()
-            img = Image.open(
-                get_storage_class()().open(
-                    self.get_header_image().some[1:].partition('/')[2]
+        try:
+            if (settings.DEBUG or not self.generated_meta_image) and self.get_header_image():
+                orig = self.get_header_image()
+                img = Image.open(
+                    get_storage_class()().open(
+                        self.get_header_image().some[1:].partition('/')[2]
+                    )
                 )
-            )
-            draw = ImageDraw.Draw(img)
-            font = ImageFont.truetype('juso/static/fonts/Montserrat-ExtraBold.ttf', int(1200/30))
-            color = ImageColor.getcolor(self.get_color(), 'RGB')
+                draw = ImageDraw.Draw(img)
+                font = ImageFont.truetype('juso/static/fonts/Montserrat-ExtraBold.ttf', int(1200/30))
+                color = ImageColor.getcolor(self.get_color(), 'RGB')
 
-            title = textwrap.wrap(self.title.upper(), 30, break_long_words=True)
-            line = 0
-            line_space = 10
-            padding_top = 5
-            padding_bottom = 14
-            padding_side = 15
-            line_height = int(1200/30) + line_space + padding_bottom + padding_top
-            width = 1200
-            height = 600
+                title = textwrap.wrap(self.title.upper(), 35, break_long_words=True)
+                line = 0
+                line_space = 10
+                padding_top = 5
+                padding_bottom = 14
+                padding_side = 15
+                line_height = int(1200/30) + line_space + padding_bottom + padding_top
+                width = 1200
+                height = 600
 
-            text_top = height - len(title) * line_height - line_height / 2
+                text_top = height - len(title) * line_height - line_height / 2
 
-            text_color = color
-            fill_color = (255, 255, 255)
-            border_color = color
+                text_color = color
+                fill_color = (255, 255, 255)
+                border_color = color
 
-            for text in title:
-                line += 1
-                size = font.getsize_multiline(text)
-                x = 30
-                y = text_top + line * line_height
-                draw.rectangle(
-                    [x - padding_side, y - padding_top, x + size[0] + padding_side, y + size[1] + padding_bottom],
-                    fill=fill_color, outline=border_color, width=3
+                for text in title:
+                    line += 1
+                    size = font.getsize_multiline(text)
+                    x = 30
+                    y = text_top + line * line_height
+                    draw.rectangle(
+                        [x - padding_side, y - padding_top, x + size[0] + padding_side, y + size[1] + padding_bottom],
+                        fill=fill_color, outline=border_color, width=3
+                    )
+                    draw.text(
+                        (x, y), text, text_color, font=font,
+                    )
+
+                f = BytesIO()
+
+                img.save(f, format="JPEG", quality=100)
+
+                self.generated_meta_image.save(
+                    orig.some.split('/')[-1], files.File(f)
                 )
-                draw.text(
-                    (x, y), text, text_color, font=font,
-                )
-
-            f = BytesIO()
-
-            img.save(f, format="JPEG", quality=100)
-
-            self.generated_meta_image.save(
-                orig.some.split('/')[-1], files.File(f)
-            )
-
-        return self.generated_meta_image
+            return self.generated_meta_image
+        except: #Anything could happen, but it's not really a priority
+            return None
 
 
     publication_date = models.DateTimeField(
@@ -218,6 +220,22 @@ class ContentMixin(TranslationMixin, MetaMixin, TemplateMixin):
         unique_together = (('slug', 'section'))
         ordering = ['-publication_date']
         get_latest_by = 'publication_date'
+
+    def meta_images_dict(self):
+        if self.meta_image:
+            return {
+                "image": str(self.meta_image.recommended),
+                "image:width": 1200,
+                "image:height": 630,
+            }
+
+        elif self.image:
+            return {
+                "image": self.generated_meta_image.url,
+                "image:width": 1200,
+                "image:height": 630,
+            }
+        return dict()
 
 
 def get_template_list(app_name, templates):

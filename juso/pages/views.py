@@ -3,6 +3,7 @@ from django.shortcuts import (get_list_or_404, get_object_or_404, redirect,
 from django.contrib.sitemaps import Sitemap
 from django.views.decorators.cache import cache_page
 from django.contrib.sitemaps.views import sitemap as sitemap_view
+from django.conf import settings
 from django.views.decorators.csrf import ensure_csrf_cookie
 from feincms3.regions import Regions
 from feincms3_meta.utils import meta_tags
@@ -64,6 +65,35 @@ def page_detail(request, path=None):
         },
     )
 
+
+def webmanifest(request):
+    page = get_landing_page(request) or get_object_or_404(
+        Page.objects.active(),
+        path='/',
+    )
+
+    return render(request, 'manifest.webmanifest', {
+        'page': page,
+        'color': settings.DEFAULT_COLOR,
+    })
+
+
+def service_worker(request):
+    return render(request, 'service-worker.js', {
+
+    }, content_type="text/javascript")
+
+
+def offline_view(request):
+    page = get_landing_page(request) or get_object_or_404(
+        Page.objects.active(),
+        path='/',
+    )
+
+    return render(request, 'offline.html', {
+        'page': page,
+        'color': settings.DEFAULT_COLOR,
+    })
 
 def sitemap_index(request, path='/'):
     sitemaps = {}

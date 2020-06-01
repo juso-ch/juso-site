@@ -2,6 +2,9 @@
 {% if plugin.title %}
 <h2>{{plugin.title}}</h2>
 {% endif %}
+{% if plugin.structured_data %}
+{% include 'blog/structured_data_list.html' %}
+{% endif %}
 <section class="cards">
   {% for article in article_list %}
   <article class="{{article.category.slug}} card">

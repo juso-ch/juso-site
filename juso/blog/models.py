@@ -94,6 +94,12 @@ class Article(ContentMixin):
                     self.language_code
                 ]
             )
+    def get_full_url(self):
+        url = self.get_absolute_url()
+        if url.startswith('//'):
+            return 'https:' + url
+        else:
+            return 'https://' + self.section.site.host + url
 
     class Meta:
         verbose_name = _("article")

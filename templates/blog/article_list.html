@@ -1,23 +1,26 @@
 {% extends 'blog/base.html' %}
 
 {% load feincms3 sekizai_tags i18n %}
+{% block structured_data %}
+{% include 'blog/structured_data_list.html' %}
+{% endblock %}
 
 {% block regions %}
 <form class="filter">
   {% for category in category_list %}
   <input
-      type="checkbox"
-      name="category"
-      id="{{category.slug}}"
-      value="{{category.slug}}"
-      ><label for="{{category.slug}}">{{category}}</label>
-  {% endfor %}
-  <div class="field">
-    <label for="search">{% trans "Search" %}</label>
-  <input type="text" name="search" id="search">
-  </div>
+    type="checkbox"
+    name="category"
+    id="{{category.slug}}"
+    value="{{category.slug}}"
+    ><label for="{{category.slug}}">{{category}}</label>
+    {% endfor %}
+    <div class="field">
+      <label for="search">{% trans "Search" %}</label>
+      <input type="text" name="search" id="search">
+    </div>
 
-  <button type="submit">{% trans "Apply" %}</button>
+    <button type="submit">{% trans "Apply" %}</button>
 </form>
 
 {% include 'blog/plugins/default.html' with enable_category=True %}

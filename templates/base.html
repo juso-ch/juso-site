@@ -31,6 +31,8 @@
     {% block meta %}
     {{meta_tags}}
     {% endblock %}
+    {% block structured_data %}
+    {% endblock %}
 
     {% include 'includes/base_style.html' %}
 
@@ -126,5 +128,16 @@
     {% addtoblock 'js' %}
     <script src="{% static 'tools.js' %}"></script>
     {% endaddtoblock %}
+
+    {% addtoblock 'js' %}
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/service-worker.js');
+        });
+      }
+    </script>
+    {% endaddtoblock %}
+
   </body>
 </html>

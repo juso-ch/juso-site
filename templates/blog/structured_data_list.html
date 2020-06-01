@@ -1,0 +1,15 @@
+<script type="application/ld+json">
+  {
+      "@context":"https://schema.org",
+      "@type":"ItemList",
+      "itemListElement":[
+      {% for article in article_list %}
+        {
+          "@type":"ListItem",
+          "position":{{forloop.counter}},
+          "url":"{{article.get_full_url}}"
+        }{% if not forloop.last %},{% endif %}
+      {% endfor %}
+      ]
+    }
+</script>

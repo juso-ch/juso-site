@@ -7,9 +7,3 @@ function toggleClassOther(id, cls){
   document.getElementById(id).classList.toggle(cls);
   return false;
 }
-
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/service-worker.js');
-  });
-}

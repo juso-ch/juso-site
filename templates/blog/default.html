@@ -5,6 +5,49 @@
 {% include 'includes/breadcrumbs.html' with obj=article %}
 {% endblock %}
 
+{% block structured_data %}
+<script type="application/ld+json">
+  {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://{{page.site.host}}{{page.path}}"
+      },
+      "author": {
+      {% if article.author %}
+        "@type": "Person",
+        "name": "{{article.author.get_full_name}}"
+        {% else %}
+        "@type": "Organization",
+        "name": "{{top.title}}",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://{{page.site.host}}/static/logo.png"
+        }
+        {% endif %}
+      },
+      "headline": "{{article.title}}",
+      "image": [
+        "https://{{page.site.host}}{{article.get_header_image.full}}",
+        "https://{{page.site.host}}{{article.get_header_image.square}}",
+        "https://{{page.site.host}}{{article.get_header_image.mobile}}",
+        "https://{{page.site.host}}{{article.get_header_image.card}}"
+       ],
+      "datePublished": "{{article.publication_date|date:"c"}}",
+      "dateModified": "{{article.edited_date|date:"c"}}",
+       "publisher": {
+        "@type": "Organization",
+        "name": "{{top.title}}",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://{{page.site.host}}/static/logo.png"
+        }
+      }
+    }
+</script>
+{% endblock %}
+
 {% block regions %}
 <article class="{{article.category.slug}} article">
   {% render_region regions 'main' %}

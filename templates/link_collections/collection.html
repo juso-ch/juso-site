@@ -1,28 +1,49 @@
-{% load static %}
+{% load static i18n %}
 <!DOCTYPE html>
 <html lang="{{request.LANGUAGE_CODE}}">
   <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{page.title}}</title>
     {{meta_tags}}
 
     <link rel="stylesheet" type="text/css" href="{% static 'sanitize.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'klima.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'montserrat.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'variables.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'darkmode.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'base.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'juso.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'collections.css' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'apple-touch-icon.png' %}" >
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static '/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon-16x16.png' %}">
+    <link rel="manifest" href="{% url 'pages:manifest' %}">
+    <meta name="theme-color" content="#eb141f">
+
     {% include 'category_colors.html' %}
 
   </head>
-  <body>
+    <body>
 
-    <div class="logo"></div>
-    <h1>{{page.title}}</h1>
+      <span class="logo" aria-label="{% trans 'Logo' %}">
+        {% include 'includes/logo.svg' %}
+      </span>
+      <h1>{{page.title}}</h1>
 
-    <article class="collection">
-      {% for link in collection.link_set.all %}
-      <a href="{{link.target}}" class="link {{link.category.slug}}">{{link.text}}</a>
-      {% endfor %}
-    </article>
-
-  </body>
+      <article class="collection">
+        {% for link in collection.link_set.all %}
+        <a href="{{link.target}}" class="link {{link.category.slug}}">{{link.text}}</a>
+        {% endfor %}
+      </article>
+    <script src="{% static 'theming.js' %}"></script>
+      <script>
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/service-worker.js');
+          });
+        }
+      </script>
+    </body>
 </html>

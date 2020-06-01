@@ -2,7 +2,7 @@ from content_editor.admin import ContentEditorInline
 from django.conf import settings
 from django.db import models
 from django.template.loader import render_to_string
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import gettext_lazy as _, gettext
 
 from juso.models import TranslationMixin
 from juso.sections.models import Category, Section
@@ -59,13 +59,17 @@ class ArticlePlugin(TranslationMixin):
         blank=True,
     )
 
+    structured_data = models.BooleanField(
+        _("include structured data"), default=False
+    )
+
     class Meta:
         abstract = True
         verbose_name = _("article plugin")
         verbose_name_plural = _("article plugins")
 
     def __str__(self):
-        return self.title or _("articles")
+        return self.title or gettext("articles")
 
 
 class ArticlePluginInline(ContentEditorInline):
@@ -92,6 +96,7 @@ class ArticlePluginInline(ContentEditorInline):
                 'sections',
                 'language_code',
                 'template_key',
+                'structured_data',
                 'all_articles',
                 'all_articles_override',
             )

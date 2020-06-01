@@ -1,9 +1,3 @@
-{% extends 'events/base.html' %}
-{% load feincms3 i18n %}
-{% block breadcrumbs %}
-{% include 'includes/breadcrumbs.html' with obj=event %}
-{% endblock %}
-{% block structured_data %}
 <script type="application/ld+json">
   {
       "@context": "https://schema.org",
@@ -65,47 +59,3 @@
       }
     }
 </script>
-{% endblock %}
-
-{% block regions %}
-<article class="{{event.category.slug}} event">
-  <div class="bar">
-    <div class="event-info">
-      <time datetime="{{event.start_date|date:"c"}}">
-        {{event.start_date|date:"d.m. H:i"}}
-      </time>-<time datetime="{{event.end_date|date:"c"}}">
-        {% if event.end_date == event.start_date %}
-        {{event.end_date|date:"H:i"}}
-        {% else %}
-        {{event.end_date|date:"d.m. H:i" }}
-        {% endif %}
-      </time>
-      {% if event.location %}
-      - <a href="{{event.location.get_absolute_url}}">{{event.location}}</a>
-      {% endif %}
-    </div>
-    <div class="action small">
-      <a class="button" href="{{event.google_calendar}}" target="_blank">
-        Google
-      </a>
-      <a class="button" href="{{event.outlook}}" target="_blank">
-        Outlook
-      </a>
-      <a class="button" href="{{event.ical_link}}" target="_blank">
-        iCal
-      </a>
-      {% if event.location %}
-      <a href="{{event.location.maps}}" class="button" target="_blank">
-        {% trans "route" %}
-      </a>
-      {% endif %}
-    </div>
-    {% render_region regions 'main' %}
-</article>
-<article class="location">
-  <a href="{{event.location.get_absolute_url}}">
-    {{event.location}}
-  </a>
-  ({{event.location.address}})
-</article>
-{% endblock %}

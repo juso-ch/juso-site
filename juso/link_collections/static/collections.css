@@ -40,7 +40,6 @@ article > a.link:hover {
 
 .logo {
   height: 4em;
-  background-color: var(--text-color);
   width: 2em;
 }
 

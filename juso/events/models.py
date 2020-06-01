@@ -157,6 +157,7 @@ class Event(ContentMixin):
             return self.meta_description
         return '<p></p>'
 
+
     class Meta:
         verbose_name = _("event")
         verbose_name_plural = _("events")

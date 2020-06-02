@@ -1,5 +1,6 @@
 from content_editor.admin import ContentEditor
 from django.conf import settings
+from django.db.models import Q
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 from feincms3 import plugins
@@ -10,12 +11,14 @@ from js_asset import JS
 from juso.forms import plugins as form_plugins
 from juso.admin import ButtonInline
 from juso.events import models
+from juso.pages.models import Page
 from juso.events.models import Event, Location, NameSpace
 from juso.events import plugins as event_plugins
 from juso.people import plugins as people_plugins
 from juso.blog import plugins as blog_plugins
 from juso.plugins import download
 from juso.utils import CopyContentMixin
+from juso.webpush import models as webpush, tasks
 
 # Register your models here.
 
@@ -112,7 +115,7 @@ class EventAdmin(ContentEditor, CopyContentMixin):
 
     plugins = models.plugins
 
-    actions = ['copy_selected']
+    actions = ['copy_selected', 'send_webpush']
 
     plugins = models.plugins
 
@@ -135,6 +138,37 @@ class EventAdmin(ContentEditor, CopyContentMixin):
         section_field.initial = sections[0]
 
         return form
+
+
+    def send_webpush(self, request, queryset):
+        for event in queryset:
+            pages = Page.objects.filter(
+                (
+                    Q(application='events') &
+                    Q(language_code=event.language_code)
+                ) &
+                (
+                    Q(category__isnull=True) |
+                    Q(category=event.category)
+                ) &
+                (
+                    Q(event_namespace__isnull=True) |
+                    Q(event_namespace=event.namespace)
+                ) &
+                (
+                    Q(site__section=event.section) |
+                    Q(sections=event.section)
+                )
+            )
+
+            for page in pages:
+                subscriptions = webpush.Subscription.objects.filter(page=page)
+                data = event.webpush_data(page)
+                for subscription in subscriptions:
+                    tasks.send_data_to.delay(
+                        data,
+                        subscription.pk
+                    )
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)

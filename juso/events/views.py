@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404, render
+from django.conf import settings
 from django.utils import timezone
 from django.http.response import HttpResponse
 from django.contrib.sitemaps import Sitemap
@@ -94,6 +95,7 @@ def event_list(request):
             ).distinct(),
             'page': page,
             'header_image': page.get_header_image(),
+            'vapid_public_key': settings.VAPID_PUBLIC_KEY,
             'meta_tags': meta_tags(
                 [page] + ancestors,
                 request=request

@@ -1,17 +1,30 @@
 {% extends 'events/base.html' %}
-{% load tools i18n %}
+{% load tools i18n sekizai_tags static %}
 
 {% block content %}
 {% regroup event_list by start_date|date:"E Y" as month_list %}
 
-<section class="filter">
-  <a href="?">{% trans "All" %}</a>
-  {% if page.sections.exists %}
-  {% for section in page.sections.all %}
-  <a href="?section={{section.slug}}">{{section}}</a>
-  {% endfor %}
-  {% endif %}
-</section>
+<div class="controls">
+  <form class="filter">
+      <div class="field">
+        <label for="search">{% trans "Search" %}</label>
+        <input type="text" name="search" id="search">
+      </div>
+
+      <button type="submit">
+      <i title="{% trans 'Search' %}" class="fas fa-search"></i>
+      </button>
+  </form>
+ <div id="notification-area">
+    <button alt="" id="subscribe-button" class="button">
+      <i title="{% trans 'Enable Notifications' %}" class="fas fa-bell"></i>
+    </button>
+    <button style="display: none" id="unsubscribe-button" class="button">
+      <i title="{% trans 'Disable Notifications' %}" class="fas fa-bell-slash"></i>
+    </button>
+    <input type="hidden" id="vapid_public_key" value="{{vapid_public_key}}">
+  </div>
+</div>
 
 <section class="events">
   {% for month in month_list %}
@@ -31,4 +44,7 @@
 <small>{% trans 'Subscribe to these events in your calendar-app with this link' %}</small>
 </div>
 </section>
+{% addtoblock 'js' %}
+<script src="{% static 'notification.js' %}"></script>
+{% endaddtoblock %}
 {% endblock %}

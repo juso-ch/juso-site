@@ -8,6 +8,7 @@ if ('Notification' in window && navigator.serviceWorker) {
     navigator.serviceWorker.ready.then(reg => {
       reg.pushManager.getSubscription().then(sub => {
         if(sub){
+          toggleButtons(true);
           var csrftoken = Cookies.get('csrftoken');
           console.log(sub);
           fetch('is-subscribed/', {

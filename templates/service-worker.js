@@ -111,6 +111,7 @@ self.addEventListener('push', function(e) {
     icon: data.icon,
     image: data.image,
     badge: data.badge,
+    vibrate: [200, 100, 300],
     data: {
       dateOfArrival: data.publication_date,
       url: data.url,

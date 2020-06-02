@@ -1,6 +1,8 @@
 from content_editor.models import Region, create_plugin_base
+import pytz
 import urllib
 import uuid
+from django.utils import timezone
 from django.db import models
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
@@ -11,6 +13,8 @@ from feincms3_meta.models import MetaMixin
 from feincms3_sites.middleware import current_site, set_current_site
 from taggit.managers import TaggableManager
 from imagefield.fields import ImageField
+import json
+import bleach
 
 from juso.models import TranslationMixin
 from juso.events import plugins as event_plugins
@@ -152,10 +156,13 @@ class Event(ContentMixin):
     @property
     def tagline(self):
         if RichText.objects.filter(parent=self).exists():
-            return RichText.objects.filter(parent=self)[0].text
+            return bleach.clean(
+                RichText.objects.filter(parent=self)[0].text,
+                strip=True, tags=[],
+            )
         if self.meta_description:
             return self.meta_description
-        return '<p></p>'
+        return ''
 
 
     class Meta:
@@ -172,6 +179,24 @@ class Event(ContentMixin):
                 'slug', 'start_date', 'section'
             ], name="unique_slugs_for_section_and_date")
         ]
+
+    def webpush_data(self, page):
+        return json.dumps({
+            'title': self.start_date.astimezone(pytz.timezone(settings.TIME_ZONE)).strftime('%d.%m.%Y %H:%M') + " - " + self.title,
+            'tagline': (self.location.name + '; ' if self.location else '') + self.tagline[:280],
+            'icon': 'https://' + page.site.host + '/static/logo.png',
+            'url': self.get_full_url(),
+            'badge': 'https://' + page.site.host + '/static/badge.png',
+            'publication_date': self.publication_date.isoformat(),
+            'image': 'https://' + page.site.host + self.get_header_image().full if self.get_header_image() else ''
+        })
+
+    def get_full_url(self):
+        url = self.get_absolute_url()
+        if url.startswith('//'):
+            return 'https:' + url
+        else:
+            return 'https://' + self.section.site.host + url
 
     def get_address(self):
         if self.location:

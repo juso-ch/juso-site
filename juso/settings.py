@@ -49,7 +49,9 @@ INSTALLED_APPS = [
     "juso.people.apps.PeopleConfig",
     "juso.forms.apps.FormsConfig",
     "juso.glossary.apps.GlossaryConfig",
+    "juso.webpush.apps.WebpushConfig",
     "juso.link_collections.apps.LinkCollectionsConfig",
+    "django_celery_results",
 ]
 
 MIDDLEWARE = [
@@ -232,7 +234,7 @@ LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'),
 )
 
-MAPS_URL = "https://www.google.com/maps/dir/Current+Location/{location.lat},{location.lng}"
+MAPS_URL = "https://www.google.com/maps/dir/My+Location/{location.lat},{location.lng}"
 
 
 CACHES = {
@@ -242,7 +244,19 @@ CACHES = {
     }
 }
 
-try:
-    from juso.local_settings import *
-except:
-    pass
+EMAIL_HOST = 'smtp'
+EMAIL_PORT = 25
+
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", 'webmaster@localhost')
+SERVER_EMAIL = os.environ.get("SERVER_EMAIL", 'root@localhost')
+
+
+CELERY_BROKER_URL = "redis://redis:6379"
+
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_CACHE_BACKEND = 'django-cache'
+
+VAPID_EMAIL = os.environ.get('VAPID_EMAIL', '')
+
+VAPID_PRIVATE_KEY = os.environ.get('VAPID_PRIVATE_KEY', '')
+VAPID_PUBLIC_KEY = os.environ.get('VAPID_PUBLIC_KEY', '')

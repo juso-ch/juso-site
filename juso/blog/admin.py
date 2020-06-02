@@ -1,5 +1,6 @@
 from content_editor.admin import ContentEditor
 from django.contrib import admin
+from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 from feincms3 import plugins
 from feincms3_meta.models import MetaMixin
@@ -7,6 +8,7 @@ from js_asset import JS
 
 from juso.admin import ButtonInline
 from juso.blog import plugins as blog_plugins
+from juso.pages.models import Page
 from juso.blog import models
 from juso.blog.models import Article, NameSpace
 from juso.events import plugins as event_plugins
@@ -15,6 +17,7 @@ from juso.people import plugins as people_plugins
 from juso.plugins import download
 from juso.utils import CopyContentMixin
 from juso.glossary.admin import GlossaryContentInline
+from juso.webpush import models as webpush, tasks
 
 # Register your models here.
 
@@ -115,7 +118,7 @@ class ArticleAdmin(ContentEditor, CopyContentMixin):
     ]
 
     plugins = models.plugins
-    actions = ['copy_selected']
+    actions = ['copy_selected', 'send_webpush']
 
     class Media:
         js = (
@@ -126,6 +129,37 @@ class ArticleAdmin(ContentEditor, CopyContentMixin):
             }, static=False),
             'admin/plugin_buttons.js',
         )
+
+
+    def send_webpush(self, request, queryset):
+        for article in queryset:
+            pages = Page.objects.filter(
+                (
+                    Q(application='blog') &
+                    Q(language_code=article.language_code)
+                ) &
+                (
+                    Q(category__isnull=True) |
+                    Q(category=article.category)
+                ) &
+                (
+                    Q(blog_namespace__isnull=True) |
+                    Q(blog_namespace=article.namespace)
+                ) &
+                (
+                    Q(site__section=article.section) |
+                    Q(sections=article.section)
+                )
+            )
+
+            for page in pages:
+                subscriptions = webpush.Subscription.objects.filter(page=page)
+                data = article.webpush_data(page)
+                for subscription in subscriptions:
+                    tasks.send_data_to.delay(
+                        data,
+                        subscription.pk
+                    )
 
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)

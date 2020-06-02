@@ -53,10 +53,6 @@ class Migration(migrations.Migration):
         ),
         migrations.RemoveField(
             model_name='button',
-            name='icon',
-        ),
-        migrations.RemoveField(
-            model_name='button',
             name='inverted',
         ),
         migrations.AlterField(

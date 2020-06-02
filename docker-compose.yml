@@ -12,6 +12,22 @@ services:
       - ./.env.dev
   cache:
     image: memcached:alpine
+  smtp:
+    image: namshi/smtp
+    restart: always
+    expose:
+      - 25
+  celery:
+    build: .
+    command: celery -A juso worker --loglevel DEBUG
+    volumes:
+      - .:/usr/src/app/
+    env_file:
+      - ./.env.dev
+  redis:
+    image: redis
+    expose:
+      - 6379
   db:
     image: postgres:12.0-alpine
     volumes:

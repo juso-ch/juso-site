@@ -3,18 +3,22 @@ from django.contrib.syndication.views import Feed
 from django.contrib.sitemaps import Sitemap
 from django.contrib.sitemaps.views import sitemap
 from django.core.paginator import Paginator
+from django.conf import settings
+from django.http import JsonResponse
 from django.utils import timezone
 from django.shortcuts import get_object_or_404, render
 from feincms3.apps import page_for_app_request
 from feincms3.regions import Regions
 from feincms3.shortcuts import render_list
 from feincms3_meta.utils import meta_tags
+import json
 
 from juso import pages
 from juso.sections.models import Category
 from juso.blog import models
 from juso.search import consume
 from juso.blog.renderer import renderer
+from juso.webpush.models import Subscription
 
 # Create your views here.
 
@@ -70,6 +74,7 @@ def article_list(request):
         {
             'page': page,
             'header_image': page.get_header_image(),
+            'vapid_public_key': settings.VAPID_PUBLIC_KEY,
             'category_list': category_list,
             "meta_tags": meta_tags([page] + ancestors, request=request),
             'regions': Regions.from_item(
@@ -215,3 +220,41 @@ class ArticleFeed(Feed):
     def item_categories(self, item):
         return [item.category.name] if item.category else None
 
+
+def subscribe_to_webpush(request):
+    data = json.loads(request.body)
+    page = page_for_app_request(request)
+    if Subscription.objects.filter(
+        page=page,
+        subscription_info__endpoint=data['endpoint']
+    ).exists():
+        print("Already subscribed!")
+        return JsonResponse({'subscribed': False})
+
+    Subscription.objects.create(
+        page=page,
+        subscription_info=data
+    )
+
+    return JsonResponse({'subscribed': True})
+
+def is_subscribed(request):
+    data = json.loads(request.body)
+    return JsonResponse({
+        'subscribed':
+        Subscription.objects.filter(
+            page=page_for_app_request(request),
+            subscription_info__endpoint=data['endpoint']
+        ).exists()
+    })
+
+
+def unsubscribe_from_webpush(request):
+    data = json.loads(request.body)
+    page = page_for_app_request(request)
+    Subscription.objects.filter(
+        page=page,
+        subscription_info__endpoint=data['endpoint']
+    ).delete()
+
+    return JsonResponse({'unsubscribed': True})

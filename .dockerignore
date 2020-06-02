@@ -2,3 +2,4 @@ media/
 db.sqlite3
 .git/
 nginx/
+vapid_private.pem

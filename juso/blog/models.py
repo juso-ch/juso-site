@@ -4,6 +4,8 @@ from django.utils.translation import gettext_lazy as _
 from feincms3 import plugins
 from feincms3.apps import apps_urlconf, reverse_app
 from feincms3_sites.middleware import current_site, set_current_site
+import json
+import bleach
 
 from imagefield.fields import ImageField
 
@@ -57,10 +59,13 @@ class Article(ContentMixin):
     @property
     def tagline(self):
         if RichText.objects.filter(parent=self).exists():
-            return RichText.objects.filter(parent=self)[0].text
+            return bleach.clean(
+                RichText.objects.filter(parent=self)[0].text,
+                strip=True,
+            )
         if self.meta_description:
             return self.meta_description
-        return '<p></p>'
+        return ''
 
     def get_absolute_url(self):
         site = current_site()
@@ -94,6 +99,18 @@ class Article(ContentMixin):
                     self.language_code
                 ]
             )
+
+    def webpush_data(self, page):
+        return json.dumps({
+            'title': self.title,
+            'tagline': self.tagline,
+            'icon': 'https://' + page.site.host + '/static/logo.png',
+            'url': self.get_full_url(),
+            'badge': 'https://' + page.site.host + '/static/badge.png',
+            'publication_date': self.publication_date.isoformat(),
+            'image': 'https://' + page.site.host + self.get_header_image().full if self.get_header_image() else ''
+        })
+
     def get_full_url(self):
         url = self.get_absolute_url()
         if url.startswith('//'):

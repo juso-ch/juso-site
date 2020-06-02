@@ -34,7 +34,6 @@ self.addEventListener('install', async (event) => {
   );
 });
 
-setDefaultHandler(new StaleWhileRevalidate());
 
 registerRoute(
   ({request}) => request.destination === 'document',
@@ -97,7 +96,7 @@ setCatchHandler(({event}) => {
   switch (event.request.destination) {
     case 'document':
       return caches.match(FALLBACK_HTML_URL);
-    break;
+      break;
 
     default:
       return Response.error();
@@ -105,3 +104,31 @@ setCatchHandler(({event}) => {
 });
 
 
+self.addEventListener('push', function(e) {
+  let data = e.data.json();
+  var options = {
+    body: data.tagline,
+    icon: data.icon,
+    image: data.image,
+    badge: data.badge,
+    data: {
+      dateOfArrival: data.publication_date,
+      url: data.url,
+    }
+  };
+  e.waitUntil(
+    caches.open('documents')
+    .then((cache) => cache.add(data.url))
+    .then(self.registration.showNotification(data.title, options))
+  );
+});
+
+self.addEventListener('notificationclick', function(event) {
+  const clickedNotification = event.notification;
+  const url = event.notification.data.url;
+  console.log(url);
+  clickedNotification.close();
+
+  const promiseChain = clients.openWindow(url);
+  event.waitUntil(promiseChain);
+});

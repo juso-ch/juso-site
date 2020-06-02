@@ -41,15 +41,15 @@ urlpatterns = [
         auth_views.PasswordResetCompleteView.as_view(),
         name='password_reset_complete',
     ),
-    path(
-        'logo/<slug:language>/<slug:slug>.svg',
-        views.logo, name="logo"
-    ),
     path('su/', include('django_su.urls')),
     path('admin/', admin.site.urls),
     path('forms/', include('juso.forms.urls')),
     path('', include('juso.pages.urls'))
 ]
+
+handler404 = 'juso.pages.views.error404'
+
+handler500 = 'juso.pages.views.error500'
 
 if settings.DEBUG:
     urlpatterns += static(

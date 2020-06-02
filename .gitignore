@@ -137,3 +137,4 @@ first_run.lock
 docker-compose.hosts.yml
 
 .vim
+vapid_private.pem

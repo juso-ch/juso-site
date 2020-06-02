@@ -228,13 +228,6 @@ class ContentMixin(TranslationMixin, MetaMixin, TemplateMixin):
                 "image:width": 1200,
                 "image:height": 630,
             }
-
-        elif self.image:
-            return {
-                "image": self.generated_meta_image.url,
-                "image:width": 1200,
-                "image:height": 630,
-            }
         return dict()
 
 

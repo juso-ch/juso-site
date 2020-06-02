@@ -10,12 +10,4 @@ then
     echo "PostgreSQL started"
 fi
 
-python manage.py migrate
-
-if [ ! -e first_run.lock ]
-then
-  python manage.py loaddata site
-  touch first_run.lock
-fi
-
 exec "$@"

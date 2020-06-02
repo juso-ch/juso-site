@@ -1007,3 +1007,7 @@ main #tamaro-widget.tamaro-widget span, main #tamaro-widget.tamaro-widget .widge
   display: block;
   margin-top: 1em;
 }
+
+.hidden {
+  display: none;
+}

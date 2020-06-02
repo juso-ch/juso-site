@@ -18,6 +18,20 @@ services:
   cache:
     image: memcached:alpine
     restart: always
+  smtp:
+    image: namshi/smtp
+    restart: always
+    expose:
+      - 25
+  celery:
+    image: jusoch/juso-site
+    command: celery -A juso worker --loglevel WARN
+    env_file:
+      - ./.env.prod
+  redis:
+    image: redis
+    expose:
+      - 6379
   db:
     image: postgres:12.0-alpine
     volumes:

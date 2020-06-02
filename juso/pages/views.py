@@ -66,6 +66,20 @@ def page_detail(request, path=None):
     )
 
 
+def error404(request, exception):
+    print("Hello")
+    return render(
+        request, '404.html', {
+            'exception': exception
+        }
+    )
+
+
+def error500(request):
+    return render(
+        request, '500.html'
+    )
+
 def webmanifest(request):
     page = get_landing_page(request) or get_object_or_404(
         Page.objects.active(),

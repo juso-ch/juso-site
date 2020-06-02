@@ -28,4 +28,8 @@ def send_data_to(data, subscription):
             }
         )
     except WebPushException as ex:
-        subscription.delete()
+        if subscription.failed_attempts > 5:
+            subscription.delete()
+        subscription.failed_attempts += 1
+        subscription.save()
+        raise ex

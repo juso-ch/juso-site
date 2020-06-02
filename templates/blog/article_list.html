@@ -6,31 +6,26 @@
 {% endblock %}
 
 {% block regions %}
-<form class="filter">
-  {% for category in category_list %}
-  <input
-    type="checkbox"
-    name="category"
-    id="{{category.slug}}"
-    value="{{category.slug}}"
-    ><label for="{{category.slug}}">{{category}}</label>
-    {% endfor %}
-    <div class="field">
-      <label for="search">{% trans "Search" %}</label>
-      <input type="text" name="search" id="search">
-    </div>
+<div class="controls">
+  <form class="filter">
+      <div class="field">
+        <label for="search">{% trans "Search" %}</label>
+        <input type="text" name="search" id="search">
+      </div>
 
-    <button type="submit">{% trans "Apply" %}</button>
-</form>
-<div id="notification-area">
-<button id="subscribe-button" style="display: none;" class="button">
-  {% trans 'Enable Notifications' %}
-</button>
-
-<button style="display: none" id="unsubscribe-button" class="button" onclick="disableNotifications();">
-  {% trans 'Disable Notifications' %}
-</button>
-<input type="hidden" id="vapid_public_key" value="{{vapid_public_key}}">
+      <button type="submit">
+      <i title="{% trans 'Search' %}" class="fas fa-search"></i>
+      </button>
+  </form>
+ <div id="notification-area">
+    <button alt="" id="subscribe-button" style="display: none;" class="button">
+      <i title="{% trans 'Enable Notifications' %}" class="fas fa-bell"></i>
+    </button>
+    <button style="display: none" id="unsubscribe-button" class="button">
+      <i title="{% trans 'Disable Notifications' %}" class="fas fa-bell-slash"></i>
+    </button>
+    <input type="hidden" id="vapid_public_key" value="{{vapid_public_key}}">
+  </div>
 </div>
 
 {% include 'blog/plugins/default.html' with enable_category=True %}

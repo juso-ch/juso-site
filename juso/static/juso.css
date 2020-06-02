@@ -1011,3 +1011,41 @@ main #tamaro-widget.tamaro-widget span, main #tamaro-widget.tamaro-widget .widge
 .hidden {
   display: none;
 }
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+}
+
+.controls > .filter {
+  display: flex;
+  align-items: center;
+}
+
+.controls > .filter button {
+  font-size: 1rem;
+  line-height: 1.5em;
+  margin-left: 1rem;
+}
+#notification-area {
+  display: flex;
+  align-items: center;
+}
+#notification-area button{
+  font-size: 1rem;
+  line-height: 1.5em;
+  margin-left: 1rem;
+}
+
+.social-media {
+  font-size: 0.8rem;
+}
+
+.social-media a.button {
+  margin: 0.2em;
+}
+
+.social-media header {
+  font-size: 1rem;
+  display: block;
+}

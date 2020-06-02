@@ -228,6 +228,12 @@ class ContentMixin(TranslationMixin, MetaMixin, TemplateMixin):
                 "image:width": 1200,
                 "image:height": 630,
             }
+        if self.get_header_image():
+            return {
+                "image": str(self.get_header_image().some),
+                "image:width": 1200,
+                "image:height": 630,
+            }
         return dict()
 
 

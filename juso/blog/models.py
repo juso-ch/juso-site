@@ -61,7 +61,7 @@ class Article(ContentMixin):
         if RichText.objects.filter(parent=self).exists():
             return bleach.clean(
                 RichText.objects.filter(parent=self)[0].text,
-                strip=True,
+                strip=True, tags=[],
             )
         if self.meta_description:
             return self.meta_description
@@ -103,7 +103,7 @@ class Article(ContentMixin):
     def webpush_data(self, page):
         return json.dumps({
             'title': self.title,
-            'tagline': self.tagline,
+            'tagline': self.tagline[:280],
             'icon': 'https://' + page.site.host + '/static/logo.png',
             'url': self.get_full_url(),
             'badge': 'https://' + page.site.host + '/static/badge.png',

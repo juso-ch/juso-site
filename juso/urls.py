@@ -13,12 +13,16 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.http import HttpResponse
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import include, path
 from juso import views
+
+def robots_view(request):
+    return HttpResponse('', content_type="text/plain")
 
 urlpatterns = [
     path(
@@ -44,6 +48,7 @@ urlpatterns = [
     path('su/', include('django_su.urls')),
     path('admin/', admin.site.urls),
     path('forms/', include('juso.forms.urls')),
+    path('robots.txt', robots_view),
     path('', include('juso.pages.urls'))
 ]
 

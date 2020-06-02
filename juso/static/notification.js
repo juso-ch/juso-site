@@ -32,8 +32,10 @@ if ('Notification' in window && navigator.serviceWorker) {
       });
     });
   } else {
-    document.getElementById('notification-area').remove();
+    toggleButtons(false);
   }
+} else {
+  document.getElementById('notification-area').remove();
 }
 
 function toggleButtons(subscribed){

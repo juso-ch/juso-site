@@ -52,6 +52,21 @@
 <article class="{{article.category.slug}} article">
   {% render_region regions 'main' %}
 </article>
+<div class="social-media">
+  <header>{% trans "Share" %}</header>
+  <a href="https://api.whatsapp.com/send?text={{request.build_absolute_uri}}" class="button small" target="_blank" rel="noreferrer">
+    <i aria-hidden="true" class="fas fa-whatsapp"></i>
+    WhatsApp
+  </a>
+  <a href="https://twitter.com/intent/tweet?url={{request.build_absolute_uri}}" class="button small" target="_blank" rel="noreferrer">
+    <i aria-hidden="true" class="fas fa-twitter"></i>
+    Twitter
+  </a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u={{request.build_absolute_uri}}" class="button small" target="_blank" rel="noreferrer">
+    <i aria-hidden="true" class="fas fa-facebook"></i>
+    Facebook
+  </a>
+</div>
 {% if edit %}
 <a class="button" href="{% url 'admin:blog_article_change' article.pk %}">
   {% trans "Edit" %}

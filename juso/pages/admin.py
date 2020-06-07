@@ -151,7 +151,10 @@ class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
         }),
         (_('advanced'), {
             'classes': ('tabbed',),
-            'fields': ('in_meta', 'is_navigation')
+            'fields': (
+                'in_meta', 'is_navigation', 'logo',
+                'favicon', 'primary_color', 'css_vars'
+            )
         })
     )
 

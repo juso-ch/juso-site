@@ -88,7 +88,7 @@ def webmanifest(request):
 
     return render(request, 'manifest.webmanifest', {
         'page': page,
-        'color': settings.DEFAULT_COLOR,
+        'color': page.primary_color or settings.DEFAULT_COLOR,
     })
 
 

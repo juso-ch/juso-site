@@ -75,15 +75,18 @@ class Command(BaseCommand):
                                 '{http://wordpress.org/export/1.2/}meta_value'
                             ).text
                         ]
-
-                article = Article.objects.create(
-                    title=title,
-                    slug=slugify(title)[:180],
-                    publication_date=pub_date,
-                    namespace=namespace,
-                    language_code=language,
-                    section=wp_import.section,
-                )
+                try:
+                    article = Article.objects.create(
+                        title=title,
+                        slug=slugify(title)[:180],
+                        publication_date=pub_date,
+                        namespace=namespace,
+                        language_code=language,
+                        section=wp_import.section,
+                    )
+                except:
+                    print("Failed to create post")
+                    continue
 
                 image = get_image(thumbnail)
 

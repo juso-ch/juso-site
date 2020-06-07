@@ -4,21 +4,18 @@ from django.contrib.sitemaps import Sitemap
 from django.contrib.sitemaps.views import sitemap
 from django.core.paginator import Paginator
 from django.conf import settings
-from django.http import JsonResponse
 from django.utils import timezone
 from django.shortcuts import get_object_or_404, render
 from feincms3.apps import page_for_app_request
 from feincms3.regions import Regions
 from feincms3.shortcuts import render_list
 from feincms3_meta.utils import meta_tags
-import json
 
 from juso import pages
 from juso.sections.models import Category
 from juso.blog import models
 from juso.search import consume
 from juso.blog.renderer import renderer
-from juso.webpush.models import Subscription
 
 # Create your views here.
 
@@ -56,16 +53,20 @@ def article_list(request):
             category__slug__in=request.GET.getlist('category')
         )
 
+    q = ''
+
     if request.GET.get('search', ''):
         vector = SearchVector('title', weight='A')\
-                + SearchVector('category', weight='B')\
+                + SearchVector('category__name', weight='A')\
                 + SearchVector('blog_richtext_set__text', weight='A')\
                 + SearchVector('blog_glossaryrichtext_set__text', weight='A')
         query = consume(request.GET['search'])
         q = request.GET['search']
         article_list = article_list.annotate(
             rank=SearchRank(vector, query)
-        ).filter(rank__gte=0.1).order_by('-rank')
+        ).filter(rank__gt=0).order_by(
+            '-publication_date__year', '-rank'
+        ).distinct()
 
     ancestors = list(page.ancestors().reverse())
     return render_list(
@@ -73,6 +74,7 @@ def article_list(request):
         article_list,
         {
             'page': page,
+            'q': q,
             'header_image': page.get_header_image(),
             'vapid_public_key': settings.VAPID_PUBLIC_KEY,
             'category_list': category_list,
@@ -221,40 +223,3 @@ class ArticleFeed(Feed):
         return [item.category.name] if item.category else None
 
 
-def subscribe_to_webpush(request):
-    data = json.loads(request.body)
-    page = page_for_app_request(request)
-    if Subscription.objects.filter(
-        page=page,
-        subscription_info__endpoint=data['endpoint']
-    ).exists():
-        print("Already subscribed!")
-        return JsonResponse({'subscribed': False})
-
-    Subscription.objects.create(
-        page=page,
-        subscription_info=data
-    )
-
-    return JsonResponse({'subscribed': True})
-
-def is_subscribed(request):
-    data = json.loads(request.body)
-    return JsonResponse({
-        'subscribed':
-        Subscription.objects.filter(
-            page=page_for_app_request(request),
-            subscription_info__endpoint=data['endpoint']
-        ).exists()
-    })
-
-
-def unsubscribe_from_webpush(request):
-    data = json.loads(request.body)
-    page = page_for_app_request(request)
-    Subscription.objects.filter(
-        page=page,
-        subscription_info__endpoint=data['endpoint']
-    ).delete()
-
-    return JsonResponse({'unsubscribed': True})

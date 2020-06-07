@@ -3,6 +3,18 @@
   "short_name":"{{page.title}}",
   "start_url": "{{page.path}}",
   "icons": [
+    {% if page.favicon %}
+    {
+      "src":"{{page.favicon.192}}",
+      "sizes":"192x192",
+      "type":"image/png"
+    },
+    {
+      "src":"{{page.favicon.512}}",
+      "sizes":"512x512",
+      "type":"image/png"
+    }
+    {% else %}
     {
       "src":"/static/android-chrome-192x192.png",
       "sizes":"192x192",
@@ -13,6 +25,7 @@
       "sizes":"512x512",
       "type":"image/png"
     }
+    {% endif %}
   ],
   "theme_color":"{{color}}",
   "background_color": "#ffffff",

@@ -190,19 +190,18 @@ SU_LOGOUT_REDIRECT_URL = "/admin/"
 def superuser_callback(user):
     return user.is_superuser
 
-#USE_X_FORWARDED_HOST = True
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_PROXY_NAME', 'traefik')
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 DEBUG = int(os.environ.get("DEBUG", default=0))
 
-#LANGUAGE_COOKIE_SECURE = not DEBUG
-#LANGUAGE_COOKIE_SAMESITE = 'strict'
+LANGUAGE_COOKIE_SECURE = not DEBUG
+LANGUAGE_COOKIE_SAMESITE = 'strict'
 
-#CSRF_COOKIE_SAMESITE = 'strict'
-#CSRF_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SAMESITE = 'strict'
+CSRF_COOKIE_SECURE = not DEBUG
 
-#SESSION_COOKIE_SECURE = not DEBUG
-#SESSION_COOKIE_NAME = '__Secure-sessionid'
-#SESSION_COOKIE_SAMESITE = 'Lax'
+SESSION_COOKIE_SECURE = not DEBUG
+SESSION_COOKIE_NAME = '__Secure-sessionid'
+SESSION_COOKIE_SAMESITE = 'Lax'
 
 SU_LOGIN_CALLBACK = "juso.settings.superuser_callback"
 

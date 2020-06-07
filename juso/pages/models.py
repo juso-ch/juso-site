@@ -195,6 +195,25 @@ class Page(
 
     lastmod = models.DateTimeField(_("lastmod"), auto_now=True)
 
+    logo = models.TextField(_("logo"), blank=True)
+
+    favicon = ImageField(
+        _("favicon"), formats={
+            '192': ['default', ('crop', (192, 192))],
+            '512': ['default', ('crop', (512, 512))],
+            '180': ['default', ('crop', (180, 180))],
+            '128': ['default', ('crop', (128, 128))],
+            '32': ['default', ('crop', (32, 32))],
+            '16': ['default', ('crop', (16, 16))],
+        }, blank=True, auto_add_fields=True)
+
+    primary_color = models.CharField(
+        _("primary color"), max_length=7,
+        blank=True
+    )
+
+    css_vars = models.TextField(_("css vars"), blank=True)
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._is_landing_page = self.is_landing_page
@@ -228,8 +247,11 @@ class Page(
             header_image = header_image or self.parent.get_header_image()
         if self.category:
             header_image = header_image or self.category.get_header_image()
-        print(header_image)
         return header_image
+
+    def top_page(self):
+        return self.ancestors(include_self=True)[0]
+
 
     def get_translation_for(self, language_code):
         r = super().get_translation_for(language_code)

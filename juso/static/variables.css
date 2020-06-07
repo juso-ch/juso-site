@@ -6,6 +6,10 @@
   --orange: #FFB100;
   --white: #FFFFFF;
 
+  --first-button: var(--red);
+  --second-button: var(--violett);
+  --third-button: var(--green);
+
   --primary-color: var(--red);
   --light-color: var(--white);
   --tamaro-primary-color: var(--primary-color);

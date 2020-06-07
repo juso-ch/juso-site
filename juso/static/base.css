@@ -1,11 +1,11 @@
 body {
-  font-size: 16px;
-  font-size: clamp(16px, 2vw, 22px);
+  font-size: 17px;
+  font-size: clamp(17px, 2vw, 22px);
   font-family: var(--body-font);
   counter-reset: glossary;
   background-color: var(--background-color);
   color: var(--text-color);
-  line-height: 1.75;
+  line-height: 1.65;
 } 
 
 h1, h2, h3, h4, h5, h6, header {
@@ -15,6 +15,9 @@ h1, h2, h3, h4, h5, h6, header {
   display: inline-block;
   margin-bottom: 0.4em;
   hyphens: auto;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
 }
 
 header > a {

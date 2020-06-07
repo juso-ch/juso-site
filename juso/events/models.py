@@ -1,5 +1,6 @@
 from content_editor.models import Region, create_plugin_base
 import pytz
+from django.urls import NoReverseMatch
 import urllib
 import uuid
 from django.utils import timezone
@@ -94,24 +95,27 @@ class Location(MetaMixin, TranslationMixin):
         ordering = ['name']
 
     def get_absolute_url(self):
-        site = current_site()
-        if not self.section or site == self.section.site:
-            return reverse_app(
-                [f'{site.pk}-events'],
-                'location-detail',
-                kwargs={
-                    'slug': self.slug
-                }
-            )
-        with set_current_site(self.section.site):
-            return '//' + self.section.site.host + reverse_app(
-                [f'{self.section.site.id}-events'],
-                'location-detail',
-                urlconf=apps_urlconf(),
-                kwargs={
-                    'slug': self.slug
-                }
-            )
+        try:
+            site = current_site()
+            if not self.section or site == self.section.site:
+                return reverse_app(
+                    [f'{site.pk}-events'],
+                    'location-detail',
+                    kwargs={
+                        'slug': self.slug
+                    }
+                )
+            with set_current_site(self.section.site):
+                return '//' + self.section.site.host + reverse_app(
+                    [f'{self.section.site.id}-events'],
+                    'location-detail',
+                    urlconf=apps_urlconf(),
+                    kwargs={
+                        'slug': self.slug
+                    }
+                )
+        except NoReverseMatch:
+            return '#'
 
 
 LocationPluginBase = create_plugin_base(Location)
@@ -181,10 +185,14 @@ class Event(ContentMixin):
         ]
 
     def webpush_data(self, page):
+        if favicon := page.top_page().favicon:
+            icon = f'https://{page.site.host}' + favicon['512']
+        else:
+            icon = 'https://' + page.site.host + '/static/logo.png'
         return json.dumps({
             'title': self.start_date.astimezone(pytz.timezone(settings.TIME_ZONE)).strftime('%d.%m.%Y %H:%M') + " - " + self.title,
             'tagline': (self.location.name + '; ' if self.location else '') + self.tagline[:280],
-            'icon': 'https://' + page.site.host + '/static/logo.png',
+            'icon': icon,
             'url': self.get_full_url(),
             'badge': 'https://' + page.site.host + '/static/badge.png',
             'publication_date': self.publication_date.isoformat(),
@@ -249,36 +257,39 @@ class Event(ContentMixin):
 
 
     def get_absolute_url(self):
-        site = current_site()
-        if site == self.section.site:
-            return reverse_app(
-                [f'{site.id}-events-{self.namespace}-{self.category}',
-                 f'{site.id}-events-{self.namespace}',
-                 f'{site.id}-events-{self.category}',
-                 f'{site.id}-events'],
-                'event-detail',
-                kwargs={
-                    'slug': self.slug,
-                    'day': self.start_date.day,
-                    'month': self.start_date.month,
-                    'year': self.start_date.year,
-                }
-            )
-        with set_current_site(self.section.site):
-            return '//' + self.section.site.host + reverse_app(
-                [f'{self.section.site.id}-events-{self.namespace}-{self.category}',
-                 f'{self.section.site.id}-events-{self.namespace}',
-                 f'{self.section.site.id}-events-{self.category}',
-                 f'{self.section.site.id}-events'],
-                'event-detail',
-                urlconf=apps_urlconf(),
-                kwargs={
-                    'slug': self.slug,
-                    'day': self.start_date.day,
-                    'month': self.start_date.month,
-                    'year': self.start_date.year,
-                }
-            )
+        try:
+            site = current_site()
+            if site == self.section.site:
+                return reverse_app(
+                    [f'{site.id}-events-{self.namespace}-{self.category}',
+                     f'{site.id}-events-{self.namespace}',
+                     f'{site.id}-events-{self.category}',
+                     f'{site.id}-events'],
+                    'event-detail',
+                    kwargs={
+                        'slug': self.slug,
+                        'day': self.start_date.day,
+                        'month': self.start_date.month,
+                        'year': self.start_date.year,
+                    }
+                )
+            with set_current_site(self.section.site):
+                return '//' + self.section.site.host + reverse_app(
+                    [f'{self.section.site.id}-events-{self.namespace}-{self.category}',
+                     f'{self.section.site.id}-events-{self.namespace}',
+                     f'{self.section.site.id}-events-{self.category}',
+                     f'{self.section.site.id}-events'],
+                    'event-detail',
+                    urlconf=apps_urlconf(),
+                    kwargs={
+                        'slug': self.slug,
+                        'day': self.start_date.day,
+                        'month': self.start_date.month,
+                        'year': self.start_date.year,
+                    }
+                )
+        except NoReverseMatch:
+            return '#'
 
 
 PluginBase = create_plugin_base(Event)

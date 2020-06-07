@@ -1,6 +1,7 @@
 from content_editor.models import create_plugin_base
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.urls import NoReverseMatch
 from feincms3 import plugins
 from feincms3.apps import apps_urlconf, reverse_app
 from feincms3_sites.middleware import current_site, set_current_site
@@ -68,47 +69,54 @@ class Article(ContentMixin):
         return ''
 
     def get_absolute_url(self):
-        site = current_site()
-        if site == self.section.site:
-            return reverse_app(
-                (f'{site.id}-blog-{self.namespace.name}-{self.category}',
-                 f'{site.id}-blog-{self.namespace.name}',
-                 f'{site.id}-blog-{self.category}',
-                 f'{site.id}-blog',),
-                'article-detail',
-                kwargs={
-                    'slug': self.slug
-                },
-                languages=[
-                    self.language_code
-                ]
-            )
-        with set_current_site(self.section.site):
-            site = self.section.site
-            return '//' + self.section.site.host + reverse_app(
-                [f'{site.id}-blog-{self.namespace.name}-{self.category or ""}',
-                 f'{site.id}-blog-{self.namespace.name}',
-                 f'{site.id}-blog-{self.category or ""}',
-                 f'{site.id}-blog'],
-                'article-detail',
-                urlconf=apps_urlconf(),
-                kwargs={
-                    'slug': self.slug
-                },
-                languages=[
-                    self.language_code
-                ]
-            )
+        try:
+            site = current_site()
+            if site == self.section.site:
+                return reverse_app(
+                    (f'{site.id}-blog-{self.namespace.name}-{self.category}',
+                     f'{site.id}-blog-{self.namespace.name}',
+                     f'{site.id}-blog-{self.category}',
+                     f'{site.id}-blog',),
+                    'article-detail',
+                    kwargs={
+                        'slug': self.slug
+                    },
+                    languages=[
+                        self.language_code
+                    ]
+                )
+            with set_current_site(self.section.site):
+                site = self.section.site
+                return '//' + self.section.site.host + reverse_app(
+                    [f'{site.id}-blog-{self.namespace.name}-{self.category or ""}',
+                     f'{site.id}-blog-{self.namespace.name}',
+                     f'{site.id}-blog-{self.category or ""}',
+                     f'{site.id}-blog'],
+                    'article-detail',
+                    urlconf=apps_urlconf(),
+                    kwargs={
+                        'slug': self.slug
+                    },
+                    languages=[
+                        self.language_code
+                    ]
+                )
+        except NoReverseMatch:
+            return '#'
 
     def webpush_data(self, page):
+        if favicon := page.top_page().favicon:
+            icon = f'https://{page.site.host}' + favicon['512']
+        else:
+            icon = 'https://' + page.site.host + '/static/logo.png'
         return json.dumps({
             'title': self.title,
             'tagline': self.tagline[:280],
-            'icon': 'https://' + page.site.host + '/static/logo.png',
+            'icon': icon,
             'url': self.get_full_url(),
             'badge': 'https://' + page.site.host + '/static/badge.png',
             'publication_date': self.publication_date.isoformat(),
-            'image': 'https://' + page.site.host + self.get_header_image().full if self.get_header_image() else ''
+            'image': ('https://' + page.site.host + self.get_header_image().full) if self.get_header_image() else ''
         })
 
     def get_full_url(self):

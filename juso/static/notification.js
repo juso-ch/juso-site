@@ -52,9 +52,7 @@ function toggleButtons(subscribed){
 function disableNotifications() {
   navigator.serviceWorker.ready.then(function(reg) {
     reg.pushManager.getSubscription().then(function(subscription) {
-      subscription.unsubscribe().then(function(successful) {
         var csrftoken = Cookies.get('csrftoken');
-        console.log(subscription);
         fetch('unsubscribe/', {
           method: 'POST', // *GET, POST, PUT, DELETE, etc.
           mode: 'cors', // no-cors, *cors, same-origin
@@ -74,7 +72,6 @@ function disableNotifications() {
       }).catch(function(e) {
         console.log(e);
       })
-    })        
   });
 }
 

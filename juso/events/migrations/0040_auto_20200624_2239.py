@@ -6,38 +6,48 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('events', '0039_articleplugin_structured_data'),
+        ("events", "0039_articleplugin_structured_data"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='event',
-            name='meta_video',
-            field=models.FileField(blank=True, help_text='Set the Open Graph video.', upload_to='meta/video/%Y/%m', verbose_name='video'),
+            model_name="event",
+            name="meta_video",
+            field=models.FileField(
+                blank=True,
+                help_text="Set the Open Graph video.",
+                upload_to="meta/video/%Y/%m",
+                verbose_name="video",
+            ),
         ),
         migrations.AddField(
-            model_name='event',
-            name='meta_video_height',
-            field=models.IntegerField(default=1080, verbose_name='video height'),
+            model_name="event",
+            name="meta_video_height",
+            field=models.IntegerField(default=1080, verbose_name="video height"),
         ),
         migrations.AddField(
-            model_name='event',
-            name='meta_video_width',
-            field=models.IntegerField(default=1920, verbose_name='video width'),
+            model_name="event",
+            name="meta_video_width",
+            field=models.IntegerField(default=1920, verbose_name="video width"),
         ),
         migrations.AddField(
-            model_name='location',
-            name='meta_video',
-            field=models.FileField(blank=True, help_text='Set the Open Graph video.', upload_to='meta/video/%Y/%m', verbose_name='video'),
+            model_name="location",
+            name="meta_video",
+            field=models.FileField(
+                blank=True,
+                help_text="Set the Open Graph video.",
+                upload_to="meta/video/%Y/%m",
+                verbose_name="video",
+            ),
         ),
         migrations.AddField(
-            model_name='location',
-            name='meta_video_height',
-            field=models.IntegerField(default=1080, verbose_name='video height'),
+            model_name="location",
+            name="meta_video_height",
+            field=models.IntegerField(default=1080, verbose_name="video height"),
         ),
         migrations.AddField(
-            model_name='location',
-            name='meta_video_width',
-            field=models.IntegerField(default=1920, verbose_name='video width'),
+            model_name="location",
+            name="meta_video_width",
+            field=models.IntegerField(default=1920, verbose_name="video width"),
         ),
     ]

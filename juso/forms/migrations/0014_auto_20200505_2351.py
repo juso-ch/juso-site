@@ -11,49 +11,81 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('sections', '0007_auto_20200502_2048'),
-        ('forms', '0013_auto_20200429_1939'),
+        ("sections", "0007_auto_20200502_2048"),
+        ("forms", "0013_auto_20200429_1939"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='form',
-            name='author',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL, verbose_name='Autor*in'),
+            model_name="form",
+            name="author",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to=settings.AUTH_USER_MODEL,
+                verbose_name="Autor*in",
+            ),
         ),
         migrations.AlterField(
-            model_name='form',
-            name='category',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='sections.Category', verbose_name='Kategorie'),
+            model_name="form",
+            name="category",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to="sections.Category",
+                verbose_name="Kategorie",
+            ),
         ),
         migrations.AlterField(
-            model_name='form',
-            name='created_date',
-            field=models.DateTimeField(auto_now_add=True, verbose_name='Erstellungsdatum'),
+            model_name="form",
+            name="created_date",
+            field=models.DateTimeField(
+                auto_now_add=True, verbose_name="Erstellungsdatum"
+            ),
         ),
         migrations.AlterField(
-            model_name='form',
-            name='edited_date',
-            field=models.DateTimeField(auto_now=True, verbose_name='Bearbeitungsdatum'),
+            model_name="form",
+            name="edited_date",
+            field=models.DateTimeField(auto_now=True, verbose_name="Bearbeitungsdatum"),
         ),
         migrations.AlterField(
-            model_name='form',
-            name='header_image',
-            field=imagefield.fields.ImageField(blank=True, height_field='header_image_height', null=True, upload_to='', verbose_name='Header Bild', width_field='header_image_width'),
+            model_name="form",
+            name="header_image",
+            field=imagefield.fields.ImageField(
+                blank=True,
+                height_field="header_image_height",
+                null=True,
+                upload_to="",
+                verbose_name="Header Bild",
+                width_field="header_image_width",
+            ),
         ),
         migrations.AlterField(
-            model_name='form',
-            name='publication_date',
-            field=models.DateTimeField(default=django.utils.timezone.now, verbose_name='Publikationsdatum'),
+            model_name="form",
+            name="publication_date",
+            field=models.DateTimeField(
+                default=django.utils.timezone.now, verbose_name="Publikationsdatum"
+            ),
         ),
         migrations.AlterField(
-            model_name='form',
-            name='section',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sections.Section', verbose_name='Sektion'),
+            model_name="form",
+            name="section",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to="sections.Section",
+                verbose_name="Sektion",
+            ),
         ),
         migrations.AlterField(
-            model_name='form',
-            name='template_key',
-            field=models.CharField(choices=[('default', 'Standard')], default='default', max_length=100, verbose_name='template'),
+            model_name="form",
+            name="template_key",
+            field=models.CharField(
+                choices=[("default", "Standard")],
+                default="default",
+                max_length=100,
+                verbose_name="template",
+            ),
         ),
     ]

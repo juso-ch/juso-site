@@ -7,33 +7,41 @@ import imagefield.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('pages', '0055_page_logo'),
+        ("pages", "0055_page_logo"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='page',
-            name='favicon',
-            field=imagefield.fields.ImageField(blank=True, height_field='favicon_height', upload_to='', verbose_name='favicon', width_field='favicon_width'),
+            model_name="page",
+            name="favicon",
+            field=imagefield.fields.ImageField(
+                blank=True,
+                height_field="favicon_height",
+                upload_to="",
+                verbose_name="favicon",
+                width_field="favicon_width",
+            ),
         ),
         migrations.AddField(
-            model_name='page',
-            name='favicon_height',
+            model_name="page",
+            name="favicon_height",
             field=models.PositiveIntegerField(blank=True, editable=False, null=True),
         ),
         migrations.AddField(
-            model_name='page',
-            name='favicon_ppoi',
-            field=imagefield.fields.PPOIField(default='0.5x0.5', max_length=20),
+            model_name="page",
+            name="favicon_ppoi",
+            field=imagefield.fields.PPOIField(default="0.5x0.5", max_length=20),
         ),
         migrations.AddField(
-            model_name='page',
-            name='favicon_width',
+            model_name="page",
+            name="favicon_width",
             field=models.PositiveIntegerField(blank=True, editable=False, null=True),
         ),
         migrations.AddField(
-            model_name='page',
-            name='primary_color',
-            field=models.CharField(blank=True, max_length=7, verbose_name='primary color'),
+            model_name="page",
+            name="primary_color",
+            field=models.CharField(
+                blank=True, max_length=7, verbose_name="primary color"
+            ),
         ),
     ]

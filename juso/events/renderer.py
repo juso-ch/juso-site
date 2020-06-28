@@ -8,7 +8,4 @@ register_renderers(renderer, events)
 
 location_renderer = TemplatePluginRenderer()
 
-location_renderer.register_string_renderer(
-    events.LocationImage,
-    render_image
-)
+location_renderer.register_string_renderer(events.LocationImage, render_image)

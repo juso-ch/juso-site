@@ -6,17 +6,28 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('pages', '0028_glossaryrichtext_glossary_text'),
+        ("pages", "0028_glossaryrichtext_glossary_text"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='formplugin',
-            options={'verbose_name': 'form'},
+            name="formplugin", options={"verbose_name": "form"},
         ),
         migrations.AlterField(
-            model_name='page',
-            name='application',
-            field=models.CharField(blank=True, choices=[('blog', 'blog'), ('people', 'people'), ('events', 'events'), ('categories', 'categories'), ('forms', 'forms'), ('glossary', 'glossary')], max_length=20, verbose_name='application'),
+            model_name="page",
+            name="application",
+            field=models.CharField(
+                blank=True,
+                choices=[
+                    ("blog", "blog"),
+                    ("people", "people"),
+                    ("events", "events"),
+                    ("categories", "categories"),
+                    ("forms", "forms"),
+                    ("glossary", "glossary"),
+                ],
+                max_length=20,
+                verbose_name="application",
+            ),
         ),
     ]

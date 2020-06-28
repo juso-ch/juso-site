@@ -11,29 +11,43 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('sections', '0001_initial'),
-        ('people', '0001_initial'),
+        ("sections", "0001_initial"),
+        ("people", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='team',
-            name='section',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sections.Section', verbose_name='section'),
+            model_name="team",
+            name="section",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to="sections.Section",
+                verbose_name="section",
+            ),
         ),
         migrations.AddField(
-            model_name='person',
-            name='user',
-            field=models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL, verbose_name='Benutzer'),
+            model_name="person",
+            name="user",
+            field=models.OneToOneField(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to=settings.AUTH_USER_MODEL,
+                verbose_name="Benutzer",
+            ),
         ),
         migrations.AddField(
-            model_name='membership',
-            name='person',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='people.Person'),
+            model_name="membership",
+            name="person",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="people.Person"
+            ),
         ),
         migrations.AddField(
-            model_name='membership',
-            name='team',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='people.Team'),
+            model_name="membership",
+            name="team",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="people.Team"
+            ),
         ),
     ]

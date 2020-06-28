@@ -5,5 +5,5 @@ from juso.link_collections import views
 app_name = "collection"
 
 urlpatterns = [
-    path('', views.collection_view, name="collection-detail"),
+    path("", views.collection_view, name="collection-detail"),
 ]

@@ -32,6 +32,7 @@ def grayscale(get_image):
     def processor(image, context):
         image = get_image(image, context)
         return ImageOps.grayscale(image)
+
     return processor
 
 
@@ -40,6 +41,7 @@ def darken(get_image):
     def processor(image, context):
         image = get_image(image, context)
         return ImageEnhance.Brightness(image).enhance(0.5)
+
     return processor
 
 
@@ -58,67 +60,73 @@ class Page(
             _("blog"),
             {
                 "urlconf": "juso.blog.urls",
-                "app_instance_namespace": lambda page: '-'.join(
-                    (str(x) for x in [
-                        page.site_id,
-                        page.application,
-                        page.blog_namespace.name,
-                        page.category
-                    ] if x))
-            }
+                "app_instance_namespace": lambda page: "-".join(
+                    (
+                        str(x)
+                        for x in [
+                            page.site_id,
+                            page.application,
+                            page.blog_namespace.name,
+                            page.category,
+                        ]
+                        if x
+                    )
+                ),
+            },
         ),
         (
-            'people',
+            "people",
             _("people"),
             {
                 "urlconf": "juso.people.urls",
-                "app_instance_namespace": lambda page: '-'.join(
-                    (str(x) for x in [
-                        page.site_id,
-                        page.application,
-                    ] if x)
-                )
-            }
+                "app_instance_namespace": lambda page: "-".join(
+                    (str(x) for x in [page.site_id, page.application,] if x)
+                ),
+            },
         ),
         (
-            'events',
+            "events",
             _("events"),
             {
                 "urlconf": "juso.events.urls",
-                "app_instance_namespace": lambda page: '-'.join(
-                    (str(x) for x in [
-                        page.site_id,
-                        page.application,
-                        page.category,
-                    ] if x)
-                )
+                "app_instance_namespace": lambda page: "-".join(
+                    (
+                        str(x)
+                        for x in [page.site_id, page.application, page.category,]
+                        if x
+                    )
+                ),
             },
         ),
         (
-            'categories',
-            _('categories'),
+            "categories",
+            _("categories"),
             {
                 "urlconf": "juso.sections.urls",
-                'app_instance_namespace': lambda page: str(page.site_id) + '-' + 'categories'
+                "app_instance_namespace": lambda page: str(page.site_id)
+                + "-"
+                + "categories",
             },
         ),
         (
-            'glossary',
+            "glossary",
             _("glossary"),
             {
-                'urlconf': "juso.glossary.urls",
-                'app_instance_namespace': lambda page: str(page.site_id) + '-' + 'glossary'
-            }
+                "urlconf": "juso.glossary.urls",
+                "app_instance_namespace": lambda page: str(page.site_id)
+                + "-"
+                + "glossary",
+            },
         ),
         (
-            'collection',
+            "collection",
             _("collection"),
             {
-                'urlconf': "juso.link_collections.urls",
-                "required_fields": ['collection'],
-                'app_instance_namespace': lambda page: str(page.slug) + '-collections'
-            }
-        )
+                "urlconf": "juso.link_collections.urls",
+                "required_fields": ["collection"],
+                "app_instance_namespace": lambda page: str(page.slug) + "-collections",
+            },
+        ),
     ]
 
     MENUS = (
@@ -129,37 +137,35 @@ class Page(
         ("quicklink", _("quickinks")),
     )
 
-    TEMPLATES = get_template_list('pages', (
+    TEMPLATES = get_template_list(
+        "pages",
         (
-            'default', ('main', 'footer')
+            ("default", ("main", "footer")),
+            ("sidebar-right", ("main", "sidebar", "footer")),
+            ("sidebar-left", ("main", "sidebar", "footer")),
+            ("sidebar-both", ("main", "left", "right", "footer")),
+            ("fullwidth", ("main", "footer")),
         ),
-        (
-            'sidebar-right', ('main', 'sidebar', 'footer')
-        ),
-        (
-            'sidebar-left', ('main', 'sidebar', 'footer')
-        ),
-        (
-            'sidebar-both', ('main', 'left', 'right', 'footer')
-        ),
-        (
-            'fullwidth', ('main', 'footer')
-        )
-    ))
+    )
 
     is_landing_page = models.BooleanField(
-        default=False,
-        verbose_name=_("is landing page"),
+        default=False, verbose_name=_("is landing page"),
     )
 
     blog_namespace = models.ForeignKey(
-        "blog.NameSpace", models.SET_NULL, blank=True, null=True,
-        verbose_name=_("namespace (blog)")
+        "blog.NameSpace",
+        models.SET_NULL,
+        blank=True,
+        null=True,
+        verbose_name=_("namespace (blog)"),
     )
 
     event_namespace = models.ForeignKey(
-        "events.NameSpace", models.SET_NULL, blank=True, null=True,
-        verbose_name=_("namespace (event)")
+        "events.NameSpace",
+        models.SET_NULL,
+        blank=True,
+        null=True,
+        verbose_name=_("namespace (event)"),
     )
 
     sections = models.ManyToManyField(
@@ -167,26 +173,38 @@ class Page(
     )
 
     category = models.ForeignKey(
-        "sections.Category", models.SET_NULL, blank=True, null=True,
+        "sections.Category",
+        models.SET_NULL,
+        blank=True,
+        null=True,
         verbose_name=_("category"),
     )
 
     collection = models.ForeignKey(
-        "link_collections.Collection", models.CASCADE, blank=True,
-        null=True, verbose_name=_("collection")
+        "link_collections.Collection",
+        models.CASCADE,
+        blank=True,
+        null=True,
+        verbose_name=_("collection"),
     )
 
     header_image = ImageField(
-        _("header image"), formats={
-            'full': ['default', 'darken', ('crop', (1920, 900))],
-            'square': ['default', ('crop', (960, 960))],
-            'mobile': ['default', ('crop', (740, 600))],
-        }, auto_add_fields=True, blank=True, null=True
+        _("header image"),
+        formats={
+            "full": ["default", "darken", ("crop", (1920, 900))],
+            "square": ["default", ("crop", (960, 960))],
+            "mobile": ["default", ("crop", (740, 600))],
+        },
+        auto_add_fields=True,
+        blank=True,
+        null=True,
     )
 
     featured_categories = models.ManyToManyField(
-        "sections.Category", blank=True, verbose_name=_("featured categories"),
-        related_name="featured"
+        "sections.Category",
+        blank=True,
+        verbose_name=_("featured categories"),
+        related_name="featured",
     )
 
     in_meta = models.BooleanField(_("in meta menu"), default=False)
@@ -198,19 +216,20 @@ class Page(
     logo = models.TextField(_("logo"), blank=True)
 
     favicon = ImageField(
-        _("favicon"), formats={
-            '192': ['default', ('crop', (192, 192))],
-            '512': ['default', ('crop', (512, 512))],
-            '180': ['default', ('crop', (180, 180))],
-            '128': ['default', ('crop', (128, 128))],
-            '32': ['default', ('crop', (32, 32))],
-            '16': ['default', ('crop', (16, 16))],
-        }, blank=True, auto_add_fields=True)
-
-    primary_color = models.CharField(
-        _("primary color"), max_length=7,
-        blank=True
+        _("favicon"),
+        formats={
+            "192": ["default", ("crop", (192, 192))],
+            "512": ["default", ("crop", (512, 512))],
+            "180": ["default", ("crop", (180, 180))],
+            "128": ["default", ("crop", (128, 128))],
+            "32": ["default", ("crop", (32, 32))],
+            "16": ["default", ("crop", (16, 16))],
+        },
+        blank=True,
+        auto_add_fields=True,
     )
+
+    primary_color = models.CharField(_("primary color"), max_length=7, blank=True)
 
     css_vars = models.TextField(_("css vars"), blank=True)
 
@@ -220,13 +239,10 @@ class Page(
 
     @transaction.atomic
     def save(self, *args, **kwargs):
-        if not self.is_landing_page or\
-           self._is_landing_page == self.is_landing_page:
+        if not self.is_landing_page or self._is_landing_page == self.is_landing_page:
             return super().save(*args, **kwargs)
         Page.objects.filter(
-            is_landing_page=True,
-            language_code=self.language_code,
-            site=self.site,
+            is_landing_page=True, language_code=self.language_code, site=self.site,
         ).update(is_landing_page=False)
         return super().save(*args, **kwargs)
 
@@ -234,7 +250,7 @@ class Page(
         site = current_site()
         if site == self.site:
             return super().get_absolute_url(*args, **kwargs)
-        return '//' + self.site.host + super().get_absolute_url()
+        return "//" + self.site.host + super().get_absolute_url()
 
     def get_category_color(self):
         return self.category.color if self.category else settings.DEFAULT_COLOR
@@ -252,7 +268,6 @@ class Page(
     def top_page(self):
         return self.ancestors(include_self=True)[0]
 
-
     def get_translation_for(self, language_code):
         r = super().get_translation_for(language_code)
         if r:
@@ -264,7 +279,7 @@ class Page(
     class Meta:
         verbose_name = _("page")
         verbose_name_plural = _("page")
-        #ordering = ['parent_id', 'position']
+        # ordering = ['parent_id', 'position']
 
 
 PluginBase = create_plugin_base(Page)
@@ -336,13 +351,22 @@ class CategoryLinking(models.Model):
         return self.category.name
 
     def get_absolute_url(self):
-        return self.page.get_absolute_url() + self.category.slug + '/'
+        return self.page.get_absolute_url() + self.category.slug + "/"
 
     class Meta:
-        ordering = ['order']
+        ordering = ["order"]
 
 
 plugins = [
-    RichText, Image, HTML, External, Team, Download, Button,
-    EventPlugin, ArticlePlugin, FormPlugin, GlossaryRichText,
+    RichText,
+    Image,
+    HTML,
+    External,
+    Team,
+    Download,
+    Button,
+    EventPlugin,
+    ArticlePlugin,
+    FormPlugin,
+    GlossaryRichText,
 ]

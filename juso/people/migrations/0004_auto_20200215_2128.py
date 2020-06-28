@@ -7,69 +7,91 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('sections', '0001_initial'),
-        ('people', '0003_auto_20200215_1917'),
+        ("sections", "0001_initial"),
+        ("people", "0003_auto_20200215_1917"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='person',
-            name='image',
-            field=models.ImageField(blank=True, null=True, upload_to='people/', verbose_name='Bild'),
+            model_name="person",
+            name="image",
+            field=models.ImageField(
+                blank=True, null=True, upload_to="people/", verbose_name="Bild"
+            ),
         ),
         migrations.AddField(
-            model_name='team',
-            name='language_code',
-            field=models.CharField(choices=[('de', 'German'), ('fr', 'French'), ('it', 'Italian')], default='de', max_length=10, verbose_name='language'),
+            model_name="team",
+            name="language_code",
+            field=models.CharField(
+                choices=[("de", "German"), ("fr", "French"), ("it", "Italian")],
+                default="de",
+                max_length=10,
+                verbose_name="language",
+            ),
         ),
         migrations.AlterField(
-            model_name='membership',
-            name='person',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='people.Person', verbose_name='person'),
+            model_name="membership",
+            name="person",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to="people.Person",
+                verbose_name="person",
+            ),
         ),
         migrations.AlterField(
-            model_name='membership',
-            name='team',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='people.Team', verbose_name='team'),
+            model_name="membership",
+            name="team",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to="people.Team",
+                verbose_name="team",
+            ),
         ),
         migrations.AlterField(
-            model_name='membership',
-            name='title',
-            field=models.CharField(max_length=100, verbose_name='Titel'),
+            model_name="membership",
+            name="title",
+            field=models.CharField(max_length=100, verbose_name="Titel"),
         ),
         migrations.AlterField(
-            model_name='person',
-            name='email',
-            field=models.EmailField(blank=True, max_length=254, verbose_name='e-mail'),
+            model_name="person",
+            name="email",
+            field=models.EmailField(blank=True, max_length=254, verbose_name="e-mail"),
         ),
         migrations.AlterField(
-            model_name='person',
-            name='first_name',
-            field=models.CharField(max_length=100, verbose_name='Vorname'),
+            model_name="person",
+            name="first_name",
+            field=models.CharField(max_length=100, verbose_name="Vorname"),
         ),
         migrations.AlterField(
-            model_name='person',
-            name='homepage',
-            field=models.URLField(blank=True, verbose_name='homepage'),
+            model_name="person",
+            name="homepage",
+            field=models.URLField(blank=True, verbose_name="homepage"),
         ),
         migrations.AlterField(
-            model_name='person',
-            name='last_name',
-            field=models.CharField(max_length=100, verbose_name='Nachname'),
+            model_name="person",
+            name="last_name",
+            field=models.CharField(max_length=100, verbose_name="Nachname"),
         ),
         migrations.AlterField(
-            model_name='person',
-            name='sections',
-            field=models.ManyToManyField(blank=True, to='sections.Section', verbose_name='sections'),
+            model_name="person",
+            name="sections",
+            field=models.ManyToManyField(
+                blank=True, to="sections.Section", verbose_name="sections"
+            ),
         ),
         migrations.AlterField(
-            model_name='team',
-            name='members',
-            field=models.ManyToManyField(related_name='teams', through='people.Membership', to='people.Person', verbose_name='members'),
+            model_name="team",
+            name="members",
+            field=models.ManyToManyField(
+                related_name="teams",
+                through="people.Membership",
+                to="people.Person",
+                verbose_name="members",
+            ),
         ),
         migrations.AlterField(
-            model_name='team',
-            name='name',
-            field=models.CharField(max_length=200, verbose_name='Name'),
+            model_name="team",
+            name="name",
+            field=models.CharField(max_length=200, verbose_name="Name"),
         ),
     ]

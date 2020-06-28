@@ -6,17 +6,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('events', '0010_button_divider_header'),
+        ("events", "0010_button_divider_header"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='image',
-            options={'verbose_name': 'Bild', 'verbose_name_plural': 'Bilder'},
+            name="image",
+            options={"verbose_name": "Bild", "verbose_name_plural": "Bilder"},
         ),
         migrations.AddField(
-            model_name='image',
-            name='title',
-            field=models.CharField(blank=True, max_length=200, verbose_name='Titel'),
+            model_name="image",
+            name="title",
+            field=models.CharField(blank=True, max_length=200, verbose_name="Titel"),
         ),
     ]

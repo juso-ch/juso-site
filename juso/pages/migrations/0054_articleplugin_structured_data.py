@@ -6,13 +6,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('pages', '0053_page_lastmod'),
+        ("pages", "0053_page_lastmod"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='articleplugin',
-            name='structured_data',
-            field=models.BooleanField(default=False, verbose_name='include structured data'),
+            model_name="articleplugin",
+            name="structured_data",
+            field=models.BooleanField(
+                default=False, verbose_name="include structured data"
+            ),
         ),
     ]

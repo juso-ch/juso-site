@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('sections', '0006_auto_20200429_1939'),
+        ("sections", "0006_auto_20200429_1939"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='category',
-            name='color',
-            field=models.CharField(blank=True, max_length=7, verbose_name='color'),
+            model_name="category",
+            name="color",
+            field=models.CharField(blank=True, max_length=7, verbose_name="color"),
         ),
     ]

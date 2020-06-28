@@ -6,13 +6,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0010_eventplugin'),
+        ("blog", "0010_eventplugin"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='eventplugin',
-            name='template_key',
-            field=models.CharField(choices=[('events/plugins/default.html', 'default')], default='events/plugins/default.html', max_length=100),
+            model_name="eventplugin",
+            name="template_key",
+            field=models.CharField(
+                choices=[("events/plugins/default.html", "default")],
+                default="events/plugins/default.html",
+                max_length=100,
+            ),
         ),
     ]

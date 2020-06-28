@@ -3,5 +3,5 @@ from django.apps import AppConfig
 
 
 class SectionsConfig(AppConfig):
-    name = 'juso.sections'
+    name = "juso.sections"
     verbose_name = _("sections")

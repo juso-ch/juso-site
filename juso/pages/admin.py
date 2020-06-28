@@ -25,57 +25,55 @@ from juso.admin import ButtonInline
 
 # Register your models here.
 
+
 class CategoryLinkingInline(OrderableAdmin, admin.TabularInline):
     model = models.CategoryLinking
 
-    ordering_field = 'order'
+    ordering_field = "order"
     ordering_field_hide_input = True
 
-    autocomplete_fields = [
-        'category'
-    ]
-
+    autocomplete_fields = ["category"]
 
 
 class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
     list_display = [
         "indented_title",
         "move_column",
-        'slug',
-        'static_path',
-        'path',
+        "slug",
+        "static_path",
+        "path",
         "is_active",
-        'language_code',
+        "language_code",
         "template_key",
-        'application',
+        "application",
         "position",
     ]
-    actions = ['open_duplicate_form']
+    actions = ["open_duplicate_form"]
 
-    prepopulated_fields = {'slug': ('title',)}
+    prepopulated_fields = {"slug": ("title",)}
 
     autocomplete_fields = [
-        'site',
-        'parent',
-        'blog_namespace',
-        'category',
-        'redirect_to_page',
-        'translations',
-        'featured_categories',
-        'sections',
-        'collection',
+        "site",
+        "parent",
+        "blog_namespace",
+        "category",
+        "redirect_to_page",
+        "translations",
+        "featured_categories",
+        "sections",
+        "collection",
     ]
 
-    search_fields = ['title']
+    search_fields = ["title"]
     list_editable = [
-        'is_active',
-        'slug',
-        'static_path',
-        'path',
-        'language_code',
+        "is_active",
+        "slug",
+        "static_path",
+        "path",
+        "language_code",
     ]
 
-    list_filter = ['is_active', 'menu', 'language_code', 'site']
+    list_filter = ["is_active", "menu", "language_code", "site"]
 
     inlines = [
         plugins.richtext.RichTextInline.create(models.RichText),
@@ -93,93 +91,98 @@ class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
     ]
 
     plugins = models.plugins
-    readonly_fields = [
-        'app_instance_namespace'
-    ]
+    readonly_fields = ["app_instance_namespace"]
 
     fieldsets = (
-        (None, {
-            'fields': (
-                'title',
-                'parent',
-            )
-        }),
-        (_('settings'), {
-            'classes': ('tabbed',),
-            'fields': (
-                'is_active',
-                'menu',
-                'language_code',
-                'template_key',
-                'is_landing_page',
-                'header_image',
-                'header_image_ppoi'
-            ),
-        }),
-        (_('path'), {
-            'classes': ('tabbed',),
-            'fields': (
-                'slug',
-                'static_path',
-                'path',
-                'site',
-            )
-        }),
-        (_('application'), {
-            'classes': ('tabbed', ),
-            'fields': (
-                'application',
-                'category',
-                'blog_namespace',
-                'featured_categories',
-                'sections',
-                'collection',
-                'app_instance_namespace',
-            )
-        }),
+        (None, {"fields": ("title", "parent",)}),
+        (
+            _("settings"),
+            {
+                "classes": ("tabbed",),
+                "fields": (
+                    "is_active",
+                    "menu",
+                    "language_code",
+                    "template_key",
+                    "is_landing_page",
+                    "header_image",
+                    "header_image_ppoi",
+                ),
+            },
+        ),
+        (
+            _("path"),
+            {
+                "classes": ("tabbed",),
+                "fields": ("slug", "static_path", "path", "site",),
+            },
+        ),
+        (
+            _("application"),
+            {
+                "classes": ("tabbed",),
+                "fields": (
+                    "application",
+                    "category",
+                    "blog_namespace",
+                    "featured_categories",
+                    "sections",
+                    "collection",
+                    "app_instance_namespace",
+                ),
+            },
+        ),
         MetaMixin.admin_fieldset(),
-        (_('redirect'), {
-            'classes': ('tabbed',),
-            'fields': (
-                'redirect_to_page',
-                'redirect_to_url',
-            )
-        }),
-        (_('translations'), {
-            'classes': ('tabbed',),
-            'fields': ('translations',)
-        }),
-        (_('advanced'), {
-            'classes': ('tabbed',),
-            'fields': (
-                'in_meta', 'is_navigation', 'logo',
-                'favicon', 'primary_color', 'css_vars'
-            )
-        })
+        (
+            _("redirect"),
+            {
+                "classes": ("tabbed",),
+                "fields": ("redirect_to_page", "redirect_to_url",),
+            },
+        ),
+        (_("translations"), {"classes": ("tabbed",), "fields": ("translations",)}),
+        (
+            _("advanced"),
+            {
+                "classes": ("tabbed",),
+                "fields": (
+                    "in_meta",
+                    "is_navigation",
+                    "logo",
+                    "favicon",
+                    "primary_color",
+                    "css_vars",
+                ),
+            },
+        ),
     )
 
     mptt_level_indent = 30
 
     class Media:
         js = (
-            'admin/js/jquery.init.js',
-            JS('https://kit.fontawesome.com/91a6274901.js', {
-                'async': 'async',
-                'crossorigin': 'anonymous',
-            }, static=False),
-            'admin/plugin_buttons.js',
+            "admin/js/jquery.init.js",
+            JS(
+                "https://kit.fontawesome.com/91a6274901.js",
+                {"async": "async", "crossorigin": "anonymous",},
+                static=False,
+            ),
+            "admin/plugin_buttons.js",
         )
 
     def get_inline_instances(self, request, obj=None):
         inlines = super().get_inline_instances(request, obj)
-        if hasattr(obj, 'pk') and models.Page.objects.get(pk=obj.pk).application == 'categories':
+        if (
+            hasattr(obj, "pk")
+            and models.Page.objects.get(pk=obj.pk).application == "categories"
+        ):
             return inlines
         return inlines[:-1]
 
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
 
-        site_field = form.base_fields['site']
+        site_field = form.base_fields["site"]
         site_field.required = True
 
         sections = request.user.section_set.all()
@@ -197,57 +200,53 @@ class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
     def open_duplicate_form(self, request, queryset):
         return redirect(
             reverse(
-                'admin:pages_Page_duplicate_page_tree',
-                kwargs={'pk': queryset[0].pk},
+                "admin:pages_Page_duplicate_page_tree", kwargs={"pk": queryset[0].pk},
             )
         )
-    open_duplicate_form.short_description =  _("Duplicate page-tree")
+
+    open_duplicate_form.short_description = _("Duplicate page-tree")
 
     def get_urls(self):
         urls = super().get_urls()
         return [
             path(
-                '<int:pk>/duplicate/',
-                self.admin_site.admin_view(
-                    self.duplicate_page_tree
-                ),
-                name="pages_Page_duplicate_page_tree"
+                "<int:pk>/duplicate/",
+                self.admin_site.admin_view(self.duplicate_page_tree),
+                name="pages_Page_duplicate_page_tree",
             )
         ] + urls
 
     def duplicate_page_tree(self, request, pk):
         page = models.Page.objects.get(pk=pk)
         form = DuplicateForm(page=page)
-        if request.method == 'POST':
+        if request.method == "POST":
             form = DuplicateForm(request.POST, page=page)
 
             if form.is_valid():
                 old_pk = page.pk
                 new_root = page
-                language_code = form.cleaned_data['language_code']
-                site = form.cleaned_data['site']
-                link_translations = form.cleaned_data['link_translations']
+                language_code = form.cleaned_data["language_code"]
+                site = form.cleaned_data["site"]
+                link_translations = form.cleaned_data["link_translations"]
                 children = page.children.all()
 
                 new_root.pk = None
                 new_root.language_code = language_code
                 new_root.site = site
-                new_root.slug = form.cleaned_data['new_slug']
-                new_root.path = form.cleaned_data['new_path']
+                new_root.slug = form.cleaned_data["new_slug"]
+                new_root.path = form.cleaned_data["new_path"]
                 new_root.static_path = True
-                new_root.title = form.cleaned_data['new_title']
+                new_root.title = form.cleaned_data["new_title"]
                 new_root.save()
 
                 if link_translations:
-                    new_root.translations.add(
-                        old_pk
-                    )
+                    new_root.translations.add(old_pk)
                     new_root.save()
 
                 def copy_children(page, children):
                     for child in children:
                         new_children = child.children.all()
-                        child.parent=page
+                        child.parent = page
                         old_pk = child.pk
                         child.pk = None
                         child.language_code = language_code
@@ -260,7 +259,7 @@ class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
 
                 copy_children(new_root, children)
 
-                return redirect('admin:pages_page_changelist')
+                return redirect("admin:pages_page_changelist")
         context = dict(
             self.admin_site.each_context(request),
             form=form,
@@ -270,7 +269,7 @@ class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
             model=models.Page,
         )
 
-        return render(request, 'admin/duplicate_page_tree.html', context)
+        return render(request, "admin/duplicate_page_tree.html", context)
 
 
 class DuplicateForm(forms.Form):
@@ -283,16 +282,16 @@ class DuplicateForm(forms.Form):
     link_translations = forms.BooleanField(required=False)
 
     def __init__(self, *args, **kwargs):
-        self.page = kwargs.pop('page')
+        self.page = kwargs.pop("page")
 
         super().__init__(*args, **kwargs)
 
 
 class SiteAdmin(SiteAdmin):
-    search_fields = ['host']
+    search_fields = ["host"]
 
     list_editable = [
-        'default_language',
+        "default_language",
     ]
 
     def get_queryset(self, request):

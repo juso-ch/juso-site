@@ -6,23 +6,27 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('events', '0005_auto_20200215_2346'),
+        ("events", "0005_auto_20200215_2346"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='event',
-            name='translations',
-            field=models.ManyToManyField(related_name='_event_translations_+', to='events.Event', verbose_name='translations'),
+            model_name="event",
+            name="translations",
+            field=models.ManyToManyField(
+                related_name="_event_translations_+",
+                to="events.Event",
+                verbose_name="translations",
+            ),
         ),
         migrations.AlterField(
-            model_name='location',
-            name='lat',
-            field=models.FloatField(default=0, verbose_name='latitude'),
+            model_name="location",
+            name="lat",
+            field=models.FloatField(default=0, verbose_name="latitude"),
         ),
         migrations.AlterField(
-            model_name='location',
-            name='lng',
-            field=models.FloatField(default=0, verbose_name='longitude'),
+            model_name="location",
+            name="lng",
+            field=models.FloatField(default=0, verbose_name="longitude"),
         ),
     ]

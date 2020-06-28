@@ -6,13 +6,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('pages', '0007_page_all_events'),
+        ("pages", "0007_page_all_events"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='page',
-            name='translations',
-            field=models.ManyToManyField(related_name='_page_translations_+', to='pages.Page'),
+            model_name="page",
+            name="translations",
+            field=models.ManyToManyField(
+                related_name="_page_translations_+", to="pages.Page"
+            ),
         ),
     ]

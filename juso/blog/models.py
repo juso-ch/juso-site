@@ -33,114 +33,110 @@ class NameSpace(TranslationMixin):
     class Meta:
         verbose_name = _("name space")
         verbose_name_plural = _("name spaces")
-        ordering = ['slug']
+        ordering = ["slug"]
 
 
 class Article(ContentMixin):
-    TEMPLATES = get_template_list('blog', (
+    TEMPLATES = get_template_list(
+        "blog",
         (
-            'default', ('main',)
+            ("default", ("main",)),
+            ("sidebar-right", ("main", "sidebar")),
+            ("sidebar-left", ("main", "sidebar")),
+            ("fullwidth", ("main",)),
         ),
-        (
-            'sidebar-right', ('main', 'sidebar')
-        ),
-        (
-            'sidebar-left', ('main', 'sidebar')
-        ),
-        (
-            'fullwidth', ('main',)
-        )
-    ))
+    )
 
     namespace = models.ForeignKey(
-        NameSpace, models.PROTECT,
-        verbose_name=_("namespace")
+        NameSpace, models.PROTECT, verbose_name=_("namespace")
     )
 
     @property
     def tagline(self):
         if RichText.objects.filter(parent=self).exists():
             return bleach.clean(
-                RichText.objects.filter(parent=self)[0].text,
-                strip=True, tags=[],
+                RichText.objects.filter(parent=self)[0].text, strip=True, tags=[],
             )
         if self.meta_description:
             return self.meta_description
-        return ''
+        return ""
 
     def get_absolute_url(self):
         try:
             site = current_site()
             if site == self.section.site:
                 return reverse_app(
-                    (f'{site.id}-blog-{self.namespace.name}-{self.category}',
-                     f'{site.id}-blog-{self.namespace.name}',
-                     f'{site.id}-blog-{self.category}',
-                     f'{site.id}-blog',),
-                    'article-detail',
-                    kwargs={
-                        'slug': self.slug
-                    },
-                    languages=[
-                        self.language_code
-                    ]
+                    (
+                        f"{site.id}-blog-{self.namespace.name}-{self.category}",
+                        f"{site.id}-blog-{self.namespace.name}",
+                        f"{site.id}-blog-{self.category}",
+                        f"{site.id}-blog",
+                    ),
+                    "article-detail",
+                    kwargs={"slug": self.slug},
+                    languages=[self.language_code],
                 )
             with set_current_site(self.section.site):
                 site = self.section.site
-                return '//' + self.section.site.host + reverse_app(
-                    [f'{site.id}-blog-{self.namespace.name}-{self.category or ""}',
-                     f'{site.id}-blog-{self.namespace.name}',
-                     f'{site.id}-blog-{self.category or ""}',
-                     f'{site.id}-blog'],
-                    'article-detail',
-                    urlconf=apps_urlconf(),
-                    kwargs={
-                        'slug': self.slug
-                    },
-                    languages=[
-                        self.language_code
-                    ]
+                return (
+                    "//"
+                    + self.section.site.host
+                    + reverse_app(
+                        [
+                            f'{site.id}-blog-{self.namespace.name}-{self.category or ""}',
+                            f"{site.id}-blog-{self.namespace.name}",
+                            f'{site.id}-blog-{self.category or ""}',
+                            f"{site.id}-blog",
+                        ],
+                        "article-detail",
+                        urlconf=apps_urlconf(),
+                        kwargs={"slug": self.slug},
+                        languages=[self.language_code],
+                    )
                 )
         except NoReverseMatch:
-            return '#'
+            return "#"
 
     def webpush_data(self, page):
         if favicon := page.top_page().favicon:
-            icon = f'https://{page.site.host}' + favicon['512']
+            icon = f"https://{page.site.host}" + favicon["512"]
         else:
-            icon = 'https://' + page.site.host + '/static/logo.png'
-        return json.dumps({
-            'title': self.title,
-            'tagline': self.tagline[:280],
-            'icon': icon,
-            'url': self.get_full_url(),
-            'badge': 'https://' + page.site.host + '/static/badge.png',
-            'publication_date': self.publication_date.isoformat(),
-            'image': ('https://' + page.site.host + self.get_header_image().full) if self.get_header_image() else ''
-        })
+            icon = "https://" + page.site.host + "/static/logo.png"
+        return json.dumps(
+            {
+                "title": self.title,
+                "tagline": self.tagline[:280],
+                "icon": icon,
+                "url": self.get_full_url(),
+                "badge": "https://" + page.site.host + "/static/badge.png",
+                "publication_date": self.publication_date.isoformat(),
+                "image": ("https://" + page.site.host + self.get_header_image().full)
+                if self.get_header_image()
+                else "",
+            }
+        )
 
     def get_full_url(self):
         url = self.get_absolute_url()
-        if url.startswith('//'):
-            return 'https:' + url
+        if url.startswith("//"):
+            return "https:" + url
         else:
-            return 'https://' + self.section.site.host + url
+            return "https://" + self.section.site.host + url
 
     class Meta:
         verbose_name = _("article")
         verbose_name_plural = _("articles")
-        ordering = ['-publication_date']
+        ordering = ["-publication_date"]
 
 
 class WPImport(models.Model):
     slug = models.SlugField(_("slug"), unique=True)
     import_file = models.FileField(verbose_name=_("wordpress file"))
     section = models.ForeignKey(
-        'sections.Section', models.CASCADE, verbose_name=_("section")
+        "sections.Section", models.CASCADE, verbose_name=_("section")
     )
     default_namespace = models.ForeignKey(
-        NameSpace, models.CASCADE, related_name='+',
-        verbose_name=_("default namespace")
+        NameSpace, models.CASCADE, related_name="+", verbose_name=_("default namespace")
     )
     completed = models.BooleanField(default=False, verbose_name=_("completed"))
 
@@ -153,7 +149,7 @@ class WPImport(models.Model):
 
 
 class NamespaceMapping(models.Model):
-    wp_import = models.ForeignKey(WPImport, models.CASCADE, related_name='mappings')
+    wp_import = models.ForeignKey(WPImport, models.CASCADE, related_name="mappings")
     nicename = models.CharField(_("name"), max_length=100)
     target = models.ForeignKey(NameSpace, models.CASCADE, related_name="+")
 
@@ -216,6 +212,15 @@ class FormPlugin(form_plugins.FormPlugin, PluginBase):
 
 
 plugins = [
-    RichText, Image, HTML, External, Team, Download, Button,
-    EventPlugin, GlossaryRichText, FormPlugin, ArticlePlugin
+    RichText,
+    Image,
+    HTML,
+    External,
+    Team,
+    Download,
+    Button,
+    EventPlugin,
+    GlossaryRichText,
+    FormPlugin,
+    ArticlePlugin,
 ]

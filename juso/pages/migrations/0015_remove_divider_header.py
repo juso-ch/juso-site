@@ -6,12 +6,9 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('pages', '0014_auto_20200324_2039'),
+        ("pages", "0014_auto_20200324_2039"),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='divider',
-            name='header',
-        ),
+        migrations.RemoveField(model_name="divider", name="header",),
     ]

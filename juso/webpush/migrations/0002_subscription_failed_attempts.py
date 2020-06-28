@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('webpush', '0001_initial'),
+        ("webpush", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='subscription',
-            name='failed_attempts',
+            model_name="subscription",
+            name="failed_attempts",
             field=models.IntegerField(default=0),
         ),
     ]

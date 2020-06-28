@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('events', '0030_auto_20200510_1723'),
+        ("events", "0030_auto_20200510_1723"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='button',
-            name='line_break',
-            field=models.BooleanField(default=True, verbose_name='break'),
+            model_name="button",
+            name="line_break",
+            field=models.BooleanField(default=True, verbose_name="break"),
         ),
     ]

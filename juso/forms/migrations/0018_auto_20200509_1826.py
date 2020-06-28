@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('forms', '0017_form_fullwidth'),
+        ("forms", "0017_form_fullwidth"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='form',
-            name='slug',
-            field=models.SlugField(max_length=180, verbose_name='Slug'),
+            model_name="form",
+            name="slug",
+            field=models.SlugField(max_length=180, verbose_name="Slug"),
         ),
     ]

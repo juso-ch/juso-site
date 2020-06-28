@@ -9,58 +9,76 @@ import imagefield.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('feincms3_sites', '0004_site_is_active'),
+        ("feincms3_sites", "0004_site_is_active"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('sections', '0009_auto_20200507_1758'),
+        ("sections", "0009_auto_20200507_1758"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='category',
-            options={'verbose_name': 'category', 'verbose_name_plural': 'categories'},
+            name="category",
+            options={"verbose_name": "category", "verbose_name_plural": "categories"},
         ),
         migrations.AlterModelOptions(
-            name='section',
-            options={'ordering': ['name'], 'verbose_name': 'section', 'verbose_name_plural': 'sections'},
+            name="section",
+            options={
+                "ordering": ["name"],
+                "verbose_name": "section",
+                "verbose_name_plural": "sections",
+            },
         ),
         migrations.AlterField(
-            model_name='category',
-            name='color',
-            field=models.CharField(blank=True, max_length=7, verbose_name='color'),
+            model_name="category",
+            name="color",
+            field=models.CharField(blank=True, max_length=7, verbose_name="color"),
         ),
         migrations.AlterField(
-            model_name='category',
-            name='header_image',
-            field=imagefield.fields.ImageField(blank=True, height_field='header_image_height', null=True, upload_to='', verbose_name='header image', width_field='header_image_width'),
+            model_name="category",
+            name="header_image",
+            field=imagefield.fields.ImageField(
+                blank=True,
+                height_field="header_image_height",
+                null=True,
+                upload_to="",
+                verbose_name="header image",
+                width_field="header_image_width",
+            ),
         ),
         migrations.AlterField(
-            model_name='category',
-            name='name',
-            field=models.CharField(max_length=200, verbose_name='name'),
+            model_name="category",
+            name="name",
+            field=models.CharField(max_length=200, verbose_name="name"),
         ),
         migrations.AlterField(
-            model_name='category',
-            name='slug',
-            field=models.SlugField(verbose_name='slug'),
+            model_name="category",
+            name="slug",
+            field=models.SlugField(verbose_name="slug"),
         ),
         migrations.AlterField(
-            model_name='section',
-            name='name',
-            field=models.CharField(max_length=100, verbose_name='name'),
+            model_name="section",
+            name="name",
+            field=models.CharField(max_length=100, verbose_name="name"),
         ),
         migrations.AlterField(
-            model_name='section',
-            name='site',
-            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='section', to='feincms3_sites.Site', verbose_name='site'),
+            model_name="section",
+            name="site",
+            field=models.OneToOneField(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="section",
+                to="feincms3_sites.Site",
+                verbose_name="site",
+            ),
         ),
         migrations.AlterField(
-            model_name='section',
-            name='slug',
-            field=models.SlugField(unique=True, verbose_name='slug'),
+            model_name="section",
+            name="slug",
+            field=models.SlugField(unique=True, verbose_name="slug"),
         ),
         migrations.AlterField(
-            model_name='section',
-            name='users',
-            field=models.ManyToManyField(to=settings.AUTH_USER_MODEL, verbose_name='users'),
+            model_name="section",
+            name="users",
+            field=models.ManyToManyField(
+                to=settings.AUTH_USER_MODEL, verbose_name="users"
+            ),
         ),
     ]

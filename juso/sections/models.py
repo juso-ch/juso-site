@@ -31,18 +31,19 @@ from PIL import ImageColor
 class Category(TranslationMixin, MetaMixin, TreeNode):
     name = models.CharField(max_length=200, verbose_name=_("name"))
     slug = models.SlugField(verbose_name=_("slug"))
-    color = models.CharField(
-        max_length=7, verbose_name=_("color"),
-        blank=True,
-    )
+    color = models.CharField(max_length=7, verbose_name=_("color"), blank=True,)
 
     header_image = ImageField(
-        _("header image"), formats={
-            'full': ['default', 'darken', ('crop', (1920, 900))],
-            'square': ['default', ('crop', (900, 900))],
-            'card': ['default', ('crop', (900, 600))],
-            'mobile': ['default', ('crop', (740, 600))]
-        }, auto_add_fields=True, blank=True, null=True
+        _("header image"),
+        formats={
+            "full": ["default", "darken", ("crop", (1920, 900))],
+            "square": ["default", ("crop", (900, 900))],
+            "card": ["default", ("crop", (900, 600))],
+            "mobile": ["default", ("crop", (740, 600))],
+        },
+        auto_add_fields=True,
+        blank=True,
+        null=True,
     )
 
     class Meta:
@@ -57,15 +58,13 @@ class Category(TranslationMixin, MetaMixin, TreeNode):
         site = current_site()
         try:
             return reverse_app(
-                (str(site.id) + '-categories',),
-                'category-detail',
-                languages=[
-                    self.language_code
-                ],
-                kwargs={'slug': self.slug}
+                (str(site.id) + "-categories",),
+                "category-detail",
+                languages=[self.language_code],
+                kwargs={"slug": self.slug},
             )
         except NoReverseMatch:
-            return '#'
+            return "#"
 
     def get_header_image(self):
         if self.header_image:
@@ -81,8 +80,7 @@ class Category(TranslationMixin, MetaMixin, TreeNode):
 class Section(TreeNode):
     name = models.CharField(max_length=100, verbose_name=_("name"))
     site = models.OneToOneField(
-        Site, models.CASCADE, verbose_name=_("site"),
-        related_name="section"
+        Site, models.CASCADE, verbose_name=_("site"), related_name="section"
     )
     users = models.ManyToManyField(User, verbose_name=_("users"))
     slug = models.SlugField(unique=True, verbose_name=_("slug"))
@@ -90,7 +88,7 @@ class Section(TreeNode):
     class Meta:
         verbose_name = _("section")
         verbose_name_plural = _("sections")
-        ordering = ['name']
+        ordering = ["name"]
 
     def __str__(self):
         return self.name
@@ -100,39 +98,44 @@ class ContentMixin(TranslationMixin, MetaMixin, TemplateMixin):
     title = models.CharField(max_length=200, verbose_name=_("title"))
     slug = models.SlugField(verbose_name=_("slug"), max_length=180)
     author = models.ForeignKey(
-        User, models.SET_NULL, null=True, blank=True,
-        verbose_name=_("author")
+        User, models.SET_NULL, null=True, blank=True, verbose_name=_("author")
     )
 
     header_image = ImageField(
-        _("header image"), formats={
-            'full': ['default', 'darken', ('crop', (1920, 900))],
-            'square': ['default', ('crop', (920, 920))],
-            'card': ['default', ('crop', (900, 600))],
-            'mobile': ['default', ('crop', (740, 600))],
-            'some': ['default', ('crop', (1200, 630))],
-        }, auto_add_fields=True, blank=True, null=True
+        _("header image"),
+        formats={
+            "full": ["default", "darken", ("crop", (1920, 900))],
+            "square": ["default", ("crop", (920, 920))],
+            "card": ["default", ("crop", (900, 600))],
+            "mobile": ["default", ("crop", (740, 600))],
+            "some": ["default", ("crop", (1200, 630))],
+        },
+        auto_add_fields=True,
+        blank=True,
+        null=True,
     )
 
     generated_meta_image = models.ImageField(
-        _("generated meta image"), upload_to='meta',
-        blank=True, null=True,
+        _("generated meta image"), upload_to="meta", blank=True, null=True,
     )
-
 
     @property
     def image(self):
         try:
-            if (settings.DEBUG or not self.generated_meta_image) and self.get_header_image():
+            if (
+                settings.DEBUG or not self.generated_meta_image
+            ) and self.get_header_image():
                 orig = self.get_header_image()
                 img = Image.open(
                     get_storage_class()().open(
-                        self.get_header_image().some[1:].partition('/')[2]
+                        self.get_header_image().some[1:].partition("/")[2]
                     )
                 )
                 draw = ImageDraw.Draw(img)
-                font = ImageFont.truetype('juso/static/fonts/Montserrat-ExtraBold.ttf', int(1200/30))
-                color = ImageColor.getcolor(self.get_color(), 'RGB')
+                font = ImageFont.truetype(
+                    "juso/static/fonts/Montserrat-ExtraBold.ttf", int(1200 / 30)
+                )
+                color = ImageColor.getcolor(self.get_color(), "RGB")
 
                 title = textwrap.wrap(self.title.upper(), 35, break_long_words=True)
                 line = 0
@@ -140,7 +143,7 @@ class ContentMixin(TranslationMixin, MetaMixin, TemplateMixin):
                 padding_top = 5
                 padding_bottom = 14
                 padding_side = 15
-                line_height = int(1200/30) + line_space + padding_bottom + padding_top
+                line_height = int(1200 / 30) + line_space + padding_bottom + padding_top
                 width = 1200
                 height = 600
 
@@ -156,8 +159,15 @@ class ContentMixin(TranslationMixin, MetaMixin, TemplateMixin):
                     x = 30
                     y = text_top + line * line_height
                     draw.rectangle(
-                        [x - padding_side, y - padding_top, x + size[0] + padding_side, y + size[1] + padding_bottom],
-                        fill=fill_color, outline=border_color, width=3
+                        [
+                            x - padding_side,
+                            y - padding_top,
+                            x + size[0] + padding_side,
+                            y + size[1] + padding_bottom,
+                        ],
+                        fill=fill_color,
+                        outline=border_color,
+                        width=3,
                     )
                     draw.text(
                         (x, y), text, text_color, font=font,
@@ -167,38 +177,26 @@ class ContentMixin(TranslationMixin, MetaMixin, TemplateMixin):
 
                 img.save(f, format="JPEG", quality=100)
 
-                self.generated_meta_image.save(
-                    orig.some.split('/')[-1], files.File(f)
-                )
+                self.generated_meta_image.save(orig.some.split("/")[-1], files.File(f))
             return self.generated_meta_image
-        except: #Anything could happen, but it's not really a priority
+        except:  # Anything could happen, but it's not really a priority
             return None
-
 
     publication_date = models.DateTimeField(
         default=timezone.now, verbose_name=_("publication date")
     )
 
-    created_date = models.DateTimeField(
-        auto_now_add=True, verbose_name=_("created at")
-    )
+    created_date = models.DateTimeField(auto_now_add=True, verbose_name=_("created at"))
 
-    edited_date = models.DateTimeField(
-        auto_now=True, verbose_name=_("edited at")
-    )
+    edited_date = models.DateTimeField(auto_now=True, verbose_name=_("edited at"))
 
     category = models.ForeignKey(
-        Category, models.SET_NULL,
-        blank=True, null=True,
-        verbose_name=_("category")
+        Category, models.SET_NULL, blank=True, null=True, verbose_name=_("category")
     )
 
     tags = TaggableManager(blank=True)
 
-    section = models.ForeignKey(
-        Section, models.CASCADE,
-        verbose_name=_("section"),
-    )
+    section = models.ForeignKey(Section, models.CASCADE, verbose_name=_("section"),)
 
     def __str__(self):
         return self.title
@@ -217,9 +215,9 @@ class ContentMixin(TranslationMixin, MetaMixin, TemplateMixin):
 
     class Meta:
         abstract = True
-        unique_together = (('slug', 'section'))
-        ordering = ['-publication_date']
-        get_latest_by = 'publication_date'
+        unique_together = ("slug", "section")
+        ordering = ["-publication_date"]
+        get_latest_by = "publication_date"
 
     def meta_images_dict(self):
         if self.meta_image:
@@ -246,6 +244,7 @@ def get_template_list(app_name, templates):
             regions=[
                 Region(key=region, title=region.title(), inherited=True)
                 for region in template[1]
-            ]
-        ) for template in templates
+            ],
+        )
+        for template in templates
     ]

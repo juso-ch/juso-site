@@ -6,13 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('pages', '0003_auto_20200215_1901'),
+        ("pages", "0003_auto_20200215_1901"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='page',
-            name='application',
-            field=models.CharField(blank=True, choices=[('blog', 'blog'), ('people', 'people')], max_length=20, verbose_name='application'),
+            model_name="page",
+            name="application",
+            field=models.CharField(
+                blank=True,
+                choices=[("blog", "blog"), ("people", "people")],
+                max_length=20,
+                verbose_name="application",
+            ),
         ),
     ]

@@ -6,26 +6,20 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('forms', '0010_auto_20200413_1246'),
+        ("forms", "0010_auto_20200413_1246"),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='formfield',
-            name='email',
-        ),
-        migrations.RemoveField(
-            model_name='formfield',
-            name='webhook',
+        migrations.RemoveField(model_name="formfield", name="email",),
+        migrations.RemoveField(model_name="formfield", name="webhook",),
+        migrations.AddField(
+            model_name="form",
+            name="email",
+            field=models.EmailField(blank=True, max_length=254, verbose_name="e-mail"),
         ),
         migrations.AddField(
-            model_name='form',
-            name='email',
-            field=models.EmailField(blank=True, max_length=254, verbose_name='e-mail'),
-        ),
-        migrations.AddField(
-            model_name='form',
-            name='webhook',
-            field=models.URLField(blank=True, max_length=1200, verbose_name='webhook'),
+            model_name="form",
+            name="webhook",
+            field=models.URLField(blank=True, max_length=1200, verbose_name="webhook"),
         ),
     ]

@@ -6,13 +6,24 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('pages', '0007_page_all_events'),
+        ("pages", "0007_page_all_events"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='page',
-            name='template_key',
-            field=models.CharField(choices=[('default', 'Default'), ('sidebar-right', 'Sidebar-Right'), ('sidebar-left', 'Sidebar-Left'), ('sidebar-both', 'Sidebar-Both'), ('fullwidth', 'Fullwidth')], default='default', max_length=100, verbose_name='template'),
+            model_name="page",
+            name="template_key",
+            field=models.CharField(
+                choices=[
+                    ("default", "Default"),
+                    ("sidebar-right", "Sidebar-Right"),
+                    ("sidebar-left", "Sidebar-Left"),
+                    ("sidebar-both", "Sidebar-Both"),
+                    ("fullwidth", "Fullwidth"),
+                ],
+                default="default",
+                max_length=100,
+                verbose_name="template",
+            ),
         ),
     ]

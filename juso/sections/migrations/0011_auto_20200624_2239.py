@@ -6,23 +6,28 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('sections', '0010_auto_20200523_1748'),
+        ("sections", "0010_auto_20200523_1748"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='category',
-            name='meta_video',
-            field=models.FileField(blank=True, help_text='Set the Open Graph video.', upload_to='meta/video/%Y/%m', verbose_name='video'),
+            model_name="category",
+            name="meta_video",
+            field=models.FileField(
+                blank=True,
+                help_text="Set the Open Graph video.",
+                upload_to="meta/video/%Y/%m",
+                verbose_name="video",
+            ),
         ),
         migrations.AddField(
-            model_name='category',
-            name='meta_video_height',
-            field=models.IntegerField(default=1080, verbose_name='video height'),
+            model_name="category",
+            name="meta_video_height",
+            field=models.IntegerField(default=1080, verbose_name="video height"),
         ),
         migrations.AddField(
-            model_name='category',
-            name='meta_video_width',
-            field=models.IntegerField(default=1920, verbose_name='video width'),
+            model_name="category",
+            name="meta_video_width",
+            field=models.IntegerField(default=1920, verbose_name="video width"),
         ),
     ]

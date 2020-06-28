@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0021_image_fullwidth'),
+        ("blog", "0021_image_fullwidth"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='articleplugin',
-            name='title',
-            field=models.CharField(blank=True, max_length=180, verbose_name='Titel'),
+            model_name="articleplugin",
+            name="title",
+            field=models.CharField(blank=True, max_length=180, verbose_name="Titel"),
         ),
     ]

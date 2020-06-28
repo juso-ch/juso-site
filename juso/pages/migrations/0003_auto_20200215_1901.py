@@ -10,45 +10,82 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('pages', '0002_auto_20200215_1901'),
-        ('sections', '0001_initial'),
-        ('feincms3_sites', '0004_site_is_active'),
+        ("pages", "0002_auto_20200215_1901"),
+        ("sections", "0001_initial"),
+        ("feincms3_sites", "0004_site_is_active"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='page',
-            name='category',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='sections.Category', verbose_name='category'),
+            model_name="page",
+            name="category",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to="sections.Category",
+                verbose_name="category",
+            ),
         ),
         migrations.AddField(
-            model_name='page',
-            name='parent',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='children', to='pages.Page', verbose_name='parent'),
+            model_name="page",
+            name="parent",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="children",
+                to="pages.Page",
+                verbose_name="parent",
+            ),
         ),
         migrations.AddField(
-            model_name='page',
-            name='redirect_to_page',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='pages.Page', verbose_name='Redirect to page'),
+            model_name="page",
+            name="redirect_to_page",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="+",
+                to="pages.Page",
+                verbose_name="Redirect to page",
+            ),
         ),
         migrations.AddField(
-            model_name='page',
-            name='site',
-            field=feincms3_sites.models.SiteForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='+', to='feincms3_sites.Site', verbose_name='site'),
+            model_name="page",
+            name="site",
+            field=feincms3_sites.models.SiteForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="+",
+                to="feincms3_sites.Site",
+                verbose_name="site",
+            ),
         ),
         migrations.AddField(
-            model_name='image',
-            name='parent',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='pages_image_set', to='pages.Page'),
+            model_name="image",
+            name="parent",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="pages_image_set",
+                to="pages.Page",
+            ),
         ),
         migrations.AddField(
-            model_name='html',
-            name='parent',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='pages_html_set', to='pages.Page'),
+            model_name="html",
+            name="parent",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="pages_html_set",
+                to="pages.Page",
+            ),
         ),
         migrations.AddField(
-            model_name='external',
-            name='parent',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='pages_external_set', to='pages.Page'),
+            model_name="external",
+            name="parent",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="pages_external_set",
+                to="pages.Page",
+            ),
         ),
     ]

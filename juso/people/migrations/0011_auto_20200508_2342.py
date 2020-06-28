@@ -7,28 +7,35 @@ import imagefield.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('people', '0010_auto_20200505_2351'),
+        ("people", "0010_auto_20200505_2351"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='person',
-            name='image_height',
+            model_name="person",
+            name="image_height",
             field=models.PositiveIntegerField(blank=True, editable=False, null=True),
         ),
         migrations.AddField(
-            model_name='person',
-            name='image_ppoi',
-            field=imagefield.fields.PPOIField(default='0.5x0.5', max_length=20),
+            model_name="person",
+            name="image_ppoi",
+            field=imagefield.fields.PPOIField(default="0.5x0.5", max_length=20),
         ),
         migrations.AddField(
-            model_name='person',
-            name='image_width',
+            model_name="person",
+            name="image_width",
             field=models.PositiveIntegerField(blank=True, editable=False, null=True),
         ),
         migrations.AlterField(
-            model_name='person',
-            name='image',
-            field=imagefield.fields.ImageField(blank=True, height_field='image_height', null=True, upload_to='people/', verbose_name='Bild', width_field='image_width'),
+            model_name="person",
+            name="image",
+            field=imagefield.fields.ImageField(
+                blank=True,
+                height_field="image_height",
+                null=True,
+                upload_to="people/",
+                verbose_name="Bild",
+                width_field="image_width",
+            ),
         ),
     ]

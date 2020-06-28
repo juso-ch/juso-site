@@ -7,22 +7,42 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('forms', '0004_auto_20200412_1612'),
-        ('pages', '0024_auto_20200329_1518'),
+        ("forms", "0004_auto_20200412_1612"),
+        ("pages", "0024_auto_20200329_1518"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='FormPlugin',
+            name="FormPlugin",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('region', models.CharField(max_length=255)),
-                ('ordering', models.IntegerField(default=0)),
-                ('form', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='forms.Form', verbose_name='form')),
-                ('parent', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='pages_formplugin_set', to='pages.Page')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("region", models.CharField(max_length=255)),
+                ("ordering", models.IntegerField(default=0)),
+                (
+                    "form",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="forms.Form",
+                        verbose_name="form",
+                    ),
+                ),
+                (
+                    "parent",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="pages_formplugin_set",
+                        to="pages.Page",
+                    ),
+                ),
             ],
-            options={
-                'abstract': False,
-            },
+            options={"abstract": False,},
         ),
     ]

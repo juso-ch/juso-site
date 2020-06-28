@@ -7,34 +7,85 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('sections', '0009_auto_20200507_1758'),
-        ('blog', '0022_articleplugin_title'),
+        ("sections", "0009_auto_20200507_1758"),
+        ("blog", "0022_articleplugin_title"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='articleplugin',
-            name='template_key',
-            field=models.CharField(choices=[('blog/plugins/default.html', 'default'), ('blog/plugins/simple_list.html', 'list')], default='blog/plugins/default.html', max_length=100),
+            model_name="articleplugin",
+            name="template_key",
+            field=models.CharField(
+                choices=[
+                    ("blog/plugins/default.html", "default"),
+                    ("blog/plugins/simple_list.html", "list"),
+                ],
+                default="blog/plugins/default.html",
+                max_length=100,
+            ),
         ),
         migrations.CreateModel(
-            name='WPImport',
+            name="WPImport",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('slug', models.SlugField(unique=True)),
-                ('import_file', models.FileField(upload_to='', verbose_name='wordpress file')),
-                ('completed', models.BooleanField(default=False)),
-                ('default_namespace', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='+', to='blog.NameSpace')),
-                ('section', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sections.Section')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("slug", models.SlugField(unique=True)),
+                (
+                    "import_file",
+                    models.FileField(upload_to="", verbose_name="wordpress file"),
+                ),
+                ("completed", models.BooleanField(default=False)),
+                (
+                    "default_namespace",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="+",
+                        to="blog.NameSpace",
+                    ),
+                ),
+                (
+                    "section",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="sections.Section",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='NamespaceMapping',
+            name="NamespaceMapping",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('nicename', models.CharField(max_length=100, verbose_name='Name')),
-                ('target', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='+', to='blog.NameSpace')),
-                ('wp_import', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='blog.WPImport')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("nicename", models.CharField(max_length=100, verbose_name="Name")),
+                (
+                    "target",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="+",
+                        to="blog.NameSpace",
+                    ),
+                ),
+                (
+                    "wp_import",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="blog.WPImport"
+                    ),
+                ),
             ],
         ),
     ]

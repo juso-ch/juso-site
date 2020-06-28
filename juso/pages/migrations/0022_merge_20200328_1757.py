@@ -6,9 +6,8 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('pages', '0021_auto_20200328_1540'),
-        ('pages', '0019_divider_header'),
+        ("pages", "0021_auto_20200328_1540"),
+        ("pages", "0019_divider_header"),
     ]
 
-    operations = [
-    ]
+    operations = []

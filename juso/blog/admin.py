@@ -26,41 +26,41 @@ from juso.webpush import models as webpush, tasks
 class ArticleAdmin(ContentEditor, CopyContentMixin):
 
     list_display = [
-        'title',
-        'slug',
-        'publication_date',
-        'category',
-        'section',
-        'language_code',
-        'namespace',
+        "title",
+        "slug",
+        "publication_date",
+        "category",
+        "section",
+        "language_code",
+        "namespace",
     ]
 
     list_filter = [
-        'category',
-        'author',
-        'section',
-        'namespace',
-        'language_code',
+        "category",
+        "author",
+        "section",
+        "namespace",
+        "language_code",
     ]
 
     list_editable = [
-        'language_code',
-        'slug',
+        "language_code",
+        "slug",
     ]
 
-    date_hierarchy = 'publication_date'
+    date_hierarchy = "publication_date"
 
     autocomplete_fields = [
-        'category',
-        'namespace',
-        'author',
-        'section',
-        'translations',
+        "category",
+        "namespace",
+        "author",
+        "section",
+        "translations",
     ]
 
     search_fields = [
-        'title',
-        'blog_richtext_set__text',
+        "title",
+        "blog_richtext_set__text",
     ]
 
     prepopulated_fields = {
@@ -68,39 +68,30 @@ class ArticleAdmin(ContentEditor, CopyContentMixin):
     }
 
     readonly_fields = (
-        'created_date',
-        'edited_date',
+        "created_date",
+        "edited_date",
     )
 
     fieldsets = (
-        (None, {
-            'fields': (
-                'title',
-                'author',
-                'category',
-                'tags',
-            )
-        }),
-        (_('settings'), {
-            'classes': ('tabbed',),
-            'fields': (
-                'language_code',
-                'slug',
-                ('publication_date', 'created_date', 'edited_date'),
-                'section',
-                'namespace',
-                'template_key',
-                'header_image',
-                'header_image_ppoi'
-            )
-        }),
+        (None, {"fields": ("title", "author", "category", "tags",)}),
+        (
+            _("settings"),
+            {
+                "classes": ("tabbed",),
+                "fields": (
+                    "language_code",
+                    "slug",
+                    ("publication_date", "created_date", "edited_date"),
+                    "section",
+                    "namespace",
+                    "template_key",
+                    "header_image",
+                    "header_image_ppoi",
+                ),
+            },
+        ),
         MetaMixin.admin_fieldset(),
-        (_("translations"), {
-            'classes': ('tabbed', ),
-            'fields': (
-                'translations',
-            )
-        })
+        (_("translations"), {"classes": ("tabbed",), "fields": ("translations",)}),
     )
 
     inlines = [
@@ -118,53 +109,38 @@ class ArticleAdmin(ContentEditor, CopyContentMixin):
     ]
 
     plugins = models.plugins
-    actions = ['copy_selected', 'send_webpush']
+    actions = ["copy_selected", "send_webpush"]
 
     class Media:
         js = (
-            'admin/js/jquery.init.js',
-            JS('https://kit.fontawesome.com/91a6274901.js', {
-                'async': 'async',
-                'crossorigin': 'anonymous',
-            }, static=False),
-            'admin/plugin_buttons.js',
+            "admin/js/jquery.init.js",
+            JS(
+                "https://kit.fontawesome.com/91a6274901.js",
+                {"async": "async", "crossorigin": "anonymous",},
+                static=False,
+            ),
+            "admin/plugin_buttons.js",
         )
-
 
     def send_webpush(self, request, queryset):
         for article in queryset:
             pages = Page.objects.filter(
-                (
-                    Q(application='blog') &
-                    Q(language_code=article.language_code)
-                ) &
-                (
-                    Q(category__isnull=True) |
-                    Q(category=article.category)
-                ) &
-                (
-                    Q(blog_namespace__isnull=True) |
-                    Q(blog_namespace=article.namespace)
-                ) &
-                (
-                    Q(site__section=article.section) |
-                    Q(sections=article.section)
-                )
+                (Q(application="blog") & Q(language_code=article.language_code))
+                & (Q(category__isnull=True) | Q(category=article.category))
+                & (Q(blog_namespace__isnull=True) | Q(blog_namespace=article.namespace))
+                & (Q(site__section=article.section) | Q(sections=article.section))
             )
 
             for page in pages:
                 subscriptions = webpush.Subscription.objects.filter(page=page)
                 data = article.webpush_data(page)
                 for subscription in subscriptions:
-                    tasks.send_data_to.delay(
-                        data,
-                        subscription.pk
-                    )
+                    tasks.send_data_to.delay(data, subscription.pk)
 
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
 
-        section_field = form.base_fields['section']
+        section_field = form.base_fields["section"]
 
         sections = request.user.section_set.all()
         section_field.initial = sections[0]
@@ -181,44 +157,32 @@ class ArticleAdmin(ContentEditor, CopyContentMixin):
 
 @admin.register(NameSpace)
 class NamespaceAdmin(admin.ModelAdmin):
-    search_fields = [
-        'name'
-    ]
+    search_fields = ["name"]
 
     list_display = [
-        'name',
-        'slug',
-        'language_code',
+        "name",
+        "slug",
+        "language_code",
     ]
 
-    list_filter = [
-        'language_code'
-    ]
+    list_filter = ["language_code"]
 
-    prepopulated_fields = {
-        "slug": ("name",)
-    }
+    prepopulated_fields = {"slug": ("name",)}
 
-    autocomplete_fields = ('translations',)
+    autocomplete_fields = ("translations",)
 
-    fieldsets = (
-        (None, {
-            'fields': ('name', 'slug', 'language_code', 'translations')
-        }),
-    )
+    fieldsets = ((None, {"fields": ("name", "slug", "language_code", "translations")}),)
+
 
 class WPImportMappingInline(admin.TabularInline):
     model = models.NamespaceMapping
     extra = 3
 
-    autocomplete_fields = ['target']
+    autocomplete_fields = ["target"]
+
 
 @admin.register(models.WPImport)
 class WPImportAdmin(admin.ModelAdmin):
-    autocomplete_fields = [
-        'section', 'default_namespace'
-    ]
+    autocomplete_fields = ["section", "default_namespace"]
 
-    inlines = [
-        WPImportMappingInline
-    ]
+    inlines = [WPImportMappingInline]

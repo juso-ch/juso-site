@@ -16,11 +16,10 @@ def top_page(page):
 
 @register.simple_tag
 def button_menu(language_code, top_page):
-    pages = top_page.descendants().exclude(
-        is_active=False,
-    ).filter(
-        menu="buttons",
-        language_code=language_code
+    pages = (
+        top_page.descendants()
+        .exclude(is_active=False,)
+        .filter(menu="buttons", language_code=language_code)
     )
 
     return pages
@@ -29,13 +28,12 @@ def button_menu(language_code, top_page):
 @register.simple_tag
 def all_menus(language_code, top_page):
     menus = defaultdict(list)
-    pages = top_page.descendants().with_tree_fields().exclude(
-        is_active=False,
-        menu=""
-    ).filter(
-        language_code=language_code
-    ).extra(
-        where=["tree_depth=1"]
+    pages = (
+        top_page.descendants()
+        .with_tree_fields()
+        .exclude(is_active=False, menu="")
+        .filter(language_code=language_code)
+        .extra(where=["tree_depth=1"])
     )
 
     for page in pages:

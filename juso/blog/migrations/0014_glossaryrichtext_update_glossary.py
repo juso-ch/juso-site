@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0013_glossaryrichtext'),
+        ("blog", "0013_glossaryrichtext"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='glossaryrichtext',
-            name='update_glossary',
+            model_name="glossaryrichtext",
+            name="update_glossary",
             field=models.BooleanField(default=True),
         ),
     ]

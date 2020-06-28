@@ -7,23 +7,28 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('forms', '0009_auto_20200413_1049'),
+        ("forms", "0009_auto_20200413_1049"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='formfield',
-            name='email',
-            field=models.EmailField(blank=True, max_length=254, verbose_name='e-mail'),
+            model_name="formfield",
+            name="email",
+            field=models.EmailField(blank=True, max_length=254, verbose_name="e-mail"),
         ),
         migrations.AddField(
-            model_name='formfield',
-            name='webhook',
-            field=models.URLField(blank=True, max_length=1200, verbose_name='webhook'),
+            model_name="formfield",
+            name="webhook",
+            field=models.URLField(blank=True, max_length=1200, verbose_name="webhook"),
         ),
         migrations.AlterField(
-            model_name='formentryvalue',
-            name='form_entry',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='fields', to='forms.FormEntry', verbose_name='fields'),
+            model_name="formentryvalue",
+            name="form_entry",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="fields",
+                to="forms.FormEntry",
+                verbose_name="fields",
+            ),
         ),
     ]

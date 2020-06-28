@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('events', '0035_auto_20200523_1748'),
+        ("events", "0035_auto_20200523_1748"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='location',
-            name='is_physical',
-            field=models.BooleanField(default=True, verbose_name='is physical'),
+            model_name="location",
+            name="is_physical",
+            field=models.BooleanField(default=True, verbose_name="is physical"),
         ),
     ]

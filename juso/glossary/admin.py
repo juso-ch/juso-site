@@ -7,53 +7,44 @@ from juso.glossary.models import Entry
 
 
 class GlossaryContentInline(RichTextInline):
-    autocomplete_fields = [
-        'entries'
-    ]
+    autocomplete_fields = ["entries"]
 
     fieldsets = (
-        (None, {
-            'fields':  ['text', 'entries', 'region', 'ordering',]
-        }),
-        (_("advanced"), {
-            'fields': ['update_glossary', 'glossary_text'],
-            'classes': ['collapse']
-        })
+        (None, {"fields": ["text", "entries", "region", "ordering",]}),
+        (
+            _("advanced"),
+            {"fields": ["update_glossary", "glossary_text"], "classes": ["collapse"]},
+        ),
     )
 
 
 @admin.register(Entry)
 class GlossaryEntryAdmin(admin.ModelAdmin):
-    search_fields = [
-        'name'
-    ]
+    search_fields = ["name"]
 
     prepopulated_fields = {
         "slug": ("name",),
     }
 
-    list_filter = [
-        'category', 'language_code'
-    ]
-
+    list_filter = ["category", "language_code"]
 
     fieldsets = (
-        (None, {
-            'fields': [
-                'name',
-                'content',
-                'category',
-                'language_code',
-                'translations',
-            ]
-        }),
-        (_("advanced"), {
-            'fields': ['auto_pattern', 'pattern', 'slug'],
-            'classes': ['collapse'],
-        })
+        (
+            None,
+            {
+                "fields": [
+                    "name",
+                    "content",
+                    "category",
+                    "language_code",
+                    "translations",
+                ]
+            },
+        ),
+        (
+            _("advanced"),
+            {"fields": ["auto_pattern", "pattern", "slug"], "classes": ["collapse"],},
+        ),
     )
 
-    autocomplete_fields = [
-        'category', 'translations'
-    ]
-
+    autocomplete_fields = ["category", "translations"]

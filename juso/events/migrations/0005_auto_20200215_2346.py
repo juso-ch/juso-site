@@ -8,28 +8,41 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('taggit', '0003_taggeditem_add_unique_index'),
-        ('sections', '0001_initial'),
-        ('events', '0004_auto_20200215_2128'),
+        ("taggit", "0003_taggeditem_add_unique_index"),
+        ("sections", "0001_initial"),
+        ("events", "0004_auto_20200215_2128"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='location',
-            options={'ordering': ['name'], 'verbose_name': 'location', 'verbose_name_plural': 'locations'},
+            name="location",
+            options={
+                "ordering": ["name"],
+                "verbose_name": "location",
+                "verbose_name_plural": "locations",
+            },
         ),
-        migrations.AlterModelOptions(
-            name='namespace',
-            options={'ordering': ['name']},
-        ),
+        migrations.AlterModelOptions(name="namespace", options={"ordering": ["name"]},),
         migrations.AddField(
-            model_name='location',
-            name='section',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='sections.Section', verbose_name='section'),
+            model_name="location",
+            name="section",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to="sections.Section",
+                verbose_name="section",
+            ),
         ),
         migrations.AlterField(
-            model_name='location',
-            name='tags',
-            field=taggit.managers.TaggableManager(blank=True, help_text='A comma-separated list of tags.', through='taggit.TaggedItem', to='taggit.Tag', verbose_name='Tags'),
+            model_name="location",
+            name="tags",
+            field=taggit.managers.TaggableManager(
+                blank=True,
+                help_text="A comma-separated list of tags.",
+                through="taggit.TaggedItem",
+                to="taggit.Tag",
+                verbose_name="Tags",
+            ),
         ),
     ]

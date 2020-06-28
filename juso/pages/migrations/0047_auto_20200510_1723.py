@@ -7,24 +7,38 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0029_auto_20200510_1723'),
-        ('pages', '0046_eventplugin_title'),
+        ("blog", "0029_auto_20200510_1723"),
+        ("pages", "0046_eventplugin_title"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='articleplugin',
-            name='all_articles',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='+', to='pages.Page', verbose_name='page with all articles'),
+            model_name="articleplugin",
+            name="all_articles",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="+",
+                to="pages.Page",
+                verbose_name="page with all articles",
+            ),
         ),
         migrations.AddField(
-            model_name='articleplugin',
-            name='all_articles_override',
-            field=models.CharField(blank=True, max_length=180, verbose_name='all article link text'),
+            model_name="articleplugin",
+            name="all_articles_override",
+            field=models.CharField(
+                blank=True, max_length=180, verbose_name="all article link text"
+            ),
         ),
         migrations.AlterField(
-            model_name='articleplugin',
-            name='articles',
-            field=models.ManyToManyField(blank=True, related_name='pages_articleplugin', to='blog.Article', verbose_name='Artikel'),
+            model_name="articleplugin",
+            name="articles",
+            field=models.ManyToManyField(
+                blank=True,
+                related_name="pages_articleplugin",
+                to="blog.Article",
+                verbose_name="Artikel",
+            ),
         ),
     ]

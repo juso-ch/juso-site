@@ -26,42 +26,42 @@ from juso.webpush import models as webpush, tasks
 @admin.register(Event)
 class EventAdmin(ContentEditor, CopyContentMixin):
     list_display = [
-        'title',
-        'slug',
-        'start_date',
-        'end_date',
-        'location',
-        'category',
-        'language_code',
+        "title",
+        "slug",
+        "start_date",
+        "end_date",
+        "location",
+        "category",
+        "language_code",
     ]
 
     list_filter = [
-        'category',
-        'language_code',
-        'namespace',
-        'section',
+        "category",
+        "language_code",
+        "namespace",
+        "section",
     ]
 
     search_fields = [
-        'location',
-        'title',
-        'description',
+        "location",
+        "title",
+        "description",
     ]
 
-    date_hierarchy = 'start_date'
+    date_hierarchy = "start_date"
 
     autocomplete_fields = [
-        'category',
-        'namespace',
-        'author',
-        'section',
-        'location',
-        'translations',
+        "category",
+        "namespace",
+        "author",
+        "section",
+        "location",
+        "translations",
     ]
 
     search_fields = [
-        'title',
-        'description',
+        "title",
+        "description",
     ]
 
     prepopulated_fields = {
@@ -69,35 +69,36 @@ class EventAdmin(ContentEditor, CopyContentMixin):
     }
 
     fieldsets = (
-        (None, {
-            'fields': (
-                'title',
-                'author',
-                ('start_date', 'end_date',),
-                'location',
-                'category',
-                'tags',
-            )
-        }),
-        (_('settings'), {
-            'classes': ('tabbed',),
-            'fields': (
-                'language_code',
-                'slug',
-                'section',
-                'namespace',
-                'template_key',
-                'header_image',
-                'header_image_ppoi'
-            )
-        }),
+        (
+            None,
+            {
+                "fields": (
+                    "title",
+                    "author",
+                    ("start_date", "end_date",),
+                    "location",
+                    "category",
+                    "tags",
+                )
+            },
+        ),
+        (
+            _("settings"),
+            {
+                "classes": ("tabbed",),
+                "fields": (
+                    "language_code",
+                    "slug",
+                    "section",
+                    "namespace",
+                    "template_key",
+                    "header_image",
+                    "header_image_ppoi",
+                ),
+            },
+        ),
         MetaMixin.admin_fieldset(),
-        (_('translations'), {
-            'classes': ('tabbed',),
-            'fields': (
-                'translations',
-            )
-        })
+        (_("translations"), {"classes": ("tabbed",), "fields": ("translations",)}),
     )
 
     inlines = [
@@ -115,60 +116,45 @@ class EventAdmin(ContentEditor, CopyContentMixin):
 
     plugins = models.plugins
 
-    actions = ['copy_selected', 'send_webpush']
+    actions = ["copy_selected", "send_webpush"]
 
     plugins = models.plugins
 
     class Media:
         js = (
-            'admin/js/jquery.init.js',
-            JS('https://kit.fontawesome.com/7655daeee1.js', {
-                'async': 'async',
-                'crossorigin': 'anonymous',
-            }, static=False),
-            'admin/plugin_buttons.js',
+            "admin/js/jquery.init.js",
+            JS(
+                "https://kit.fontawesome.com/7655daeee1.js",
+                {"async": "async", "crossorigin": "anonymous",},
+                static=False,
+            ),
+            "admin/plugin_buttons.js",
         )
 
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
 
-        section_field = form.base_fields['section']
+        section_field = form.base_fields["section"]
 
         sections = request.user.section_set.all()
         section_field.initial = sections[0]
 
         return form
 
-
     def send_webpush(self, request, queryset):
         for event in queryset:
             pages = Page.objects.filter(
-                (
-                    Q(application='events') &
-                    Q(language_code=event.language_code)
-                ) &
-                (
-                    Q(category__isnull=True) |
-                    Q(category=event.category)
-                ) &
-                (
-                    Q(event_namespace__isnull=True) |
-                    Q(event_namespace=event.namespace)
-                ) &
-                (
-                    Q(site__section=event.section) |
-                    Q(sections=event.section)
-                )
+                (Q(application="events") & Q(language_code=event.language_code))
+                & (Q(category__isnull=True) | Q(category=event.category))
+                & (Q(event_namespace__isnull=True) | Q(event_namespace=event.namespace))
+                & (Q(site__section=event.section) | Q(sections=event.section))
             )
 
             for page in pages:
                 subscriptions = webpush.Subscription.objects.filter(page=page)
                 data = event.webpush_data(page)
                 for subscription in subscriptions:
-                    tasks.send_data_to.delay(
-                        data,
-                        subscription.pk
-                    )
+                    tasks.send_data_to.delay(data, subscription.pk)
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)
@@ -181,60 +167,45 @@ class EventAdmin(ContentEditor, CopyContentMixin):
 @admin.register(Location)
 class LocationAdmin(ContentEditor):
     search_fields = [
-        'name',
-        'street',
-        'city',
+        "name",
+        "street",
+        "city",
     ]
 
     list_display = [
-        'name',
-        'slug',
-        'street',
-        'city',
-        'lng',
-        'lat',
+        "name",
+        "slug",
+        "street",
+        "city",
+        "lng",
+        "lat",
     ]
 
-    list_filter = [
-        'city'
-    ]
+    list_filter = ["city"]
 
-    prepopulated_fields = {
-        'slug': ('name',)
-    }
+    prepopulated_fields = {"slug": ("name",)}
 
-    autocomplete_fields = [
-        'section', 'translations'
-    ]
+    autocomplete_fields = ["section", "translations"]
 
     fieldsets = (
-        (None, {
-            'fields': (
-                'name',
-                'street',
-                ('city', 'zip_code',),
-                'country',
-            )
-        }),
-        (_('advanced'), {
-            'classes': ('tabbed',),
-            'fields': (
-                'section',
-                'slug',
-                'is_physical',
-                'lat',
-                'lng',
-                'header_image',
-                'header_image_ppoi'
-            )
-        }),
+        (None, {"fields": ("name", "street", ("city", "zip_code",), "country",)}),
+        (
+            _("advanced"),
+            {
+                "classes": ("tabbed",),
+                "fields": (
+                    "section",
+                    "slug",
+                    "is_physical",
+                    "lat",
+                    "lng",
+                    "header_image",
+                    "header_image_ppoi",
+                ),
+            },
+        ),
         MetaMixin.admin_fieldset(),
-        (_('translations'), {
-            'classes': ('tabbed',),
-            'fields': (
-                'translations',
-            )
-        }),
+        (_("translations"), {"classes": ("tabbed",), "fields": ("translations",)}),
     )
 
     inlines = [
@@ -248,7 +219,7 @@ class LocationAdmin(ContentEditor):
         return obj.section in sections
 
     def save_model(self, request, obj, form, change):
-        if(not change):
+        if not change:
             locator = Nominatim(user_agent=settings.NOMINATIM_USER_AGENT)
             location = locator.geocode(
                 f"{obj.street}, {obj.zip_code} {obj.city}, {obj.country}"
@@ -260,27 +231,17 @@ class LocationAdmin(ContentEditor):
 
 @admin.register(NameSpace)
 class NamespaceAdmin(admin.ModelAdmin):
-    search_fields = [
-        'name'
-    ]
+    search_fields = ["name"]
     list_display = [
-        'name',
-        'slug',
-        'language_code',
+        "name",
+        "slug",
+        "language_code",
     ]
 
-    list_filter = [
-        'language_code'
-    ]
+    list_filter = ["language_code"]
 
-    prepopulated_fields = {
-        "slug": ("name",)
-    }
+    prepopulated_fields = {"slug": ("name",)}
 
-    autocomplete_fields = ('translations',)
+    autocomplete_fields = ("translations",)
 
-    fieldsets = (
-        (None, {
-            'fields': ('name', 'slug', 'language_code', 'translations')
-        }),
-    )
+    fieldsets = ((None, {"fields": ("name", "slug", "language_code", "translations")}),)

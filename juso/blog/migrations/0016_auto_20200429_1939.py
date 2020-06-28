@@ -7,28 +7,35 @@ import imagefield.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0015_auto_20200429_1653'),
+        ("blog", "0015_auto_20200429_1653"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='article',
-            name='header_image',
-            field=imagefield.fields.ImageField(blank=True, height_field='header_image_height', null=True, upload_to='', verbose_name='header image', width_field='header_image_width'),
+            model_name="article",
+            name="header_image",
+            field=imagefield.fields.ImageField(
+                blank=True,
+                height_field="header_image_height",
+                null=True,
+                upload_to="",
+                verbose_name="header image",
+                width_field="header_image_width",
+            ),
         ),
         migrations.AddField(
-            model_name='article',
-            name='header_image_height',
+            model_name="article",
+            name="header_image_height",
             field=models.PositiveIntegerField(blank=True, editable=False, null=True),
         ),
         migrations.AddField(
-            model_name='article',
-            name='header_image_ppoi',
-            field=imagefield.fields.PPOIField(default='0.5x0.5', max_length=20),
+            model_name="article",
+            name="header_image_ppoi",
+            field=imagefield.fields.PPOIField(default="0.5x0.5", max_length=20),
         ),
         migrations.AddField(
-            model_name='article',
-            name='header_image_width',
+            model_name="article",
+            name="header_image_width",
             field=models.PositiveIntegerField(blank=True, editable=False, null=True),
         ),
     ]

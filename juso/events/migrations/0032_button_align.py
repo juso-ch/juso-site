@@ -6,13 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('events', '0031_button_line_break'),
+        ("events", "0031_button_line_break"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='button',
-            name='align',
-            field=models.CharField(blank=True, choices=[('', 'Standard'), ('center', 'center'), ('right', 'right')], max_length=30, verbose_name='alignment'),
+            model_name="button",
+            name="align",
+            field=models.CharField(
+                blank=True,
+                choices=[("", "Standard"), ("center", "center"), ("right", "right")],
+                max_length=30,
+                verbose_name="alignment",
+            ),
         ),
     ]

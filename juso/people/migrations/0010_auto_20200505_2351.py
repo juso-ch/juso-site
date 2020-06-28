@@ -9,71 +9,108 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('sections', '0007_auto_20200502_2048'),
-        ('people', '0009_merge_20200324_2216'),
+        ("sections", "0007_auto_20200502_2048"),
+        ("people", "0009_merge_20200324_2216"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='membership',
-            options={'ordering': ['order'], 'verbose_name': 'Mitliedschaft', 'verbose_name_plural': 'Mitgliedschaften'},
+            name="membership",
+            options={
+                "ordering": ["order"],
+                "verbose_name": "Mitliedschaft",
+                "verbose_name_plural": "Mitgliedschaften",
+            },
         ),
         migrations.AlterModelOptions(
-            name='person',
-            options={'ordering': ['last_name', 'first_name'], 'verbose_name': 'Person', 'verbose_name_plural': 'Menschen'},
+            name="person",
+            options={
+                "ordering": ["last_name", "first_name"],
+                "verbose_name": "Person",
+                "verbose_name_plural": "Menschen",
+            },
         ),
         migrations.AlterModelOptions(
-            name='team',
-            options={'ordering': ['order'], 'verbose_name': 'Team', 'verbose_name_plural': 'Teams'},
+            name="team",
+            options={
+                "ordering": ["order"],
+                "verbose_name": "Team",
+                "verbose_name_plural": "Teams",
+            },
         ),
         migrations.AlterField(
-            model_name='membership',
-            name='person',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='people.Person', verbose_name='Person'),
+            model_name="membership",
+            name="person",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to="people.Person",
+                verbose_name="Person",
+            ),
         ),
         migrations.AlterField(
-            model_name='membership',
-            name='team',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='people.Team', verbose_name='Team'),
+            model_name="membership",
+            name="team",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to="people.Team",
+                verbose_name="Team",
+            ),
         ),
         migrations.AlterField(
-            model_name='person',
-            name='email',
-            field=models.EmailField(blank=True, max_length=254, verbose_name='E-Mail'),
+            model_name="person",
+            name="email",
+            field=models.EmailField(blank=True, max_length=254, verbose_name="E-Mail"),
         ),
         migrations.AlterField(
-            model_name='person',
-            name='homepage',
-            field=models.URLField(blank=True, verbose_name='Homepage'),
+            model_name="person",
+            name="homepage",
+            field=models.URLField(blank=True, verbose_name="Homepage"),
         ),
         migrations.AlterField(
-            model_name='person',
-            name='phone',
-            field=models.CharField(blank=True, max_length=20, verbose_name='Handy'),
+            model_name="person",
+            name="phone",
+            field=models.CharField(blank=True, max_length=20, verbose_name="Handy"),
         ),
         migrations.AlterField(
-            model_name='person',
-            name='sections',
-            field=models.ManyToManyField(blank=True, to='sections.Section', verbose_name='Sektionen'),
+            model_name="person",
+            name="sections",
+            field=models.ManyToManyField(
+                blank=True, to="sections.Section", verbose_name="Sektionen"
+            ),
         ),
         migrations.AlterField(
-            model_name='person',
-            name='user',
-            field=models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL, verbose_name='Benutzer*in'),
+            model_name="person",
+            name="user",
+            field=models.OneToOneField(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to=settings.AUTH_USER_MODEL,
+                verbose_name="Benutzer*in",
+            ),
         ),
         migrations.AlterField(
-            model_name='team',
-            name='members',
-            field=models.ManyToManyField(related_name='teams', through='people.Membership', to='people.Person', verbose_name='Mitglieder'),
+            model_name="team",
+            name="members",
+            field=models.ManyToManyField(
+                related_name="teams",
+                through="people.Membership",
+                to="people.Person",
+                verbose_name="Mitglieder",
+            ),
         ),
         migrations.AlterField(
-            model_name='team',
-            name='order',
-            field=models.IntegerField(default=0, verbose_name='Reihenfolge'),
+            model_name="team",
+            name="order",
+            field=models.IntegerField(default=0, verbose_name="Reihenfolge"),
         ),
         migrations.AlterField(
-            model_name='team',
-            name='section',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sections.Section', verbose_name='Sektion'),
+            model_name="team",
+            name="section",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to="sections.Section",
+                verbose_name="Sektion",
+            ),
         ),
     ]

@@ -3,5 +3,5 @@ from django.apps import AppConfig
 
 
 class GlossaryConfig(AppConfig):
-    name = 'juso.glossary'
+    name = "juso.glossary"
     verbose_name = _("glossary")

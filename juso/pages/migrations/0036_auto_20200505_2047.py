@@ -7,23 +7,46 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('link_collections', '0001_initial'),
-        ('pages', '0035_auto_20200429_2009'),
+        ("link_collections", "0001_initial"),
+        ("pages", "0035_auto_20200429_2009"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='page',
-            options={'ordering': ['position'], 'verbose_name': 'page', 'verbose_name_plural': 'page'},
+            name="page",
+            options={
+                "ordering": ["position"],
+                "verbose_name": "page",
+                "verbose_name_plural": "page",
+            },
         ),
         migrations.AddField(
-            model_name='page',
-            name='collection',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='link_collections.Collection', verbose_name='collection'),
+            model_name="page",
+            name="collection",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="link_collections.Collection",
+                verbose_name="collection",
+            ),
         ),
         migrations.AlterField(
-            model_name='page',
-            name='application',
-            field=models.CharField(blank=True, choices=[('blog', 'blog'), ('people', 'people'), ('events', 'events'), ('categories', 'categories'), ('forms', 'forms'), ('glossary', 'glossary'), ('collection', 'collection')], max_length=20, verbose_name='application'),
+            model_name="page",
+            name="application",
+            field=models.CharField(
+                blank=True,
+                choices=[
+                    ("blog", "blog"),
+                    ("people", "people"),
+                    ("events", "events"),
+                    ("categories", "categories"),
+                    ("forms", "forms"),
+                    ("glossary", "glossary"),
+                    ("collection", "collection"),
+                ],
+                max_length=20,
+                verbose_name="application",
+            ),
         ),
     ]

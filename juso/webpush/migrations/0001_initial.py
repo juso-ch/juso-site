@@ -10,16 +10,31 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('pages', '0054_articleplugin_structured_data'),
+        ("pages", "0054_articleplugin_structured_data"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Subscription',
+            name="Subscription",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('subscription_info', django.contrib.postgres.fields.jsonb.JSONField()),
-                ('page', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='pages.Page', verbose_name='page')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("subscription_info", django.contrib.postgres.fields.jsonb.JSONField()),
+                (
+                    "page",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="pages.Page",
+                        verbose_name="page",
+                    ),
+                ),
             ],
         ),
     ]

@@ -6,13 +6,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('events', '0027_auto_20200510_1144'),
+        ("events", "0027_auto_20200510_1144"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='event',
-            name='slug',
-            field=models.SlugField(unique_for_date=models.DateTimeField(verbose_name='Start-Datum')),
+            model_name="event",
+            name="slug",
+            field=models.SlugField(
+                unique_for_date=models.DateTimeField(verbose_name="Start-Datum")
+            ),
         ),
     ]

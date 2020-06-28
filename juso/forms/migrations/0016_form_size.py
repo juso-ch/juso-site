@@ -6,13 +6,24 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('forms', '0015_auto_20200507_1758'),
+        ("forms", "0015_auto_20200507_1758"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='form',
-            name='size',
-            field=models.TextField(choices=[('one', 'one'), ('one-half', 'one half'), ('one-third', 'one third'), ('one-fourth', 'one fouth'), ('three-fourths', 'thre fourths'), ('two-thirds', 'two thirds')], default='one', verbose_name='size'),
+            model_name="form",
+            name="size",
+            field=models.TextField(
+                choices=[
+                    ("one", "one"),
+                    ("one-half", "one half"),
+                    ("one-third", "one third"),
+                    ("one-fourth", "one fouth"),
+                    ("three-fourths", "thre fourths"),
+                    ("two-thirds", "two thirds"),
+                ],
+                default="one",
+                verbose_name="size",
+            ),
         ),
     ]

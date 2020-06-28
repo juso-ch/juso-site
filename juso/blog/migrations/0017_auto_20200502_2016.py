@@ -7,13 +7,30 @@ import juso.models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0016_auto_20200429_1939'),
+        ("blog", "0016_auto_20200429_1939"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='button',
-            name='color',
-            field=juso.models.ColorField(blank=True, choices=[('red', 'red'), ('orange', 'orange'), ('yellow', 'yellow'), ('olive', 'olive'), ('green', 'green'), ('teal', 'teal'), ('violett', 'violett'), ('purple', 'purple'), ('pink', 'pink'), ('brown', 'brown'), ('grey', 'grey'), ('black', 'black')], max_length=20),
+            model_name="button",
+            name="color",
+            field=juso.models.ColorField(
+                blank=True,
+                choices=[
+                    ("red", "red"),
+                    ("orange", "orange"),
+                    ("yellow", "yellow"),
+                    ("olive", "olive"),
+                    ("green", "green"),
+                    ("teal", "teal"),
+                    ("violett", "violett"),
+                    ("purple", "purple"),
+                    ("pink", "pink"),
+                    ("brown", "brown"),
+                    ("grey", "grey"),
+                    ("black", "black"),
+                ],
+                max_length=20,
+            ),
         ),
     ]

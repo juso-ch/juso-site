@@ -3,5 +3,5 @@ from django.apps import AppConfig
 
 
 class PagesConfig(AppConfig):
-    name = 'juso.pages'
+    name = "juso.pages"
     verbose_name = _("pages")

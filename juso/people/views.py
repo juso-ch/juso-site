@@ -14,13 +14,9 @@ def person_detail(request, pk):
     page = page_for_app_request(request)
     page.activate_language(request)
 
-    person = get_object_or_404(
-        Person, pk=pk
-    )
+    person = get_object_or_404(Person, pk=pk)
 
-    memberships = person.membership_set.filter(
-        team__language_code=page.language_code
-    )
+    memberships = person.membership_set.filter(team__language_code=page.language_code)
 
     ancestors = list(page.ancestors().reverse())
 
@@ -28,15 +24,17 @@ def person_detail(request, pk):
         request,
         "people/person_detail.html",
         {
-            'page': page,
-            'person': person,
-            'memberships': memberships,
-            'meta_tags': meta_tags([page] + ancestors, request=request),
+            "page": page,
+            "person": person,
+            "memberships": memberships,
+            "meta_tags": meta_tags([page] + ancestors, request=request),
             "regions": Regions.from_item(
-                page, renderer=pages.renderer.renderer,
-                timeout=60, inherit_from=ancestors
-            )
-        }
+                page,
+                renderer=pages.renderer.renderer,
+                timeout=60,
+                inherit_from=ancestors,
+            ),
+        },
     )
 
 
@@ -44,9 +42,7 @@ def team_detail(request, pk):
     page = page_for_app_request(request)
     page.activate_language(request)
 
-    team = get_object_or_404(
-        Team, pk=pk 
-    )
+    team = get_object_or_404(Team, pk=pk)
 
     ancestors = list(page.ancestors().reverse())
 
@@ -54,14 +50,16 @@ def team_detail(request, pk):
         request,
         "people/team_detail.html",
         {
-            'page': page,
-            'team': team,
-            'meta_tags': meta_tags([page] + ancestors, request=request),
+            "page": page,
+            "team": team,
+            "meta_tags": meta_tags([page] + ancestors, request=request),
             "regions": Regions.from_item(
-                page, renderer=pages.renderer.renderer,
-                timeout=60, inherit_from=ancestors
-            )
-        }
+                page,
+                renderer=pages.renderer.renderer,
+                timeout=60,
+                inherit_from=ancestors,
+            ),
+        },
     )
 
 
@@ -74,17 +72,16 @@ def teams_for_section(request):
 
     return render_list(
         request,
-        Team.objects.filter(
-            section=section,
-            language_code=page.language_code,
-        ),
+        Team.objects.filter(section=section, language_code=page.language_code,),
         {
-            'page': page,
-            'meta_tags': meta_tags([page] + ancestors, request=request),
-            'regions': Regions.from_item(
-                page, renderer=pages.renderer.renderer, timeout=60,
-                inherit_from=ancestors
-            )
+            "page": page,
+            "meta_tags": meta_tags([page] + ancestors, request=request),
+            "regions": Regions.from_item(
+                page,
+                renderer=pages.renderer.renderer,
+                timeout=60,
+                inherit_from=ancestors,
+            ),
         },
         paginate_by=10,
     )

@@ -7,13 +7,17 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0023_auto_20200509_1635'),
+        ("blog", "0023_auto_20200509_1635"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='namespacemapping',
-            name='wp_import',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='mappings', to='blog.WPImport'),
+            model_name="namespacemapping",
+            name="wp_import",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="mappings",
+                to="blog.WPImport",
+            ),
         ),
     ]

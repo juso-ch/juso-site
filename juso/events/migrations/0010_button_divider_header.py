@@ -4,64 +4,161 @@ import django.db.models.deletion
 from django.db import migrations, models
 
 
-
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('events', '0009_team_columns'),
+        ("events", "0009_team_columns"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Header',
+            name="Header",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('text', models.CharField(blank=True, max_length=240, verbose_name='Text')),
-                ('inverted', models.BooleanField(default=False, verbose_name='inverted')),
-                ('level', models.SmallIntegerField(choices=[(1, 'h1'), (2, 'h2'), (3, 'h3'), (4, 'h4'), (5, 'h5')], verbose_name='level')),
-                ('block', models.BooleanField(verbose_name='block')),
-                ('dividing', models.BooleanField(verbose_name='dividing')),
-                ('region', models.CharField(max_length=255)),
-                ('ordering', models.IntegerField(default=0)),
-                ('parent', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='events_header_set', to='events.Event')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "text",
+                    models.CharField(blank=True, max_length=240, verbose_name="Text"),
+                ),
+                (
+                    "inverted",
+                    models.BooleanField(default=False, verbose_name="inverted"),
+                ),
+                (
+                    "level",
+                    models.SmallIntegerField(
+                        choices=[(1, "h1"), (2, "h2"), (3, "h3"), (4, "h4"), (5, "h5")],
+                        verbose_name="level",
+                    ),
+                ),
+                ("block", models.BooleanField(verbose_name="block")),
+                ("dividing", models.BooleanField(verbose_name="dividing")),
+                ("region", models.CharField(max_length=255)),
+                ("ordering", models.IntegerField(default=0)),
+                (
+                    "parent",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="events_header_set",
+                        to="events.Event",
+                    ),
+                ),
             ],
-            options={
-                'abstract': False,
-            },
+            options={"abstract": False,},
         ),
         migrations.CreateModel(
-            name='Divider',
+            name="Divider",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('text', models.CharField(blank=True, max_length=240, verbose_name='Text')),
-                ('inverted', models.BooleanField(default=False, verbose_name='inverted')),
-                ('color', models.CharField(blank=True, choices=[('red', 'red')], max_length=20)),
-                ('alignment', models.CharField(blank=True, choices=[('left aligned', 'left aligned'), ('right aligned', 'right aligned')], max_length=30, verbose_name='alignment')),
-                ('hidden', models.BooleanField(default=False, verbose_name='hidden')),
-                ('section', models.BooleanField(default=False, verbose_name='section')),
-                ('region', models.CharField(max_length=255)),
-                ('ordering', models.IntegerField(default=0)),
-                ('parent', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='events_divider_set', to='events.Event')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "text",
+                    models.CharField(blank=True, max_length=240, verbose_name="Text"),
+                ),
+                (
+                    "inverted",
+                    models.BooleanField(default=False, verbose_name="inverted"),
+                ),
+                (
+                    "color",
+                    models.CharField(
+                        blank=True, choices=[("red", "red")], max_length=20
+                    ),
+                ),
+                (
+                    "alignment",
+                    models.CharField(
+                        blank=True,
+                        choices=[
+                            ("left aligned", "left aligned"),
+                            ("right aligned", "right aligned"),
+                        ],
+                        max_length=30,
+                        verbose_name="alignment",
+                    ),
+                ),
+                ("hidden", models.BooleanField(default=False, verbose_name="hidden")),
+                ("section", models.BooleanField(default=False, verbose_name="section")),
+                ("region", models.CharField(max_length=255)),
+                ("ordering", models.IntegerField(default=0)),
+                (
+                    "parent",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="events_divider_set",
+                        to="events.Event",
+                    ),
+                ),
             ],
-            options={
-                'abstract': False,
-            },
+            options={"abstract": False,},
         ),
         migrations.CreateModel(
-            name='Button',
+            name="Button",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('text', models.CharField(blank=True, max_length=240, verbose_name='Text')),
-                ('inverted', models.BooleanField(default=False, verbose_name='inverted')),
-                ('color', models.CharField(blank=True, choices=[('red', 'red')], max_length=20)),
-                ('style', models.CharField(blank=True, choices=[('', 'none'), ('basic', 'basic'), ('primary', 'primary'), ('tertiary', 'tertiary')], default='', max_length=20, verbose_name='style')),
-                ('target', models.CharField(max_length=800, verbose_name='Ziel')),
-                ('region', models.CharField(max_length=255)),
-                ('ordering', models.IntegerField(default=0)),
-                ('parent', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='events_button_set', to='events.Event')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "text",
+                    models.CharField(blank=True, max_length=240, verbose_name="Text"),
+                ),
+                (
+                    "inverted",
+                    models.BooleanField(default=False, verbose_name="inverted"),
+                ),
+                (
+                    "color",
+                    models.CharField(
+                        blank=True, choices=[("red", "red")], max_length=20
+                    ),
+                ),
+                (
+                    "style",
+                    models.CharField(
+                        blank=True,
+                        choices=[
+                            ("", "none"),
+                            ("basic", "basic"),
+                            ("primary", "primary"),
+                            ("tertiary", "tertiary"),
+                        ],
+                        default="",
+                        max_length=20,
+                        verbose_name="style",
+                    ),
+                ),
+                ("target", models.CharField(max_length=800, verbose_name="Ziel")),
+                ("region", models.CharField(max_length=255)),
+                ("ordering", models.IntegerField(default=0)),
+                (
+                    "parent",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="events_button_set",
+                        to="events.Event",
+                    ),
+                ),
             ],
-            options={
-                'abstract': False,
-            },
+            options={"abstract": False,},
         ),
     ]

@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0009_merge_20200324_2216'),
+        ("blog", "0009_merge_20200324_2216"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='divider',
-            name='header',
-            field=models.BooleanField(default=False, verbose_name='header'),
+            model_name="divider",
+            name="header",
+            field=models.BooleanField(default=False, verbose_name="header"),
         ),
     ]

@@ -6,12 +6,16 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('events', '0013_divider_header'),
+        ("events", "0013_divider_header"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='event',
-            options={'ordering': ['start_date'], 'verbose_name': 'event', 'verbose_name_plural': 'events'},
+            name="event",
+            options={
+                "ordering": ["start_date"],
+                "verbose_name": "event",
+                "verbose_name_plural": "events",
+            },
         ),
     ]

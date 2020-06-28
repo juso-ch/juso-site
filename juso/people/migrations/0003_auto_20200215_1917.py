@@ -6,18 +6,22 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('sections', '0001_initial'),
-        ('people', '0002_auto_20200215_1901'),
+        ("sections", "0001_initial"),
+        ("people", "0002_auto_20200215_1901"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='team',
-            options={'ordering': ['name'], 'verbose_name': 'team', 'verbose_name_plural': 'teams'},
+            name="team",
+            options={
+                "ordering": ["name"],
+                "verbose_name": "team",
+                "verbose_name_plural": "teams",
+            },
         ),
         migrations.AddField(
-            model_name='person',
-            name='sections',
-            field=models.ManyToManyField(to='sections.Section'),
+            model_name="person",
+            name="sections",
+            field=models.ManyToManyField(to="sections.Section"),
         ),
     ]

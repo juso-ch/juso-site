@@ -6,18 +6,12 @@ from django.utils.translation import gettext_lazy as _
 
 class Download(models.Model):
 
-    document = models.FileField(
-        verbose_name=_("File"),
-        upload_to='downloads/'
-    )
+    document = models.FileField(verbose_name=_("File"), upload_to="downloads/")
 
-    download_text = models.CharField(
-        max_length=200, verbose_name=_("download text")
-    )
+    download_text = models.CharField(max_length=200, verbose_name=_("download text"))
 
     link_classes = models.CharField(
-        max_length=200, blank=True,
-        verbose_name=_("link classes (css)")
+        max_length=200, blank=True, verbose_name=_("link classes (css)")
     )
 
     class Meta:
@@ -34,6 +28,4 @@ class DownloadInline(ContentEditorInline):
 
 
 def render_download(plugin, **kwargs):
-    return render_to_string('plugins/download.html', {
-        "plugin": plugin
-    })
+    return render_to_string("plugins/download.html", {"plugin": plugin})

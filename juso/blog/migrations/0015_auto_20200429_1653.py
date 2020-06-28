@@ -8,62 +8,152 @@ import juso.models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('forms', '0012_auto_20200426_1301'),
-        ('sections', '0005_category_color'),
-        ('blog', '0014_glossaryrichtext_update_glossary'),
+        ("forms", "0012_auto_20200426_1301"),
+        ("sections", "0005_category_color"),
+        ("blog", "0014_glossaryrichtext_update_glossary"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='ArticlePlugin',
+            name="ArticlePlugin",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('language_code', models.CharField(choices=[('de', 'German'), ('fr', 'French'), ('it', 'Italian')], default='de', max_length=10, verbose_name='language')),
-                ('count', models.IntegerField(default=3, verbose_name='count')),
-                ('template_key', models.CharField(choices=[('blog/plugins/default.html', 'default')], default='blog/plugins/default.html', max_length=100)),
-                ('region', models.CharField(max_length=255)),
-                ('ordering', models.IntegerField(default=0)),
-                ('articles', models.ManyToManyField(blank=True, related_name='_articleplugin_articles_+', related_query_name='+', to='blog.Article', verbose_name='articles')),
-                ('category', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='sections.Category', verbose_name='category')),
-                ('namespace', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='blog.NameSpace', verbose_name='namespace')),
-                ('parent', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='blog_articleplugin_set', to='blog.Article')),
-                ('sections', models.ManyToManyField(blank=True, related_name='_articleplugin_sections_+', related_query_name='+', to='sections.Section')),
-                ('translations', models.ManyToManyField(blank=True, related_name='_articleplugin_translations_+', to='blog.ArticlePlugin')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "language_code",
+                    models.CharField(
+                        choices=[("de", "German"), ("fr", "French"), ("it", "Italian")],
+                        default="de",
+                        max_length=10,
+                        verbose_name="language",
+                    ),
+                ),
+                ("count", models.IntegerField(default=3, verbose_name="count")),
+                (
+                    "template_key",
+                    models.CharField(
+                        choices=[("blog/plugins/default.html", "default")],
+                        default="blog/plugins/default.html",
+                        max_length=100,
+                    ),
+                ),
+                ("region", models.CharField(max_length=255)),
+                ("ordering", models.IntegerField(default=0)),
+                (
+                    "articles",
+                    models.ManyToManyField(
+                        blank=True,
+                        related_name="_articleplugin_articles_+",
+                        related_query_name="+",
+                        to="blog.Article",
+                        verbose_name="articles",
+                    ),
+                ),
+                (
+                    "category",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="+",
+                        to="sections.Category",
+                        verbose_name="category",
+                    ),
+                ),
+                (
+                    "namespace",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="+",
+                        to="blog.NameSpace",
+                        verbose_name="namespace",
+                    ),
+                ),
+                (
+                    "parent",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="blog_articleplugin_set",
+                        to="blog.Article",
+                    ),
+                ),
+                (
+                    "sections",
+                    models.ManyToManyField(
+                        blank=True,
+                        related_name="_articleplugin_sections_+",
+                        related_query_name="+",
+                        to="sections.Section",
+                    ),
+                ),
+                (
+                    "translations",
+                    models.ManyToManyField(
+                        blank=True,
+                        related_name="_articleplugin_translations_+",
+                        to="blog.ArticlePlugin",
+                    ),
+                ),
             ],
-            options={
-                'abstract': False,
-            },
+            options={"abstract": False,},
         ),
         migrations.CreateModel(
-            name='FormPlugin',
+            name="FormPlugin",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('region', models.CharField(max_length=255)),
-                ('ordering', models.IntegerField(default=0)),
-                ('form', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='+', related_query_name='+', to='forms.Form', verbose_name='form')),
-                ('parent', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='blog_formplugin_set', to='blog.Article')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("region", models.CharField(max_length=255)),
+                ("ordering", models.IntegerField(default=0)),
+                (
+                    "form",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="+",
+                        related_query_name="+",
+                        to="forms.Form",
+                        verbose_name="form",
+                    ),
+                ),
+                (
+                    "parent",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="blog_formplugin_set",
+                        to="blog.Article",
+                    ),
+                ),
             ],
-            options={
-                'abstract': False,
-            },
+            options={"abstract": False,},
         ),
-        migrations.RemoveField(
-            model_name='header',
-            name='parent',
-        ),
-        migrations.RemoveField(
-            model_name='button',
-            name='inverted',
-        ),
+        migrations.RemoveField(model_name="header", name="parent",),
+        migrations.RemoveField(model_name="button", name="inverted",),
         migrations.AlterField(
-            model_name='button',
-            name='style',
-            field=models.CharField(blank=True, choices=[('', 'none'), ('secondary', 'secondary')], default='', max_length=20, verbose_name='style'),
+            model_name="button",
+            name="style",
+            field=models.CharField(
+                blank=True,
+                choices=[("", "none"), ("secondary", "secondary")],
+                default="",
+                max_length=20,
+                verbose_name="style",
+            ),
         ),
-        migrations.DeleteModel(
-            name='Divider',
-        ),
-        migrations.DeleteModel(
-            name='Header',
-        ),
+        migrations.DeleteModel(name="Divider",),
+        migrations.DeleteModel(name="Header",),
     ]

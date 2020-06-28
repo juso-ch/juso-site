@@ -11,51 +11,87 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('events', '0001_initial'),
+        ("events", "0001_initial"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('people', '0001_initial'),
-        ('taggit', '0003_taggeditem_add_unique_index'),
+        ("people", "0001_initial"),
+        ("taggit", "0003_taggeditem_add_unique_index"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='team',
-            name='team',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='+', to='people.Team', verbose_name='team'),
+            model_name="team",
+            name="team",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="+",
+                to="people.Team",
+                verbose_name="team",
+            ),
         ),
         migrations.AddField(
-            model_name='richtext',
-            name='parent',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='events_richtext_set', to='events.Event'),
+            model_name="richtext",
+            name="parent",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="events_richtext_set",
+                to="events.Event",
+            ),
         ),
         migrations.AddField(
-            model_name='locationimage',
-            name='parent',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='events_locationimage_set', to='events.Location'),
+            model_name="locationimage",
+            name="parent",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="events_locationimage_set",
+                to="events.Location",
+            ),
         ),
         migrations.AddField(
-            model_name='location',
-            name='tags',
-            field=taggit.managers.TaggableManager(help_text='A comma-separated list of tags.', through='taggit.TaggedItem', to='taggit.Tag', verbose_name='Tags'),
+            model_name="location",
+            name="tags",
+            field=taggit.managers.TaggableManager(
+                help_text="A comma-separated list of tags.",
+                through="taggit.TaggedItem",
+                to="taggit.Tag",
+                verbose_name="Tags",
+            ),
         ),
         migrations.AddField(
-            model_name='image',
-            name='parent',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='events_image_set', to='events.Event'),
+            model_name="image",
+            name="parent",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="events_image_set",
+                to="events.Event",
+            ),
         ),
         migrations.AddField(
-            model_name='html',
-            name='parent',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='events_html_set', to='events.Event'),
+            model_name="html",
+            name="parent",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="events_html_set",
+                to="events.Event",
+            ),
         ),
         migrations.AddField(
-            model_name='external',
-            name='parent',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='events_external_set', to='events.Event'),
+            model_name="external",
+            name="parent",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="events_external_set",
+                to="events.Event",
+            ),
         ),
         migrations.AddField(
-            model_name='event',
-            name='author',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL, verbose_name='Autor'),
+            model_name="event",
+            name="author",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to=settings.AUTH_USER_MODEL,
+                verbose_name="Autor",
+            ),
         ),
     ]

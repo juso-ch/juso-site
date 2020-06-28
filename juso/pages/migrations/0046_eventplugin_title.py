@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('pages', '0045_auto_20200510_1144'),
+        ("pages", "0045_auto_20200510_1144"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='eventplugin',
-            name='title',
-            field=models.CharField(blank=True, max_length=180, verbose_name='Titel'),
+            model_name="eventplugin",
+            name="title",
+            field=models.CharField(blank=True, max_length=180, verbose_name="Titel"),
         ),
     ]

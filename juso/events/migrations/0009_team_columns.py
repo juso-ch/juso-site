@@ -6,13 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('events', '0008_remove_team_columns'),
+        ("events", "0008_remove_team_columns"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='team',
-            name='columns',
-            field=models.CharField(choices=[('two', '2'), ('three', '3'), ('four', '4'), ('five', '5')], default='three', max_length=10, verbose_name='columns'),
+            model_name="team",
+            name="columns",
+            field=models.CharField(
+                choices=[("two", "2"), ("three", "3"), ("four", "4"), ("five", "5")],
+                default="three",
+                max_length=10,
+                verbose_name="columns",
+            ),
         ),
     ]

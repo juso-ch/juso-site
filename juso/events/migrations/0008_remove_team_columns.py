@@ -6,12 +6,9 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('events', '0007_team_columns'),
+        ("events", "0007_team_columns"),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='team',
-            name='columns',
-        ),
+        migrations.RemoveField(model_name="team", name="columns",),
     ]

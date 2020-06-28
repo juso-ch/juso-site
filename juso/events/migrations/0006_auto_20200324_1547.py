@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('events', '0005_auto_20200215_2346'),
+        ("events", "0005_auto_20200215_2346"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='location',
-            name='lat',
-            field=models.FloatField(default=0, verbose_name='latitude'),
+            model_name="location",
+            name="lat",
+            field=models.FloatField(default=0, verbose_name="latitude"),
         ),
         migrations.AlterField(
-            model_name='location',
-            name='lng',
-            field=models.FloatField(default=0, verbose_name='longitude'),
+            model_name="location",
+            name="lng",
+            field=models.FloatField(default=0, verbose_name="longitude"),
         ),
     ]

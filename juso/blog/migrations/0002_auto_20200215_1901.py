@@ -10,30 +10,50 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('blog', '0001_initial'),
-        ('sections', '0001_initial'),
-        ('taggit', '0003_taggeditem_add_unique_index'),
+        ("blog", "0001_initial"),
+        ("sections", "0001_initial"),
+        ("taggit", "0003_taggeditem_add_unique_index"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='article',
-            name='category',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='sections.Category', verbose_name='category'),
+            model_name="article",
+            name="category",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to="sections.Category",
+                verbose_name="category",
+            ),
         ),
         migrations.AddField(
-            model_name='article',
-            name='namespace',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='blog.NameSpace', verbose_name='namespace'),
+            model_name="article",
+            name="namespace",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.PROTECT,
+                to="blog.NameSpace",
+                verbose_name="namespace",
+            ),
         ),
         migrations.AddField(
-            model_name='article',
-            name='section',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sections.Section', verbose_name='section'),
+            model_name="article",
+            name="section",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to="sections.Section",
+                verbose_name="section",
+            ),
         ),
         migrations.AddField(
-            model_name='article',
-            name='tags',
-            field=taggit.managers.TaggableManager(blank=True, help_text='A comma-separated list of tags.', through='taggit.TaggedItem', to='taggit.Tag', verbose_name='Tags'),
+            model_name="article",
+            name="tags",
+            field=taggit.managers.TaggableManager(
+                blank=True,
+                help_text="A comma-separated list of tags.",
+                through="taggit.TaggedItem",
+                to="taggit.Tag",
+                verbose_name="Tags",
+            ),
         ),
     ]

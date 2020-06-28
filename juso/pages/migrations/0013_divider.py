@@ -7,27 +7,59 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('pages', '0012_button'),
+        ("pages", "0012_button"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Divider',
+            name="Divider",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('text', models.CharField(max_length=240, verbose_name='Text')),
-                ('inverted', models.BooleanField(default=False, verbose_name='inverted')),
-                ('color', models.CharField(blank=True, choices=[('red', 'red')], max_length=20)),
-                ('alignment', models.CharField(blank=True, choices=[('left aligned', 'left aligned'), ('right aligned', 'right aligned')], max_length=30, verbose_name='alignment')),
-                ('hidden', models.BooleanField(default=False, verbose_name='hidden')),
-                ('section', models.BooleanField(default=False, verbose_name='section')),
-                ('header', models.BooleanField(default=False, verbose_name='header')),
-                ('region', models.CharField(max_length=255)),
-                ('ordering', models.IntegerField(default=0)),
-                ('parent', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='pages_divider_set', to='pages.Page')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("text", models.CharField(max_length=240, verbose_name="Text")),
+                (
+                    "inverted",
+                    models.BooleanField(default=False, verbose_name="inverted"),
+                ),
+                (
+                    "color",
+                    models.CharField(
+                        blank=True, choices=[("red", "red")], max_length=20
+                    ),
+                ),
+                (
+                    "alignment",
+                    models.CharField(
+                        blank=True,
+                        choices=[
+                            ("left aligned", "left aligned"),
+                            ("right aligned", "right aligned"),
+                        ],
+                        max_length=30,
+                        verbose_name="alignment",
+                    ),
+                ),
+                ("hidden", models.BooleanField(default=False, verbose_name="hidden")),
+                ("section", models.BooleanField(default=False, verbose_name="section")),
+                ("header", models.BooleanField(default=False, verbose_name="header")),
+                ("region", models.CharField(max_length=255)),
+                ("ordering", models.IntegerField(default=0)),
+                (
+                    "parent",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="pages_divider_set",
+                        to="pages.Page",
+                    ),
+                ),
             ],
-            options={
-                'abstract': False,
-            },
+            options={"abstract": False,},
         ),
     ]

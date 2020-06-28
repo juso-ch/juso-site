@@ -7,32 +7,54 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('sections', '0007_auto_20200502_2048'),
-        ('link_collections', '0001_initial'),
+        ("sections", "0007_auto_20200502_2048"),
+        ("link_collections", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='collection',
-            options={'ordering': ['name'], 'verbose_name': 'Sammlung', 'verbose_name_plural': 'Sammlungen'},
+            name="collection",
+            options={
+                "ordering": ["name"],
+                "verbose_name": "Sammlung",
+                "verbose_name_plural": "Sammlungen",
+            },
         ),
         migrations.AlterModelOptions(
-            name='link',
-            options={'ordering': ['order'], 'verbose_name': 'Link', 'verbose_name_plural': 'Links'},
+            name="link",
+            options={
+                "ordering": ["order"],
+                "verbose_name": "Link",
+                "verbose_name_plural": "Links",
+            },
         ),
         migrations.AlterField(
-            model_name='collection',
-            name='section',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sections.Section', verbose_name='Sektion'),
+            model_name="collection",
+            name="section",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to="sections.Section",
+                verbose_name="Sektion",
+            ),
         ),
         migrations.AlterField(
-            model_name='link',
-            name='category',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='sections.Category', verbose_name='Kategorie'),
+            model_name="link",
+            name="category",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to="sections.Category",
+                verbose_name="Kategorie",
+            ),
         ),
         migrations.AlterField(
-            model_name='link',
-            name='collection',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='link_collections.Collection', verbose_name='Sammlung'),
+            model_name="link",
+            name="collection",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to="link_collections.Collection",
+                verbose_name="Sammlung",
+            ),
         ),
     ]

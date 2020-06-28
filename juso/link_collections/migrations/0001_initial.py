@@ -9,37 +9,76 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('sections', '0007_auto_20200502_2048'),
+        ("sections", "0007_auto_20200502_2048"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Collection',
+            name="Collection",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=120, verbose_name='Name')),
-                ('section', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sections.Section', verbose_name='section')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=120, verbose_name="Name")),
+                (
+                    "section",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="sections.Section",
+                        verbose_name="section",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'collection',
-                'verbose_name_plural': 'collections',
-                'ordering': ['name'],
+                "verbose_name": "collection",
+                "verbose_name_plural": "collections",
+                "ordering": ["name"],
             },
         ),
         migrations.CreateModel(
-            name='Link',
+            name="Link",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('text', models.CharField(max_length=120, verbose_name='Text')),
-                ('target', models.URLField(verbose_name='Ziel')),
-                ('order', models.IntegerField(default=0)),
-                ('category', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='sections.Category', verbose_name='category')),
-                ('collection', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='link_collections.Collection', verbose_name='Collection')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("text", models.CharField(max_length=120, verbose_name="Text")),
+                ("target", models.URLField(verbose_name="Ziel")),
+                ("order", models.IntegerField(default=0)),
+                (
+                    "category",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        to="sections.Category",
+                        verbose_name="category",
+                    ),
+                ),
+                (
+                    "collection",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="link_collections.Collection",
+                        verbose_name="Collection",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'link',
-                'verbose_name_plural': 'links',
-                'ordering': ['order'],
+                "verbose_name": "link",
+                "verbose_name_plural": "links",
+                "ordering": ["order"],
             },
         ),
     ]

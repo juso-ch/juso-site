@@ -17,27 +17,19 @@ def form_view(request, pk):
     if request.POST:
         return process_form(request, form)
 
-    return HttpResponse(render_to_string(
-        'forms/form.html', {
-            'form': form,
-            'disable_js': True,
-        }
-    ))
+    return HttpResponse(
+        render_to_string("forms/form.html", {"form": form, "disable_js": True,})
+    )
 
 
 def process_form(request, form):
     if form.is_valid():
         # Save entry
-        entry = models.FormEntry.objects.create(
-            form=form.form,
-            ip=client_ip(request),
-        )
+        entry = models.FormEntry.objects.create(form=form.form, ip=client_ip(request),)
 
         for field in form.form.forms_formfield_set.all():
             models.FormEntryValue.objects.create(
-                field=field,
-                form_entry=entry,
-                value=form.cleaned_data[field.slug],
+                field=field, form_entry=entry, value=form.cleaned_data[field.slug],
             )
 
         if form.form.webhook:
@@ -46,22 +38,27 @@ def process_form(request, form):
             requests.post(url, data=data)
 
         if form.form.email:
-            message = (f'Form: {form.form.title} ({form.form.pk})'
-                       f'\nEntry-ID: {entry.pk}'
-                       f'\nCreated: {entry.created}'
-                       f'\nIP: {entry.ip}'
-                       '\n--------------------------')
+            message = (
+                f"Form: {form.form.title} ({form.form.pk})"
+                f"\nEntry-ID: {entry.pk}"
+                f"\nCreated: {entry.created}"
+                f"\nIP: {entry.ip}"
+                "\n--------------------------"
+            )
             for field in form.form.forms_formfield_set.all():
-                message += f'\n{field.name}: {form.cleaned_data[field.slug]}'
-            message += '\n'
+                message += f"\n{field.name}: {form.cleaned_data[field.slug]}"
+            message += "\n"
             send_mail(
-                f'Form Entry: {form.form.title}',
-                message, 'form@juso.ch', [form.form.email], False,
+                f"Form Entry: {form.form.title}",
+                message,
+                "form@juso.ch",
+                [form.form.email],
+                False,
             )
 
         if form.form.success_redirect:
             response = HttpResponse(status=201)
-            response['URL'] = form.form.success_redirect
+            response["URL"] = form.form.success_redirect
             return response
 
         if form.form.success_message:
@@ -69,9 +66,6 @@ def process_form(request, form):
 
         form = form.form.get_instance(None)
 
-    return HttpResponse(render_to_string(
-        'forms/form.html', {
-            'form': form,
-            'disable_js': True,
-        }
-    ))
+    return HttpResponse(
+        render_to_string("forms/form.html", {"form": form, "disable_js": True,})
+    )

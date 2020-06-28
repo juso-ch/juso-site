@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('pages', '0054_articleplugin_structured_data'),
+        ("pages", "0054_articleplugin_structured_data"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='page',
-            name='logo',
-            field=models.TextField(blank=True, verbose_name='logo'),
+            model_name="page",
+            name="logo",
+            field=models.TextField(blank=True, verbose_name="logo"),
         ),
     ]

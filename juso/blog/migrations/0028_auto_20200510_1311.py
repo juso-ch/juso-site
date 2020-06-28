@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0027_auto_20200510_1144'),
+        ("blog", "0027_auto_20200510_1144"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='eventplugin',
-            name='title',
-            field=models.CharField(blank=True, max_length=180, verbose_name='Titel'),
+            model_name="eventplugin",
+            name="title",
+            field=models.CharField(blank=True, max_length=180, verbose_name="Titel"),
         ),
         migrations.AlterField(
-            model_name='wpimport',
-            name='slug',
-            field=models.SlugField(unique=True, verbose_name='Slug'),
+            model_name="wpimport",
+            name="slug",
+            field=models.SlugField(unique=True, verbose_name="Slug"),
         ),
     ]

@@ -6,22 +6,65 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('forms', '0011_auto_20200413_1247'),
+        ("forms", "0011_auto_20200413_1247"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='formfield',
-            name='input_type',
-            field=models.CharField(choices=[('text', 'text'), ('email', 'email'), ('boolean', 'boolean'), ('date', 'date'), ('datetime', 'datetime'), ('time', 'time'), ('decimal', 'decimal'), ('file', 'file'), ('image', 'image'), ('int', 'integer'), ('choice', 'choice'), ('multi', 'multiple choice'), ('url', 'url'), ('hidden', 'hidden'), ('section', 'section')], max_length=140, verbose_name='type'),
+            model_name="formfield",
+            name="input_type",
+            field=models.CharField(
+                choices=[
+                    ("text", "text"),
+                    ("email", "email"),
+                    ("boolean", "boolean"),
+                    ("date", "date"),
+                    ("datetime", "datetime"),
+                    ("time", "time"),
+                    ("decimal", "decimal"),
+                    ("file", "file"),
+                    ("image", "image"),
+                    ("int", "integer"),
+                    ("choice", "choice"),
+                    ("multi", "multiple choice"),
+                    ("url", "url"),
+                    ("hidden", "hidden"),
+                    ("section", "section"),
+                ],
+                max_length=140,
+                verbose_name="type",
+            ),
         ),
         migrations.AlterField(
-            model_name='formfield',
-            name='size',
-            field=models.TextField(choices=[('one', 'one'), ('two', 'two'), ('three', 'three'), ('four', 'four'), ('five', 'five'), ('six', 'six'), ('seven', 'seven'), ('eight', 'eight'), ('nine', 'nine'), ('ten', 'ten'), ('eleven', 'eleven'), ('twelve', 'twelve'), ('thirteen', 'thirteen'), ('fourteen', 'fourteen'), ('fifteen', 'fifteen'), ('sixteen', 'sixteen')], default='sixteen', verbose_name='size'),
+            model_name="formfield",
+            name="size",
+            field=models.TextField(
+                choices=[
+                    ("one", "one"),
+                    ("two", "two"),
+                    ("three", "three"),
+                    ("four", "four"),
+                    ("five", "five"),
+                    ("six", "six"),
+                    ("seven", "seven"),
+                    ("eight", "eight"),
+                    ("nine", "nine"),
+                    ("ten", "ten"),
+                    ("eleven", "eleven"),
+                    ("twelve", "twelve"),
+                    ("thirteen", "thirteen"),
+                    ("fourteen", "fourteen"),
+                    ("fifteen", "fifteen"),
+                    ("sixteen", "sixteen"),
+                ],
+                default="sixteen",
+                verbose_name="size",
+            ),
         ),
         migrations.AddIndex(
-            model_name='formfield',
-            index=models.Index(fields=['parent', 'slug'], name='forms_formf_parent__6a8ee3_idx'),
+            model_name="formfield",
+            index=models.Index(
+                fields=["parent", "slug"], name="forms_formf_parent__6a8ee3_idx"
+            ),
         ),
     ]

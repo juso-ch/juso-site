@@ -12,7 +12,7 @@ def copy_plugins(model_class, old_parent, parent):
         plugin.save()
 
 
-class CopyContentMixin():
+class CopyContentMixin:
 
     plugins = []
 
@@ -23,7 +23,7 @@ class CopyContentMixin():
             if page.pk in duplicated:
                 continue
 
-            page.slug = page.slug + '-copy'
+            page.slug = page.slug + "-copy"
             parent = self.copy_descendants(page, duplicated)
             parent.save()
 
@@ -33,9 +33,9 @@ class CopyContentMixin():
         parent.pk = None
         parent.id = None
 
-        if hasattr(parent, 'app_instance_namespace'):
-            parent.app_instance_namespace = ''
-            parent.application = ''
+        if hasattr(parent, "app_instance_namespace"):
+            parent.app_instance_namespace = ""
+            parent.application = ""
 
         parent.save()
 
@@ -59,50 +59,53 @@ class CopyContentMixin():
     copy_selected.short_description = _("copy selected")
 
 
-meta_fieldset = (_('meta'), {
-    'classes': ('tabbed',),
-    'fields': (
-        'meta_title',
-        'meta_author',
-        'meta_description',
-        'meta_image',
-        'meta_image_ppoi',
-        'meta_robots',
-        'meta_canonical',
-    )
-})
+meta_fieldset = (
+    _("meta"),
+    {
+        "classes": ("tabbed",),
+        "fields": (
+            "meta_title",
+            "meta_author",
+            "meta_description",
+            "meta_image",
+            "meta_image_ppoi",
+            "meta_robots",
+            "meta_canonical",
+        ),
+    },
+)
 
 
 def render_embed(plugin, **kwargs):
-    return render_to_string('plugins/embed.html', {
-        'json': oembed_json(plugin.url),
-        'html': mark_safe(oembed_html(plugin.url)),
-    })
+    return render_to_string(
+        "plugins/embed.html",
+        {"json": oembed_json(plugin.url), "html": mark_safe(oembed_html(plugin.url)),},
+    )
 
 
 number_words = {
-    1: 'one',
-    2: 'two',
-    3: 'three',
-    4: 'four',
-    5: 'five',
-    6: 'six',
-    7: 'seven',
-    8: 'eight',
-    9: 'nine',
-    10: 'ten',
-    11: 'eleven',
-    12: 'twelve',
-    13: 'thirteen',
-    14: 'fourteen',
-    15: 'fifteen',
-    16: 'sixteen',
-    17: 'seventeen',
-    18: 'eighteen',
+    1: "one",
+    2: "two",
+    3: "three",
+    4: "four",
+    5: "five",
+    6: "six",
+    7: "seven",
+    8: "eight",
+    9: "nine",
+    10: "ten",
+    11: "eleven",
+    12: "twelve",
+    13: "thirteen",
+    14: "fourteen",
+    15: "fifteen",
+    16: "sixteen",
+    17: "seventeen",
+    18: "eighteen",
 }
 
 
 def number_word(number):
     if number in number_words.keys():
         return number_words[number]
-    return ''
+    return ""

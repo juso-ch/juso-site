@@ -9,45 +9,42 @@ from feincms3.mixins import TemplateMixin
 from feincms3_sites.middleware import current_site, set_current_site
 
 from juso.forms.forms import get_form_instance
+
 # Create your models here.
 from juso.sections.models import ContentMixin, get_template_list
 from juso.utils import number_word
 
 INPUT_TYPES = (
-    ('text', _("text")),
-    ('email', _("email")),
-    ('boolean', _("boolean")),
-    ('date', _("date")),
-    ('datetime', _("datetime")),
-    ('time', _("time")),
-    ('decimal', _("decimal")),
-    ('file', _("file")),
-    ('image', _("image")),
-    ('int', _("integer")),
-    ('choice', _("choice")),
-    ('multi', _("multiple choice")),
-    ('url', _("url")),
-    ('hidden', _("hidden")),
-    ('section', _("section")),
+    ("text", _("text")),
+    ("email", _("email")),
+    ("boolean", _("boolean")),
+    ("date", _("date")),
+    ("datetime", _("datetime")),
+    ("time", _("time")),
+    ("decimal", _("decimal")),
+    ("file", _("file")),
+    ("image", _("image")),
+    ("int", _("integer")),
+    ("choice", _("choice")),
+    ("multi", _("multiple choice")),
+    ("url", _("url")),
+    ("hidden", _("hidden")),
+    ("section", _("section")),
 )
 
 
 SIZES = (
-    ('one', _("one")),
-    ('one-half', _("one half")),
-    ('one-third', _("one third")),
-    ('one-fourth', _("one fouth")),
-    ('three-fourths', _("thre fourths")),
-    ('two-thirds', _("two thirds")),
+    ("one", _("one")),
+    ("one-half", _("one half")),
+    ("one-third", _("one third")),
+    ("one-fourth", _("one fouth")),
+    ("three-fourths", _("thre fourths")),
+    ("two-thirds", _("two thirds")),
 )
 
 
 class Form(ContentMixin):
-    TEMPLATES = get_template_list('form', (
-        (
-            'default', ('fields', 'handlers'),
-        ),
-    ))
+    TEMPLATES = get_template_list("form", (("default", ("fields", "handlers"),),))
     fullwidth = models.BooleanField(_("full width"))
     submit = models.CharField(max_length=200)
     size = models.TextField(_("size"), default="one", choices=SIZES)
@@ -63,15 +60,10 @@ class Form(ContentMixin):
     class Meta:
         verbose_name = _("form")
         verbose_name_plural = _("forms")
-        ordering = ['title']
+        ordering = ["title"]
 
     def get_absolute_url(self):
-        return reverse(
-            'forms:form-detail',
-            kwargs = {
-                'pk': self.pk
-            }
-        )
+        return reverse("forms:form-detail", kwargs={"pk": self.pk})
 
     def count(self):
         return self.formentry_set.count()
@@ -82,10 +74,7 @@ PluginBase = create_plugin_base(Form)
 
 class FormField(PluginBase):
     name = models.CharField(_("name"), max_length=140)
-    input_type = models.CharField(
-        _("type"), choices=INPUT_TYPES,
-        max_length=140
-    )
+    input_type = models.CharField(_("type"), choices=INPUT_TYPES, max_length=140)
 
     slug = models.SlugField()
     required = models.BooleanField(_("required"))
@@ -94,17 +83,14 @@ class FormField(PluginBase):
     initial = models.TextField(_("initial"), max_length=240, blank=True)
     size = models.TextField(_("size"), default="one", choices=SIZES)
 
-
     def __str__(self):
         return self.name
 
     class Meta:
         verbose_name = _("form field")
         verbose_name_plural = _("form fields")
-        ordering = ['ordering']
-        indexes = [
-            models.Index(fields=('parent', 'slug'))
-        ]
+        ordering = ["ordering"]
+        indexes = [models.Index(fields=("parent", "slug"))]
 
 
 class FormEntry(models.Model):
@@ -123,8 +109,7 @@ class FormEntry(models.Model):
 
 class FormEntryValue(models.Model):
     form_entry = models.ForeignKey(
-        FormEntry, models.CASCADE,
-        related_name="fields", verbose_name=_("fields")
+        FormEntry, models.CASCADE, related_name="fields", verbose_name=_("fields")
     )
     field = models.ForeignKey(FormField, models.CASCADE)
     value = models.TextField(_("value"), blank=True)

@@ -8,30 +8,26 @@ from juso.forms.models import Form
 
 class FormPlugin(models.Model):
     form = models.ForeignKey(
-        Form, models.CASCADE,
+        Form,
+        models.CASCADE,
         verbose_name=_("form"),
-        related_name='%(app_label)s_%(class)s',
+        related_name="%(app_label)s_%(class)s",
     )
 
     class Meta:
         abstract = True
 
+
 class FormPluginInline(ContentEditorInline):
-    autocomplete_fields = [
-        'form'
-    ]
+    autocomplete_fields = ["form"]
 
 
 def render_form(form_plugin, request=None):
     form = form_plugin.form.get_instance(request)
 
-    form_html = render_to_string('forms/form.html', {
-        'form': form
-    })
+    form_html = render_to_string("forms/form.html", {"form": form})
 
-    script = render_to_string('forms/script.html', {
-        'form': form
-    })
+    script = render_to_string("forms/script.html", {"form": form})
 
     return f"""
 <div class="wrapper" id="form-wrapper-{form_plugin.id}">

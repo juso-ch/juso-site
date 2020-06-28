@@ -7,18 +7,28 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('forms', '0022_auto_20200624_2239'),
+        ("forms", "0022_auto_20200624_2239"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='form',
-            name='meta_video_url',
-            field=models.URLField(blank=True, help_text='Set the Open Graph video to an url.', verbose_name='video url'),
+            model_name="form",
+            name="meta_video_url",
+            field=models.URLField(
+                blank=True,
+                help_text="Set the Open Graph video to an url.",
+                verbose_name="video url",
+            ),
         ),
         migrations.AlterField(
-            model_name='form',
-            name='meta_video',
-            field=models.FileField(blank=True, help_text='Set the Open Graph video.', upload_to='meta/video/%Y/%m', validators=[django.core.validators.FileExtensionValidator(['mp4'])], verbose_name='video'),
+            model_name="form",
+            name="meta_video",
+            field=models.FileField(
+                blank=True,
+                help_text="Set the Open Graph video.",
+                upload_to="meta/video/%Y/%m",
+                validators=[django.core.validators.FileExtensionValidator(["mp4"])],
+                verbose_name="video",
+            ),
         ),
     ]

@@ -6,28 +6,28 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('glossary', '0005_auto_20200505_2351'),
+        ("glossary", "0005_auto_20200505_2351"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='entry',
-            name='auto_pattern',
-            field=models.BooleanField(default=True, verbose_name='auto-pattern'),
+            model_name="entry",
+            name="auto_pattern",
+            field=models.BooleanField(default=True, verbose_name="auto-pattern"),
         ),
         migrations.AlterField(
-            model_name='entry',
-            name='name',
-            field=models.CharField(max_length=40, verbose_name='name'),
+            model_name="entry",
+            name="name",
+            field=models.CharField(max_length=40, verbose_name="name"),
         ),
         migrations.AlterField(
-            model_name='entry',
-            name='pattern',
-            field=models.CharField(blank=True, max_length=200, verbose_name='pattern'),
+            model_name="entry",
+            name="pattern",
+            field=models.CharField(blank=True, max_length=200, verbose_name="pattern"),
         ),
         migrations.AlterField(
-            model_name='entry',
-            name='slug',
-            field=models.SlugField(unique=True, verbose_name='slug'),
+            model_name="entry",
+            name="slug",
+            field=models.SlugField(unique=True, verbose_name="slug"),
         ),
     ]

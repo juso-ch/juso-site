@@ -9,23 +9,25 @@ from juso.people.models import Team
 
 class TeamPlugin(models.Model):
     team = models.ForeignKey(
-        Team, models.CASCADE,
-        verbose_name=_("team"),
-        related_name="+"
+        Team, models.CASCADE, verbose_name=_("team"), related_name="+"
     )
 
     template_key = models.CharField(
-        max_length=100, default='teams/default.html',
+        max_length=100,
+        default="teams/default.html",
         choices=settings.TEAM_TEMPLATE_CHOICES,
     )
 
     columns = models.CharField(
-        _("columns"), default="three", max_length=10, choices=(
-            ('two', _("2")),
-            ('three', _("3")),
-            ('four', _("4")),
-            ('five', _("5")),
-        )
+        _("columns"),
+        default="three",
+        max_length=10,
+        choices=(
+            ("two", _("2")),
+            ("three", _("3")),
+            ("four", _("4")),
+            ("five", _("5")),
+        ),
     )
 
     class Meta:
@@ -39,14 +41,11 @@ class TeamPlugin(models.Model):
 
 class TeamPluginInline(ContentEditorInline):
     autocomplete_fields = [
-        'team',
+        "team",
     ]
 
 
 def render_team(plugin, **kwargs):
     return render_to_string(
-        plugin.template_key, {
-            'team': plugin.team,
-            'plugin': plugin,
-        }
+        plugin.template_key, {"team": plugin.team, "plugin": plugin,}
     )

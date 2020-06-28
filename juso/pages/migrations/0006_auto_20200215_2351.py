@@ -7,20 +7,32 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('events', '0005_auto_20200215_2346'),
-        ('blog', '0004_auto_20200215_2346'),
-        ('pages', '0005_auto_20200215_2346'),
+        ("events", "0005_auto_20200215_2346"),
+        ("blog", "0004_auto_20200215_2346"),
+        ("pages", "0005_auto_20200215_2346"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='page',
-            name='event_namespace',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='events.NameSpace', verbose_name='namespace (event)'),
+            model_name="page",
+            name="event_namespace",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to="events.NameSpace",
+                verbose_name="namespace (event)",
+            ),
         ),
         migrations.AlterField(
-            model_name='page',
-            name='blog_namespace',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='blog.NameSpace', verbose_name='namespace (blog)'),
+            model_name="page",
+            name="blog_namespace",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to="blog.NameSpace",
+                verbose_name="namespace (blog)",
+            ),
         ),
     ]

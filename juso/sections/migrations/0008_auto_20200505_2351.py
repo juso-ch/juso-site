@@ -9,34 +9,52 @@ import imagefield.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('feincms3_sites', '0004_site_is_active'),
+        ("feincms3_sites", "0004_site_is_active"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('sections', '0007_auto_20200502_2048'),
+        ("sections", "0007_auto_20200502_2048"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='section',
-            options={'ordering': ['name'], 'verbose_name': 'Sektion', 'verbose_name_plural': 'Sektionen'},
+            name="section",
+            options={
+                "ordering": ["name"],
+                "verbose_name": "Sektion",
+                "verbose_name_plural": "Sektionen",
+            },
         ),
         migrations.AlterField(
-            model_name='category',
-            name='color',
-            field=models.CharField(blank=True, max_length=7, verbose_name='Farbe'),
+            model_name="category",
+            name="color",
+            field=models.CharField(blank=True, max_length=7, verbose_name="Farbe"),
         ),
         migrations.AlterField(
-            model_name='category',
-            name='header_image',
-            field=imagefield.fields.ImageField(blank=True, height_field='header_image_height', null=True, upload_to='', verbose_name='Header Bild', width_field='header_image_width'),
+            model_name="category",
+            name="header_image",
+            field=imagefield.fields.ImageField(
+                blank=True,
+                height_field="header_image_height",
+                null=True,
+                upload_to="",
+                verbose_name="Header Bild",
+                width_field="header_image_width",
+            ),
         ),
         migrations.AlterField(
-            model_name='section',
-            name='site',
-            field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='section', to='feincms3_sites.Site', verbose_name='Seite'),
+            model_name="section",
+            name="site",
+            field=models.OneToOneField(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="section",
+                to="feincms3_sites.Site",
+                verbose_name="Seite",
+            ),
         ),
         migrations.AlterField(
-            model_name='section',
-            name='users',
-            field=models.ManyToManyField(to=settings.AUTH_USER_MODEL, verbose_name='Benutzer*innen'),
+            model_name="section",
+            name="users",
+            field=models.ManyToManyField(
+                to=settings.AUTH_USER_MODEL, verbose_name="Benutzer*innen"
+            ),
         ),
     ]

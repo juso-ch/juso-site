@@ -21,9 +21,7 @@ from juso.blog.renderer import renderer
 
 
 def articles_for_page(page, qs=None):
-    qs = qs if qs else models.Article.objects.filter(
-        language_code=page.language_code
-    )
+    qs = qs if qs else models.Article.objects.filter(language_code=page.language_code)
 
     if page.category:
         qs = qs.filter(category=page.category)
@@ -33,7 +31,7 @@ def articles_for_page(page, qs=None):
 
     if page.sections.exists():
         qs = qs.filter(section__in=page.sections.all())
-    elif hasattr(page.site, 'section'):
+    elif hasattr(page.site, "section"):
         qs = qs.filter(section=page.site.section)
 
     return qs.filter(publication_date__lte=timezone.now())
@@ -44,45 +42,48 @@ def article_list(request):
     page.activate_language(request)
 
     article_list = articles_for_page(page)
-    category_list = Category.objects.filter(
-        article__in=article_list
-    ).distinct()
+    category_list = Category.objects.filter(article__in=article_list).distinct()
 
-    if request.GET.get('category', None):
+    if request.GET.get("category", None):
         article_list = article_list.filter(
-            category__slug__in=request.GET.getlist('category')
+            category__slug__in=request.GET.getlist("category")
         )
 
-    q = ''
+    q = ""
 
-    if request.GET.get('search', ''):
-        vector = SearchVector('title', weight='A')\
-                + SearchVector('category__name', weight='A')\
-                + SearchVector('blog_richtext_set__text', weight='A')\
-                + SearchVector('blog_glossaryrichtext_set__text', weight='A')
-        query = consume(request.GET['search'])
-        q = request.GET['search']
-        article_list = article_list.annotate(
-            rank=SearchRank(vector, query)
-        ).filter(rank__gt=0).order_by(
-            '-publication_date__year', '-rank'
-        ).distinct()
+    if request.GET.get("search", ""):
+        vector = (
+            SearchVector("title", weight="A")
+            + SearchVector("category__name", weight="A")
+            + SearchVector("blog_richtext_set__text", weight="A")
+            + SearchVector("blog_glossaryrichtext_set__text", weight="A")
+        )
+        query = consume(request.GET["search"])
+        q = request.GET["search"]
+        article_list = (
+            article_list.annotate(rank=SearchRank(vector, query))
+            .filter(rank__gt=0)
+            .order_by("-publication_date__year", "-rank")
+            .distinct()
+        )
 
     ancestors = list(page.ancestors().reverse())
     return render_list(
         request,
         article_list,
         {
-            'page': page,
-            'q': q,
-            'header_image': page.get_header_image(),
-            'vapid_public_key': settings.VAPID_PUBLIC_KEY,
-            'category_list': category_list,
+            "page": page,
+            "q": q,
+            "header_image": page.get_header_image(),
+            "vapid_public_key": settings.VAPID_PUBLIC_KEY,
+            "category_list": category_list,
             "meta_tags": meta_tags([page] + ancestors, request=request),
-            'regions': Regions.from_item(
-                page, renderer=pages.renderer.renderer, timeout=60,
-                inherit_from=ancestors
-            )
+            "regions": Regions.from_item(
+                page,
+                renderer=pages.renderer.renderer,
+                timeout=60,
+                inherit_from=ancestors,
+            ),
         },
         paginate_by=12,
     )
@@ -92,9 +93,7 @@ def category_list(request, slug):
     page = page_for_app_request(request)
     page.activate_language(request)
 
-    articles = articles_for_page(page).filter(
-        category__slug=slug
-    )
+    articles = articles_for_page(page).filter(category__slug=slug)
 
     ancestors = list(page.ancestors().reverse())
 
@@ -102,13 +101,15 @@ def category_list(request, slug):
         request,
         articles,
         {
-            'page': page,
-            'header_image': page.get_header_image(),
+            "page": page,
+            "header_image": page.get_header_image(),
             "meta_tags": meta_tags([page] + ancestors, request=request),
-            'regions': Regions.from_item(
-                page, renderer=pages.renderer.renderer, timeout=60,
-                inherit_from=ancestors
-            )
+            "regions": Regions.from_item(
+                page,
+                renderer=pages.renderer.renderer,
+                timeout=60,
+                inherit_from=ancestors,
+            ),
         },
         paginate_by=10,
     )
@@ -118,14 +119,13 @@ def article_detail(request, slug):
     page = page_for_app_request(request)
     page.activate_language(request)
 
-    article = get_object_or_404(
-        articles_for_page(page),
-        slug=slug
-    )
+    article = get_object_or_404(articles_for_page(page), slug=slug)
 
     ancestors = list(page.ancestors().reverse())
-    edit = request.user.is_authenticated and \
-            request.user.section_set.filter(pk=article.section.pk).exists()
+    edit = (
+        request.user.is_authenticated
+        and request.user.section_set.filter(pk=article.section.pk).exists()
+    )
 
     return render(
         request,
@@ -134,25 +134,23 @@ def article_detail(request, slug):
             "page": page,
             "article": article,
             "obj": article,
-            'edit': edit,
-            'header_image': article.get_header_image() or page.get_header_image(),
+            "edit": edit,
+            "header_image": article.get_header_image() or page.get_header_image(),
             "title": article.title,
-            "meta_tags": meta_tags(
-                [article, page] + ancestors,
-                request=request
-            ),
-            "regions": Regions.from_item(
-                article, renderer=renderer, timeout=60,
-            ),
+            "meta_tags": meta_tags([article, page] + ancestors, request=request),
+            "regions": Regions.from_item(article, renderer=renderer, timeout=60,),
             "page_regions": Regions.from_item(
-                page, renderer=pages.renderer.renderer,
-                timeout=60, inherit_from=ancestors)
+                page,
+                renderer=pages.renderer.renderer,
+                timeout=60,
+                inherit_from=ancestors,
+            ),
         },
     )
 
 
 class ArticleSitemap(Sitemap):
-    changefreq = 'never'
+    changefreq = "never"
 
     def __init__(self, blog_page):
         self.page = blog_page
@@ -172,7 +170,7 @@ class ArticleFeed(Feed):
     def get_object(self, request, *args, **kwargs):
         page = page_for_app_request(request)
         page.activate_language(request)
-        self.limit = int(request.GET.get('limit', '30'))
+        self.limit = int(request.GET.get("limit", "30"))
         return page
 
     def title(self, obj):
@@ -190,12 +188,14 @@ class ArticleFeed(Feed):
     def categories(self, obj):
         if obj.category:
             return obj.category.name
-        return [x for x in articles_for_page(obj).values_list(
-            'category__name', flat=True
-        ) if x is not None]
+        return [
+            x
+            for x in articles_for_page(obj).values_list("category__name", flat=True)
+            if x is not None
+        ]
 
     def items(self, obj):
-        return articles_for_page(obj)[:self.limit]
+        return articles_for_page(obj)[: self.limit]
 
     def item_title(self, item):
         return item.title
@@ -206,12 +206,12 @@ class ArticleFeed(Feed):
     def item_author_name(self, item):
         if item.author:
             return item.author.full_name
-        return ''
+        return ""
 
     def item_author_email(self, item):
         if item.author:
             return item.author.email
-        return ''
+        return ""
 
     def item_pubdate(self, item):
         return item.publication_date
@@ -221,5 +221,3 @@ class ArticleFeed(Feed):
 
     def item_categories(self, item):
         return [item.category.name] if item.category else None
-
-

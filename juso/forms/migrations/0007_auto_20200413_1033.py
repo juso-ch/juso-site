@@ -6,13 +6,34 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('forms', '0006_auto_20200413_1027'),
+        ("forms", "0006_auto_20200413_1027"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='formfield',
-            name='size',
-            field=models.TextField(choices=[('one', 'one'), ('two', 'two'), ('three', 'three'), ('four', 'four'), ('five', 'five'), ('six', 'six'), ('seven', 'seven'), ('eight', 'eight'), ('nine', 'nine'), ('ten', 'ten'), ('eleven', 'eleven'), ('twelve', 'twelve'), ('thirteen', 'thirteen'), ('fourteen', 'fourteen'), ('fifteen', 'fifteen'), ('sixteen', 'sixteen')], default='eighteen', verbose_name='size'),
+            model_name="formfield",
+            name="size",
+            field=models.TextField(
+                choices=[
+                    ("one", "one"),
+                    ("two", "two"),
+                    ("three", "three"),
+                    ("four", "four"),
+                    ("five", "five"),
+                    ("six", "six"),
+                    ("seven", "seven"),
+                    ("eight", "eight"),
+                    ("nine", "nine"),
+                    ("ten", "ten"),
+                    ("eleven", "eleven"),
+                    ("twelve", "twelve"),
+                    ("thirteen", "thirteen"),
+                    ("fourteen", "fourteen"),
+                    ("fifteen", "fifteen"),
+                    ("sixteen", "sixteen"),
+                ],
+                default="eighteen",
+                verbose_name="size",
+            ),
         ),
     ]

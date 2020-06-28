@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('pages', '0039_auto_20200508_1610'),
+        ("pages", "0039_auto_20200508_1610"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='image',
-            name='fullwidth',
-            field=models.BooleanField(default=False, verbose_name='full width'),
+            model_name="image",
+            name="fullwidth",
+            field=models.BooleanField(default=False, verbose_name="full width"),
         ),
     ]

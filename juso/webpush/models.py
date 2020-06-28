@@ -7,13 +7,10 @@ from juso.pages.models import Page
 
 
 class Subscription(models.Model):
-    page = models.ForeignKey(
-        Page, models.CASCADE,
-        verbose_name=_('page'),
-    )
+    page = models.ForeignKey(Page, models.CASCADE, verbose_name=_("page"),)
     subscription_info = JSONField()
 
     failed_attempts = models.IntegerField(default=0)
 
     def endpoint(self):
-        return self.subscription_info['endpoint']
+        return self.subscription_info["endpoint"]

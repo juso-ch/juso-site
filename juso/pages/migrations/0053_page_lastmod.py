@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('pages', '0052_auto_20200523_1748'),
+        ("pages", "0052_auto_20200523_1748"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='page',
-            name='lastmod',
-            field=models.DateTimeField(auto_now=True, verbose_name='lastmod'),
+            model_name="page",
+            name="lastmod",
+            field=models.DateTimeField(auto_now=True, verbose_name="lastmod"),
         ),
     ]

@@ -7,30 +7,57 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('events', '0012_merge_20200324_2216'),
-        ('sections', '0003_auto_20200302_1952'),
-        ('pages', '0019_eventplugin'),
+        ("events", "0012_merge_20200324_2216"),
+        ("sections", "0003_auto_20200302_1952"),
+        ("pages", "0019_eventplugin"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='eventplugin',
-            name='category',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', related_query_name='+', to='sections.Category', verbose_name='category'),
+            model_name="eventplugin",
+            name="category",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="+",
+                related_query_name="+",
+                to="sections.Category",
+                verbose_name="category",
+            ),
         ),
         migrations.AlterField(
-            model_name='eventplugin',
-            name='events',
-            field=models.ManyToManyField(blank=True, related_name='_eventplugin_events_+', related_query_name='+', to='events.Event', verbose_name='events'),
+            model_name="eventplugin",
+            name="events",
+            field=models.ManyToManyField(
+                blank=True,
+                related_name="_eventplugin_events_+",
+                related_query_name="+",
+                to="events.Event",
+                verbose_name="events",
+            ),
         ),
         migrations.AlterField(
-            model_name='eventplugin',
-            name='namespace',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', related_query_name='+', to='events.NameSpace', verbose_name='namespace'),
+            model_name="eventplugin",
+            name="namespace",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="+",
+                related_query_name="+",
+                to="events.NameSpace",
+                verbose_name="namespace",
+            ),
         ),
         migrations.AlterField(
-            model_name='eventplugin',
-            name='sections',
-            field=models.ManyToManyField(blank=True, related_name='_eventplugin_sections_+', related_query_name='+', to='sections.Section'),
+            model_name="eventplugin",
+            name="sections",
+            field=models.ManyToManyField(
+                blank=True,
+                related_name="_eventplugin_sections_+",
+                related_query_name="+",
+                to="sections.Section",
+            ),
         ),
     ]

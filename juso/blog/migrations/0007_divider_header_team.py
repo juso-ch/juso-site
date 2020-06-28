@@ -4,66 +4,203 @@ import django.db.models.deletion
 from django.db import migrations, models
 
 
-
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('people', '0007_auto_20200324_1547'),
-        ('blog', '0006_auto_20200324_2039'),
+        ("people", "0007_auto_20200324_1547"),
+        ("blog", "0006_auto_20200324_2039"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Team',
+            name="Team",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('template_key', models.CharField(choices=[('teams/default.html', 'default')], default='teams/default.html', max_length=100)),
-                ('columns', models.CharField(choices=[('two', '2'), ('three', '3'), ('four', '4'), ('five', '5')], default='three', max_length=10, verbose_name='columns')),
-                ('region', models.CharField(max_length=255)),
-                ('ordering', models.IntegerField(default=0)),
-                ('parent', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='blog_team_set', to='blog.Article')),
-                ('team', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='+', to='people.Team', verbose_name='team')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "template_key",
+                    models.CharField(
+                        choices=[("teams/default.html", "default")],
+                        default="teams/default.html",
+                        max_length=100,
+                    ),
+                ),
+                (
+                    "columns",
+                    models.CharField(
+                        choices=[
+                            ("two", "2"),
+                            ("three", "3"),
+                            ("four", "4"),
+                            ("five", "5"),
+                        ],
+                        default="three",
+                        max_length=10,
+                        verbose_name="columns",
+                    ),
+                ),
+                ("region", models.CharField(max_length=255)),
+                ("ordering", models.IntegerField(default=0)),
+                (
+                    "parent",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="blog_team_set",
+                        to="blog.Article",
+                    ),
+                ),
+                (
+                    "team",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="+",
+                        to="people.Team",
+                        verbose_name="team",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'team',
-                'verbose_name_plural': 'teams',
-                'abstract': False,
+                "verbose_name": "team",
+                "verbose_name_plural": "teams",
+                "abstract": False,
             },
         ),
         migrations.CreateModel(
-            name='Header',
+            name="Header",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('text', models.CharField(blank=True, max_length=240, verbose_name='Text')),
-                ('inverted', models.BooleanField(default=False, verbose_name='inverted')),
-                ('color', models.CharField(blank=True, choices=[('red', 'red'), ('orange', 'orange'), ('yellow', 'yellow'), ('olive', 'olive'), ('green', 'green'), ('teal', 'teal'), ('violett', 'violett'), ('purple', 'purple'), ('pink', 'pink'), ('brown', 'brown'), ('grey', 'grey'), ('black', 'black')], max_length=20)),
-                ('level', models.SmallIntegerField(choices=[(1, 'h1'), (2, 'h2'), (3, 'h3'), (4, 'h4'), (5, 'h5')], verbose_name='level')),
-                ('block', models.BooleanField(verbose_name='block')),
-                ('dividing', models.BooleanField(verbose_name='dividing')),
-                ('region', models.CharField(max_length=255)),
-                ('ordering', models.IntegerField(default=0)),
-                ('parent', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='blog_header_set', to='blog.Article')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "text",
+                    models.CharField(blank=True, max_length=240, verbose_name="Text"),
+                ),
+                (
+                    "inverted",
+                    models.BooleanField(default=False, verbose_name="inverted"),
+                ),
+                (
+                    "color",
+                    models.CharField(
+                        blank=True,
+                        choices=[
+                            ("red", "red"),
+                            ("orange", "orange"),
+                            ("yellow", "yellow"),
+                            ("olive", "olive"),
+                            ("green", "green"),
+                            ("teal", "teal"),
+                            ("violett", "violett"),
+                            ("purple", "purple"),
+                            ("pink", "pink"),
+                            ("brown", "brown"),
+                            ("grey", "grey"),
+                            ("black", "black"),
+                        ],
+                        max_length=20,
+                    ),
+                ),
+                (
+                    "level",
+                    models.SmallIntegerField(
+                        choices=[(1, "h1"), (2, "h2"), (3, "h3"), (4, "h4"), (5, "h5")],
+                        verbose_name="level",
+                    ),
+                ),
+                ("block", models.BooleanField(verbose_name="block")),
+                ("dividing", models.BooleanField(verbose_name="dividing")),
+                ("region", models.CharField(max_length=255)),
+                ("ordering", models.IntegerField(default=0)),
+                (
+                    "parent",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="blog_header_set",
+                        to="blog.Article",
+                    ),
+                ),
             ],
-            options={
-                'abstract': False,
-            },
+            options={"abstract": False,},
         ),
         migrations.CreateModel(
-            name='Divider',
+            name="Divider",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('text', models.CharField(blank=True, max_length=240, verbose_name='Text')),
-                ('inverted', models.BooleanField(default=False, verbose_name='inverted')),
-                ('color', models.CharField(blank=True, choices=[('red', 'red'), ('orange', 'orange'), ('yellow', 'yellow'), ('olive', 'olive'), ('green', 'green'), ('teal', 'teal'), ('violett', 'violett'), ('purple', 'purple'), ('pink', 'pink'), ('brown', 'brown'), ('grey', 'grey'), ('black', 'black')], max_length=20)),
-                ('alignment', models.CharField(blank=True, choices=[('left aligned', 'left aligned'), ('right aligned', 'right aligned')], max_length=30, verbose_name='alignment')),
-                ('hidden', models.BooleanField(default=False, verbose_name='hidden')),
-                ('section', models.BooleanField(default=False, verbose_name='section')),
-                ('region', models.CharField(max_length=255)),
-                ('ordering', models.IntegerField(default=0)),
-                ('parent', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='blog_divider_set', to='blog.Article')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "text",
+                    models.CharField(blank=True, max_length=240, verbose_name="Text"),
+                ),
+                (
+                    "inverted",
+                    models.BooleanField(default=False, verbose_name="inverted"),
+                ),
+                (
+                    "color",
+                    models.CharField(
+                        blank=True,
+                        choices=[
+                            ("red", "red"),
+                            ("orange", "orange"),
+                            ("yellow", "yellow"),
+                            ("olive", "olive"),
+                            ("green", "green"),
+                            ("teal", "teal"),
+                            ("violett", "violett"),
+                            ("purple", "purple"),
+                            ("pink", "pink"),
+                            ("brown", "brown"),
+                            ("grey", "grey"),
+                            ("black", "black"),
+                        ],
+                        max_length=20,
+                    ),
+                ),
+                (
+                    "alignment",
+                    models.CharField(
+                        blank=True,
+                        choices=[
+                            ("left aligned", "left aligned"),
+                            ("right aligned", "right aligned"),
+                        ],
+                        max_length=30,
+                        verbose_name="alignment",
+                    ),
+                ),
+                ("hidden", models.BooleanField(default=False, verbose_name="hidden")),
+                ("section", models.BooleanField(default=False, verbose_name="section")),
+                ("region", models.CharField(max_length=255)),
+                ("ordering", models.IntegerField(default=0)),
+                (
+                    "parent",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="blog_divider_set",
+                        to="blog.Article",
+                    ),
+                ),
             ],
-            options={
-                'abstract': False,
-            },
+            options={"abstract": False,},
         ),
     ]

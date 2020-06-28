@@ -6,16 +6,22 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0018_auto_20200505_2351'),
+        ("blog", "0018_auto_20200505_2351"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='articleplugin',
-            options={'verbose_name': 'article plugin', 'verbose_name_plural': 'article plugins'},
+            name="articleplugin",
+            options={
+                "verbose_name": "article plugin",
+                "verbose_name_plural": "article plugins",
+            },
         ),
         migrations.AlterModelOptions(
-            name='eventplugin',
-            options={'verbose_name': 'event plugin', 'verbose_name_plural': 'event plugins'},
+            name="eventplugin",
+            options={
+                "verbose_name": "event plugin",
+                "verbose_name_plural": "event plugins",
+            },
         ),
     ]

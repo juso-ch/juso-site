@@ -6,19 +6,26 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('sections', '0003_auto_20200302_1952'),
-        ('pages', '0023_auto_20200329_1335'),
+        ("sections", "0003_auto_20200302_1952"),
+        ("pages", "0023_auto_20200329_1335"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='page',
-            name='featured_categories',
-            field=models.ManyToManyField(blank=True, related_name='featured', to='sections.Category', verbose_name='featured categories'),
+            model_name="page",
+            name="featured_categories",
+            field=models.ManyToManyField(
+                blank=True,
+                related_name="featured",
+                to="sections.Category",
+                verbose_name="featured categories",
+            ),
         ),
         migrations.AlterField(
-            model_name='page',
-            name='sections',
-            field=models.ManyToManyField(blank=True, to='sections.Section', verbose_name='sections'),
+            model_name="page",
+            name="sections",
+            field=models.ManyToManyField(
+                blank=True, to="sections.Section", verbose_name="sections"
+            ),
         ),
     ]

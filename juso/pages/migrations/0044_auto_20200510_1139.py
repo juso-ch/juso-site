@@ -6,14 +6,16 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('sections', '0009_auto_20200507_1758'),
-        ('pages', '0043_auto_20200509_2054'),
+        ("sections", "0009_auto_20200507_1758"),
+        ("pages", "0043_auto_20200509_2054"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='articleplugin',
-            name='sections',
-            field=models.ManyToManyField(blank=True, related_name='pages_articleplugin', to='sections.Section'),
+            model_name="articleplugin",
+            name="sections",
+            field=models.ManyToManyField(
+                blank=True, related_name="pages_articleplugin", to="sections.Section"
+            ),
         ),
     ]

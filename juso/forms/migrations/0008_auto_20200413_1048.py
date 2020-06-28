@@ -7,13 +7,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('forms', '0007_auto_20200413_1033'),
+        ("forms", "0007_auto_20200413_1033"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='formentryvalue',
-            name='form_entry',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='forms.FormEntry', verbose_name='fields'),
+            model_name="formentryvalue",
+            name="form_entry",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to="forms.FormEntry",
+                verbose_name="fields",
+            ),
         ),
     ]

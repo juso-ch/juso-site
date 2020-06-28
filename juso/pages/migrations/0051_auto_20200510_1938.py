@@ -6,18 +6,16 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('pages', '0050_auto_20200510_1834'),
+        ("pages", "0050_auto_20200510_1834"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='eventplugin',
-            old_name='all_articles',
-            new_name='all_events',
+            model_name="eventplugin", old_name="all_articles", new_name="all_events",
         ),
         migrations.RenameField(
-            model_name='eventplugin',
-            old_name='all_articles_override',
-            new_name='all_events_override',
+            model_name="eventplugin",
+            old_name="all_articles_override",
+            new_name="all_events_override",
         ),
     ]

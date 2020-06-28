@@ -21,13 +21,11 @@ def consume(qs):
 
         if result[1].strip():  # Phrase
             query = combine_query(
-                query,
-                SearchQuery(result[1].strip(), search_type='phrase')
+                query, SearchQuery(result[1].strip(), search_type="phrase")
             )
 
         if result[2].strip():  # Keywords
             query = combine_query(
-                query,
-                SearchQuery(result[2].strip(), search_type='plain')
+                query, SearchQuery(result[2].strip(), search_type="plain")
             )
     return query

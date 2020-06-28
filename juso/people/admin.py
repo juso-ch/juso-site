@@ -8,30 +8,24 @@ from juso.people.models import Membership, Person, Team
 class TeamInline(admin.TabularInline):
     model = Membership
 
-    autocomplete_fields = [
-        'team',
-        'person'
-    ]
+    autocomplete_fields = ["team", "person"]
 
 
 class PersonInline(OrderableAdmin, admin.TabularInline):
     model = Membership
-    ordering_field = 'order'
+    ordering_field = "order"
     ordering_field_hide_input = True
 
-    autocomplete_fields = [
-        'team',
-        'person'
-    ]
+    autocomplete_fields = ["team", "person"]
 
 
 @admin.register(Person)
 class PersonAdmin(admin.ModelAdmin):
     list_display = [
-        'first_name',
-        'last_name',
-        'user',
-        'email',
+        "first_name",
+        "last_name",
+        "user",
+        "email",
     ]
 
     inlines = [
@@ -39,18 +33,16 @@ class PersonAdmin(admin.ModelAdmin):
     ]
 
     autocomplete_fields = [
-        'user',
-        'sections',
+        "user",
+        "sections",
     ]
 
     search_fields = [
-        'first_name',
-        'last_name',
+        "first_name",
+        "last_name",
     ]
 
-    list_filter = [
-        'sections', 'teams'
-    ]
+    list_filter = ["sections", "teams"]
 
     def has_delete_permission(self, request, obj=None):
         if obj is None:
@@ -74,34 +66,26 @@ class PersonAdmin(admin.ModelAdmin):
 @admin.register(Team)
 class TeamAdmin(OrderableAdmin, admin.ModelAdmin):
     list_display = [
-        'name',
-        'section',
-        'order',
+        "name",
+        "section",
+        "order",
     ]
 
-    list_editable = [
-        'order'
-    ]
+    list_editable = ["order"]
 
     list_filter = [
-        'section',
-        'language_code',
+        "section",
+        "language_code",
     ]
 
-    ordering_field = ['order']
+    ordering_field = ["order"]
     ordering_field_hide_input = True
 
-    autocomplete_fields = [
-        'section', 'translations'
-    ]
+    autocomplete_fields = ["section", "translations"]
 
-    inlines = [
-        PersonInline
-    ]
+    inlines = [PersonInline]
 
-    search_fields = [
-        'name'
-    ]
+    search_fields = ["name"]
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)

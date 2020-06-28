@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('pages', '0034_auto_20200429_1653'),
+        ("pages", "0034_auto_20200429_1653"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='page',
-            name='in_meta',
-            field=models.BooleanField(default=False, verbose_name='in meta menu'),
+            model_name="page",
+            name="in_meta",
+            field=models.BooleanField(default=False, verbose_name="in meta menu"),
         ),
         migrations.AddField(
-            model_name='page',
-            name='is_navigation',
-            field=models.BooleanField(default=False, verbose_name='display navigation'),
+            model_name="page",
+            name="is_navigation",
+            field=models.BooleanField(default=False, verbose_name="display navigation"),
         ),
     ]

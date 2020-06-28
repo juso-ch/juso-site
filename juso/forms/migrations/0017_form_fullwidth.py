@@ -6,14 +6,14 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('forms', '0016_form_size'),
+        ("forms", "0016_form_size"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='form',
-            name='fullwidth',
-            field=models.BooleanField(default=False, verbose_name='full width'),
+            model_name="form",
+            name="fullwidth",
+            field=models.BooleanField(default=False, verbose_name="full width"),
             preserve_default=False,
         ),
     ]

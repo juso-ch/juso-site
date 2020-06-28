@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('pages', '0056_auto_20200605_1721'),
+        ("pages", "0056_auto_20200605_1721"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='page',
-            name='css_vars',
-            field=models.TextField(blank=True, verbose_name='css vars'),
+            model_name="page",
+            name="css_vars",
+            field=models.TextField(blank=True, verbose_name="css vars"),
         ),
     ]

@@ -200,7 +200,7 @@ CSRF_COOKIE_SAMESITE = 'strict'
 CSRF_COOKIE_SECURE = not DEBUG
 
 SESSION_COOKIE_SECURE = not DEBUG
-SESSION_COOKIE_NAME = '__Secure-sessionid'
+#SESSION_COOKIE_NAME = '__Secure-sessionid'
 SESSION_COOKIE_SAMESITE = 'Lax'
 
 SU_LOGIN_CALLBACK = "juso.settings.superuser_callback"

@@ -26,7 +26,7 @@ django-treebeard==4.3
 easy-thumbnails==2.7
 et-xmlfile==1.0.1
 feincms3==0.33.0
-feincms3-meta==3.0.1
+# -e git://github.com/sacovo/feincms3-meta.git#egg=feincms3-meta
 feincms3-sites==0.10.0
 form-designer==0.16.1
 geographiclib==1.50
@@ -74,3 +74,4 @@ celery
 django-celery-results
 redis
 pywebpush
+future

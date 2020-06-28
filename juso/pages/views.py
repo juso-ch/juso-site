@@ -67,17 +67,29 @@ def page_detail(request, path=None):
 
 
 def error404(request, exception):
-    print("Hello")
+    page = get_landing_page(request)
+    page.activate_language(request)
     return render(
         request, '404.html', {
-            'exception': exception
+            'exception': exception,
+            'page': page,
+            "regions": Regions.from_item(
+                page, renderer=renderer, timeout=60,
+            ),
         }
     )
 
 
 def error500(request):
+    page = get_landing_page(request)
+    page.activate_language(request)
     return render(
-        request, '500.html'
+        request, '500.html',{
+            'page': page,
+            "regions": Regions.from_item(
+                page, renderer=renderer, timeout=60,
+            ),
+        }
     )
 
 def webmanifest(request):

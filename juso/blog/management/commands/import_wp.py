@@ -88,7 +88,10 @@ class Command(BaseCommand):
                     print("Failed to create post")
                     continue
 
-                image = get_image(thumbnail)
+                try:
+                    image = get_image(thumbnail)
+                except Exception as e:
+                    print(e)
 
                 if image is not None:
                     try:

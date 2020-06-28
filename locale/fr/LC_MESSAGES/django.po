@@ -1,818 +1,587 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# This file was generated from translations.xlsx
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-11 21:56+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
-"MIME-Version: 1.0\n"
+"PO-Revision-Date: 2020-06-22 13:09+0200\n"
+"Language: fr\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Generated-By: xls-to-po 1.0\n"
 
-#: juso/admin.py:26
 msgid "display"
-msgstr ""
+msgstr "affichage"
 
-#: juso/blog/admin.py:82 juso/events/admin.py:80 juso/forms/admin.py:74
-#: juso/pages/admin.py:100
 msgid "settings"
-msgstr ""
+msgstr "options"
 
-#: juso/blog/admin.py:96 juso/events/admin.py:93 juso/events/admin.py:198
-#: juso/forms/admin.py:98 juso/models.py:9 juso/pages/admin.py:140
-#: juso/sections/admin.py:87
 msgid "translations"
-msgstr ""
+msgstr "traductions"
 
-#: juso/blog/apps.py:7 juso/pages/models.py:58
 msgid "blog"
-msgstr ""
+msgstr "blog"
 
-#: juso/blog/models.py:24 juso/blog/models.py:121 juso/events/models.py:24
-#: juso/events/models.py:38 juso/forms/models.py:88 juso/glossary/models.py:30
-#: juso/link_collections/models.py:14 juso/people/models.py:74
-#: juso/sections/models.py:23 juso/sections/models.py:73
 msgid "name"
-msgstr ""
+msgstr "nom"
 
-#: juso/blog/models.py:31
 msgid "name space"
-msgstr ""
+msgstr "name space"
 
-#: juso/blog/models.py:32
 msgid "name spaces"
-msgstr ""
+msgstr "name spaces"
 
-#: juso/blog/models.py:54 juso/blog/plugins.py:33 juso/events/models.py:32
-#: juso/events/models.py:127 juso/events/plugins.py:45
 msgid "namespace"
-msgstr ""
+msgstr "namespace"
 
-#: juso/blog/models.py:99
 msgid "article"
-msgstr ""
+msgstr "article"
 
-#: juso/blog/models.py:100 juso/blog/plugins.py:15 juso/blog/plugins.py:68
 msgid "articles"
-msgstr ""
+msgstr "articles"
 
-#: juso/blog/models.py:105 juso/glossary/models.py:33
-#: juso/sections/models.py:24 juso/sections/models.py:79
-#: juso/sections/models.py:92
 msgid "slug"
-msgstr ""
+msgstr "slug"
 
-#: juso/blog/models.py:106
 msgid "wordpress file"
-msgstr ""
+msgstr "fichier wordpress"
 
-#: juso/blog/models.py:141 juso/pages/models.py:261
-msgid "glossary text"
-msgstr ""
-
-#: juso/blog/models.py:145 juso/events/models.py:106 juso/events/models.py:197
-#: juso/pages/models.py:265
-msgid "caption"
-msgstr ""
-
-#: juso/blog/models.py:146 juso/blog/plugins.py:18 juso/events/models.py:198
-#: juso/events/plugins.py:20 juso/pages/models.py:266 juso/people/models.py:123
-#: juso/sections/models.py:91
-msgid "title"
-msgstr ""
-
-#: juso/blog/models.py:147 juso/events/models.py:199 juso/forms/models.py:51
-#: juso/pages/models.py:267
-msgid "full width"
-msgstr ""
-
-#: juso/blog/models.py:150 juso/events/models.py:202 juso/forms/models.py:25
-#: juso/pages/models.py:270 juso/people/models.py:26
-msgid "image"
-msgstr ""
-
-#: juso/blog/models.py:151 juso/events/models.py:37 juso/events/models.py:203
-#: juso/pages/models.py:271
-msgid "images"
-msgstr ""
-
-#: juso/blog/plugins.py:20 juso/events/plugins.py:21
-msgid "count"
-msgstr ""
-
-#: juso/blog/plugins.py:43 juso/events/plugins.py:56
-#: juso/link_collections/models.py:36 juso/pages/models.py:171
-#: juso/sections/models.py:40 juso/sections/models.py:122
-msgid "category"
-msgstr ""
-
-#: juso/blog/plugins.py:53
-msgid "page with all articles"
-msgstr ""
-
-#: juso/blog/plugins.py:58
-msgid "all article link text"
-msgstr ""
-
-#: juso/blog/plugins.py:64
-msgid "article plugin"
-msgstr ""
-
-#: juso/blog/plugins.py:65
-msgid "article plugins"
-msgstr ""
-
-#: juso/blog/plugins.py:88 juso/events/admin.py:186 juso/events/plugins.py:93
-#: juso/forms/admin.py:20 juso/glossary/admin.py:18 juso/glossary/admin.py:45
-#: juso/pages/admin.py:144 juso/sections/admin.py:33
-msgid "advanced"
-msgstr ""
-
-#: juso/events/apps.py:7 juso/events/models.py:140 juso/events/plugins.py:16
-#: juso/events/plugins.py:66 juso/pages/models.py:85
-msgid "events"
-msgstr ""
-
-#: juso/events/models.py:33
-msgid "namespaces"
-msgstr ""
-
-#: juso/events/models.py:41
-msgid "street"
-msgstr ""
-
-#: juso/events/models.py:42
-msgid "city"
-msgstr ""
-
-#: juso/events/models.py:43
-msgid "zip code"
-msgstr ""
-
-#: juso/events/models.py:44
-msgid "country"
-msgstr ""
-
-#: juso/events/models.py:47 juso/pages/models.py:180 juso/sections/models.py:31
-#: juso/sections/models.py:99
-msgid "header image"
-msgstr ""
-
-#: juso/events/models.py:55 juso/forms/models.py:31
-#: juso/link_collections/models.py:12 juso/people/models.py:78
-#: juso/sections/models.py:82 juso/sections/models.py:129
 msgid "section"
-msgstr ""
+msgstr "section"
 
-#: juso/events/models.py:58
+msgid "default namespace"
+msgstr "namespace par défaut"
+
+msgid "completed"
+msgstr "terminé"
+
+msgid "wordpress import"
+msgstr "importation wordpress"
+
+msgid "wordpress imports"
+msgstr "importations wordpress"
+
+msgid "glossary text"
+msgstr "texte de glossaire"
+
+msgid "caption"
+msgstr "caption"
+
+msgid "title"
+msgstr "titre"
+
+msgid "full width"
+msgstr "largeur totale"
+
+msgid "image"
+msgstr "image"
+
+msgid "images"
+msgstr "images"
+
+msgid "count"
+msgstr "nombre"
+
+msgid "category"
+msgstr "catégorie"
+
+msgid "page with all articles"
+msgstr "Page avec tous les articles"
+
+msgid "all article link text"
+msgstr "Lien de tous les articles"
+
+msgid "article plugin"
+msgstr "plugin d'article"
+
+msgid "article plugins"
+msgstr "plugins d'article"
+
+msgid "advanced"
+msgstr "avancé"
+
+msgid "events"
+msgstr "évènements"
+
+msgid "namespaces"
+msgstr "namespaces"
+
+msgid "street"
+msgstr "rue"
+
+msgid "city"
+msgstr "localité"
+
+msgid "zip code"
+msgstr "NPA"
+
+msgid "country"
+msgstr "pays"
+
+msgid "header image"
+msgstr "Image du header"
+
 msgid "website"
-msgstr ""
+msgstr "site internet"
 
-#: juso/events/models.py:60
 msgid "longitude"
-msgstr ""
+msgstr "longitude"
 
-#: juso/events/models.py:61
 msgid "latitude"
-msgstr ""
+msgstr "latitude"
 
-#: juso/events/models.py:77 juso/events/models.py:122
 msgid "location"
-msgstr ""
+msgstr "lieu"
 
-#: juso/events/models.py:78
 msgid "locations"
-msgstr ""
+msgstr "lieux"
 
-#: juso/events/models.py:116
 msgid "start date"
-msgstr ""
+msgstr "Date de début"
 
-#: juso/events/models.py:117
 msgid "end date"
-msgstr ""
+msgstr "Date de fin"
 
-#: juso/events/models.py:139
 msgid "event"
-msgstr ""
+msgstr "évènement"
 
-#: juso/events/plugins.py:25
 msgid "page with all events"
-msgstr ""
+msgstr "Page avec tous les évènements"
 
-#: juso/events/plugins.py:30
 msgid "all events link text"
-msgstr ""
+msgstr "Lien de tous les évènements"
 
-#: juso/events/plugins.py:70
 msgid "event plugin"
-msgstr ""
+msgstr "Plugin d'évènement"
 
-#: juso/events/plugins.py:71
 msgid "event plugins"
-msgstr ""
+msgstr "Plugins d'évènement"
 
-#: juso/forms/admin.py:86 juso/utils.py:57
 msgid "meta"
-msgstr ""
+msgstr "meta"
 
-#: juso/forms/apps.py:7 juso/forms/models.py:65
 msgid "forms"
-msgstr ""
+msgstr "formulaire"
 
-#: juso/forms/models.py:17 juso/link_collections/models.py:31 juso/models.py:49
 msgid "text"
-msgstr ""
+msgstr "texte"
 
-#: juso/forms/models.py:18
 msgid "email"
-msgstr ""
+msgstr "e-mail"
 
-#: juso/forms/models.py:19
 msgid "boolean"
-msgstr ""
+msgstr "booléen"
 
-#: juso/forms/models.py:20
 msgid "date"
-msgstr ""
+msgstr "date"
 
-#: juso/forms/models.py:21
 msgid "datetime"
-msgstr ""
+msgstr "datetime"
 
-#: juso/forms/models.py:22
 msgid "time"
-msgstr ""
+msgstr "temps"
 
-#: juso/forms/models.py:23
 msgid "decimal"
-msgstr ""
+msgstr "décimal"
 
-#: juso/forms/models.py:24
 msgid "file"
-msgstr ""
+msgstr "fichier"
 
-#: juso/forms/models.py:26
 msgid "integer"
-msgstr ""
+msgstr "entier"
 
-#: juso/forms/models.py:27
 msgid "choice"
-msgstr ""
+msgstr "choix"
 
-#: juso/forms/models.py:28
 msgid "multiple choice"
-msgstr ""
+msgstr "choix multiples"
 
-#: juso/forms/models.py:29
 msgid "url"
-msgstr ""
+msgstr "URL"
 
-#: juso/forms/models.py:30
 msgid "hidden"
-msgstr ""
+msgstr "caché"
 
-#: juso/forms/models.py:36
 msgid "one"
-msgstr ""
+msgstr "un"
 
-#: juso/forms/models.py:37
 msgid "one half"
-msgstr ""
+msgstr "moitié"
 
-#: juso/forms/models.py:38
 msgid "one third"
-msgstr ""
+msgstr "un tiers"
 
-#: juso/forms/models.py:39
 msgid "one fouth"
-msgstr ""
+msgstr "un quart"
 
-#: juso/forms/models.py:40
 msgid "thre fourths"
-msgstr ""
+msgstr "trois quarts"
 
-#: juso/forms/models.py:41
 msgid "two thirds"
-msgstr ""
+msgstr "deux tiers"
 
-#: juso/forms/models.py:53 juso/forms/models.py:99
 msgid "size"
-msgstr ""
+msgstr "taille"
 
-#: juso/forms/models.py:54
 msgid "success message"
-msgstr ""
+msgstr "message de succès"
 
-#: juso/forms/models.py:55
 msgid "success redirect"
-msgstr ""
+msgstr "message de redirection"
 
-#: juso/forms/models.py:57 juso/people/models.py:36
 msgid "e-mail"
-msgstr ""
+msgstr "e-mail"
 
-#: juso/forms/models.py:58
 msgid "webhook"
-msgstr ""
+msgstr "webhook"
 
-#: juso/forms/models.py:64 juso/forms/plugins.py:12
 msgid "form"
-msgstr ""
+msgstr "formulaire"
 
-#: juso/forms/models.py:82 juso/forms/models.py:83 juso/pages/models.py:256
 msgid "rich text"
-msgstr ""
+msgstr "texte"
 
-#: juso/forms/models.py:90
 msgid "type"
-msgstr ""
+msgstr "type"
 
-#: juso/forms/models.py:95
 msgid "required"
-msgstr ""
+msgstr "requis"
 
-#: juso/forms/models.py:96
 msgid "help text"
-msgstr ""
+msgstr "texte d'aide"
 
-#: juso/forms/models.py:97
 msgid "choices"
-msgstr ""
+msgstr "choix"
 
-#: juso/forms/models.py:98
 msgid "initial"
-msgstr ""
+msgstr "choix initial"
 
-#: juso/forms/models.py:105
 msgid "form field"
-msgstr ""
+msgstr "champ du formulaire"
 
-#: juso/forms/models.py:106
 msgid "form fields"
-msgstr ""
+msgstr "champs du formulaire"
 
-#: juso/forms/models.py:116
 msgid "created"
-msgstr ""
+msgstr "Créé"
 
-#: juso/forms/models.py:117
 msgid "ip address"
-msgstr ""
+msgstr "adresse IP"
 
-#: juso/forms/models.py:123
 msgid "form entry"
-msgstr ""
+msgstr "entrée du formulaire"
 
-#: juso/forms/models.py:124
 msgid "form entries"
-msgstr ""
+msgstr "entrées du formulaire"
 
-#: juso/forms/models.py:130
 msgid "fields"
-msgstr ""
+msgstr "champs"
 
-#: juso/forms/models.py:133
 msgid "value"
-msgstr ""
+msgstr "valeur"
 
-#: juso/forms/models.py:139
 msgid "form entry value"
-msgstr ""
+msgstr "valeur entrée dans le formulaire"
 
-#: juso/forms/models.py:140
 msgid "form entry values"
-msgstr ""
+msgstr "valeurs entrées dans le formulaire"
 
-#: juso/glossary/apps.py:7 juso/pages/models.py:107
 msgid "glossary"
-msgstr ""
+msgstr "glossaire"
 
-#: juso/glossary/models.py:36
 msgid "auto-pattern"
-msgstr ""
+msgstr "modèle automatique"
 
-#: juso/glossary/models.py:39
 msgid "pattern"
-msgstr ""
+msgstr "modèle"
 
-#: juso/glossary/models.py:57
 msgid "entries"
-msgstr ""
+msgstr "entrées"
 
-#: juso/link_collections/apps.py:7
 msgid "link collections"
-msgstr ""
+msgstr "listes de liens"
 
-#: juso/link_collections/models.py:20 juso/pages/models.py:115
-#: juso/pages/models.py:176
 msgid "collection"
-msgstr ""
+msgstr "liste"
 
-#: juso/link_collections/models.py:21
 msgid "collections"
-msgstr ""
+msgstr "listes"
 
-#: juso/link_collections/models.py:28
 msgid "Collection"
-msgstr ""
+msgstr "Liste"
 
-#: juso/link_collections/models.py:32 juso/models.py:79
 msgid "target"
-msgstr ""
+msgstr "objectif"
 
-#: juso/link_collections/models.py:45
 msgid "link"
-msgstr ""
+msgstr "lien"
 
-#: juso/link_collections/models.py:46
 msgid "links"
-msgstr ""
+msgstr "liens"
 
-#: juso/models.py:25
 msgid "red"
-msgstr ""
+msgstr "rouge"
 
-#: juso/models.py:26
 msgid "orange"
-msgstr ""
+msgstr "orange"
 
-#: juso/models.py:27
 msgid "yellow"
-msgstr ""
+msgstr "jaune"
 
-#: juso/models.py:28
 msgid "olive"
-msgstr ""
+msgstr "olive"
 
-#: juso/models.py:29
 msgid "green"
-msgstr ""
+msgstr "vert"
 
-#: juso/models.py:30
 msgid "teal"
-msgstr ""
+msgstr "bleu canard"
 
-#: juso/models.py:31
 msgid "violett"
-msgstr ""
+msgstr "violet"
 
-#: juso/models.py:32
 msgid "purple"
-msgstr ""
+msgstr "pourpre"
 
-#: juso/models.py:33
 msgid "pink"
-msgstr ""
+msgstr "rose"
 
-#: juso/models.py:34
 msgid "brown"
-msgstr ""
+msgstr "brun"
 
-#: juso/models.py:35
 msgid "grey"
-msgstr ""
+msgstr "gris"
 
-#: juso/models.py:36
 msgid "black"
-msgstr ""
+msgstr "noir"
 
-#: juso/models.py:63
 msgid "style"
-msgstr ""
+msgstr "style"
 
-#: juso/models.py:64
 msgid "none"
-msgstr ""
+msgstr "aucun"
 
-#: juso/models.py:65
 msgid "secondary"
-msgstr ""
+msgstr "secondaire"
 
-#: juso/models.py:69
 msgid "alignment"
-msgstr ""
+msgstr "alignement"
 
-#: juso/models.py:70 juso/settings.py:150 juso/settings.py:154
-#: juso/settings.py:158
 msgid "default"
-msgstr ""
+msgstr "par défaut"
 
-#: juso/models.py:71
 msgid "center"
-msgstr ""
+msgstr "centre"
 
-#: juso/models.py:72
 msgid "right"
-msgstr ""
+msgstr "droite"
 
-#: juso/models.py:73
 msgid "block"
-msgstr ""
+msgstr "bloc"
 
-#: juso/models.py:77
 msgid "break"
-msgstr ""
+msgstr "retour à la ligne"
 
-#: juso/pages/admin.py:112
 msgid "path"
-msgstr ""
+msgstr "chemin"
 
-#: juso/pages/admin.py:121
 msgid "application"
-msgstr ""
+msgstr "application"
 
-#: juso/pages/admin.py:133
 msgid "redirect"
-msgstr ""
+msgstr "redirection"
 
-#: juso/pages/admin.py:202
 msgid "JUSO Schweiz"
-msgstr ""
+msgstr "JS Suisse"
 
-#: juso/pages/admin.py:203
 msgid "JUSO Admin"
-msgstr ""
+msgstr "Admin JS"
 
-#: juso/pages/apps.py:7
 msgid "pages"
-msgstr ""
+msgstr "pages"
 
-#: juso/pages/models.py:72 juso/people/apps.py:7 juso/people/models.py:49
 msgid "people"
-msgstr ""
+msgstr "personnes"
 
-#: juso/pages/models.py:99 juso/sections/models.py:41
 msgid "categories"
-msgstr ""
+msgstr "catégories"
 
-#: juso/pages/models.py:125
 msgid "main navigation"
-msgstr ""
+msgstr "navigation principale"
 
-#: juso/pages/models.py:126
 msgid "top navigation"
-msgstr ""
+msgstr "navigation top"
 
-#: juso/pages/models.py:127
 msgid "button navigation"
-msgstr ""
+msgstr "boutons navigation"
 
-#: juso/pages/models.py:128
 msgid "footer navigation"
-msgstr ""
+msgstr "footer navigation"
 
-#: juso/pages/models.py:129
 msgid "quickinks"
-msgstr ""
+msgstr "quicklinks"
 
-#: juso/pages/models.py:152
 msgid "is landing page"
-msgstr ""
+msgstr "est la page d'accueil"
 
-#: juso/pages/models.py:157
 msgid "namespace (blog)"
-msgstr ""
+msgstr "namespace (blog)"
 
-#: juso/pages/models.py:162
 msgid "namespace (event)"
-msgstr ""
+msgstr "namespace (évènements)"
 
-#: juso/pages/models.py:166 juso/people/models.py:22 juso/sections/apps.py:7
-#: juso/sections/models.py:83
 msgid "sections"
-msgstr ""
+msgstr "sections"
 
-#: juso/pages/models.py:188
 msgid "featured categories"
-msgstr ""
+msgstr "catégories favoris"
 
-#: juso/pages/models.py:192
 msgid "in meta menu"
-msgstr ""
+msgstr "Dans le menu meta"
 
-#: juso/pages/models.py:194
 msgid "display navigation"
-msgstr ""
+msgstr "Afficher la navigation"
 
-#: juso/pages/models.py:241 juso/pages/models.py:242
 msgid "page"
-msgstr ""
+msgstr "page"
 
-#: juso/pages/models.py:251
 msgid "external"
-msgstr ""
+msgstr "externe"
 
-#: juso/pages/models.py:280 juso/pages/models.py:281
 msgid "HTML"
-msgstr ""
+msgstr "HTML"
 
-#: juso/people/models.py:16
 msgid "user"
-msgstr ""
+msgstr "utilisatrice*eur"
 
-#: juso/people/models.py:33
 msgid "first name"
-msgstr ""
+msgstr "prénom"
 
-#: juso/people/models.py:34
 msgid "last name"
-msgstr ""
+msgstr "nom de famille"
 
-#: juso/people/models.py:37
 msgid "homepage"
-msgstr ""
+msgstr "page d'accueil"
 
-#: juso/people/models.py:38
 msgid "phone"
-msgstr ""
+msgstr "téléphone portable"
 
-#: juso/people/models.py:40
 msgid "Facebook"
-msgstr ""
+msgstr "Facebook"
 
-#: juso/people/models.py:41
 msgid "Twitter"
-msgstr ""
+msgstr "Twitter"
 
-#: juso/people/models.py:42
 msgid "Instagram"
-msgstr ""
+msgstr "Instagram"
 
-#: juso/people/models.py:48 juso/people/models.py:120
 msgid "person"
-msgstr ""
+msgstr "personne"
 
-#: juso/people/models.py:83
 msgid "members"
-msgstr ""
+msgstr "membres"
 
-#: juso/people/models.py:86
 msgid "order"
-msgstr ""
+msgstr "ordre"
 
-#: juso/people/models.py:89 juso/people/models.py:122 juso/people/plugins.py:13
 msgid "team"
-msgstr ""
+msgstr "équipe"
 
-#: juso/people/models.py:90
 msgid "teams"
-msgstr ""
+msgstr "équipes"
 
-#: juso/people/models.py:128
 msgid "membership"
-msgstr ""
+msgstr "Affiliation"
 
-#: juso/people/models.py:129
 msgid "memberships"
-msgstr ""
+msgstr "Affiliations"
 
-#: juso/people/plugins.py:23
 msgid "columns"
-msgstr ""
+msgstr "colonnes"
 
-#: juso/people/plugins.py:24
-msgid "2"
-msgstr ""
-
-#: juso/people/plugins.py:25
-msgid "3"
-msgstr ""
-
-#: juso/people/plugins.py:26
-msgid "4"
-msgstr ""
-
-#: juso/people/plugins.py:27
-msgid "5"
-msgstr ""
-
-#: juso/plugins/download.py:10
 msgid "File"
-msgstr ""
+msgstr "Fichier"
 
-#: juso/plugins/download.py:15
 msgid "download text"
-msgstr ""
+msgstr "download text"
 
-#: juso/plugins/download.py:20
 msgid "link classes (css)"
-msgstr ""
+msgstr "link classes (css)"
 
-#: juso/plugins/download.py:25
 msgid "download"
-msgstr ""
+msgstr "téléchargement"
 
-#: juso/plugins/download.py:26
 msgid "downloads"
-msgstr ""
+msgstr "téléchargements"
 
-#: juso/sections/models.py:26
 msgid "color"
-msgstr ""
+msgstr "couleur"
 
-#: juso/sections/models.py:75
 msgid "site"
-msgstr ""
+msgstr "site"
 
-#: juso/sections/models.py:78
 msgid "users"
-msgstr ""
+msgstr "utilisatrice*eur"
 
-#: juso/sections/models.py:95
 msgid "author"
-msgstr ""
+msgstr "auteur·e"
 
-#: juso/sections/models.py:108
 msgid "publication date"
-msgstr ""
+msgstr "Date de publication"
 
-#: juso/sections/models.py:112
 msgid "created at"
-msgstr ""
+msgstr "Date de création"
 
-#: juso/sections/models.py:116
 msgid "edited at"
-msgstr ""
+msgstr "Date d'édition"
 
-#: juso/settings.py:159
 msgid "list"
-msgstr ""
+msgstr "liste"
 
-#: juso/settings.py:164
 msgid "German"
-msgstr ""
+msgstr "Allemand"
 
-#: juso/settings.py:165
 msgid "French"
-msgstr ""
+msgstr "Français"
 
-#: juso/settings.py:166
 msgid "Italian"
-msgstr ""
+msgstr "Italien"
 
-#: juso/utils.py:54
 msgid "copy selected"
-msgstr ""
+msgstr "presse-papier"
 
-#: templates/admin/base.html:35
 msgid "Welcome,"
-msgstr ""
+msgstr "Bienvenue,"
 
-#: templates/admin/base.html:40
 msgid "View site"
-msgstr ""
+msgstr "Voir le site"
 
-#: templates/admin/base.html:45
 msgid "Documentation"
-msgstr ""
+msgstr "Documentation"
 
-#: templates/admin/base.html:49
 msgid "Change password"
-msgstr ""
+msgstr "Changer de mot de passe"
 
-#: templates/admin/base.html:51
 msgid "Log out"
-msgstr ""
+msgstr "Déconnexion"
 
-#: templates/admin/base.html:61
 msgid "Home"
-msgstr ""
+msgstr "Page d'accueil"
 
-#: templates/blog/article_list.html:16
 msgid "Search"
-msgstr ""
+msgstr "Rechercher"
 
-#: templates/blog/article_list.html:20
 msgid "Apply"
-msgstr ""
+msgstr "Appliquer"
 
-#: templates/blog/default.html:14 templates/pages/categorylinking_list.html:19
-#: templates/pages/default.html:15
 msgid "Edit"
-msgstr ""
+msgstr "Modifier"
 
-#: templates/blog/plugins/default.html:48
 msgid "read more"
-msgstr ""
+msgstr "Lire plus"
 
-#: templates/events/event_list.html:8
 msgid "All"
-msgstr ""
+msgstr "Tout"
 
-#: templates/events/plugins/default.html:27
 msgid "more info"
-msgstr ""
+msgstr "plus d'infos"
 
-#: templates/includes/meta_menu.html:19
 msgid "Quicklinks"
-msgstr ""
+msgstr "Quicklinks"

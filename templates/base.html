@@ -19,13 +19,12 @@
 
     <title>{% block title %}
       {% if page is not top %}
-      {{title|default:page.title}} - {% endif %}
-      {{top.title}}
+      {{title|default:page.title|nbsp}} - {% endif %}
+      {{top.title|nbsp}}
       {% endblock %}</title>
 
     {% block meta %}
     {{meta_tags}}
-    <meta name="twitter:card" content="summary_large_image" />
     {% endblock %}
     {% block structured_data %}
     {% endblock %}
@@ -69,7 +68,7 @@
           {% include 'includes/logo.svg' %}
           </span>
           <span class="name">
-            {{top.title}}
+            {{top.title|nbsp}}
           </span>
         </a>
       </div>
@@ -102,7 +101,7 @@
 
       {% block header %}
       <h1 class="ui primary center aligned header">
-        {{title|default:page.title}}
+        {{title|default:page.title|nbsp}}
       </h1>
       {% endblock %}
     </header>

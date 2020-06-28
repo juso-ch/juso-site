@@ -69,43 +69,41 @@
 
 {% block regions %}
 <article class="{{event.category.slug}} event">
-  <div class="bar">
-    <div class="event-info">
-      <time datetime="{{event.start_date|date:"c"}}">
-        {{event.start_date|date:"d.m. H:i"}}
-      </time>-<time datetime="{{event.end_date|date:"c"}}">
-        {% if event.end_date == event.start_date %}
-        {{event.end_date|date:"H:i"}}
-        {% else %}
-        {{event.end_date|date:"d.m. H:i" }}
-        {% endif %}
-      </time>
-      {% if event.location %}
-      - <a href="{{event.location.get_absolute_url}}">{{event.location}}</a>
-      {% endif %}
+  <section class="event-text">
+    {% render_region regions 'main' %}
+  </section>
+  <section class="event-info">
+    <div class="datetime">
+      {% include 'events/date_card.html' with date=event.start_date %}
+      <span class="to">
+        {% trans 'bis' %}
+      </span>
+      {% include 'events/date_card.html' with date=event.end_date %}
     </div>
-    <div class="action small">
-      <a class="button" href="{{event.google_calendar}}" target="_blank">
-        Google
-      </a>
-      <a class="button" href="{{event.outlook}}" target="_blank">
-        Outlook
-      </a>
-      <a class="button" href="{{event.ical_link}}" target="_blank">
-        iCal
-      </a>
+    <div class="location card">
+      <h2>{{event.location.name}}</h2>
+      <address>
+        {{event.location.street}}<br/>
+        {{event.location.zip_code}} {{event.location.city}}<br/>
+      </address>
+
       {% if event.location %}
       <a href="{{event.location.maps}}" class="button" target="_blank">
         {% trans "route" %}
       </a>
       {% endif %}
     </div>
-    {% render_region regions 'main' %}
-</article>
-<article class="location">
-  <a href="{{event.location.get_absolute_url}}">
-    {{event.location}}
-  </a>
-  ({{event.location.address}})
+    <div class="event-buttons">
+      <a class="button secondary" href="{{event.google_calendar}}" target="_blank">
+        Google
+      </a>
+      <a class="button secondary" href="{{event.outlook}}" target="_blank">
+        Outlook
+      </a>
+      <a class="button secondary" href="{{event.ical_link}}" target="_blank">
+        iCal
+      </a>
+    </div>
+  </section>
 </article>
 {% endblock %}

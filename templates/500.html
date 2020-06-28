@@ -1,1 +1,9 @@
 {% extends 'base.html' %}
+{% load i18n %}
+
+
+{% block header %}
+<h1 class="ui primary center aligned header">
+  {% trans 'Server error' %}
+</h1>
+{% endblock %}

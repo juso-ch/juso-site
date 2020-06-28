@@ -12,7 +12,6 @@ async function submitForm(form){
       // 'Content-Type': 'application/x-www-form-urlencoded',
     },
     redirect: 'error', // manual, *follow, error
-    referrerPolicy: 'no-referrer', // no-referrer, *client
     body: formData // body data type must match "Content-Type" header
   }).then(response => {
     if(response.status == 201){

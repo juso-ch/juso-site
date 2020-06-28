@@ -73,15 +73,11 @@ class Form(ContentMixin):
             }
         )
 
+    def count(self):
+        return self.formentry_set.count()
+
 
 PluginBase = create_plugin_base(Form)
-
-
-class RichText(plugins.richtext.RichText, PluginBase):
-    class Meta:
-        verbose_name = _("rich text")
-        verbose_name = _("rich text")
-
 
 
 class FormField(PluginBase):
@@ -97,6 +93,7 @@ class FormField(PluginBase):
     choices = models.TextField(_("choices"), blank=True)
     initial = models.TextField(_("initial"), max_length=240, blank=True)
     size = models.TextField(_("size"), default="one", choices=SIZES)
+
 
     def __str__(self):
         return self.name

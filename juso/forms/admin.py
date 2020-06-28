@@ -1,10 +1,13 @@
+import csv
+from django.http import HttpResponse
 from content_editor.admin import ContentEditor, ContentEditorInline
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.utils.translation import gettext_lazy as _
 # Register your models here.
 from feincms3 import plugins
 
-from juso.forms.models import Form, FormField, RichText
+from juso.forms.models import Form, FormField
+from juso.sections.models import Section
 from juso.utils import CopyContentMixin
 
 
@@ -37,6 +40,7 @@ class FormAdmin(ContentEditor, CopyContentMixin):
         'created_date',
         'section',
         'language_code',
+        'count',
     ]
 
     list_filter = [
@@ -103,12 +107,13 @@ class FormAdmin(ContentEditor, CopyContentMixin):
         })
     )
 
+    actions = ['export_form']
+
     inlines = [
         FormFieldInline.create(FormField),
-        plugins.richtext.RichTextInline.create(RichText),
     ]
 
-    plugins = [FormField, RichText]
+    plugins = [FormField]
 
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
@@ -134,3 +139,41 @@ class FormAdmin(ContentEditor, CopyContentMixin):
             return super().has_change_permission(request, obj)
         sections = request.user.section_set.all()
         return obj.section in sections
+
+
+    def export_form(self, request, query):
+
+        form = query.first()
+
+        if form.section not in Section.objects.filter(users=request.user):
+            messages.add_message(request, messages.ERROR, _("access denied"))
+            return
+
+        form_entries = []
+        fields = set()
+
+        for field in FormField.objects.filter(parent=form):
+            fields.add(field.slug)
+
+        for entry in form.formentry_set.all():
+            values = {
+                'ip': entry.ip,
+                'created': entry.created
+            }
+
+            for field in fields:
+                value = entry.fields.filter(field__slug=field)[0]
+                values[field] = value.value
+
+            form_entries.append(values)
+        fields.add('ip')
+        fields.add('created')
+
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="somefilename.csv"'
+
+        writer = csv.DictWriter(response, fieldnames=fields)
+        writer.writeheader()
+        writer.writerows(form_entries)
+
+        return response

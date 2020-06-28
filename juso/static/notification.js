@@ -21,7 +21,6 @@ if ('Notification' in window && navigator.serviceWorker) {
               "Content-Type": 'application/json',
             },
             redirect: 'error', // manual, *follow, error
-            referrerPolicy: 'no-referrer', // no-referrer, *client
             body: JSON.stringify(sub) // body data type must match "Content-Type" header
           }).then(response => response.json())
             .then(json => {
@@ -63,7 +62,6 @@ function disableNotifications() {
             "Content-Type": 'application/json',
           },
           redirect: 'error', // manual, *follow, error
-          referrerPolicy: 'no-referrer', // no-referrer, *client
           body: JSON.stringify(subscription) // body data type must match "Content-Type" header
         }).then(response => response.json())
           .then(json => {
@@ -94,7 +92,6 @@ function enableNotifications() {
             "Content-Type": 'application/json',
           },
           redirect: 'error', // manual, *follow, error
-          referrerPolicy: 'no-referrer', // no-referrer, *client
           body: JSON.stringify(sub) // body data type must match "Content-Type" header
         }).then(response => response.json()).then( json => {
           toggleButtons(true);

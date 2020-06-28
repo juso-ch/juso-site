@@ -4,7 +4,8 @@ body.theme-change, body.theme-change .nav-panel {
 
 body.dark{
   background-color: #262626;
-  color: #ffffff;
+  color: #dedede;
+  --white: #dedede;
   --text-color: var(--white);
   --background-color:var(--anthrazit);
   --footer-background-color: black;
@@ -38,6 +39,7 @@ body.dark img {
   opacity: .75;
   transition: opacity .5s ease-in-out;
 }
+
 body.dark img:hover {
   opacity: 1;
 }

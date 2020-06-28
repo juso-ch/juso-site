@@ -280,7 +280,7 @@ class DuplicateForm(forms.Form):
     new_slug = forms.CharField()
     new_path = forms.CharField()
     new_title = forms.CharField()
-    link_translations = forms.BooleanField()
+    link_translations = forms.BooleanField(required=False)
 
     def __init__(self, *args, **kwargs):
         self.page = kwargs.pop('page')
@@ -289,7 +289,11 @@ class DuplicateForm(forms.Form):
 
 
 class SiteAdmin(SiteAdmin):
-    search_fields = ['domain']
+    search_fields = ['host']
+
+    list_editable = [
+        'default_language',
+    ]
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)

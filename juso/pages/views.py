@@ -33,7 +33,20 @@ def page_detail(request, path=None):
     if path is None and not Page.objects.active().filter(path="/").exists():
         return redirect(get_landing_page(request).path)
 
-    page = get_object_or_404(Page.objects.active(), path=f"/{path}/" if path else "/",)
+    page = Page.objects.active().filter(path=f"/{path}/" if path else "/")
+
+    if not page.exists():
+        page = Page.objects.active().filter(path=f"/{request.LANGUAGE_CODE}/{path}/")
+        if page.exists():
+            return redirect(page[0].path)
+
+        for language_code, _ in settings.LANGUAGES:
+            page = Page.objects.active().filter(path=f"/{language_code}/{path}/")
+
+            if page.exists():
+                return redirect(page[0].path)
+
+    page = get_object_or_404(page)
 
     if page.redirect_to_url or page.redirect_to_page:
         return redirect(page.redirect_to_url or page.redirect_to_page)

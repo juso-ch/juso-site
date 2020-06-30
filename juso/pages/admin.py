@@ -152,6 +152,7 @@ class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
                     "favicon",
                     "primary_color",
                     "css_vars",
+                    "google_site_verification",
                 ),
             },
         ),

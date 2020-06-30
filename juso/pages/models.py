@@ -215,6 +215,8 @@ class Page(
 
     logo = models.TextField(_("logo"), blank=True)
 
+    google_site_verification = models.CharField(max_length=60, blank=True)
+
     favicon = ImageField(
         _("favicon"),
         formats={

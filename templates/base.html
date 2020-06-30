@@ -26,6 +26,9 @@
     {% block meta %}
     {{meta_tags}}
     {% endblock %}
+    {% if page.google_site_verification %}
+    <meta name="google-site-verification" content="{{page.google_site_verification}}" />
+    {% endif %}
     {% block structured_data %}
     {% endblock %}
 
@@ -46,7 +49,7 @@
     <meta name="theme-color" content="{{top.primary_color|default:"#eb141f"}}">
     <style>
 :root{
-    {% if top.primary_color %}
+  {% if top.primary_color %}
   --primary-color: {{top.primary_color}};
     {% endif %}
     {% if top.css_vars %}
@@ -57,109 +60,109 @@
     {% endcache %}
 
   </head>
-  <body class="{{page.category.slug}}">
+    <body class="{{page.category.slug}}">
 
-    {% button_menu request.LANGUAGE_CODE top as buttons %}
+      {% button_menu request.LANGUAGE_CODE top as buttons %}
 
-    <nav role="main" class="main" id="mainNavigation">
-      <div class="branding">
-        <a class="brand" href="{{top.get_absolute_url}}">
-          <span class="logo" aria-label="{% trans 'Logo' %}">
-          {% include 'includes/logo.svg' %}
-          </span>
-          <span class="name">
-            {{top.title|nbsp}}
-          </span>
-        </a>
-      </div>
-      {% include 'includes/main_navigation.html' with menu=menus.main buttons=buttons %}
-    </nav>
+      <nav role="main" class="main" id="mainNavigation">
+        <div class="branding">
+          <a class="brand" href="{{top.get_absolute_url}}">
+            <span class="logo" aria-label="{% trans 'Logo' %}">
+              {% include 'includes/logo.svg' %}
+            </span>
+            <span class="name">
+              {{top.title|nbsp}}
+            </span>
+          </a>
+        </div>
+        {% include 'includes/main_navigation.html' with menu=menus.main buttons=buttons %}
+      </nav>
 
-    <header
-      {% if header_image %}
-      style="background-image: url('{{header_image.full}}')"
-      class="background-image page"
-      {% else %}
-      class="page"
-      {% endif %}
-      >
-      <div class="top-bar">
-        <nav role="top" class="top">
-          {% include 'includes/top_navigation.html' with menu=menus.top %}
-          {% include 'includes/translations.html' with page=page obj=obj %}
+      <header
+        {% if header_image %}
+        style="background-image: url('{{header_image.full}}')"
+        class="background-image page"
+        {% else %}
+        class="page"
+        {% endif %}
+        >
+        <div class="top-bar">
+          <nav role="top" class="top">
+            {% include 'includes/top_navigation.html' with menu=menus.top %}
+            {% include 'includes/translations.html' with page=page obj=obj %}
+          </nav>
+
+        <nav role="buttons" class="buttons">
+          {% include 'includes/nav_buttons.html' with menu=buttons %}
+        </nav>
+        </div>
+        <span class="logo mobile-only" aria-label="{% trans 'Logo' %}">
+          <a title="{% trans 'logo' %}" href="{{top.get_absolute_url}}">
+            {% include 'includes/logo.svg' %}
+          </a>
+        </span>
+
+        {% block header %}
+        <h1 class="ui primary center aligned header">
+          {{title|default:page.title|nbsp}}
+        </h1>
+        {% endblock %}
+      </header>
+
+      <main>
+        {% block content %}
+        {% endblock %}
+      </main>
+
+
+      <footer>
+        {% block footer %}
+        <nav class="meta">
+          {% include 'includes/meta_menu.html' with menu=menus.main quicklinks=menus.quicklink%}
         </nav>
 
-      <nav role="buttons" class="buttons">
-        {% include 'includes/nav_buttons.html' with menu=buttons %}
+        <nav role="footer" class="footer">
+          {% include 'includes/footer_menu.html' with menu=menus.footer %}
+        </nav>
+
+        {% render_region regions "footer" %}
+        {% endblock %}
+      </footer>
+
+      {% render_block 'js' %}
+
+      {% addtoblock 'js' %}
+      <script src="{% static 'js.cookie.min.js' %}"></script>
+      {% endaddtoblock %}
+
+      {% addtoblock 'js' %}
+      <script src="{% static 'forms/forms.js' %}"></script>
+      {% endaddtoblock %}
+
+      {% addtoblock 'js' %}
+      <script src="{% static 'theming.js' %}"></script>
+      {% endaddtoblock %}
+
+      {% addtoblock 'js' %}
+      <script src="{% static 'sticky.js' %}"></script>
+      {% endaddtoblock %}
+
+      {% addtoblock 'js' %}
+      <script src="{% static 'tools.js' %}"></script>
+      {% endaddtoblock %}
+
+      {% addtoblock 'js' %}
+      <script>
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/service-worker.js');
+          });
+        }
+      </script>
+      {% endaddtoblock %}
+      <nav id="mobile-menu">
+        {% include 'includes/mobile_menu.html' with menu=menus.main buttons=buttons footer=menus.footer top_menu=menus.top %}
       </nav>
-      </div>
-      <span class="logo mobile-only" aria-label="{% trans 'Logo' %}">
-        <a title="{% trans 'logo' %}" href="{{top.get_absolute_url}}">
-          {% include 'includes/logo.svg' %}
-        </a>
-      </span>
 
-      {% block header %}
-      <h1 class="ui primary center aligned header">
-        {{title|default:page.title|nbsp}}
-      </h1>
-      {% endblock %}
-    </header>
-
-    <main>
-      {% block content %}
-      {% endblock %}
-    </main>
-
-
-    <footer>
-      {% block footer %}
-      <nav class="meta">
-        {% include 'includes/meta_menu.html' with menu=menus.main quicklinks=menus.quicklink%}
-      </nav>
-
-      <nav role="footer" class="footer">
-        {% include 'includes/footer_menu.html' with menu=menus.footer %}
-      </nav>
-
-      {% render_region regions "footer" %}
-      {% endblock %}
-    </footer>
-
-    {% render_block 'js' %}
-
-    {% addtoblock 'js' %}
-    <script src="{% static 'js.cookie.min.js' %}"></script>
-    {% endaddtoblock %}
-
-    {% addtoblock 'js' %}
-    <script src="{% static 'forms/forms.js' %}"></script>
-    {% endaddtoblock %}
-
-    {% addtoblock 'js' %}
-    <script src="{% static 'theming.js' %}"></script>
-    {% endaddtoblock %}
-
-    {% addtoblock 'js' %}
-    <script src="{% static 'sticky.js' %}"></script>
-    {% endaddtoblock %}
-
-    {% addtoblock 'js' %}
-    <script src="{% static 'tools.js' %}"></script>
-    {% endaddtoblock %}
-
-    {% addtoblock 'js' %}
-    <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-          navigator.serviceWorker.register('/service-worker.js');
-        });
-      }
-    </script>
-    {% endaddtoblock %}
-    <nav id="mobile-menu">
-      {% include 'includes/mobile_menu.html' with menu=menus.main buttons=buttons footer=menus.footer top_menu=menus.top %}
-    </nav>
-
-  </body>
+    </body>
 </html>

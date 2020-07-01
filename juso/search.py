@@ -1,4 +1,5 @@
 import re
+
 from django.contrib.postgres.search import SearchQuery
 
 

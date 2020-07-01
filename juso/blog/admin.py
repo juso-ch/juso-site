@@ -7,17 +7,18 @@ from feincms3_meta.models import MetaMixin
 from js_asset import JS
 
 from juso.admin import ButtonInline
-from juso.blog import plugins as blog_plugins
-from juso.pages.models import Page
 from juso.blog import models
+from juso.blog import plugins as blog_plugins
 from juso.blog.models import Article, NameSpace
 from juso.events import plugins as event_plugins
 from juso.forms import plugins as form_plugins
+from juso.glossary.admin import GlossaryContentInline
+from juso.pages.models import Page
 from juso.people import plugins as people_plugins
 from juso.plugins import download
 from juso.utils import CopyContentMixin
-from juso.glossary.admin import GlossaryContentInline
-from juso.webpush import models as webpush, tasks
+from juso.webpush import models as webpush
+from juso.webpush import tasks
 
 # Register your models here.
 

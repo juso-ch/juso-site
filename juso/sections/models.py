@@ -1,11 +1,13 @@
-from content_editor.models import Region, Template
 import textwrap
-from django.contrib.auth.models import User
-from django.core.files.storage import get_storage_class
-from django.core import files
-from django.urls import NoReverseMatch
+from io import BytesIO
+
+from content_editor.models import Region, Template
 from django.conf import settings
+from django.contrib.auth.models import User
+from django.core import files
+from django.core.files.storage import get_storage_class
 from django.db import models
+from django.urls import NoReverseMatch
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from feincms3.apps import reverse_app
@@ -13,17 +15,12 @@ from feincms3.mixins import TemplateMixin
 from feincms3_meta.models import MetaMixin
 from feincms3_sites.middleware import current_site
 from feincms3_sites.models import Site
+from imagefield.fields import ImageField
+from PIL import Image, ImageColor, ImageDraw, ImageFont
 from taggit.managers import TaggableManager
 from tree_queries.models import TreeNode
-from io import BytesIO
 
-from imagefield.fields import ImageField
 from juso.models import TranslationMixin
-
-from PIL import Image
-from PIL import ImageFont
-from PIL import ImageDraw
-from PIL import ImageColor
 
 # Create your models here.
 
@@ -40,6 +37,7 @@ class Category(TranslationMixin, MetaMixin, TreeNode):
             "square": ["default", ("crop", (900, 900))],
             "card": ["default", ("crop", (900, 600))],
             "mobile": ["default", ("crop", (740, 600))],
+            "some": ["default", ("crop", (1200, 630))],
         },
         auto_add_fields=True,
         blank=True,

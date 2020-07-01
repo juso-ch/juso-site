@@ -1,7 +1,6 @@
-from django.shortcuts import reverse
-from django.conf import settings
-
 from django import template
+from django.conf import settings
+from django.shortcuts import reverse
 
 register = template.Library()
 

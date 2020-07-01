@@ -1,7 +1,10 @@
 import json
+
 from django.http import JsonResponse
 from feincms3.apps import page_for_app_request
+
 from juso.webpush.models import Subscription
+
 
 # Create your views here.
 def subscribe_to_webpush(request):

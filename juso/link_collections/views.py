@@ -1,5 +1,4 @@
 from django.shortcuts import render
-
 from feincms3.apps import page_for_app_request
 from feincms3_meta.utils import meta_tags
 

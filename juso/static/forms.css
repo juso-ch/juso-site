@@ -92,7 +92,7 @@ form .field {
 }
 
 
-.field > input:focus {
+.field > input:focus, .field > textarea:focus {
   border-bottom-color: var(--highlight-color);
   outline: none;
 }
@@ -102,7 +102,7 @@ form .field {
   opacity: 1;
 }
 
-.field > input, .field > select {
+.field > input, .field > select, .field > textarea {
   width: 100%;
   background: var(--background-color);
   border: none;

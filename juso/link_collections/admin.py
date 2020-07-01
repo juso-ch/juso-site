@@ -1,9 +1,9 @@
 from admin_ordering.admin import OrderableAdmin
 from django.contrib import admin
 
-# Register your models here.
+from juso.link_collections.models import Collection, Link
 
-from juso.link_collections.models import Link, Collection
+# Register your models here.
 
 
 class LinkInline(OrderableAdmin, admin.TabularInline):

@@ -1,27 +1,27 @@
+from admin_ordering.admin import OrderableAdmin
 from content_editor.admin import ContentEditor
 from django import forms
-from django.urls import path
-from django.shortcuts import render, redirect, reverse
 from django.conf import settings
 from django.contrib import admin
+from django.shortcuts import redirect, render, reverse
+from django.urls import path
 from django.utils.translation import gettext_lazy as _
 from feincms3 import plugins
 from feincms3.admin import TreeAdmin
+from feincms3_meta.models import MetaMixin
 from feincms3_sites.admin import SiteAdmin
 from feincms3_sites.models import Site
-from feincms3_meta.models import MetaMixin
 from js_asset import JS
 
-from admin_ordering.admin import OrderableAdmin
+from juso.admin import ButtonInline
 from juso.blog import plugins as blog_plugins
 from juso.events import plugins as event_plugins
 from juso.forms import plugins as form_plugins
+from juso.glossary.admin import GlossaryContentInline
 from juso.pages import models
 from juso.people import plugins as people_plugins
 from juso.plugins import download
 from juso.utils import CopyContentMixin
-from juso.glossary.admin import GlossaryContentInline
-from juso.admin import ButtonInline
 
 # Register your models here.
 
@@ -87,6 +87,7 @@ class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
         blog_plugins.ArticlePluginInline.create(models.ArticlePlugin),
         GlossaryContentInline.create(models.GlossaryRichText),
         form_plugins.FormPluginInline.create(models.FormPlugin),
+        form_plugins.EntryCounterInline.create(models.FormEntryCounterPlugin),
         CategoryLinkingInline,
     ]
 

@@ -1,13 +1,12 @@
+from django.template.loader import render_to_string
 from django.utils.html import mark_safe
 from feincms3 import plugins
-from django.template.loader import render_to_string
 
 from juso.blog import plugins as article_plugins
 from juso.events import plugins as event_plugins
 from juso.forms import plugins as form_plugins
 from juso.people import plugins as people_plugins
 from juso.plugins import download
-
 from juso.utils import render_embed
 
 
@@ -63,4 +62,8 @@ def register_renderers(renderer, pages):
 
     renderer.register_string_renderer(
         pages.FormPlugin, form_plugins.render_form,
+    )
+
+    renderer.register_string_renderer(
+        pages.FormEntryCounterPlugin, form_plugins.render_counter,
     )

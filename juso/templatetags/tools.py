@@ -1,6 +1,6 @@
-from django.shortcuts import reverse
 from django import template
 from django.core import serializers
+from django.shortcuts import reverse
 from django.utils.safestring import mark_safe
 
 from juso.sections.models import Category

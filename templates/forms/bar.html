@@ -1,0 +1,25 @@
+<div class="wrapper">
+  <div class="progress">
+    <div class="bar" style="width: {{percentage|stringformat:".2f"}}%"></div>
+  </div>
+  <div class="counter progress-info">
+    <div class="goal">
+      <span class="prefix">
+        {{plugin.prefix}}
+      </span>
+      <span class="number">{{count}}</span>
+      <span class="suffix">
+        {{plugin.suffix}}
+      </span>
+    </div>
+    <div class="missing">
+      <span class="prefix">
+        {{plugin.prefix_missing}}
+      </span>
+      <span class="number">{{missing}}</span>
+      <span class="suffix">
+        {{plugin.suffix_missing}}
+      </span>
+    </div>
+  </div>
+</div>

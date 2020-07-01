@@ -6,11 +6,9 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('forms', '0024_auto_20200626_1201'),
+        ("forms", "0024_auto_20200626_1201"),
     ]
 
     operations = [
-        migrations.DeleteModel(
-            name='RichText',
-        ),
+        migrations.DeleteModel(name="RichText",),
     ]

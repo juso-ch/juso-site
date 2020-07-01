@@ -1,7 +1,6 @@
 from django.urls import path
 
 from juso.events import views
-
 from juso.webpush import views as webpush
 
 app_name = "events"

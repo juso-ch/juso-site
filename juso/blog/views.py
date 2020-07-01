@@ -1,21 +1,21 @@
+from django.conf import settings
 from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
-from django.contrib.syndication.views import Feed
 from django.contrib.sitemaps import Sitemap
 from django.contrib.sitemaps.views import sitemap
+from django.contrib.syndication.views import Feed
 from django.core.paginator import Paginator
-from django.conf import settings
-from django.utils import timezone
 from django.shortcuts import get_object_or_404, render
+from django.utils import timezone
 from feincms3.apps import page_for_app_request
 from feincms3.regions import Regions
 from feincms3.shortcuts import render_list
 from feincms3_meta.utils import meta_tags
 
 from juso import pages
-from juso.sections.models import Category
 from juso.blog import models
-from juso.search import consume
 from juso.blog.renderer import renderer
+from juso.search import consume
+from juso.sections.models import Category
 
 # Create your views here.
 

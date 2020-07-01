@@ -1,3 +1,5 @@
+import numbers
+
 import requests
 from django.core.mail import send_mail
 from django.http.response import HttpResponse
@@ -28,9 +30,12 @@ def process_form(request, form):
         entry = models.FormEntry.objects.create(form=form.form, ip=client_ip(request),)
 
         for field in form.form.forms_formfield_set.all():
-            models.FormEntryValue.objects.create(
+            field_entry = models.FormEntryValue.objects.create(
                 field=field, form_entry=entry, value=form.cleaned_data[field.slug],
             )
+            if isinstance(form.cleaned_data[field.slug], numbers.Number):
+                field_entry.int_value = form.cleaned_data[field.slug]
+                field_entry.save()
 
         if form.form.webhook:
             data = form.cleaned_data

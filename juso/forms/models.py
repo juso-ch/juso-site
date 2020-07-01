@@ -1,21 +1,17 @@
 from content_editor.models import create_plugin_base
-from django.db import models, transaction
-from django.utils.translation import gettext_lazy as _
+from django.db import models
 from django.shortcuts import reverse
-from feincms3 import plugins
-from feincms3.apps import apps_urlconf, reverse_app
+from django.utils.translation import gettext_lazy as _
 from feincms3.cleanse import CleansedRichTextField
-from feincms3.mixins import TemplateMixin
-from feincms3_sites.middleware import current_site, set_current_site
 
 from juso.forms.forms import get_form_instance
 
 # Create your models here.
 from juso.sections.models import ContentMixin, get_template_list
-from juso.utils import number_word
 
 INPUT_TYPES = (
     ("text", _("text")),
+    ("long_text", _("long text")),
     ("email", _("email")),
     ("boolean", _("boolean")),
     ("date", _("date")),
@@ -68,6 +64,38 @@ class Form(ContentMixin):
     def count(self):
         return self.formentry_set.count()
 
+    def aggregate(self, field_slug):
+        return (
+            FormEntryValue.objects.filter(
+                form_entry__form=self, field__slug=field_slug,
+            ).aggregate(r=models.Sum("int_value"))["r"]
+            or 0
+        )
+
+    def entry_dict(self):
+        form_entries = []
+        fields = set()
+
+        for field in FormField.objects.filter(parent=self):
+            fields.add(field.slug)
+
+        for entry in self.formentry_set.all():
+            values = {"ip": entry.ip, "created": entry.created}
+
+            for field in fields:
+                value = entry.fields.filter(field__slug=field)
+                if value.exists():
+                    values[field] = value[0].value
+                else:
+                    values[field] = ""
+
+            form_entries.append(values)
+
+        fields.add("ip")
+        fields.add("created")
+
+        return form_entries, fields
+
 
 PluginBase = create_plugin_base(Form)
 
@@ -82,6 +110,19 @@ class FormField(PluginBase):
     choices = models.TextField(_("choices"), blank=True)
     initial = models.TextField(_("initial"), max_length=240, blank=True)
     size = models.TextField(_("size"), default="one", choices=SIZES)
+
+    unique = models.BooleanField(
+        _("unique"),
+        default=False,
+        help_text=_("restricts people to only submit one value for this form"),
+    )
+
+    unique_error = models.CharField(
+        _("unique error"),
+        blank=True,
+        max_length=180,
+        help_text=_("error that is displayed if value already exists"),
+    )
 
     def __str__(self):
         return self.name
@@ -113,6 +154,7 @@ class FormEntryValue(models.Model):
     )
     field = models.ForeignKey(FormField, models.CASCADE)
     value = models.TextField(_("value"), blank=True)
+    int_value = models.IntegerField(_("int value"), default=0)
 
     def __str__(self):
         return f"{self.field.name}: {self.value}"

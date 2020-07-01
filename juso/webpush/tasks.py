@@ -1,6 +1,6 @@
 from celery import shared_task
 from django.conf import settings
-from pywebpush import webpush, WebPushException
+from pywebpush import WebPushException, webpush
 
 from juso.webpush import models
 

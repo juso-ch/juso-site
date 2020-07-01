@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from types import MethodType
+
 from django import forms
 from django.forms import widgets
 
@@ -15,6 +17,22 @@ class DynamicForm(forms.Form):
 
         for field in self.form.forms_formfield_set.all():
             self.fields[field.slug] = get_field_instance(field, request)
+            if field.unique:
+                bound_field = field
+
+                def clean_field(self):
+                    values = models.FormEntryValue.objects.filter(
+                        form_entry__form=self.form,
+                        field=bound_field,
+                        value=self.cleaned_data[bound_field.slug],
+                    )
+
+                    if values.exists():
+                        raise forms.ValidationError(bound_field.unique_error)
+                    return self.cleaned_data[bound_field.slug]
+
+                self.__dict__[f"clean_{field.slug}"] = MethodType(clean_field, self)
+        print(self.fields)
 
 
 class HiddenField(forms.Field):
@@ -31,6 +49,10 @@ class DateTimeField(forms.DateTimeField):
 
 class CustomChoiceField(forms.ChoiceField):
     widget = widgets.ChoiceWidget
+
+
+class TextField(forms.CharField):
+    widget = widgets.Textarea
 
 
 def get_form_instance(form: models.Form, request=None):
@@ -87,6 +109,7 @@ def get_field_instance(field, request):
 
 INPUT_TYPES = {
     "text": forms.CharField,
+    "long_text": TextField,
     "boolean": forms.BooleanField,
     "choice": forms.ChoiceField,
     "date": DateField,

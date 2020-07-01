@@ -1,7 +1,7 @@
 from django.db import models
+from django.template.loader import render_to_string
 from django.utils.translation import gettext_lazy as _
 from feincms3.mixins import LanguageMixin
-from django.template.loader import render_to_string
 
 
 class TranslationMixin(LanguageMixin):

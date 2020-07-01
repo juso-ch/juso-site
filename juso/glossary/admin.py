@@ -1,6 +1,7 @@
-from django.utils.translation import gettext_lazy as _
 from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
 from feincms3.plugins.richtext import RichTextInline
+
 from juso.glossary.models import Entry
 
 # Register your models here.

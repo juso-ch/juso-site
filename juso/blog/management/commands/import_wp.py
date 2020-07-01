@@ -1,14 +1,16 @@
-import requests
 from collections import defaultdict
-from django.core import files
 from io import BytesIO
+
+import requests
+from dateutil import parser
+from django.core import files
 from django.core.management.base import BaseCommand, CommandError
 from django.utils.text import slugify
 from feincms3.cleanse import cleanse_html
-from dateutil import parser
 from langdetect import detect
-from juso.blog.models import Article, RichText, WPImport
 from lxml import etree
+
+from juso.blog.models import Article, RichText, WPImport
 
 
 def get_image(thumbnail):

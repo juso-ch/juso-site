@@ -1,5 +1,6 @@
 from django.urls import path
 from django.views.decorators.cache import cache_page
+
 from juso.pages import views
 
 app_name = "pages"

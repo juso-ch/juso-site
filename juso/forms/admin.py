@@ -1,11 +1,11 @@
 import csv
-from django.http import HttpResponse
+
 from content_editor.admin import ContentEditor, ContentEditorInline
 from django.contrib import admin, messages
+from django.http import HttpResponse
 from django.utils.translation import gettext_lazy as _
 
 # Register your models here.
-from feincms3 import plugins
 
 from juso.forms.models import Form, FormField
 from juso.sections.models import Section
@@ -28,7 +28,14 @@ class FormFieldInline(ContentEditorInline):
             _("advanced"),
             {
                 "classes": ("collapse",),
-                "fields": ("size", "choices", "initial", "help_text",),
+                "fields": (
+                    "size",
+                    "choices",
+                    "initial",
+                    "help_text",
+                    "unique",
+                    "unique_error",
+                ),
             },
         ),
     )
@@ -144,28 +151,13 @@ class FormAdmin(ContentEditor, CopyContentMixin):
             messages.add_message(request, messages.ERROR, _("access denied"))
             return
 
-        form_entries = []
-        fields = set()
-
-        for field in FormField.objects.filter(parent=form):
-            fields.add(field.slug)
-
-        for entry in form.formentry_set.all():
-            values = {"ip": entry.ip, "created": entry.created}
-
-            for field in fields:
-                value = entry.fields.filter(field__slug=field)[0]
-                values[field] = value.value
-
-            form_entries.append(values)
-        fields.add("ip")
-        fields.add("created")
+        entries, fields = form.entry_dict()
 
         response = HttpResponse(content_type="text/csv")
         response["Content-Disposition"] = 'attachment; filename="somefilename.csv"'
 
         writer = csv.DictWriter(response, fieldnames=fields)
         writer.writeheader()
-        writer.writerows(form_entries)
+        writer.writerows(entries)
 
         return response

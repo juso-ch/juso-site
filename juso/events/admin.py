@@ -1,24 +1,25 @@
 from content_editor.admin import ContentEditor
 from django.conf import settings
-from django.db.models import Q
 from django.contrib import admin
+from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 from feincms3 import plugins
 from feincms3_meta.models import MetaMixin
 from geopy.geocoders import Nominatim
 from js_asset import JS
 
-from juso.forms import plugins as form_plugins
 from juso.admin import ButtonInline
-from juso.events import models
-from juso.pages.models import Page
-from juso.events.models import Event, Location, NameSpace
-from juso.events import plugins as event_plugins
-from juso.people import plugins as people_plugins
 from juso.blog import plugins as blog_plugins
+from juso.events import models
+from juso.events import plugins as event_plugins
+from juso.events.models import Event, Location, NameSpace
+from juso.forms import plugins as form_plugins
+from juso.pages.models import Page
+from juso.people import plugins as people_plugins
 from juso.plugins import download
 from juso.utils import CopyContentMixin
-from juso.webpush import models as webpush, tasks
+from juso.webpush import models as webpush
+from juso.webpush import tasks
 
 # Register your models here.
 

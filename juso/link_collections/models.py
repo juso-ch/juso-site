@@ -2,9 +2,9 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from feincms3_meta.models import MetaMixin
 
-# Create your models here.
+from juso.sections.models import Category, Section
 
-from juso.sections.models import Section, Category
+# Create your models here.
 
 
 class Collection(models.Model):

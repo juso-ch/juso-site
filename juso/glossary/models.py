@@ -1,10 +1,11 @@
 import re
 
-from django.utils.translation import gettext_lazy as _
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 from feincms3.plugins.richtext import RichText
-from juso.sections.models import Category
+
 from juso.models import TranslationMixin
+from juso.sections.models import Category
 
 # Create your models here.
 

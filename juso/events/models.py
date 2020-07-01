@@ -1,29 +1,29 @@
-from content_editor.models import Region, create_plugin_base
-import pytz
-from django.urls import NoReverseMatch
+import json
 import urllib
 import uuid
-from django.utils import timezone
-from django.db import models
+
+import bleach
+import pytz
+from content_editor.models import Region, create_plugin_base
 from django.conf import settings
-from django.utils.translation import gettext_lazy as _
+from django.db import models
+from django.urls import NoReverseMatch
+from django.utils import timezone
 from django.utils.timezone import datetime, now
+from django.utils.translation import gettext_lazy as _
 from feincms3 import plugins
 from feincms3.apps import apps_urlconf, reverse_app
 from feincms3_meta.models import MetaMixin
 from feincms3_sites.middleware import current_site, set_current_site
-from taggit.managers import TaggableManager
 from imagefield.fields import ImageField
-import json
-import bleach
+from taggit.managers import TaggableManager
 
-from juso.models import TranslationMixin
-from juso.events import plugins as event_plugins
-from juso.people import plugins as people_plugins
-from juso.forms import plugins as form_plugins
 from juso.blog import plugins as blog_plugins
+from juso.events import plugins as event_plugins
+from juso.forms import plugins as form_plugins
+from juso.models import Button, TranslationMixin
+from juso.people import plugins as people_plugins
 from juso.plugins import download
-from juso.models import Button
 from juso.sections.models import ContentMixin, Section, get_template_list
 
 # Create your models here.
@@ -346,6 +346,10 @@ class EventPlugin(event_plugins.EventPlugin, PluginBase):
 
 
 class FormPlugin(form_plugins.FormPlugin, PluginBase):
+    pass
+
+
+class FormEntryCounterPlugin(form_plugins.EntryCounter, PluginBase):
     pass
 
 

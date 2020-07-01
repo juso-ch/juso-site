@@ -1235,3 +1235,36 @@ time > .time >.minutes {
     margin-right: 0;
   }
 }
+
+.counter {
+  text-align: center;
+}
+
+.counter > .number {
+  font-size: 1.8em;
+}
+
+.counter .number {
+  font-weight: 800;
+  margin: 0.1em;
+}
+
+.progress {
+  width: 100%;
+  background-color: var(--grey);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  margin-bottom: 0.5em;
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1em;
+}
+
+.progress > .bar {
+  background-color: var(--highlight-color);
+  height: 1em;
+  border-radius: var(--border-radius);
+}

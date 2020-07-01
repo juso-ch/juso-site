@@ -11,6 +11,7 @@
   --third-button: var(--green);
 
   --primary-color: var(--red);
+  --grey: #aaa;
   --light-color: var(--white);
   --tamaro-primary-color: var(--primary-color);
   --tamaro-bg-color: var(--background-color);

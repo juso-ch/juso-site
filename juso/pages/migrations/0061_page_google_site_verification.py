@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('pages', '0060_auto_20200626_1201'),
+        ("pages", "0060_auto_20200626_1201"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='page',
-            name='google_site_verification',
+            model_name="page",
+            name="google_site_verification",
             field=models.CharField(blank=True, max_length=60),
         ),
     ]

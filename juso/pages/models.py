@@ -1,27 +1,25 @@
 from content_editor.models import create_plugin_base
-from django.db import models, transaction
 from django.conf import settings
+from django.db import models, transaction
 from django.utils.translation import gettext_lazy as _
 from feincms3 import plugins as feincms3_plugins
 from feincms3.apps import AppsMixin
 from feincms3.mixins import MenuMixin, RedirectMixin, TemplateMixin
 from feincms3_meta.models import MetaMixin
-from feincms3_sites.middleware import current_site, set_current_site
+from feincms3_sites.middleware import current_site
 from feincms3_sites.models import AbstractPage
-
 from imagefield.fields import ImageField
-
-from PIL import ImageOps, ImageEnhance
 from imagefield.processing import register
+from PIL import ImageEnhance, ImageOps
 
 from juso import models as juso
 from juso.blog import plugins as article_plugins
 from juso.events import plugins as event_plugins
 from juso.forms import plugins as form_plugins
+from juso.glossary.models import GlossaryContent
 from juso.models import TranslationMixin
 from juso.people import plugins as people_plugins
 from juso.plugins import download
-from juso.glossary.models import GlossaryContent
 from juso.sections.models import get_template_list
 
 # Create your models here.
@@ -342,6 +340,10 @@ class FormPlugin(form_plugins.FormPlugin, PluginBase):
     pass
 
 
+class FormEntryCounterPlugin(form_plugins.EntryCounter, PluginBase):
+    pass
+
+
 class CategoryLinking(models.Model):
     page = models.ForeignKey(Page, models.CASCADE)
     category = models.ForeignKey("sections.Category", models.CASCADE)
@@ -371,4 +373,5 @@ plugins = [
     ArticlePlugin,
     FormPlugin,
     GlossaryRichText,
+    FormEntryCounterPlugin,
 ]

@@ -10,6 +10,10 @@ from juso.plugins import download
 from juso.utils import render_embed
 
 
+def render_navigation(plugin):
+    return render_to_string("pages/page_subnav.html", {"pages": plugin.pages.all()})
+
+
 def render_richtext(plugin):
     return render_to_string(
         "plugins/text.html", {"content": plugins.richtext.render_richtext(plugin)}
@@ -39,6 +43,9 @@ def register_renderers(renderer, pages):
 
     if hasattr(pages, "GlossaryRichText"):
         renderer.register_string_renderer(pages.GlossaryRichText, render_glossarytext)
+
+    if hasattr(pages, "NavigationPlugin"):
+        renderer.register_string_renderer(pages.NavigationPlugin, render_navigation)
 
     renderer.register_string_renderer(pages.HTML, render_html)
 

@@ -282,6 +282,13 @@ class Page(
         # ordering = ['parent_id', 'position']
 
 
+class PagesPlugin(models.Model):
+    pages = models.ManyToManyField(Page, related_name="+")
+
+    class Meta:
+        abstract = True
+
+
 PluginBase = create_plugin_base(Page)
 
 
@@ -361,6 +368,10 @@ class CategoryLinking(models.Model):
         ordering = ["order"]
 
 
+class NavigationPlugin(PagesPlugin, PluginBase):
+    pass
+
+
 plugins = [
     RichText,
     Image,
@@ -374,4 +385,5 @@ plugins = [
     FormPlugin,
     GlossaryRichText,
     FormEntryCounterPlugin,
+    NavigationPlugin,
 ]

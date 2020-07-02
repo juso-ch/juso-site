@@ -1,5 +1,5 @@
 from admin_ordering.admin import OrderableAdmin
-from content_editor.admin import ContentEditor
+from content_editor.admin import ContentEditor, ContentEditorInline
 from django import forms
 from django.conf import settings
 from django.contrib import admin
@@ -33,6 +33,10 @@ class CategoryLinkingInline(OrderableAdmin, admin.TabularInline):
     ordering_field_hide_input = True
 
     autocomplete_fields = ["category"]
+
+
+class NavigationPluginInline(ContentEditorInline):
+    autocomplete_fields = ["pages"]
 
 
 class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
@@ -88,6 +92,7 @@ class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
         GlossaryContentInline.create(models.GlossaryRichText),
         form_plugins.FormPluginInline.create(models.FormPlugin),
         form_plugins.EntryCounterInline.create(models.FormEntryCounterPlugin),
+        NavigationPluginInline.create(models.NavigationPlugin),
         CategoryLinkingInline,
     ]
 

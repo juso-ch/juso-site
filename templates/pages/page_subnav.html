@@ -1,4 +1,5 @@
-{% for child in page.children.all %}
+<nav class="subsites">
+{% for child in pages %}
 <a href="{{child.get_absolute_url}}" class="nav-item {{child.category.slug}}">
   <img src="{{child.get_header_image.square}}" alt="{{child.title}}">
   <div class="overlay"></div>
@@ -9,3 +10,4 @@
   </div>
 </a>
 {% endfor %}
+</nav>

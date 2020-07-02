@@ -6,9 +6,7 @@
   {% render_region regions "main" %}
 </article>
 {% if page.is_navigation %}
-<nav class="subsites">
-  {% include 'pages/page_subnav.html' with page=page %}
-</nav>
+  {% include 'pages/page_subnav.html' with pages=page.children.all %}
 {% endif %}
 {% if edit %}
 <a class="button" href="{% url 'admin:pages_page_change' page.pk %}">

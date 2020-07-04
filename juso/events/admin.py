@@ -7,6 +7,7 @@ from feincms3 import plugins
 from feincms3_meta.models import MetaMixin
 from geopy.geocoders import Nominatim
 from js_asset import JS
+from reversion.admin import VersionAdmin
 
 from juso.admin import ButtonInline
 from juso.blog import plugins as blog_plugins
@@ -25,7 +26,7 @@ from juso.webpush import tasks
 
 
 @admin.register(Event)
-class EventAdmin(ContentEditor, CopyContentMixin):
+class EventAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
     list_display = [
         "title",
         "slug",
@@ -166,7 +167,7 @@ class EventAdmin(ContentEditor, CopyContentMixin):
 
 
 @admin.register(Location)
-class LocationAdmin(ContentEditor):
+class LocationAdmin(VersionAdmin, ContentEditor):
     search_fields = [
         "name",
         "street",

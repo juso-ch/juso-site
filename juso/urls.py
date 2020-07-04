@@ -24,7 +24,12 @@ from juso import views
 
 
 def robots_view(request):
-    return HttpResponse("", content_type="text/plain")
+    if settings.DEBUG:
+        c = """User-agent: *
+Disallow: /"""
+    else:
+        c = ""
+    return HttpResponse(c, content_type="text/plain")
 
 
 urlpatterns = [

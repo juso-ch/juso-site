@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from feincms3 import plugins
 from feincms3_meta.models import MetaMixin
 from js_asset import JS
+from reversion.admin import VersionAdmin
 
 from juso.admin import ButtonInline
 from juso.blog import models
@@ -24,7 +25,7 @@ from juso.webpush import tasks
 
 
 @admin.register(Article)
-class ArticleAdmin(ContentEditor, CopyContentMixin):
+class ArticleAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
 
     list_display = [
         "title",

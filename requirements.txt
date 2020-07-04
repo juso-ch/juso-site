@@ -75,3 +75,4 @@ django-celery-results
 redis
 pywebpush
 future
+django-reversion

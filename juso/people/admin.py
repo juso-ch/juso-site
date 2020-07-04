@@ -1,5 +1,6 @@
 from admin_ordering.admin import OrderableAdmin
 from django.contrib import admin
+from reversion.admin import VersionAdmin
 
 # Register your models here.
 from juso.people.models import Membership, Person, Team
@@ -20,7 +21,7 @@ class PersonInline(OrderableAdmin, admin.TabularInline):
 
 
 @admin.register(Person)
-class PersonAdmin(admin.ModelAdmin):
+class PersonAdmin(VersionAdmin, admin.ModelAdmin):
     list_display = [
         "first_name",
         "last_name",
@@ -64,7 +65,7 @@ class PersonAdmin(admin.ModelAdmin):
 
 
 @admin.register(Team)
-class TeamAdmin(OrderableAdmin, admin.ModelAdmin):
+class TeamAdmin(VersionAdmin, OrderableAdmin, admin.ModelAdmin):
     list_display = [
         "name",
         "section",

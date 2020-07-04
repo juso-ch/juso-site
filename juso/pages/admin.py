@@ -12,6 +12,7 @@ from feincms3_meta.models import MetaMixin
 from feincms3_sites.admin import SiteAdmin
 from feincms3_sites.models import Site
 from js_asset import JS
+from reversion.admin import VersionAdmin
 
 from juso.admin import ButtonInline
 from juso.blog import plugins as blog_plugins
@@ -39,7 +40,7 @@ class NavigationPluginInline(ContentEditorInline):
     autocomplete_fields = ["pages"]
 
 
-class PageAdmin(CopyContentMixin, ContentEditor, TreeAdmin):
+class PageAdmin(VersionAdmin, CopyContentMixin, ContentEditor, TreeAdmin):
     list_display = [
         "indented_title",
         "move_column",

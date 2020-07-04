@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 from feincms3.plugins.richtext import RichTextInline
+from reversion.admin import VersionAdmin
 
 from juso.glossary.models import Entry
 
@@ -20,7 +21,7 @@ class GlossaryContentInline(RichTextInline):
 
 
 @admin.register(Entry)
-class GlossaryEntryAdmin(admin.ModelAdmin):
+class GlossaryEntryAdmin(VersionAdmin, admin.ModelAdmin):
     search_fields = ["name"]
 
     prepopulated_fields = {

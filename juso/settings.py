@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sitemaps",
+    'reversion',
     "sekizai",
     "admin_ordering",
     "feincms3",

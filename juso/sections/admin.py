@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 from feincms3.admin import TreeAdmin
 from feincms3_meta.models import MetaMixin
+from reversion.admin import VersionAdmin
 
 from juso.sections.models import Category, Section
 
@@ -9,7 +10,7 @@ from juso.sections.models import Category, Section
 
 
 @admin.register(Section)
-class SectionAdmin(TreeAdmin):
+class SectionAdmin(VersionAdmin, TreeAdmin):
     list_display = [
         "indented_title",
         "move_column",
@@ -49,7 +50,7 @@ class SectionAdmin(TreeAdmin):
 
 
 @admin.register(Category)
-class CategoryAdmin(TreeAdmin):
+class CategoryAdmin(VersionAdmin, TreeAdmin):
     list_display = [
         "indented_title",
         "move_column",

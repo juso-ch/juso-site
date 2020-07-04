@@ -1,5 +1,6 @@
 from admin_ordering.admin import OrderableAdmin
 from django.contrib import admin
+from reversion.admin import VersionAdmin
 
 from juso.link_collections.models import Collection, Link
 
@@ -17,7 +18,7 @@ class LinkInline(OrderableAdmin, admin.TabularInline):
 
 
 @admin.register(Collection)
-class CollectionAdmin(admin.ModelAdmin):
+class CollectionAdmin(VersionAdmin, admin.ModelAdmin):
     list_display = ["name", "section"]
     inlines = [LinkInline]
 

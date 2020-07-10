@@ -232,6 +232,15 @@ class Page(
     primary_color = models.CharField(_("primary color"), max_length=7, blank=True)
 
     css_vars = models.TextField(_("css vars"), blank=True)
+    fonts = models.TextField(
+        _("fonts"), default="klima\nmontserrat",
+        help_text=_("fonts loaded on the site")
+    )
+
+
+    def get_fonts(self):
+        for font in self.fonts.split('\n'):
+            yield font.strip() + ".css"
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

@@ -3,13 +3,11 @@
 {% addtoblock 'css' %}
 <link rel="stylesheet" type="text/css" href="{% static 'sanitize.css' %}">
 {% endaddtoblock %}
-
+{% for font in top.get_fonts %}
 {% addtoblock 'css' %}
-<link rel="stylesheet" type="text/css" href="{% static 'klima.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static font %}">
 {% endaddtoblock %}
-{% addtoblock 'css' %}
-<link rel="stylesheet" type="text/css" href="{% static 'montserrat.css' %}">
-{% endaddtoblock %}
+{% endfor %}
 {% addtoblock 'css' %}
 <link rel="stylesheet" type="text/css" href="{% static 'variables.css' %}">
 {% endaddtoblock %}

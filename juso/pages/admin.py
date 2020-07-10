@@ -55,6 +55,8 @@ class PageAdmin(VersionAdmin, CopyContentMixin, ContentEditor, TreeAdmin):
     ]
     actions = ["open_duplicate_form"]
 
+    list_per_page = 50
+
     prepopulated_fields = {"slug": ("title",)}
 
     autocomplete_fields = [
@@ -159,6 +161,7 @@ class PageAdmin(VersionAdmin, CopyContentMixin, ContentEditor, TreeAdmin):
                     "favicon",
                     "primary_color",
                     "css_vars",
+                    "fonts",
                     "google_site_verification",
                 ),
             },

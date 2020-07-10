@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
+
 from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -32,7 +33,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.sitemaps",
-    'reversion',
+    "reversion",
     "sekizai",
     "admin_ordering",
     "feincms3",
@@ -135,13 +136,19 @@ CKEDITOR_CONFIGS = {
                 "Format",
                 "RemoveFormat",
                 "-",
+                "Undo",
+                "Redo",
+                "-",
                 "Bold",
                 "Italic",
+                "Strike",
                 "Subscript",
                 "Superscript",
                 "-",
                 "NumberedList",
                 "BulletedList",
+                "Table",
+                "Blockquote",
                 "-",
                 "Anchor",
                 "Link",
@@ -150,6 +157,7 @@ CKEDITOR_CONFIGS = {
                 "HorizontalRule",
                 "SpecialChar",
                 "-",
+                "ShowBlocks",
                 "Source",
             ]
         ],
@@ -259,3 +267,42 @@ VAPID_EMAIL = os.environ.get("VAPID_EMAIL", "")
 
 VAPID_PRIVATE_KEY = os.environ.get("VAPID_PRIVATE_KEY", "")
 VAPID_PUBLIC_KEY = os.environ.get("VAPID_PUBLIC_KEY", "")
+
+
+from html_sanitizer.sanitizer import bold_span_to_strong, italic_span_to_em, tag_replacer, target_blank_noopener, sanitize_href
+
+def is_mergeable(e1, e2):
+    table_tags = ['tr', 'td', 'th']
+    return e1.tag not in table_tags
+
+HTML_SANITIZERS = {
+    "default": {
+        "tags": {
+            "a", "h1", "h2", "h3", "strong", "em", "p", "ul", "ol",
+            "li", "br", "sub", "sup", "hr", "table", "td", "tr", "th", "tbody",
+            "thead", "caption",
+        },
+        "attributes": {
+            "a": ("href", "name", "target", "title", "id", "rel"),
+            "table": ("summary"),
+        },
+        "empty": {"hr", "a", "br"},
+        "separate": {"a", "p", "li"},
+        "whitespace": {"br"},
+        "keep_typographic_whitespace": False,
+        "add_nofollow": False,
+        "autolink": False,
+        "sanitize_href": sanitize_href,
+        "element_preprocessors": [
+            bold_span_to_strong,
+            italic_span_to_em,
+            tag_replacer("b", "strong"),
+            tag_replacer("i", "em"),
+            tag_replacer("form", "p"),
+            target_blank_noopener,
+        ],
+        "element_postprocessors": [],
+        "is_mergeable": is_mergeable,
+
+    }
+}

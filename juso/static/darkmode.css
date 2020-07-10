@@ -1,4 +1,6 @@
 body.theme-change, body.theme-change .nav-panel {
+  -webkit-transition: all 400ms ease-in-out;
+  -o-transition: all 400ms ease-in-out;
   transition: all 400ms ease-in-out;
 }
 
@@ -6,6 +8,7 @@ body.dark{
   background-color: #262626;
   color: #dedede;
   --white: #dedede;
+  --grey: #4e4e4e;
   --text-color: var(--white);
   --background-color:var(--anthrazit);
   --footer-background-color: black;
@@ -16,27 +19,10 @@ body.dark{
   --tamaro-label-checkable-color: var(--white);
 }
 
-body.tamaro-widget-overlay-outer.dark footer {
-  background-color: black;
-  color: grey;
-}
-
-body.tamaro-widget-overlay-outer.dark footer nav.footer {
-  border-top: grey solid;
-}
-
-body.tamaro-widget-overlay-outer.dark nav.main.sticky,
-body.tamaro-widget-overlay-outer.dark .nav-panel {
-  background-color: #262626;
-  color: #ffffff;
-}
-
-body.tamaro-widget-overlay-outer.dark nav#mobile-menu .logo{
-  background-color: #ffffff;
-}
-
 body.dark img {
   opacity: .75;
+  -webkit-transition: opacity .5s ease-in-out;
+  -o-transition: opacity .5s ease-in-out;
   transition: opacity .5s ease-in-out;
 }
 

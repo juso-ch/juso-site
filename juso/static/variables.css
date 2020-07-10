@@ -24,8 +24,8 @@
   --footer-background-color: var(--anthrazit);
   --footer-text-color: var(--white);
 
-  --container-width: min(1200px, 94vw);
-  --container-outer-width: min(1200px, 100vw);
+  --container-width: 94vw;
+  --container-outer-width: 100vw;
 
   --outer-padding: calc((100vw - var(--container-outer-width))/2);
   --inner-padding: calc((100vw - var(--container-width))/2);
@@ -43,4 +43,27 @@
 
   --box-shadow: rgba(0, 0, 0, 0.4) 0 4px 8px;
   --border-radius: 3px;
+}
+
+@media (min-width: 1250px){
+  :root {
+    --container-width: 1200px;
+    --container-outer-width: 1200px;
+  }
+}
+
+@supports (-ms-ime-align:auto) {
+  :root {
+    --container-width: 94vw;
+    --container-outer-width: 1200px;
+
+    --outer-padding: 2vw;
+    --inner-padding: 2vw;
+
+  }
+  main {
+    max-width: 1200px !important;
+    margin-right: auto;
+    margin-left: auto;
+  }
 }

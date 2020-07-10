@@ -1,21 +1,25 @@
-
-
 form.form {
   padding: 0.3rem;
 }
 
 form.form {
+  display: -ms-grid;
   display: grid;
+  -ms-grid-columns: 1fr 1em 1fr 1em 1fr 1em 1fr 1em 1fr 1em 1fr 1em 1fr 1em 1fr 1em 1fr 1em 1fr 1em 1fr 1em 1fr;
   grid-template-columns: repeat(12, 1fr);
-  column-gap: 1em;
+  -webkit-column-gap: 1em;
+     -moz-column-gap: 1em;
+          column-gap: 1em;
 }
 
 form.form > .message {
+  -ms-grid-column-span: 12;
   grid-column: span 12;
   font-size: 0.9rem;
 }
 
 form.form > button {
+  -ms-grid-column-span: 12;
   grid-column: span 12;
   width: 100%;
   font-size: 1em;
@@ -29,31 +33,38 @@ form .field {
 }
 
 .field {
+  -ms-grid-column-span: 12;
   grid-column: span 12;
 }
 
 @media (min-width: 420px) {
   .field.one {
+    -ms-grid-column-span: 12;
     grid-column: span 12;
   }
 
   .field.three-fourths {
+    -ms-grid-column-span: 9;
     grid-column: span 9;
   }
 
   .field.two-thirds {
+    -ms-grid-column-span: 8;
     grid-column: span 8;
   }
 
   .field.one-half {
+    -ms-grid-column-span: 6;
     grid-column: span 6;
   }
 
   .field.one-third {
+    -ms-grid-column-span: 4;
     grid-column: span 4;
   }
 
   .field.one-fourth {
+    -ms-grid-column-span: 3;
     grid-column: span 3;
   }
 }
@@ -83,10 +94,14 @@ form .field {
 
 .field > input[type="checkbox"] + label + small {
   display: block;
-  transform: translateY(-0.5em);
+  -webkit-transform: translateY(-0.5em);
+      -ms-transform: translateY(-0.5em);
+          transform: translateY(-0.5em);
 }
 
 .field > small, .field > label {
+  -webkit-transition: color 100ms ease-in-out;
+  -o-transition: color 100ms ease-in-out;
   transition: color 100ms ease-in-out;
   opacity: 0.7;
 }
@@ -111,6 +126,8 @@ form .field {
   margin-bottom: -0.3rem;
   font-size: 1em;
   padding: 0.3em;
+  -webkit-transition: border 100ms ease-in-out;
+  -o-transition: border 100ms ease-in-out;
   transition: border 100ms ease-in-out;
   font-family: var(--body-font);
 }
@@ -119,4 +136,3 @@ form .field {
   font-size: 0.6em;
   margin-top: 0em;
 }
-

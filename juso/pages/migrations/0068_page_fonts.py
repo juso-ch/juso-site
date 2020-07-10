@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('pages', '0067_navigationplugin'),
+        ("pages", "0067_navigationplugin"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='page',
-            name='fonts',
-            field=models.TextField(default='klima\nmontserrat', verbose_name='fonts'),
+            model_name="page",
+            name="fonts",
+            field=models.TextField(default="klima\nmontserrat", verbose_name="fonts"),
         ),
     ]

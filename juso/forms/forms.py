@@ -32,7 +32,6 @@ class DynamicForm(forms.Form):
                     return self.cleaned_data[bound_field.slug]
 
                 self.__dict__[f"clean_{field.slug}"] = MethodType(clean_field, self)
-        print(self.fields)
 
 
 class HiddenField(forms.Field):

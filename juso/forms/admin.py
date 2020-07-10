@@ -5,6 +5,7 @@ from django.contrib import admin, messages
 from django.http import HttpResponse
 from django.utils.translation import gettext_lazy as _
 from reversion.admin import VersionAdmin
+
 # Register your models here.
 
 from juso.forms.models import Form, FormField

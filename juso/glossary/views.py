@@ -20,11 +20,11 @@ def glossary(request):
     entries = Entry.objects.filter(language_code=page.language_code)
     q = ""
 
-    if "q" in request.GET and request.GET["q"]:
+    if "search" in request.GET and request.GET["search"]:
         vector = SearchVector("name", weight="A") + SearchVector("content", weight="B")
-        query = consume(request.GET["q"])
+        query = consume(request.GET["search"])
         print(query)
-        q = request.GET["q"]
+        q = request.GET["search"]
         print(q)
 
         entries = (

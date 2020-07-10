@@ -269,18 +269,44 @@ VAPID_PRIVATE_KEY = os.environ.get("VAPID_PRIVATE_KEY", "")
 VAPID_PUBLIC_KEY = os.environ.get("VAPID_PUBLIC_KEY", "")
 
 
-from html_sanitizer.sanitizer import bold_span_to_strong, italic_span_to_em, tag_replacer, target_blank_noopener, sanitize_href
+from html_sanitizer.sanitizer import (
+    bold_span_to_strong,
+    italic_span_to_em,
+    tag_replacer,
+    target_blank_noopener,
+    sanitize_href,
+)
+
 
 def is_mergeable(e1, e2):
-    table_tags = ['tr', 'td', 'th']
+    table_tags = ["tr", "td", "th"]
     return e1.tag not in table_tags
+
 
 HTML_SANITIZERS = {
     "default": {
         "tags": {
-            "a", "h1", "h2", "h3", "strong", "em", "p", "ul", "ol",
-            "li", "br", "sub", "sup", "hr", "table", "td", "tr", "th", "tbody",
-            "thead", "caption",
+            "a",
+            "h1",
+            "h2",
+            "h3",
+            "strong",
+            "em",
+            "p",
+            "ul",
+            "ol",
+            "li",
+            "br",
+            "sub",
+            "sup",
+            "hr",
+            "table",
+            "td",
+            "tr",
+            "th",
+            "tbody",
+            "thead",
+            "caption",
         },
         "attributes": {
             "a": ("href", "name", "target", "title", "id", "rel"),
@@ -303,6 +329,5 @@ HTML_SANITIZERS = {
         ],
         "element_postprocessors": [],
         "is_mergeable": is_mergeable,
-
     }
 }

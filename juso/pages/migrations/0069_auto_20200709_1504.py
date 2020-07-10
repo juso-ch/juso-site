@@ -6,13 +6,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('pages', '0068_page_fonts'),
+        ("pages", "0068_page_fonts"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='page',
-            name='fonts',
-            field=models.TextField(default='klima\nmontserrat', help_text='fonts loaded on the site', verbose_name='fonts'),
+            model_name="page",
+            name="fonts",
+            field=models.TextField(
+                default="klima\nmontserrat",
+                help_text="fonts loaded on the site",
+                verbose_name="fonts",
+            ),
         ),
     ]

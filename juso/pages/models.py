@@ -233,13 +233,11 @@ class Page(
 
     css_vars = models.TextField(_("css vars"), blank=True)
     fonts = models.TextField(
-        _("fonts"), default="klima\nmontserrat",
-        help_text=_("fonts loaded on the site")
+        _("fonts"), default="klima\nmontserrat", help_text=_("fonts loaded on the site")
     )
 
-
     def get_fonts(self):
-        for font in self.fonts.split('\n'):
+        for font in self.fonts.split("\n"):
             yield font.strip() + ".css"
 
     def __init__(self, *args, **kwargs):

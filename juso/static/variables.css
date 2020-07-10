@@ -5,13 +5,21 @@
   --green: #3b8632;
   --orange: #FFB100;
   --white: #FFFFFF;
+  --yellow: #F9C80E;
+  --blue: #01BAEF;
+  --olive: #A8C686;
+  --teal: #08BDBD;
+  --purple: #473144;
+  --pink: #EE92C2;
+  --brown: #352208;
+  --grey: #aaa;
+  --black: var(--anthrazit);
 
   --first-button: var(--red);
   --second-button: var(--violett);
   --third-button: var(--green);
 
   --primary-color: var(--red);
-  --grey: #aaa;
   --light-color: var(--white);
   --tamaro-primary-color: var(--primary-color);
   --tamaro-bg-color: var(--background-color);
@@ -43,6 +51,59 @@
 
   --box-shadow: rgba(0, 0, 0, 0.4) 0 4px 8px;
   --border-radius: 3px;
+}
+
+.red {
+  --primary-color: var(--red);
+}
+
+.orange {
+  --primary-color: var(--orange);
+}
+
+.yellow {
+  --primary-color: var(--yellow);
+}
+
+.olive {
+  --primary-color: var(--olive);
+}
+
+.blue {
+  --primary-color: var(--blue);
+}
+
+.green {
+  --primary-color: var(--green);
+}
+
+
+.teal {
+  --primary-color: var(--teal);
+}
+.violett {
+  --primary-color: var(--violett);
+}
+
+.purple {
+  --primary-color: var(--purple);
+}
+
+.pink {
+  --primary-color: var(--pink);
+}
+
+
+.brown {
+  --primary-color: var(--brown);
+}
+
+.grey {
+  --primary-color: var(--grey);
+}
+
+.black {
+  --primary-color: var(--black);
 }
 
 @media (min-width: 1250px){

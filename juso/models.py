@@ -24,6 +24,7 @@ class ColorField(models.CharField):
         ("orange", _("orange")),
         ("yellow", _("yellow")),
         ("olive", _("olive")),
+        ("blue", _("blue")),
         ("green", _("green")),
         ("teal", _("teal")),
         ("violett", _("violett")),

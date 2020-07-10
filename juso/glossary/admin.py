@@ -36,6 +36,7 @@ class GlossaryEntryAdmin(VersionAdmin, admin.ModelAdmin):
             {
                 "fields": [
                     "name",
+                    "intro",
                     "content",
                     "category",
                     "language_code",

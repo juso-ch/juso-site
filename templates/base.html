@@ -8,7 +8,7 @@
   <head>
     <!-- Standard Meta -->
     <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     {% translation_head page obj as translations %}
     {% for language, uri in translations %}
@@ -64,10 +64,10 @@
 
       {% button_menu request.LANGUAGE_CODE top as buttons %}
 
-      <nav role="main" class="main" id="mainNavigation">
+      <nav class="main" id="mainNavigation">
         <div class="branding">
           <a class="brand" href="{{top.get_absolute_url}}">
-            <span class="logo" aria-label="{% trans 'Logo' %}">
+            <span class="logo">
               {% include 'includes/logo.svg' %}
             </span>
             <span class="name">
@@ -87,12 +87,12 @@
         {% endif %}
         >
         <div class="top-bar">
-          <nav role="top" class="top">
+          <nav class="top">
             {% include 'includes/top_navigation.html' with menu=menus.top %}
             {% include 'includes/translations.html' with page=page obj=obj %}
           </nav>
 
-        <nav role="buttons" class="buttons">
+        <nav class="buttons">
           {% include 'includes/nav_buttons.html' with menu=buttons %}
         </nav>
         </div>
@@ -121,7 +121,7 @@
           {% include 'includes/meta_menu.html' with menu=menus.main quicklinks=menus.quicklink%}
         </nav>
 
-        <nav role="footer" class="footer">
+        <nav class="footer">
           {% include 'includes/footer_menu.html' with menu=menus.footer %}
         </nav>
 

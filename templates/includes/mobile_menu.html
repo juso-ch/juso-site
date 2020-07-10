@@ -1,6 +1,6 @@
 {% load menus i18n %}
 {% load tools %}
-<input type="checkbox" id="fab" autocomplete="off"/>
+<input type="checkbox" id="fab"/>
 <label id="fab-button" class="menu-btn" for="fab">
 </label>
 <div class="nav-panel">
@@ -19,7 +19,7 @@
   </div>
   <div class="menu">
       <a class="branding" href="{{top.get_absolute_url}}">
-        <span class="logo" aria-label="{% trans 'Logo' %}">
+        <span class="logo">
           {% include 'includes/logo.svg' %}
         </span>
       </a>

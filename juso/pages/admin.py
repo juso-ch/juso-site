@@ -6,11 +6,13 @@ from django.contrib import admin
 from django.shortcuts import redirect, render, reverse
 from django.urls import path
 from django.utils.translation import gettext_lazy as _
+from django.utils.html import format_html, mark_safe
 from feincms3 import plugins
 from feincms3.admin import TreeAdmin
 from feincms3_meta.models import MetaMixin
 from feincms3_sites.admin import SiteAdmin
 from feincms3_sites.models import Site
+from feincms3_sites.middleware import current_site
 from js_asset import JS
 from reversion.admin import VersionAdmin
 
@@ -73,11 +75,6 @@ class PageAdmin(VersionAdmin, CopyContentMixin, ContentEditor, TreeAdmin):
 
     search_fields = ["title"]
     list_editable = [
-        "is_active",
-        "slug",
-        "static_path",
-        "path",
-        "language_code",
     ]
 
     list_filter = ["is_active", "menu", "language_code", "site"]
@@ -200,6 +197,26 @@ class PageAdmin(VersionAdmin, CopyContentMixin, ContentEditor, TreeAdmin):
         site_field.initial = Site.objects.filter(section__in=sections)[0]
 
         return form
+
+    def indented_title(self, instance):
+        """
+        Use Unicode box-drawing characters to visualize the tree hierarchy.
+        """
+        box_drawing = []
+        for i in range(instance.tree_depth - 1):
+            box_drawing.append('<i class="l"></i>')
+        if instance.tree_depth > 0:
+            box_drawing.append('<i class="a"></i>')
+
+        return format_html(
+            '<div class="box">'
+            '<div class="box-drawing">{}</div>'
+            '<div class="box-text" style="text-indent:{}px">{}</div>'
+            "</div>",
+            mark_safe("".join(box_drawing)),
+            instance.tree_depth * 30,
+            instance.title,
+        )
 
     def get_queryset(self, request):
         qs = super().get_queryset(request)

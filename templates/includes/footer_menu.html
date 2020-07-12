@@ -1,7 +1,7 @@
 {% load menus %}
 {% for main, children in menu|group_by_tree %}
 <a href="{{main.get_absolute_url}}">
-{{main}}
+{{main.title}}
 </a>
 {% endfor %}
 <span onclick="toggleTheme(true)" class="toggle-theme dark">

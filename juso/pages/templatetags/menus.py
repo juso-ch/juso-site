@@ -33,7 +33,6 @@ def all_menus(language_code, top_page):
         .with_tree_fields()
         .exclude(is_active=False, menu="")
         .filter(language_code=language_code)
-        .extra(where=["tree_depth=1"])
     )
 
     for page in pages:

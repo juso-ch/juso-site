@@ -1,13 +1,13 @@
-{% load menus %}
+{% load menus tools %}
 
 {% for main, children in menu|group_by_tree %}
 {% if children %}
 {% if vertical %}
 <div class="item{% if page and main.id in page.tree_path %} active primary{% endif %}">
-  <a href="{{main.get_absolute_url}}">{{main.title}}</a>
+  <a href="{{main.get_absolute_url}}">{{main.title|nbsp}}</a>
 {% else %}
 <div class="ui simple dropdown item">
-  <a href="{{main.get_absolute_url}}">{{main.title}}</a>
+  <a href="{{main.get_absolute_url}}">{{main.title|nbsp}}</a>
   <i class="dropdown icon"></i>
 {% endif %}
   <div class="menu">
@@ -15,7 +15,7 @@
     {% for child in children %}
     <a class="item {% if category and child == category %} active primary{% endif %}"
        href="{{child.get_absolute_url}}">
-      {{child.title}}
+      {{child.title|nbsp}}
     </a>
     {% endfor %}
     
@@ -23,7 +23,7 @@
     {% for child in children %}
     <a class="item {% if page and child.id in page.tree_path and main.application != "categories" %} active primary{% endif %}"
        href="{{child.get_absolute_url}}">
-      {{child.title}}
+      {{child.title|nbsp}}
     </a>
     {% endfor %}
     {% endif %}
@@ -32,7 +32,7 @@
 {% else %}
 <a class="item {% if page and main.id in page.tree_path %}active {% endif %}"
    href="{{main.get_absolute_url}}">
-  {{main.title}}
+  {{main.title|nbsp}}
 </a>
 {% endif %}
 {% endfor %}

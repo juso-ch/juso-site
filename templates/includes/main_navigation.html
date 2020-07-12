@@ -1,9 +1,9 @@
-{% load menus %}
+{% load menus tools %}
 <ul>
 {% for main, children in menu|group_by_tree %}
 <li>
   <a href="{{main.get_absolute_url}}">
-{{main}}
+{{main.title|nbsp}}
   </a>
 </li>
 {% endfor %}
@@ -12,7 +12,7 @@
   {% for button in buttons %}
   <a class="button" href="{{button.get_absolute_url}}">
     <span>
-    {{button}}
+    {{button.title|nbsp}}
     </span>
   </a>
   {% endfor %}

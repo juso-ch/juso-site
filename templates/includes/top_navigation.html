@@ -1,6 +1,6 @@
-{% load menus %}
+{% load menus tools %}
 {% for main, children in menu|group_by_tree %}
 <a href="{{main.get_absolute_url}}">
-{{main}}
+{{main.title|nbsp}}
 </a>
 {% endfor %}

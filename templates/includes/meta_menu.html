@@ -1,13 +1,13 @@
-{% load menus i18n %}
+{% load menus i18n tools %}
 {% for main, children in menu|group_by_tree %}
 {% if main.in_meta %}
 <div class="meta-menu">
-  <h4><a href="{{main.get_absolute_url}}">{{main}}</a></h4>
+  <h4><a href="{{main.get_absolute_url}}">{{main.title|nbsp}}</a></h4>
   <div>
     {% for child in children %}
     {% if child.in_meta %}
     <a href="{{child.get_absolute_url}}">
-      {{child}}
+      {{child.title|nbsp}}
     </a>
     {% endif %}
     {% endfor %}
@@ -20,7 +20,7 @@
   <div>
     {% for main, children in quicklinks|group_by_tree %}
     <a href="{{main.get_absolute_url}}">
-      {{main}}
+      {{main.title|nbsp}}
     </a>
     {% endfor %}
   </div>

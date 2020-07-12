@@ -8,7 +8,7 @@
     {% for button in buttons %}
     <a href="{{button.get_absolute_url}}" class="button">
       <span>
-      {{button.title}}
+      {{button.title|nbsp}}
       </span>
     </a>
     {% endfor %}
@@ -24,7 +24,7 @@
         </span>
       </a>
     {% for element, children in menu|group_by_tree %}
-    <a href="{{element.get_absolute_url}}">{{element.title}}</a>
+    <a href="{{element.get_absolute_url}}">{{element.title|nbsp}}</a>
     {% endfor %}
   </div>
   <div class="small-bottom-bar">

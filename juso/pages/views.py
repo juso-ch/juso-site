@@ -30,10 +30,10 @@ def get_landing_page(request):
 
 @ensure_csrf_cookie
 def page_detail(request, path=None):
-    if path is None and not Page.objects.active().filter(path="/").exists():
-        return redirect(get_landing_page(request).path)
-
     page = Page.objects.active().filter(path=f"/{path}/" if path else "/")
+
+    if path is None and not page.exists():
+        return redirect(get_landing_page(request).path)
 
     if not page.exists():
         page = Page.objects.active().filter(path=f"/{request.LANGUAGE_CODE}/{path}/")

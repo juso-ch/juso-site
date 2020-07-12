@@ -63,6 +63,3 @@ urlpatterns = [
 handler404 = "juso.pages.views.error404"
 
 handler500 = "juso.pages.views.error500"
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

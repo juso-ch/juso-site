@@ -76,7 +76,6 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": ["templates"],
-        "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.debug",
@@ -86,6 +85,11 @@ TEMPLATES = [
                 "sekizai.context_processors.sekizai",
             ],
             "builtins": ["feincms3.templatetags.feincms3",],
+            "loaders": [
+                ("juso.template.SiteTemplateLoader", ['custom/templates'], ['base.html']),
+                "django.template.loaders.filesystem.Loader",
+                "django.template.loaders.app_directories.Loader",
+            ]
         },
     },
 ]
@@ -121,7 +125,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATICFILES_DIRS = []
+STATICFILES_DIRS = ['custom/static']
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = "/static/"

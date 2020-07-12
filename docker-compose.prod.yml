@@ -7,6 +7,7 @@ services:
     volumes:
       - static_volume:/home/app/web/static/
       - media_volume:/home/app/web/media/
+      - ./custom/:/home/app/web/custom/
     expose:
       - 8000
     env_file:

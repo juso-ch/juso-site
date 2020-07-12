@@ -128,6 +128,17 @@ class Article(ContentMixin):
         verbose_name = _("article")
         verbose_name_plural = _("articles")
         ordering = ["-publication_date"]
+        indexes = [
+            models.Index(fields=[
+                "language_code"
+            ]),
+            models.Index(fields=[
+                "category_id", "language_code", "namespace_id",
+            ]),
+            models.Index(fields=[
+                "language_code", "namespace_id", "section_id",
+            ])
+        ]
 
 
 class WPImport(models.Model):

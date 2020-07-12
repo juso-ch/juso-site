@@ -47,6 +47,13 @@ class Category(TranslationMixin, MetaMixin, TreeNode):
     class Meta:
         verbose_name = _("category")
         verbose_name_plural = _("categories")
+        indexes = [
+            models.Index(fields=['slug'])
+        ]
+        constraints = [
+            models.UniqueConstraint(fields=['slug', 'language_code'], name="unique_slug_for_language")
+        ]
+
 
     @property
     def title(self):
@@ -213,7 +220,12 @@ class ContentMixin(TranslationMixin, MetaMixin, TemplateMixin):
 
     class Meta:
         abstract = True
-        unique_together = ("slug", "section")
+        constraints = [
+            models.UniqueConstraint(fields=['slug', 'section'], name="slug_unique")
+        ]
+        indexes = [
+            models.Index(fields=['slug'])
+        ]
         ordering = ["-publication_date"]
         get_latest_by = "publication_date"
 

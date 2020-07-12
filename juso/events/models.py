@@ -161,7 +161,7 @@ class Event(ContentMixin):
         verbose_name = _("event")
         verbose_name_plural = _("events")
         ordering = ["start_date"]
-        indexes = [models.Index(fields=["start_date", "slug", "section",])]
+        indexes = [models.Index(fields=["start_date", "slug", "section"])]
         constraints = [
             models.UniqueConstraint(
                 fields=["slug", "start_date", "section"],

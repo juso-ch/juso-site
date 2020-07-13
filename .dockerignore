@@ -1,4 +1,5 @@
 media/
+static/
 db.sqlite3
 .git/
 nginx/

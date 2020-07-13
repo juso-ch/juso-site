@@ -74,8 +74,7 @@ class PageAdmin(VersionAdmin, CopyContentMixin, ContentEditor, TreeAdmin):
     ]
 
     search_fields = ["title"]
-    list_editable = [
-    ]
+    list_editable = []
 
     list_filter = ["is_active", "menu", "language_code", "site"]
 

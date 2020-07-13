@@ -3,7 +3,6 @@ from feincms3_sites.middleware import current_site
 
 
 class SiteTemplateLoader(filesystem.Loader):
-
     def __init__(self, engine, dirs=None, template_names=None):
         super().__init__(engine)
         self.dirs = dirs
@@ -12,4 +11,4 @@ class SiteTemplateLoader(filesystem.Loader):
     def get_template_sources(self, template_name):
         if self.template_names and template_name not in self.template_names:
             return []
-        return super().get_template_sources(f'{current_site().host}/{template_name}')
+        return super().get_template_sources(f"{current_site().host}/{template_name}")

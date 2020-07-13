@@ -6,20 +6,28 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('pages', '0069_auto_20200709_1504'),
+        ("pages", "0069_auto_20200709_1504"),
     ]
 
     operations = [
         migrations.AddIndex(
-            model_name='page',
-            index=models.Index(fields=['path', 'site_id', 'language_code', 'is_active'], name='pages_page_path_7e204f_idx'),
+            model_name="page",
+            index=models.Index(
+                fields=["path", "site_id", "language_code", "is_active"],
+                name="pages_page_path_7e204f_idx",
+            ),
         ),
         migrations.AddIndex(
-            model_name='page',
-            index=models.Index(fields=['is_landing_page', 'site_id', 'language_code'], name='pages_page_is_land_8ba6f0_idx'),
+            model_name="page",
+            index=models.Index(
+                fields=["is_landing_page", "site_id", "language_code"],
+                name="pages_page_is_land_8ba6f0_idx",
+            ),
         ),
         migrations.AddIndex(
-            model_name='page',
-            index=models.Index(fields=['parent_id'], name='pages_page_parent__9df5fb_idx'),
+            model_name="page",
+            index=models.Index(
+                fields=["parent_id"], name="pages_page_parent__9df5fb_idx"
+            ),
         ),
     ]

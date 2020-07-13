@@ -287,12 +287,8 @@ class Page(
         verbose_name = _("page")
         verbose_name_plural = _("pages")
         indexes = [
-            models.Index(fields=[
-                'path', 'site_id', 'language_code', 'is_active',
-            ]),
-            models.Index(fields=[
-                'is_landing_page', 'site_id', 'language_code',
-            ]),
+            models.Index(fields=["path", "site_id", "language_code", "is_active",]),
+            models.Index(fields=["is_landing_page", "site_id", "language_code",]),
         ]
 
 
@@ -363,6 +359,7 @@ class FormPlugin(form_plugins.FormPlugin, PluginBase):
 
 class FormEntryCounterPlugin(form_plugins.EntryCounter, PluginBase):
     pass
+
 
 class CategoryLinking(models.Model):
     page = models.ForeignKey(Page, models.CASCADE)

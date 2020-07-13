@@ -6,20 +6,28 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0045_formentrycounterplugin_aggregate_field'),
+        ("blog", "0045_formentrycounterplugin_aggregate_field"),
     ]
 
     operations = [
         migrations.AddIndex(
-            model_name='article',
-            index=models.Index(fields=['language_code'], name='blog_articl_languag_9ee77e_idx'),
+            model_name="article",
+            index=models.Index(
+                fields=["language_code"], name="blog_articl_languag_9ee77e_idx"
+            ),
         ),
         migrations.AddIndex(
-            model_name='article',
-            index=models.Index(fields=['category_id', 'language_code', 'namespace_id'], name='blog_articl_categor_989f55_idx'),
+            model_name="article",
+            index=models.Index(
+                fields=["category_id", "language_code", "namespace_id"],
+                name="blog_articl_categor_989f55_idx",
+            ),
         ),
         migrations.AddIndex(
-            model_name='article',
-            index=models.Index(fields=['language_code', 'namespace_id', 'section_id'], name='blog_articl_languag_e03b43_idx'),
+            model_name="article",
+            index=models.Index(
+                fields=["language_code", "namespace_id", "section_id"],
+                name="blog_articl_languag_e03b43_idx",
+            ),
         ),
     ]

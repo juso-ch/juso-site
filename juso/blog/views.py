@@ -82,7 +82,6 @@ def article_list(request):
                 page,
                 renderer=pages.renderer.renderer,
                 timeout=60,
-                inherit_from=ancestors,
             ),
         },
         paginate_by=12,

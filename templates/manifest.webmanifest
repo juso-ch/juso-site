@@ -1,6 +1,7 @@
+{% load tools %}
 {
-  "name":"{{page.title}}",
-  "short_name":"{{page.title}}",
+  "name":"{{page.title|nbsp:" "}}",
+  "short_name":"{{page.title|nbsp:" "}}",
   "start_url": "{{page.path}}",
   "icons": [
     {% if page.favicon %}
@@ -24,6 +25,12 @@
       "src":"/static/android-chrome-512x512.png",
       "sizes":"512x512",
       "type":"image/png"
+    },
+    {
+      "src":"/static/maskable_icon.png",
+      "sizes":"1090x1090",
+      "type":"image/png",
+      "purpose": "maskable"
     }
     {% endif %}
   ],

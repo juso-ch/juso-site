@@ -36,6 +36,11 @@
 
     {% render_block 'css' %}
     {% cache 600 top top.pk %}
+
+    {% for prefetch in top.get_prefeteches %}
+    <link rel="preload" href="{% static prefetch.0 %}" as="{{prefetch.1}}" {% if prefetch.1 == 'font'%}crossorigin{% endif %}>
+    {% endfor %}
+
     {% if top.favicon %}
     <link rel="apple-touch-icon" sizes="180x180" href="{{top.favicon.180}}" >
     <link rel="icon" type="image/png" sizes="32x32" href="{{top.favicon.32}}">
@@ -63,8 +68,10 @@
     <body class="{{page.category.slug}}">
 
       {% button_menu request.LANGUAGE_CODE top as buttons %}
+      <div id="loading-bar" class="complete">
+      </div>
 
-      <nav class="main" id="mainNavigation">
+      <nav class="main {% block main_nav_class %}{% endblock %}" id="mainNavigation">
         <div class="branding">
           <a class="brand" href="{{top.get_absolute_url}}">
             <span class="logo">
@@ -78,6 +85,7 @@
         {% include 'includes/main_navigation.html' with menu=menus.main buttons=buttons %}
       </nav>
 
+      {% block page_header %}
       <header
         {% if header_image %}
         style="background-image: url('{{header_image.full}}')"
@@ -103,11 +111,12 @@
         </span>
 
         {% block header %}
-        <h1 class="ui primary center aligned header">
+        <h1 class="header">
           {{title|default:page.title|nbsp}}
         </h1>
         {% endblock %}
       </header>
+      {% endblock %}
 
       <main>
         {% block content %}
@@ -158,11 +167,57 @@
             navigator.serviceWorker.register('/service-worker.js');
           });
         }
+        if (window.matchMedia('(display-mode: standalone)').matches) {  
+
+          window.addEventListener('DOMContentLoaded', (event) => {
+            document.getElementById('loading-bar').style.width = "75%";
+            document.getElementById('loading-bar').classList.remove('complete');
+          });
+
+          window.addEventListener('beforeunload', (event) => {
+            document.getElementById('loading-bar').classList.remove('complete');
+            document.getElementById('loading-bar').style.width = "25%";
+          });
+          window.addEventListener('load', function() {
+            document.getElementById('loading-bar').style.width = "100%";
+            window.setTimeout(function() {
+              document.getElementById('loading-bar').classList.add('complete');
+            }, 300);
+
+          });
+        }
+
+        window.addEventListener('load', function() {
+          window.localStorage.setItem(document.URL, document.title);
+          if(navigator.share) {
+            let shareButton = document.getElementById('share-api-button');
+            shareButton.classList.add('enabled');
+            shareButton.addEventListener('click', (event) => {
+              event.preventDefault();
+
+              let url = document.location.href;
+              const canonicalElement = document.querySelector('link[rel=canonical]');
+              if (canonicalElement !== null) {
+                url = canonicalElement.href;
+              }
+              navigator.share({
+                title: document.title,
+                url: url,
+              })
+                .then(() => console.log('Successful share'))
+                .catch((error) => console.log('Error sharing', error));
+
+            });
+          }
+        })
       </script>
       {% endaddtoblock %}
       <nav id="mobile-menu">
         {% include 'includes/mobile_menu.html' with menu=menus.main buttons=buttons footer=menus.footer top_menu=menus.top %}
       </nav>
+      <div id="share-menu">
+        {% include 'includes/share_menu.html' %}
+      </div>
 
     </body>
 </html>

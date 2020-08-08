@@ -1,0 +1,23 @@
+{% load menus i18n %}
+{% load tools %}
+<input type="checkbox" id="fab-share"/>
+<label id="fab-share-button" class="share-btn" for="fab-share">
+<i class="fas fa-share"></i>
+</label>
+<div class="social-media-button">
+  <a href="#" class="sm-button share" id="share-api-button">
+    <i class="fas fa-share-alt"></i>
+  </a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u={{request.build_absolute_uri}}" target="_blank" rel="noreferrer" class="sm-button facebook">
+    <i class="fas fa-facebook"></i>
+  </a>
+  <a href="https://api.whatsapp.com/send?text={{request.build_absolute_uri}}" target="_blank" rel="noreferrer" class="sm-button whatsapp">
+    <i class="fas fa-whatsapp"></i>
+  </a>
+  <a href="https://twitter.com/intent/tweet?url={{request.build_absolute_uri}}" target="_blank" rel="noreferrer" class="sm-button twitter">
+    <i class="fas fa-twitter"></i>
+  </a>
+  <a href="https://t.me/share/url?url={{request.build_absolute_uri}}" target="_blank" rel="noreferrer" class="sm-button telegram">
+    <i class="fas fa-telegram-plane"></i>
+  </a>
+</div>

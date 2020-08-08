@@ -1,0 +1,31 @@
+{% extends 'pages/default.html' %}
+{% load i18n tools %}
+
+
+{% block main_nav_class %}no-background{% endblock %}
+
+{% block page_header %}
+<header class="page no-background">
+  <div class="top-bar">
+    <nav class="top">
+      {% include 'includes/top_navigation.html' with menu=menus.top %}
+      {% include 'includes/translations.html' with page=page obj=obj %}
+    </nav>
+
+  <nav class="buttons">
+    {% include 'includes/nav_buttons.html' with menu=buttons %}
+  </nav>
+  </div>
+  <span class="logo mobile-only" aria-label="{% trans 'Logo' %}">
+    <a title="{% trans 'logo' %}" href="{{top.get_absolute_url}}">
+      {% include 'includes/logo.svg' %}
+    </a>
+  </span>
+
+  {% block header %}
+  <h1 class="header">
+    {{title|default:page.title|nbsp}}
+  </h1>
+  {% endblock %}
+</header>
+{% endblock %}

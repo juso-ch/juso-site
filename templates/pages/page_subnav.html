@@ -1,5 +1,6 @@
+{% load menus %}
 <nav class="subsites">
-{% for child in pages %}
+{% for child in pages|order_by_position %}
 <a href="{{child.get_absolute_url}}" class="nav-item {{child.category.slug}}">
   <img src="{{child.get_header_image.square}}" alt="{{child.title}}">
   <div class="overlay"></div>

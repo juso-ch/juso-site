@@ -10,7 +10,7 @@
   <form class="filter">
     <div class="field">
       <label for="search">{% trans "Search" %}</label>
-      <input type="text" name="search" id="search">
+      <input type="text" name="search" id="search" value="{{q}}">
     </div>
 
     <button type="submit">
@@ -28,6 +28,9 @@
   </div>
 </div>
 
+{% if article_list.number == 1 and q == '' %}
+{% render_region regions 'main' %}
+{% endif %}
 {% include 'blog/plugins/default.html' with enable_category=True %}
 {% include 'includes/pagination.html' with page=article_list%}
 

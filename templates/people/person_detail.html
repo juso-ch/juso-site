@@ -1,1 +1,46 @@
 {% extends 'people/base.html' %}
+{% load tools i18n %}
+
+{% block structured_data %}
+{% endblock %}
+
+{% block content %}
+<div class="text">
+  {{person.bio|safe}}
+</div>
+<div class="social-media">
+  {% if person.facebook %}
+  <a href="{{person.facebook}}" class="icon button">
+    <i class="fas fa-facebook"></i>
+  </a>
+  {% endif %}
+  {% if person.twitter %}
+  <a href="{{person.twitter}}" class="icon button">
+    <i class="fas fa-twitter"></i>
+  </a>
+  {% endif %}
+  {% if person.instagram %}
+  <a href="{{person.instagram}}" class="icon button">
+    <i class="fas fa-instagram"></i>
+  </a>
+  {% endif %}
+  {% if person.email %}
+  <a href="mailto:{{person.email}}">
+    {{person.email}}
+  </a>
+  {% endif %}
+  {% if person.homepage %}
+  <a href="{{person.homepage}}">
+    {{person.homepage}}
+  </a>
+  {% endif %}
+</div>
+<figure>
+  <img src="{{person.image.square}}" alt="{{person.get_full_name}}" title="{{person.get_full_name}}"/>
+</figure>
+<h2>{% trans 'articles' %}</h2>
+<div class="text">
+  {% include 'blog/plugins/simple_list.html' with article_list=articles %}
+</div>
+
+{% endblock %}

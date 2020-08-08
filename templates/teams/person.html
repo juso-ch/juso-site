@@ -1,0 +1,44 @@
+<section class="card horizontal">
+  {% if person.image %}
+  <div class="image">
+    <img src="{{person.image.square}}">
+  </div>
+  {% endif %}
+  <div class="content">
+    <header>
+      <h3 class="name">
+        {{person.get_full_name}}
+      </h3>
+    </header>
+    <section>
+      {% if person.email %}
+      <a href="mailto:{{person.email}}">
+        {{person.email}}
+      </a>
+      {% endif %}
+      {% if person.phone %}
+      <a href="phone:{{person.phone}}">
+        {{person.phone}}
+      </a>
+      {% endif %}
+      <div class="social-media">
+
+        {% if person.facebook %}
+        <a href="{{person.facebook}}" class="icon button">
+          <i class="fas fa-facebook"></i>
+        </a>
+        {% endif %}
+        {% if person.twitter %}
+        <a href="{{person.twitter}}" class="icon button">
+          <i class="fas fa-twitter"></i>
+        </a>
+        {% endif %}
+        {% if person.instagram %}
+        <a href="{{person.instagram}}" class="icon button">
+          <i class="fas fa-instagram"></i>
+        </a>
+        {% endif %}
+      </div>
+    </section>
+  </div>
+</section>

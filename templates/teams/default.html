@@ -1,7 +1,11 @@
 <section class="cards team">
   {% for membership in team.membership_set.all %}
   <article class="card horizontal">
-    {% if membership.person.image %}
+    {% if membership.image %}
+    <div class="image">
+      <img src="{{membership.image.square}}">
+    </div>
+    {% elif membership.person.image %}
     <div class="image">
       <img src="{{membership.person.image.square}}">
     </div>
@@ -9,9 +13,17 @@
     <div class="content">
       <header>
         <div class="name">
+          {% if membership.person.get_absolute_url %}
+          <a href="{{membership.person.get_absolute_url}}" class="author-info">
+            {{membership.person.first_name}}
+            <br>
+            {{membership.person.last_name}}
+          </a>
+          {% else %}
           {{membership.person.first_name}}
           <br>
           {{membership.person.last_name}}
+          {% endif %}
         </div>
         <div class="title">
           {{membership.title}}

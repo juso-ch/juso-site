@@ -1,9 +1,12 @@
+import bleach
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.urls import NoReverseMatch
 from feincms3.apps import apps_urlconf, reverse_app
 from feincms3_sites.middleware import current_site, set_current_site
 from imagefield.fields import ImageField
+from feincms3.plugins.richtext import RichText, CleansedRichTextField
 
 from juso.models import TranslationMixin
 from juso.sections.models import Section
@@ -38,31 +41,31 @@ class Person(models.Model):
     twitter = models.URLField(blank=True, verbose_name=_("Twitter"))
     instagram = models.URLField(blank=True, verbose_name=_("Instagram"))
 
+    bio = CleansedRichTextField(blank=True)
+
     def __str__(self):
         return self.first_name + " " + self.last_name
 
     class Meta:
         verbose_name = _("person")
         verbose_name_plural = _("people")
+
         ordering = ["last_name", "first_name"]
 
+    def description(self):
+        return bleach.clean(self.bio, strip=True, tags=[])
+
+    def get_full_name(self):
+        return f"{self.first_name} {self.last_name}"
+
     def get_absolute_url(self):
-        site = current_site()
-        if self.sections.filter(site=site).exists():
+        try:
+            site = current_site()
             return reverse_app(
                 [f"{site.id}-people"], "person-detail", kwargs={"pk": self.pk}
             )
-        with set_current_site(self.sections.first().site):
-            return (
-                "//"
-                + self.sections.first().site.host
-                + reverse_app(
-                    [f"{self.sections.first().site.id}-people"],
-                    "person-detail",
-                    urlconf=apps_urlconf(),
-                    kwargs={"pk": self.pk},
-                )
-            )
+        except NoReverseMatch:
+            return ''
 
 
 class Team(TranslationMixin):
@@ -109,6 +112,14 @@ class Membership(models.Model):
     person = models.ForeignKey(Person, models.CASCADE, verbose_name=_("person"))
     team = models.ForeignKey(Team, models.CASCADE, verbose_name=_("team"))
     title = models.CharField(max_length=100, verbose_name=_("title"))
+    image = ImageField(
+        _("image"),
+        blank=True,
+        null=True,
+        upload_to="people/",
+        auto_add_fields=True,
+        formats={"square": ["default", ("crop", (900, 900))],},
+    )
     order = models.IntegerField(default=0)
 
     class Meta:

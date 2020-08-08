@@ -17,11 +17,13 @@ class SectionAdmin(VersionAdmin, TreeAdmin):
         "name",
     ]
 
-    autocomplete_fields = ["users", "site", "parent"]
+    autocomplete_fields = ["site", "parent"]
 
     prepopulated_fields = {
         "slug": ("name",),
     }
+
+    filter_horizontal = ['users']
 
     fieldsets = (
         (None, {"fields": ("name", "users", "parent")}),

@@ -41,7 +41,10 @@ def logo(category=None):
         )
     return reverse("logo", kwargs={"language": "no", "slug": "default"})
 
+@register.simple_tag
+def safe(text):
+    return mark_safe(text)
 
 @register.filter
-def nbsp(obj):
-    return mark_safe(obj.replace("~", "&nbsp;"))
+def nbsp(obj, rep='&nbsp;'):
+    return mark_safe(obj.replace("~", rep))

@@ -6,6 +6,7 @@ from feincms3_meta.utils import meta_tags
 
 from juso import pages
 from juso.people.models import Person, Team
+from juso.blog.models import Article
 
 # Create your views here.
 
@@ -15,6 +16,8 @@ def person_detail(request, pk):
     page.activate_language(request)
 
     person = get_object_or_404(Person, pk=pk)
+
+    articles = Article.objects.filter(author=person)
 
     memberships = person.membership_set.filter(team__language_code=page.language_code)
 
@@ -27,7 +30,10 @@ def person_detail(request, pk):
             "page": page,
             "person": person,
             "memberships": memberships,
-            "meta_tags": meta_tags([page] + ancestors, request=request),
+            "articles": articles,
+            "header_image": page.get_header_image(),
+            "title": person.get_full_name(),
+            "meta_tags": meta_tags([page] + ancestors, request=request, title=person.get_full_name(), description=person.description()),
             "regions": Regions.from_item(
                 page,
                 renderer=pages.renderer.renderer,

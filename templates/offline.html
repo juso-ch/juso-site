@@ -97,7 +97,7 @@ a, a:visited {
               continue;
             }
             cache.match(keys[i]).then(response => {
-              appendSite(response.url, response.url);
+              appendSite(response.url, window.localStorage.getItem(response.url) || response.url);
             });
           }
         });

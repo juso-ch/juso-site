@@ -1,4 +1,5 @@
 from content_editor.models import create_plugin_base
+from django.core.validators import MinValueValidator
 from django.conf import settings
 from django.db import models, transaction
 from django.utils.translation import gettext_lazy as _
@@ -64,7 +65,7 @@ class Page(
                         for x in [
                             page.site_id,
                             page.application,
-                            page.blog_namespace.name,
+                            page.blog_namespace.name if page.blog_namespace else None,
                             page.category,
                         ]
                         if x
@@ -139,6 +140,7 @@ class Page(
         "pages",
         (
             ("default", ("main", "footer")),
+            ("no_header_image", ("main", "footer")),
             ("sidebar-right", ("main", "sidebar", "footer")),
             ("sidebar-left", ("main", "sidebar", "footer")),
             ("sidebar-both", ("main", "left", "right", "footer")),
@@ -150,20 +152,23 @@ class Page(
         default=False, verbose_name=_("is landing page"),
     )
 
+    position = models.PositiveIntegerField(
+        db_index=True,
+        default=10,
+        validators=[
+            MinValueValidator(
+                limit_value=1,
+                message=_("Position is expected to be greater than zero."),
+            )
+        ],
+    )
+
     blog_namespace = models.ForeignKey(
         "blog.NameSpace",
         models.SET_NULL,
         blank=True,
         null=True,
         verbose_name=_("namespace (blog)"),
-    )
-
-    event_namespace = models.ForeignKey(
-        "events.NameSpace",
-        models.SET_NULL,
-        blank=True,
-        null=True,
-        verbose_name=_("namespace (event)"),
     )
 
     sections = models.ManyToManyField(
@@ -233,12 +238,23 @@ class Page(
 
     css_vars = models.TextField(_("css vars"), blank=True)
     fonts = models.TextField(
-        _("fonts"), default="klima\nmontserrat", help_text=_("fonts loaded on the site")
+        _("fonts"), default="klima", help_text=_("fonts loaded on the site")
     )
 
     def get_fonts(self):
         for font in self.fonts.split("\n"):
             yield font.strip() + ".css"
+
+    prefetches = models.TextField(
+        _("prefetch"), default="""fonts/klima-regular-web.woff2:font
+fonts/klima-regular-italic-web.woff2:font
+fonts/klima-bold-web.woff2:font
+fonts/klima-bold-italic-web.woff2:font""", help_text=_("files that should be preloaded")
+    )
+
+    def get_prefeteches(self):
+        for prefetch in self.prefetches.split('\n'):
+            yield prefetch.strip().split(':')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -289,6 +305,10 @@ class Page(
         indexes = [
             models.Index(fields=["path", "site_id", "language_code", "is_active",]),
             models.Index(fields=["is_landing_page", "site_id", "language_code",]),
+        ]
+
+        constraints = [
+            models.UniqueConstraint(fields=['path', 'site_id'], name="unique_page_for_path")
         ]
 
 

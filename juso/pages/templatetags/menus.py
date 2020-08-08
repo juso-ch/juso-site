@@ -47,4 +47,9 @@ def group_by_tree(iterable):
     iterable = sorted(iterable, key=lambda p: p.position)
 
     for element in iterable:
-        yield element, element.children.all()
+        yield element, sorted(element.children.all(), key=lambda p: p.position)
+
+
+@register.filter
+def order_by_position(iterable):
+    return sorted(iterable, key=lambda p: p.position)

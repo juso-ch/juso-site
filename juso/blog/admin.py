@@ -75,7 +75,10 @@ class ArticleAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
     )
 
     fieldsets = (
-        (None, {"fields": ("title", "author", "category", "tags",)}),
+        (None, {"fields": (
+            "title", "author", "category", "tags",
+            "header_image", "header_image_ppoi",
+        )}),
         (
             _("settings"),
             {
@@ -87,8 +90,6 @@ class ArticleAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
                     "section",
                     "namespace",
                     "template_key",
-                    "header_image",
-                    "header_image_ppoi",
                 ),
             },
         ),

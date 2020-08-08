@@ -1,6 +1,6 @@
 body {
-  font-size: 17px;
-  font-size: clamp(17px, 2vw, 22px);
+  font-size: 16px;
+  font-size: clamp(15px, 2vw, 22px);
   font-family: var(--body-font);
   counter-reset: glossary;
   background-color: var(--background-color);
@@ -12,7 +12,6 @@ h1, h2, h3, h4, h5, h6, header {
   font-family: var(--title-font);
   font-weight: 800;
   text-transform: uppercase;
-  display: inline-block;
   margin-bottom: 0.4em;
   hyphens: auto;
   -webkit-hyphens: auto;

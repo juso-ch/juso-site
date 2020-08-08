@@ -3,10 +3,12 @@
 */
 
 @import url('klima.css');
-@import url('folsom.css');
-@import url('graph.css');
 @import url('darkmode.css');
 @import url('variables.css');
+
+html, body {
+    height: 100%;
+}
 
 body {
     margin: 0;
@@ -100,7 +102,7 @@ h5 {
     letter-spacing: 1px;
 }
 
-ul li {
+ul > li {
     list-style-type: square;
     padding: 1px 0;
 }
@@ -130,6 +132,7 @@ form {
 
 fieldset {
     margin: 0;
+    min-width: 0;
     padding: 0;
     border: none;
     border-top: 1px solid #eee;
@@ -147,6 +150,7 @@ code, pre {
     font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
     color: #666;
     font-size: 12px;
+    overflow-x: auto;
 }
 
 pre.literal-block {
@@ -227,6 +231,15 @@ p img, h1 img, h2 img, h3 img, h4 img, td img {
     clear: both;
 }
 
+.nowrap {
+    white-space: nowrap;
+}
+
+
+.hidden {
+    display: none;
+}
+
 .align-left {
     text-align: left;
 }
@@ -290,11 +303,14 @@ tr.alt {
     background: #f6f6f6;
 }
 
-.row1 {
+tr:nth-child(odd), .row-form-errors {
     background: #fff;
 }
 
-.row2 {
+tr:nth-child(even),
+tr:nth-child(even) .errorlist,
+tr:nth-child(odd) + .row-form-errors,
+tr:nth-child(odd) + .row-form-errors .errorlist {
     background: #f9f9f9;
 }
 
@@ -626,7 +642,8 @@ td ul.errorlist li {
     padding-left: 0;
 }
 
-.errors input, .errors select, .errors textarea {
+.errors input, .errors select, .errors textarea,
+td ul.errorlist + input, td ul.errorlist + select, td ul.errorlist + textarea {
     border: 1px solid #ba2121;
 }
 
@@ -749,13 +766,13 @@ a.deletelink:focus, a.deletelink:hover {
     text-decoration: none;
 }
 
-.object-tools a.viewsitelink, .object-tools a.golink,.object-tools a.addlink {
+.object-tools a.viewsitelink, .object-tools a.addlink {
     background-repeat: no-repeat;
     background-position: right 7px center;
     padding-right: 26px;
 }
 
-.object-tools a.viewsitelink, .object-tools a.golink {
+.object-tools a.viewsitelink {
     background-image: url(../img/tooltag-arrowright.svg);
 }
 
@@ -780,6 +797,23 @@ table#change-history tbody th {
     width: 100%;
     min-width: 980px;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+#container > div {
+    flex-shrink: 0;
+}
+
+#container > .main {
+    display: flex;
+    flex: 1 0 auto;
+}
+
+.main > .content {
+    flex:  1 0;
+    max-width: 100%;
 }
 
 #content {

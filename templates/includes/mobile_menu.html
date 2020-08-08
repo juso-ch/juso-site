@@ -5,7 +5,7 @@
 </label>
 <div class="nav-panel">
   <div class="buttons">
-    {% for button in buttons %}
+    {% for button in buttons|order_by_position %}
     <a href="{{button.get_absolute_url}}" class="button">
       <span>
       {{button.title|nbsp}}

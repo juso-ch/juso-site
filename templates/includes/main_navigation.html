@@ -9,7 +9,7 @@
 {% endfor %}
 </ul>
 <div class="buttons">
-  {% for button in buttons %}
+  {% for button in buttons|order_by_position %}
   <a class="button" href="{{button.get_absolute_url}}">
     <span>
     {{button.title|nbsp}}

@@ -1,4 +1,5 @@
-{% for button in menu %}
+{% load menus %}
+{% for button in menu|order_by_position %}
 <a href="{{button.get_absolute_url}}" class="button">
   {{button.title}}
 </a>

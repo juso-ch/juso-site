@@ -43,16 +43,6 @@ class EventPlugin(TranslationMixin):
             return number_word(min(self.events.count(), self.count,))
         return number_word(self.count)
 
-    namespace = models.ForeignKey(
-        "events.NameSpace",
-        models.SET_NULL,
-        related_name="+",
-        verbose_name=_("namespace"),
-        blank=True,
-        null=True,
-        related_query_name="+",
-    )
-
     template_key = models.CharField(
         max_length=100,
         default="events/plugins/default.html",
@@ -83,7 +73,7 @@ class EventPlugin(TranslationMixin):
 
 
 class EventPluginInline(ContentEditorInline):
-    autocomplete_fields = ["events", "category", "sections", "namespace"]
+    autocomplete_fields = ["events", "category", "sections" ]
 
     fieldsets = (
         (
@@ -95,7 +85,6 @@ class EventPluginInline(ContentEditorInline):
                     "title",
                     "count",
                     "category",
-                    "namespace",
                     "ordering",
                     "region",
                 )

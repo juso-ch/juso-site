@@ -26,11 +26,9 @@ def event_list_for_page(page, past_events=False):
     if category:
         qs = qs.filter(category=page.category)
 
-    if page.event_namespace:
-        qs = qs.filter(namespace=page.event_namespace)
-
     if page.sections.exists():
         qs = qs.filter(section__in=page.sections.all())
+
     elif hasattr(page.site, "section"):
         qs = qs.filter(section=page.site.section)
 

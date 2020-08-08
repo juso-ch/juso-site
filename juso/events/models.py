@@ -29,19 +29,6 @@ from juso.sections.models import ContentMixin, Section, get_template_list
 # Create your models here.
 
 
-class NameSpace(TranslationMixin):
-    name = models.CharField(max_length=200, verbose_name=_("name"))
-    slug = models.SlugField()
-
-    def __str__(self):
-        return f"{self.name} ({self.language_code})"
-
-    class Meta:
-        ordering = ["name"]
-        verbose_name = _("namespace")
-        verbose_name_plural = _("namespaces")
-
-
 class Location(MetaMixin, TranslationMixin):
     regions = [Region(key="images", title=_("images"))]
     name = models.CharField(max_length=200, verbose_name=_("name"))
@@ -141,10 +128,6 @@ class Event(ContentMixin):
 
     location = models.ForeignKey(
         Location, models.SET_NULL, blank=True, null=True, verbose_name=_("location")
-    )
-
-    namespace = models.ForeignKey(
-        NameSpace, models.PROTECT, verbose_name=_("namespace")
     )
 
     @property
@@ -262,8 +245,6 @@ class Event(ContentMixin):
             if site == self.section.site:
                 return reverse_app(
                     [
-                        f"{site.id}-events-{self.namespace}-{self.category}",
-                        f"{site.id}-events-{self.namespace}",
                         f"{site.id}-events-{self.category}",
                         f"{site.id}-events",
                     ],
@@ -281,8 +262,6 @@ class Event(ContentMixin):
                     + self.section.site.host
                     + reverse_app(
                         [
-                            f"{self.section.site.id}-events-{self.namespace}-{self.category}",
-                            f"{self.section.site.id}-events-{self.namespace}",
                             f"{self.section.site.id}-events-{self.category}",
                             f"{self.section.site.id}-events",
                         ],

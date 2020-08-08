@@ -13,7 +13,7 @@ from juso.admin import ButtonInline
 from juso.blog import plugins as blog_plugins
 from juso.events import models
 from juso.events import plugins as event_plugins
-from juso.events.models import Event, Location, NameSpace
+from juso.events.models import Event, Location
 from juso.forms import plugins as form_plugins
 from juso.pages.models import Page
 from juso.people import plugins as people_plugins
@@ -40,7 +40,6 @@ class EventAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
     list_filter = [
         "category",
         "language_code",
-        "namespace",
         "section",
     ]
 
@@ -54,7 +53,6 @@ class EventAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
 
     autocomplete_fields = [
         "category",
-        "namespace",
         "author",
         "section",
         "location",
@@ -81,6 +79,8 @@ class EventAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
                     "location",
                     "category",
                     "tags",
+                    "header_image",
+                    "header_image_ppoi",
                 )
             },
         ),
@@ -92,10 +92,7 @@ class EventAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
                     "language_code",
                     "slug",
                     "section",
-                    "namespace",
                     "template_key",
-                    "header_image",
-                    "header_image_ppoi",
                 ),
             },
         ),
@@ -148,7 +145,6 @@ class EventAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
             pages = Page.objects.filter(
                 (Q(application="events") & Q(language_code=event.language_code))
                 & (Q(category__isnull=True) | Q(category=event.category))
-                & (Q(event_namespace__isnull=True) | Q(event_namespace=event.namespace))
                 & (Q(site__section=event.section) | Q(sections=event.section))
             )
 
@@ -229,21 +225,3 @@ class LocationAdmin(VersionAdmin, ContentEditor):
             obj.lat = location.latitude
             obj.lng = location.longitude
         super().save_model(request, obj, form, change)
-
-
-@admin.register(NameSpace)
-class NamespaceAdmin(admin.ModelAdmin):
-    search_fields = ["name"]
-    list_display = [
-        "name",
-        "slug",
-        "language_code",
-    ]
-
-    list_filter = ["language_code"]
-
-    prepopulated_fields = {"slug": ("name",)}
-
-    autocomplete_fields = ("translations",)
-
-    fieldsets = ((None, {"fields": ("name", "slug", "language_code", "translations")}),)

@@ -1,4 +1,3 @@
-from django.contrib.postgres.fields import JSONField
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -9,7 +8,7 @@ from juso.pages.models import Page
 
 class Subscription(models.Model):
     page = models.ForeignKey(Page, models.CASCADE, verbose_name=_("page"),)
-    subscription_info = JSONField()
+    subscription_info = models.JSONField()
 
     failed_attempts = models.IntegerField(default=0)
 

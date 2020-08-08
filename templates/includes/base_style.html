@@ -8,6 +8,7 @@
 <link rel="stylesheet" type="text/css" href="{% static font %}">
 {% endaddtoblock %}
 {% endfor %}
+
 {% addtoblock 'css' %}
 <link rel="stylesheet" type="text/css" href="{% static 'variables.css' %}">
 {% endaddtoblock %}
@@ -22,6 +23,9 @@
 {% endaddtoblock %}
 {% addtoblock 'css' %}
 <link rel="stylesheet" type="text/css" href="{% static 'juso.css' %}">
+{% endaddtoblock %}
+{% addtoblock 'css' %}
+<link rel="stylesheet" media="print" type="text/css" href="{% static 'print.css' %}">
 {% endaddtoblock %}
 
 {% addtoblock 'css' %}

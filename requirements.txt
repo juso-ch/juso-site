@@ -1,21 +1,21 @@
-asgiref==3.2.3
+asgiref==3.2.10
 astroid==2.3.3
 beautifulsoup4==4.8.2
 bleach==3.1.4
 certifi==2019.11.28
 chardet==3.0.4
-Django==3.0.7
+Django>=3.1
 django-admin-ordering==0.12.0
 django-ckeditor==5.9.0
 django-classy-tags==1.0.0
-django-content-editor==2.0.0
+django-content-editor>=3.0.0
 django-fobi==0.16.1
-django-imagefield==0.11.3
+django-imagefield==0.12
 django-ip==1.0.2
 django-js-asset==1.2.2
 django-nine==0.2.3
 django-nonefield==0.4
-django-sekizai==1.1.0
+# django-sekizai
 django-six==1.0.4
 django-su==0.9.0
 django-taggit==1.2.0
@@ -25,7 +25,7 @@ django-tree-queries==0.3.3
 django-treebeard==4.3
 easy-thumbnails==2.7
 et-xmlfile==1.0.1
-feincms3==0.33.0
+feincms3>=0.33.0
 # -e git://github.com/sacovo/feincms3-meta.git#egg=feincms3-meta
 feincms3-sites==0.10.0
 form-designer==0.16.1

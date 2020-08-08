@@ -133,6 +133,9 @@ class Article(ContentMixin):
             models.Index(fields=["category_id", "language_code", "namespace_id",]),
             models.Index(fields=["language_code", "namespace_id", "section_id",]),
         ]
+        constraints = [
+            models.UniqueConstraint(fields=["slug", "namespace_id", "section_id"], name="unique_path")
+        ]
 
 
 class WPImport(models.Model):

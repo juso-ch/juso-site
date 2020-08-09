@@ -385,7 +385,7 @@ class CategoryLinking(models.Model):
     page = models.ForeignKey(Page, models.CASCADE)
     category = models.ForeignKey("sections.Category", models.CASCADE)
 
-    description = feincms3_plugins.richtext.CleansedRichTextField()
+    description = feincms3_plugins.richtext.CleansedRichTextField(blank=True)
     order = models.IntegerField(default=10)
 
     def __str__(self):

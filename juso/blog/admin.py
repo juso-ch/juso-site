@@ -27,7 +27,7 @@ from juso.webpush import tasks
 @admin.register(Article)
 class ArticleAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
 
-    list_display = [
+    list_display = (
         "title",
         "slug",
         "publication_date",
@@ -35,35 +35,35 @@ class ArticleAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
         "section",
         "language_code",
         "namespace",
-    ]
+    )
 
-    list_filter = [
+    list_filter = (
         "category",
         "author",
         "section",
         "namespace",
         "language_code",
-    ]
+    )
 
-    list_editable = [
+    list_editable = (
         "language_code",
         "slug",
-    ]
+    )
 
     date_hierarchy = "publication_date"
 
-    autocomplete_fields = [
+    autocomplete_fields = (
         "category",
         "namespace",
         "author",
         "section",
         "translations",
-    ]
+    )
 
-    search_fields = [
+    search_fields = (
         "title",
         "blog_richtext_set__text",
-    ]
+    )
 
     prepopulated_fields = {
         "slug": ("title",),
@@ -97,7 +97,7 @@ class ArticleAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
         (_("translations"), {"classes": ("tabbed",), "fields": ("translations",)}),
     )
 
-    inlines = [
+    inlines = (
         plugins.richtext.RichTextInline.create(models.RichText),
         plugins.image.ImageInline.create(models.Image),
         plugins.html.HTMLInline.create(models.HTML),
@@ -109,10 +109,10 @@ class ArticleAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
         blog_plugins.ArticlePluginInline.create(models.ArticlePlugin),
         event_plugins.EventPluginInline.create(models.EventPlugin),
         form_plugins.FormPluginInline.create(models.FormPlugin),
-    ]
+    )
 
     plugins = models.plugins
-    actions = ["copy_selected", "send_webpush"]
+    actions = ("copy_selected", "send_webpush")
 
     class Media:
         js = (
@@ -160,15 +160,15 @@ class ArticleAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
 
 @admin.register(NameSpace)
 class NamespaceAdmin(admin.ModelAdmin):
-    search_fields = ["name"]
+    search_fields = ("name",)
 
-    list_display = [
+    list_display = (
         "name",
         "slug",
         "language_code",
-    ]
+    )
 
-    list_filter = ["language_code"]
+    list_filter = ("language_code",)
 
     prepopulated_fields = {"slug": ("name",)}
 
@@ -181,11 +181,11 @@ class WPImportMappingInline(admin.TabularInline):
     model = models.NamespaceMapping
     extra = 3
 
-    autocomplete_fields = ["target"]
+    autocomplete_fields = ("target",)
 
 
 @admin.register(models.WPImport)
 class WPImportAdmin(admin.ModelAdmin):
-    autocomplete_fields = ["section", "default_namespace"]
+    autocomplete_fields = ("section", "default_namespace")
 
-    inlines = [WPImportMappingInline]
+    inlines = (WPImportMappingInline,)

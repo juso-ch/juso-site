@@ -153,7 +153,7 @@ class FormEntryValue(models.Model):
         FormEntry, models.CASCADE, related_name="fields", verbose_name=_("fields")
     )
     field = models.ForeignKey(FormField, models.CASCADE)
-    value = models.TextField(_("value"), blank=True)
+    value = models.TextField(_("value"), blank=True, null=True)
     int_value = models.IntegerField(_("int value"), default=0)
 
     def __str__(self):

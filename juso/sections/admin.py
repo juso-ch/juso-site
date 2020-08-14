@@ -23,7 +23,7 @@ class SectionAdmin(VersionAdmin, TreeAdmin):
         "slug": ("name",),
     }
 
-    filter_horizontal = ['users']
+    filter_horizontal = ["users"]
 
     fieldsets = (
         (None, {"fields": ("name", "users", "parent")}),

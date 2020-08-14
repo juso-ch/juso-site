@@ -6,21 +6,19 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('pages', '0074_auto_20200726_1652'),
+        ("pages", "0074_auto_20200726_1652"),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='eventplugin',
-            name='namespace',
-        ),
-        migrations.RemoveField(
-            model_name='page',
-            name='event_namespace',
-        ),
+        migrations.RemoveField(model_name="eventplugin", name="namespace",),
+        migrations.RemoveField(model_name="page", name="event_namespace",),
         migrations.AlterField(
-            model_name='page',
-            name='prefetches',
-            field=models.TextField(default='fonts/klima-regular-web.woff2:font\nfonts/klima-regular-italic-web.woff2:font\nfonts/klima-bold-web.woff2:font\nfonts/klima-bold-italic-web.woff2:font\nfonts/montserrat-regular-ext.woff2:font\nfonts/montserrat-regular.woff2:font\nfonts/montserrat-bold-ext.woff2:font\nfonts/montserrat-bold.woff2:font', help_text='files that should be preloaded', verbose_name='prefetch'),
+            model_name="page",
+            name="prefetches",
+            field=models.TextField(
+                default="fonts/klima-regular-web.woff2:font\nfonts/klima-regular-italic-web.woff2:font\nfonts/klima-bold-web.woff2:font\nfonts/klima-bold-italic-web.woff2:font\nfonts/montserrat-regular-ext.woff2:font\nfonts/montserrat-regular.woff2:font\nfonts/montserrat-bold-ext.woff2:font\nfonts/montserrat-bold.woff2:font",
+                help_text="files that should be preloaded",
+                verbose_name="prefetch",
+            ),
         ),
     ]

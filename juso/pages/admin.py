@@ -32,11 +32,12 @@ from juso.utils import CopyContentMixin
 
 class CategoryLinkingInline(OrderableAdmin, admin.TabularInline):
     model = models.CategoryLinking
+    fk_name = "page"
 
     ordering_field = "order"
     ordering_field_hide_input = True
 
-    autocomplete_fields = ["category"]
+    autocomplete_fields = ["category", "other_site"]
 
 
 class NavigationPluginInline(ContentEditorInline):
@@ -341,7 +342,9 @@ class ResctrictedMoveForm(MoveForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        queryset = self.model._default_manager.filter(site=self.instance.site).with_tree_fields()
+        queryset = self.model._default_manager.filter(
+            site=self.instance.site
+        ).with_tree_fields()
 
         self.fields["of"] = TreeNodeChoiceField(
             label=pgettext("MoveForm", "Of"),

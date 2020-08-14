@@ -24,7 +24,7 @@ from juso import views
 
 
 def robots_view(request):
-    if settings.DEBUG:
+    if settings.DEBUG or "dev" in request.get_host():
         c = """User-agent: *
 Disallow: /"""
     else:
@@ -65,7 +65,4 @@ handler404 = "juso.pages.views.error404"
 handler500 = "juso.pages.views.error500"
 
 if settings.DEBUG:
-    urlpatterns += static(
-        settings.MEDIA_URL,
-        document_root=settings.MEDIA_ROOT
-    )
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

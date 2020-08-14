@@ -5,7 +5,7 @@
 {% render_region regions 'main' %}
 <nav role="subsites" class="subsites">
 {% for child in categorylinking_list %}
-<a href="{{child.category.get_absolute_url}}" class="nav-item {{child.category.slug}}">
+<a href="{% if child.other_site %}{{child.other_site.get_absolute_url}}{% else %}{{child.category.get_absolute_url}}{% endif %}" class="nav-item {{child.category.slug}}">
     <img src="{{child.category.get_header_image.square}}">
     <div class="overlay"></div>
     <div class="info">

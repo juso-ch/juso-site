@@ -65,7 +65,7 @@ class Person(models.Model):
                 [f"{site.id}-people"], "person-detail", kwargs={"pk": self.pk}
             )
         except NoReverseMatch:
-            return ''
+            return ""
 
 
 class Team(TranslationMixin):

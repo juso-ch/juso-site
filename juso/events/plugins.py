@@ -73,7 +73,7 @@ class EventPlugin(TranslationMixin):
 
 
 class EventPluginInline(ContentEditorInline):
-    autocomplete_fields = ["events", "category", "sections" ]
+    autocomplete_fields = ["events", "category", "sections"]
 
     fieldsets = (
         (

@@ -44,9 +44,7 @@ class EventAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
     ]
 
     search_fields = [
-        "location",
         "title",
-        "description",
     ]
 
     date_hierarchy = "start_date"
@@ -57,11 +55,6 @@ class EventAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
         "section",
         "location",
         "translations",
-    ]
-
-    search_fields = [
-        "title",
-        "description",
     ]
 
     prepopulated_fields = {
@@ -88,12 +81,7 @@ class EventAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
             _("settings"),
             {
                 "classes": ("tabbed",),
-                "fields": (
-                    "language_code",
-                    "slug",
-                    "section",
-                    "template_key",
-                ),
+                "fields": ("language_code", "slug", "section", "template_key",),
             },
         ),
         MetaMixin.admin_fieldset(),

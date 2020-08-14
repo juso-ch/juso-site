@@ -6,12 +6,9 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('events', '0047_formentrycounterplugin_aggregate_field'),
+        ("events", "0047_formentrycounterplugin_aggregate_field"),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='event',
-            name='author',
-        ),
+        migrations.RemoveField(model_name="event", name="author",),
     ]

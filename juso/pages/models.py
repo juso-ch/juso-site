@@ -12,6 +12,7 @@ from feincms3_sites.models import AbstractPage
 from imagefield.fields import ImageField
 from imagefield.processing import register
 from PIL import ImageEnhance, ImageOps
+import bleach
 
 from juso import models as juso
 from juso.blog import plugins as article_plugins
@@ -241,20 +242,36 @@ class Page(
         _("fonts"), default="klima", help_text=_("fonts loaded on the site")
     )
 
+    @property
+    def description(self):
+        return self.meta_description or self.tagline[:300]
+
+    @property
+    def tagline(self):
+        if RichText.objects.filter(parent=self).exists():
+            return bleach.clean(
+                RichText.objects.filter(parent=self)[0].text, strip=True, tags=[],
+            )
+        if self.meta_description:
+            return self.meta_description
+        return ""
+
     def get_fonts(self):
         for font in self.fonts.split("\n"):
             yield font.strip() + ".css"
 
     prefetches = models.TextField(
-        _("prefetch"), default="""fonts/klima-regular-web.woff2:font
+        _("prefetch"),
+        default="""fonts/klima-regular-web.woff2:font
 fonts/klima-regular-italic-web.woff2:font
 fonts/klima-bold-web.woff2:font
-fonts/klima-bold-italic-web.woff2:font""", help_text=_("files that should be preloaded")
+fonts/klima-bold-italic-web.woff2:font""",
+        help_text=_("files that should be preloaded"),
     )
 
     def get_prefeteches(self):
-        for prefetch in self.prefetches.split('\n'):
-            yield prefetch.strip().split(':')
+        for prefetch in self.prefetches.split("\n"):
+            yield prefetch.strip().split(":")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -270,6 +287,10 @@ fonts/klima-bold-italic-web.woff2:font""", help_text=_("files that should be pre
         return super().save(*args, **kwargs)
 
     def get_absolute_url(self, *args, **kwargs):
+
+        if self.redirect_to_url or self.redirect_to_page:
+            return self.redirect_to_url or self.redirect_to_page.get_absolute_url()
+
         site = current_site()
         if site == self.site:
             return super().get_absolute_url(*args, **kwargs)
@@ -308,7 +329,9 @@ fonts/klima-bold-italic-web.woff2:font""", help_text=_("files that should be pre
         ]
 
         constraints = [
-            models.UniqueConstraint(fields=['path', 'site_id'], name="unique_page_for_path")
+            models.UniqueConstraint(
+                fields=["path", "site_id"], name="unique_page_for_path"
+            )
         ]
 
 
@@ -387,6 +410,9 @@ class CategoryLinking(models.Model):
 
     description = feincms3_plugins.richtext.CleansedRichTextField(blank=True)
     order = models.IntegerField(default=10)
+    other_site = models.ForeignKey(
+        Page, models.CASCADE, blank=True, null=True, related_name="+"
+    )
 
     def __str__(self):
         return self.category.name

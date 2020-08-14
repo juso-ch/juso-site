@@ -38,11 +38,10 @@ class ArticleAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
     )
 
     list_filter = (
-        "category",
-        "author",
-        "section",
         "namespace",
+        "section",
         "language_code",
+        "category",
     )
 
     list_editable = (
@@ -75,10 +74,19 @@ class ArticleAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
     )
 
     fieldsets = (
-        (None, {"fields": (
-            "title", "author", "category", "tags",
-            "header_image", "header_image_ppoi",
-        )}),
+        (
+            None,
+            {
+                "fields": (
+                    "title",
+                    "author",
+                    "category",
+                    "tags",
+                    "header_image",
+                    "header_image_ppoi",
+                )
+            },
+        ),
         (
             _("settings"),
             {

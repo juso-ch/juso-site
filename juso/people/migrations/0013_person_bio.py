@@ -7,13 +7,13 @@ import feincms3.cleanse
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('people', '0012_auto_20200523_1748'),
+        ("people", "0012_auto_20200523_1748"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='person',
-            name='bio',
+            model_name="person",
+            name="bio",
             field=feincms3.cleanse.CleansedRichTextField(blank=True),
         ),
     ]

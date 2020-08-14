@@ -124,7 +124,7 @@ def offline_view(request):
     )
 
 
-def sitemap_index(request, path="/"):
+def sitemap_index(request, path=None):
     sitemaps = {}
 
     top_page = get_object_or_404(

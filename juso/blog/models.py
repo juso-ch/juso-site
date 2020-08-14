@@ -53,6 +53,10 @@ class Article(ContentMixin):
     )
 
     @property
+    def description(self):
+        return self.meta_description or self.tagline[:300]
+
+    @property
     def tagline(self):
         if RichText.objects.filter(parent=self).exists():
             return bleach.clean(
@@ -134,7 +138,9 @@ class Article(ContentMixin):
             models.Index(fields=["language_code", "namespace_id", "section_id",]),
         ]
         constraints = [
-            models.UniqueConstraint(fields=["slug", "namespace_id", "section_id"], name="unique_path")
+            models.UniqueConstraint(
+                fields=["slug", "namespace_id", "section_id"], name="unique_path"
+            )
         ]
 
 

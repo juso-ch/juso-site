@@ -8,28 +8,45 @@ import feincms3.cleanse
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('pages', '0075_auto_20200726_2314'),
+        ("pages", "0075_auto_20200726_2314"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='categorylinking',
-            name='description',
+            model_name="categorylinking",
+            name="description",
             field=feincms3.cleanse.CleansedRichTextField(blank=True),
         ),
         migrations.AlterField(
-            model_name='page',
-            name='fonts',
-            field=models.TextField(default='klima', help_text='fonts loaded on the site', verbose_name='fonts'),
+            model_name="page",
+            name="fonts",
+            field=models.TextField(
+                default="klima",
+                help_text="fonts loaded on the site",
+                verbose_name="fonts",
+            ),
         ),
         migrations.AlterField(
-            model_name='page',
-            name='position',
-            field=models.PositiveIntegerField(db_index=True, default=10, validators=[django.core.validators.MinValueValidator(limit_value=1, message='Position is expected to be greater than zero.')]),
+            model_name="page",
+            name="position",
+            field=models.PositiveIntegerField(
+                db_index=True,
+                default=10,
+                validators=[
+                    django.core.validators.MinValueValidator(
+                        limit_value=1,
+                        message="Position is expected to be greater than zero.",
+                    )
+                ],
+            ),
         ),
         migrations.AlterField(
-            model_name='page',
-            name='prefetches',
-            field=models.TextField(default='fonts/klima-regular-web.woff2:font\nfonts/klima-regular-italic-web.woff2:font\nfonts/klima-bold-web.woff2:font\nfonts/klima-bold-italic-web.woff2:font', help_text='files that should be preloaded', verbose_name='prefetch'),
+            model_name="page",
+            name="prefetches",
+            field=models.TextField(
+                default="fonts/klima-regular-web.woff2:font\nfonts/klima-regular-italic-web.woff2:font\nfonts/klima-bold-web.woff2:font\nfonts/klima-bold-italic-web.woff2:font",
+                help_text="files that should be preloaded",
+                verbose_name="prefetch",
+            ),
         ),
     ]

@@ -33,7 +33,12 @@ def person_detail(request, pk):
             "articles": articles,
             "header_image": page.get_header_image(),
             "title": person.get_full_name(),
-            "meta_tags": meta_tags([page] + ancestors, request=request, title=person.get_full_name(), description=person.description()),
+            "meta_tags": meta_tags(
+                [page] + ancestors,
+                request=request,
+                title=person.get_full_name(),
+                description=person.description(),
+            ),
             "regions": Regions.from_item(
                 page,
                 renderer=pages.renderer.renderer,

@@ -6,16 +6,15 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('pages', '0070_auto_20200712_1711'),
+        ("pages", "0070_auto_20200712_1711"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='page',
-            options={'verbose_name': 'page', 'verbose_name_plural': 'pages'},
+            name="page",
+            options={"verbose_name": "page", "verbose_name_plural": "pages"},
         ),
         migrations.RemoveIndex(
-            model_name='page',
-            name='pages_page_parent__9df5fb_idx',
+            model_name="page", name="pages_page_parent__9df5fb_idx",
         ),
     ]

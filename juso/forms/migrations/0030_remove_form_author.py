@@ -6,12 +6,9 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('forms', '0029_formentryvalue_int_value'),
+        ("forms", "0029_formentryvalue_int_value"),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='form',
-            name='author',
-        ),
+        migrations.RemoveField(model_name="form", name="author",),
     ]

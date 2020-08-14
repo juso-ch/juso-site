@@ -131,6 +131,10 @@ class Event(ContentMixin):
     )
 
     @property
+    def description(self):
+        return self.meta_description or self.tagline[:300]
+
+    @property
     def tagline(self):
         if RichText.objects.filter(parent=self).exists():
             return bleach.clean(
@@ -244,10 +248,7 @@ class Event(ContentMixin):
             site = current_site()
             if site == self.section.site:
                 return reverse_app(
-                    [
-                        f"{site.id}-events-{self.category}",
-                        f"{site.id}-events",
-                    ],
+                    [f"{site.id}-events-{self.category}", f"{site.id}-events",],
                     "event-detail",
                     kwargs={
                         "slug": self.slug,
@@ -255,6 +256,7 @@ class Event(ContentMixin):
                         "month": self.start_date.month,
                         "year": self.start_date.year,
                     },
+                    languages=[self.language_code],
                 )
             with set_current_site(self.section.site):
                 return (
@@ -273,6 +275,7 @@ class Event(ContentMixin):
                             "month": self.start_date.month,
                             "year": self.start_date.year,
                         },
+                        languages=[self.language_code],
                     )
                 )
         except NoReverseMatch:

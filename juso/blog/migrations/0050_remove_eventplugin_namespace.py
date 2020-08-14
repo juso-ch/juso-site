@@ -6,12 +6,9 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0049_auto_20200721_1045'),
+        ("blog", "0049_auto_20200721_1045"),
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='eventplugin',
-            name='namespace',
-        ),
+        migrations.RemoveField(model_name="eventplugin", name="namespace",),
     ]

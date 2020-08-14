@@ -79,9 +79,7 @@ def article_list(request):
             "category_list": category_list,
             "meta_tags": meta_tags([page] + ancestors, request=request),
             "regions": Regions.from_item(
-                page,
-                renderer=pages.renderer.renderer,
-                timeout=60,
+                page, renderer=pages.renderer.renderer, timeout=60,
             ),
         },
         paginate_by=12,

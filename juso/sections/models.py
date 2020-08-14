@@ -101,7 +101,13 @@ class Section(TreeNode):
 class ContentMixin(TranslationMixin, MetaMixin, TemplateMixin):
     title = models.CharField(max_length=200, verbose_name=_("title"))
     slug = models.SlugField(verbose_name=_("slug"), max_length=180)
-    author = models.ForeignKey("people.Person", models.SET_NULL, verbose_name=_("author"), blank=True, null=True)
+    author = models.ForeignKey(
+        "people.Person",
+        models.SET_NULL,
+        verbose_name=_("author"),
+        blank=True,
+        null=True,
+    )
 
     header_image = ImageField(
         _("header image"),

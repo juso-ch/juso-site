@@ -9,6 +9,7 @@ from feincms3_meta.utils import meta_tags
 from feincms3_sites.middleware import current_site
 
 from juso.blog.views import ArticleSitemap
+from juso.blog.models import Article
 from juso.events.views import EventSitemap
 from juso.pages.models import Page
 from juso.pages.renderer import renderer
@@ -72,8 +73,14 @@ def page_detail(request, path=None):
 
 
 def error404(request, exception):
+    query = Article.objects.filter(slug=request.path.replace('/', ''))
+
+    if query.exists():
+        return redirect(query[0].get_absolute_url())
+
     page = get_landing_page(request)
     page.activate_language(request)
+
     return render(
         request,
         "404.html",
@@ -81,6 +88,7 @@ def error404(request, exception):
             "exception": exception,
             "page": page,
             "regions": Regions.from_item(page, renderer=renderer, timeout=60,),
+            "header_image": page.get_header_image(),
         },
     )
 
@@ -94,6 +102,7 @@ def error500(request):
         {
             "page": page,
             "regions": Regions.from_item(page, renderer=renderer, timeout=60,),
+            "header_image": page.get_header_image(),
         },
     )
 
@@ -158,7 +167,9 @@ class PageSitemap(Sitemap):
         super().__init__()
 
     def items(self):
-        return self.top_page.descendants(include_self=True)
+        return self.top_page.descendants(include_self=True).filter(
+            is_active=True, redirect_to_url="", redirect_to_page__isnull=True
+        )
 
     def lastmod(self, obj):
         return obj.lastmod

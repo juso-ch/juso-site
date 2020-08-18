@@ -128,14 +128,16 @@
         {% block footer %}
         <nav class="meta">
           {% include 'includes/meta_menu.html' with menu=menus.main quicklinks=menus.quicklink%}
+          <div class="footer">
+        {% render_region regions "footer" %}
+          </div>
+        {% endblock %}
         </nav>
 
         <nav class="footer">
           {% include 'includes/footer_menu.html' with menu=menus.footer %}
         </nav>
 
-        {% render_region regions "footer" %}
-        {% endblock %}
       </footer>
 
       {% render_block 'js' %}

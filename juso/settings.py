@@ -59,6 +59,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "feincms3_sites.middleware.site_middleware",
+    "feincms3_sites.middleware.redirect_to_site_middleware",
     "feincms3_sites.middleware.default_language_middleware",
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.security.SecurityMiddleware",
@@ -139,7 +140,7 @@ STATIC_URL = "/static/"
 CKEDITOR_CONFIGS = {
     "default": {
         "toolbar": "Custom",
-        "format_tags": "h1;h2;h3;p;pre",
+        "format_tags": "h1;h2;h3;h4;p;pre",
         "toolbar_Custom": [
             [
                 "Format",
@@ -299,6 +300,7 @@ HTML_SANITIZERS = {
             "h1",
             "h2",
             "h3",
+            "h4",
             "strong",
             "em",
             "p",

@@ -41,7 +41,11 @@
 <div class="ical field">
 <input type="text" id="ical_url" value="https://{{page.site.host}}{{page.path}}ical/">
   <label for="ical_url">{% trans 'iCal-Link for Google Calendar, etc.:' %}</label>
-<small>{% trans 'Subscribe to these events in your calendar-app with this link' %}</small>
+  <small>
+    {% blocktrans %}
+    Subscribe to these events in your calendar-app with this link.<br/>Copy the link above and insert it into <a href="https://calendar.google.com/calendar/r/settings/addbyurl">your Google calendar</a>.
+      {% endblocktrans %}
+  </small>
 </div>
 </section>
 {% addtoblock 'js' %}

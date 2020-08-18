@@ -33,6 +33,7 @@
         "url": "https://{{page.site.host}}{{event.location.get_absolute_url}}",
         "name": "{{event.location.name}}"
         {% else %}
+        "name": "{%trans 'TBD' %}",
         "url": "https://{{page.site.host}}{{event.get_absolute_url}}"
         {% endif %}
       {% endif %}
@@ -83,11 +84,15 @@
     <div class="location card">
       <h2>{{event.location.name}}</h2>
       <address>
+        {% if event.location.is_physical %}
         {{event.location.street}}<br/>
         {{event.location.zip_code}} {{event.location.city}}<br/>
+        {% else %}
+        -
+        {% endif %}
       </address>
 
-      {% if event.location %}
+      {% if event.location.is_physical %}
       <a href="{{event.location.maps}}" class="button" target="_blank">
         {% trans "route" %}
       </a>

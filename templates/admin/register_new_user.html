@@ -1,0 +1,34 @@
+{% extends 'admin/change_form.html' %}
+{% load i18n admin_modify %}
+
+{% block content %}
+<div id="content-main">
+  <form method="POST">
+    {% csrf_token %}
+    <fieldset class="module aligned {{ fieldset.classes }}">
+      {% for field in form %}
+      <div class="form-row{% if field.is_hidden %} hidden{% endif %} field-{{ field.field.name }}">
+        <div>
+          {% if field.is_checkbox %}
+          {{ field.field }}{{ field.label_tag }}
+          {% else %}
+          {{ field.label_tag }}
+          {% if field.is_readonly %}
+          <div class="readonly">{{ field.contents }}</div>
+          {% else %}
+          {{ field }}
+          {% endif %}
+          {% endif %}
+          {% if field.field.help_text %}
+          <div class="help">{{ field.field.help_text|safe }}</div>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </fieldset>
+    <div class="submit-row">
+      <input type="submit" value="Save" class="default" name="_save">
+    </div>
+  </form>
+</div>
+{% endblock %}

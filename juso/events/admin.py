@@ -205,7 +205,7 @@ class LocationAdmin(VersionAdmin, ContentEditor):
         return obj.section in sections
 
     def save_model(self, request, obj, form, change):
-        if not change:
+        if not change and obj.is_physical:
             locator = Nominatim(user_agent=settings.NOMINATIM_USER_AGENT)
             location = locator.geocode(
                 f"{obj.street}, {obj.zip_code} {obj.city}, {obj.country}"

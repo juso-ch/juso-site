@@ -44,6 +44,14 @@ a:visited {
   max-width: 65%;
 }
 
+.meta .text > p, .meta .text > ul, .meta .text > ol, .meta .wrapper > *, figure > img, figure > figcaption {
+  max-width: 100%;
+  font-weight: normal;
+  text-transform: none;
+  font-size: 1rem;
+}
+
+
 .text > table {
   width: 100%;
   border: 1px solid var(--grey);
@@ -988,7 +996,7 @@ footer > nav {
   flex-wrap: wrap;
 }
 
-.meta-menu {
+.meta-menu, div.footer {
   margin: 0em 0.5em;
 }
 

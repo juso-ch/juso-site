@@ -1780,3 +1780,7 @@ time > .time >.minutes {
 #loading-bar.complete {
   display: none;
 }
+
+a.download {
+  display: block;
+}

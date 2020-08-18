@@ -78,7 +78,7 @@ class Category(TranslationMixin, MetaMixin, TreeNode):
         return None
 
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.language_code})"
 
 
 class Section(TreeNode):

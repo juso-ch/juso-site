@@ -24,7 +24,7 @@ from juso import views
 
 
 def robots_view(request):
-    if settings.DEBUG or "dev" in request.get_host():
+    if "dev." in request.get_host():
         c = """User-agent: *
 Disallow: /"""
     else:

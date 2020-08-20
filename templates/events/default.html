@@ -45,7 +45,7 @@
       {% else %}
       "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
       {% endif %}
-      "description": "{{event.meta_description}}",
+      "description": "{{event.description}}",
       "name": "{{event.title}}",
       "image": [
         "https://{{page.site.host}}{{event.get_header_image.full}}",

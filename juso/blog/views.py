@@ -20,7 +20,7 @@ from juso.sections.models import Category
 # Create your views here.
 
 
-def articles_for_page(page, qs=None):
+def articles_for_page(page, qs=None, allow_future=False):
     qs = qs if qs else models.Article.objects.filter(language_code=page.language_code)
 
     if page.category:
@@ -34,7 +34,10 @@ def articles_for_page(page, qs=None):
     elif hasattr(page.site, "section"):
         qs = qs.filter(section=page.site.section)
 
-    return qs.filter(publication_date__lte=timezone.now())
+    if allow_future:
+        return qs
+    else:
+        return qs.filter(publication_date__lte=timezone.now())
 
 
 def article_list(request):
@@ -116,7 +119,7 @@ def article_detail(request, slug):
     page = page_for_app_request(request)
     page.activate_language(request)
 
-    article = get_object_or_404(articles_for_page(page), slug=slug)
+    article = get_object_or_404(articles_for_page(page, allow_future=True), slug=slug)
 
     ancestors = list(page.ancestors().reverse())
     edit = (

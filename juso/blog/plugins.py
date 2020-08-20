@@ -2,6 +2,7 @@ from content_editor.admin import ContentEditorInline
 from django.conf import settings
 from django.db import models
 from django.template.loader import render_to_string
+from django.utils import timezone
 from django.utils.translation import gettext
 from django.utils.translation import gettext_lazy as _
 
@@ -138,6 +139,8 @@ def get_article_list(plugin):
 
     if plugin.namespace:
         articles = articles.filter(namespace=plugin.namespace)
+
+    articles = articles.filter(publication_date__lte=timezone.now())
 
     return articles[: plugin.count]
 

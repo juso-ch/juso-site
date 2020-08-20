@@ -47,8 +47,10 @@ class Form(ContentMixin):
     success_message = CleansedRichTextField(_("success message"), blank=True)
     success_redirect = models.URLField(_("success redirect"), blank=True)
 
-    email = models.EmailField(_("e-mail"), blank=True)
+    email = models.CharField(_("e-mail"), max_length=1200, blank=True)
     webhook = models.URLField(_("webhook"), max_length=1200, blank=True)
+    list_id = models.CharField(_("list id"), max_length=30, blank=True)
+    webhook_dict = models.JSONField(_("webhook dict"), blank=True)
 
     def get_instance(self, request):
         return get_form_instance(self, request)

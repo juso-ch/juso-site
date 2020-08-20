@@ -2,9 +2,11 @@ import csv
 
 from content_editor.admin import ContentEditor, ContentEditorInline
 from django.contrib import admin, messages
+from django.db import models
 from django.http import HttpResponse
 from django.utils.translation import gettext_lazy as _
 from reversion.admin import VersionAdmin
+from flat_json_widget.widgets import FlatJsonWidget
 
 # Register your models here.
 
@@ -73,6 +75,10 @@ class FormAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
         "edited_date",
     )
 
+    formfield_overrides = {
+        models.JSONField: {'widget': FlatJsonWidget},
+    }
+
     fieldsets = (
         (
             None,
@@ -88,6 +94,8 @@ class FormAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
                     "success_message",
                     "success_redirect",
                     "webhook",
+                    'list_id',
+                    "webhook_dict",
                     "email",
                     "fullwidth",
                 ),

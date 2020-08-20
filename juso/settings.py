@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "taggit",
     "juso",
     "content_editor",
+    "flat_json_widget",
     "juso.sections.apps.SectionsConfig",
     "juso.blog.apps.BlogConfig",
     "juso.pages.apps.PagesConfig",
@@ -342,3 +343,6 @@ HTML_SANITIZERS = {
         "is_mergeable": is_mergeable,
     }
 }
+
+MAILTRAIN_URL = os.environ.get('MAILTRAIN_URL', '')
+MAILTRAIN_TOKEN = os.environ.get('MAILTRAIN_TOKEN', '')

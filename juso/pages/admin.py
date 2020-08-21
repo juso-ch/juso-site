@@ -254,9 +254,9 @@ class PageAdmin(VersionAdmin, CopyContentMixin, ContentEditor, TreeAdmin):
 
     def duplicate_page_tree(self, request, pk):
         page = models.Page.objects.get(pk=pk)
-        form = DuplicateForm(page=page)
+        form = DuplicateForm(page=page, request=request)
         if request.method == "POST":
-            form = DuplicateForm(request.POST, page=page)
+            form = DuplicateForm(request.POST, page=page, request=rueqest)
 
             if form.is_valid():
                 old_pk = page.pk
@@ -319,8 +319,15 @@ class DuplicateForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         self.page = kwargs.pop("page")
-
+        self.request = kwargs.pop("request")
         super().__init__(*args, **kwargs)
+
+        if self.request.user.is_superuser:
+            return
+
+        self.fields['site'].queryset = Site.objects.filter(
+            section__in=self.request.user.section_set.all()
+        )
 
 
 class SiteAdmin(SiteAdmin):

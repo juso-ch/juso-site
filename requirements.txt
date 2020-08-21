@@ -46,7 +46,7 @@ mccabe==0.6.1
 openpyxl==3.0.3
 parso==0.6.2
 pbr==5.4.5
-Pillow==7.0.0
+Pillow>=7.1.0
 psycopg2-binary==2.8.5
 pydot==1.4.1
 pylint==2.4.4

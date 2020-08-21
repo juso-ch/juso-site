@@ -24,6 +24,18 @@ class RegistrationForm(forms.Form):
     group = forms.ModelChoiceField(Group.objects.all(), required=False)
 
 
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request')
+        super().__init__(*args, **kwargs)
+
+        if self.request.user.is_superuser:
+            return
+
+        self.fields['section'].queryset = self.request.user.section_set.all()
+        self.fields['group'].queryset = self.request.user.groups.all()
+
+
+
 class CustomUserAdmin(UserAdmin):
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
@@ -32,8 +44,10 @@ class CustomUserAdmin(UserAdmin):
 
         return form
 
+    change_list_template = "admin/user/change_list.html"
+
     def register_new_user(self, request):
-        form = RegistrationForm(request.POST)
+        form = RegistrationForm(request.POST, request=request)
 
         if request.POST:
             if form.is_valid():
@@ -105,7 +119,7 @@ Admin: https://{section.site.host}/admin/
         return [
             path(
                 "register-new-user/",
-                user_passes_test(lambda user: user.is_superuser, login_url='/admin/login/')(
+                user_passes_test(lambda user: user.is_staff, login_url='/admin/login/')(
                     self.admin_site.admin_view(self.register_new_user)
                 ),
                 name="auth_User_register_new_user",

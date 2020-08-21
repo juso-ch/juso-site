@@ -1,5 +1,18 @@
 # juso-site
 
+## Features
+- Multisite support
+- PWA ready
+  - Push notifications
+  - Offline mode
+- Duplicate page trees to new domain/language
+- Translatebale
+- Structured Data for blog posts and events
+- Form builder with support for mailtrain connection
+- Easy customisation with css variables
+- docker container
+- nginx with apache pagespeed
+
 ## Docker
 
 ```

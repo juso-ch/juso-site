@@ -43,7 +43,7 @@ def process_form(request, form):
                 field_entry.save()
 
         if form.form.webhook or form.form.list_id:
-            data = form.form.webhook_dict.copy()
+            data = form.form.webhook_dict.copy() if form.form.webhook_dict else dict()
             data.update(form.cleaned_data)
             url = form.form.webhook or  mailtrain_subscribe_url(form.form)
             response = requests.post(url, data=data)

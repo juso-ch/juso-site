@@ -50,7 +50,7 @@ class Form(ContentMixin):
     email = models.CharField(_("e-mail"), max_length=1200, blank=True)
     webhook = models.URLField(_("webhook"), max_length=1200, blank=True)
     list_id = models.CharField(_("list id"), max_length=30, blank=True)
-    webhook_dict = models.JSONField(_("webhook dict"), blank=True)
+    webhook_dict = models.JSONField(_("webhook dict"), blank=True, null=True)
 
     def get_instance(self, request):
         return get_form_instance(self, request)
@@ -74,12 +74,15 @@ class Form(ContentMixin):
             or 0
         )
 
+    def clear_entries(self):
+        self.formentry_set.all().delete()
+
     def entry_dict(self):
         form_entries = []
-        fields = set()
+        fields = []
 
         for field in FormField.objects.filter(parent=self):
-            fields.add(field.slug)
+            fields.append(field.slug)
 
         for entry in self.formentry_set.all():
             values = {"ip": entry.ip, "created": entry.created}
@@ -93,8 +96,8 @@ class Form(ContentMixin):
 
             form_entries.append(values)
 
-        fields.add("ip")
-        fields.add("created")
+        fields.append("ip")
+        fields.append("created")
 
         return form_entries, fields
 

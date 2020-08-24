@@ -4,6 +4,7 @@ from content_editor.admin import ContentEditor, ContentEditorInline
 from django.contrib import admin, messages
 from django.db import models
 from django.http import HttpResponse
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from reversion.admin import VersionAdmin
 from flat_json_widget.widgets import FlatJsonWidget
@@ -119,7 +120,7 @@ class FormAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
         (_("translations"), {"classes": ("tabbed",), "fields": ("translations",)}),
     )
 
-    actions = ["export_form"]
+    actions = ["export_form", "clear_form"]
 
     inlines = [
         FormFieldInline.create(FormField),
@@ -152,21 +153,37 @@ class FormAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
         sections = request.user.section_set.all()
         return obj.section in sections
 
+    def can_access_entries(self, form, request):
+        if form.section not in Section.objects.filter(users=request.user):
+            messages.add_message(request, messages.ERROR, _("access denied"))
+            return False
+        return True
+
+
     def export_form(self, request, query):
 
         form = query.first()
 
-        if form.section not in Section.objects.filter(users=request.user):
-            messages.add_message(request, messages.ERROR, _("access denied"))
+        if not self.can_access_entries(form, request):
             return
 
         entries, fields = form.entry_dict()
 
         response = HttpResponse(content_type="text/csv")
-        response["Content-Disposition"] = 'attachment; filename="somefilename.csv"'
+        response["Content-Disposition"] = f'attachment; filename="{form.slug}-{timezone.now():%Y%m%d%H%M}.csv"'
 
         writer = csv.DictWriter(response, fieldnames=fields)
         writer.writeheader()
         writer.writerows(entries)
+
+        return response
+
+    def clear_form(self, request, query):
+        form = query.first()
+
+        response = self.export_form(request, query)
+
+        if response:
+            form.clear_entries()
 
         return response

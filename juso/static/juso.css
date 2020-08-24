@@ -1784,3 +1784,58 @@ time > .time >.minutes {
 a.download {
   display: block;
 }
+
+.candidature {
+    display: flex;
+    flex-wrap: wrap;
+  margin-top: 1em;
+  box-shadow: var(--box-shadow);
+}
+
+.candidature .name {
+  font-size: 1.2em;
+}
+
+.candidature .image {
+  flex: 1 1 30%;
+  min-width: 120px;
+}
+
+.candidature .content {
+  flex: 1 1 70%;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.candidature .slogan {
+    text-transform: none;
+    font-size: 1.1em;
+    border-left: var(--primary-color) solid 4px;
+    padding-left: 0.5em;
+    padding-top: 0px;
+    line-height: 1.2em;
+    margin-top: 0.3em;
+}
+
+.candidature div.contact {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.candidature .old {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.candidature a.contact:first-child {
+  margin-right: 0.5em;
+}
+
+.candidature a.contact {
+  margin-left: 0;
+  line-height: 2.2em;
+}

@@ -3,7 +3,7 @@ from django.contrib import admin
 from reversion.admin import VersionAdmin
 
 # Register your models here.
-from juso.people.models import Membership, Person, Team
+from juso.people.models import Membership, Person, Team, CandidateList, Candidature
 
 
 class TeamInline(admin.TabularInline):
@@ -95,3 +95,34 @@ class TeamAdmin(VersionAdmin, OrderableAdmin, admin.ModelAdmin):
             return qs
         sections = request.user.section_set.all()
         return qs.filter(section__in=sections)
+
+
+class CandidateInline(OrderableAdmin, admin.StackedInline):
+    model = Candidature
+    ordering_field = "order"
+    ordering_field_hide_input = True
+
+    autocomplete_fields = ["person"]
+
+
+@admin.register(CandidateList)
+class CandidateListAdmin(admin.ModelAdmin):
+    autocomplete_fields = [
+        'sections'
+    ]
+
+    list_display = [
+        'name'
+    ]
+
+    list_filter = [
+        'sections',
+    ]
+
+    search_fields = [
+        'name'
+    ]
+
+    inlines = [
+        CandidateInline
+    ]

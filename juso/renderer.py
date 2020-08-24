@@ -59,6 +59,8 @@ def register_renderers(renderer, pages):
 
     renderer.register_string_renderer(pages.Team, people_plugins.render_team)
 
+    renderer.register_string_renderer(pages.CandidaturePlugin, people_plugins.render_candidate_list)
+
     renderer.register_string_renderer(pages.EventPlugin, event_plugins.render_events)
 
     renderer.register_string_renderer(

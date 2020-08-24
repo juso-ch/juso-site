@@ -95,6 +95,7 @@ class EventAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
         plugins.external.ExternalInline.create(models.External),
         download.DownloadInline.create(models.Download),
         people_plugins.TeamPluginInline.create(models.Team),
+        people_plugins.CandidateListPluginInline.create(models.CandidaturePlugin),
         blog_plugins.ArticlePluginInline.create(models.ArticlePlugin),
         event_plugins.EventPluginInline.create(models.EventPlugin),
         ButtonInline.create(models.Button),

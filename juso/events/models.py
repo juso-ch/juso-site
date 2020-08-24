@@ -315,6 +315,10 @@ class Team(people_plugins.TeamPlugin, PluginBase):
     pass
 
 
+class CandidaturePlugin(people_plugins.CandidatePlugin, PluginBase):
+    pass
+
+
 class Button(Button, PluginBase):
     pass
 
@@ -346,4 +350,5 @@ plugins = [
     ArticlePlugin,
     EventPlugin,
     FormPlugin,
+    CandidaturePlugin,
 ]

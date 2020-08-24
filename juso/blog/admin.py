@@ -113,6 +113,7 @@ class ArticleAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
         ButtonInline.create(models.Button),
         download.DownloadInline.create(models.Download),
         people_plugins.TeamPluginInline.create(models.Team),
+        people_plugins.CandidateListPluginInline.create(models.CandidaturePlugin),
         GlossaryContentInline.create(models.GlossaryRichText),
         blog_plugins.ArticlePluginInline.create(models.ArticlePlugin),
         event_plugins.EventPluginInline.create(models.EventPlugin),

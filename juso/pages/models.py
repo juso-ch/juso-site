@@ -404,6 +404,10 @@ class FormEntryCounterPlugin(form_plugins.EntryCounter, PluginBase):
     pass
 
 
+class CandidaturePlugin(people_plugins.CandidatePlugin, PluginBase):
+    pass
+
+
 class CategoryLinking(models.Model):
     page = models.ForeignKey(Page, models.CASCADE)
     category = models.ForeignKey("sections.Category", models.CASCADE)
@@ -442,4 +446,5 @@ plugins = [
     GlossaryRichText,
     FormEntryCounterPlugin,
     NavigationPlugin,
+    CandidaturePlugin,
 ]

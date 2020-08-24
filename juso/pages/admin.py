@@ -88,6 +88,7 @@ class PageAdmin(VersionAdmin, CopyContentMixin, ContentEditor, TreeAdmin):
         download.DownloadInline.create(models.Download),
         ButtonInline.create(models.Button),
         people_plugins.TeamPluginInline.create(models.Team),
+        people_plugins.CandidateListPluginInline.create(models.CandidaturePlugin),
         event_plugins.EventPluginInline.create(models.EventPlugin),
         blog_plugins.ArticlePluginInline.create(models.ArticlePlugin),
         GlossaryContentInline.create(models.GlossaryRichText),

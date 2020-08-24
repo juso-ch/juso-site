@@ -41,6 +41,10 @@ class Person(models.Model):
     twitter = models.URLField(blank=True, verbose_name=_("Twitter"))
     instagram = models.URLField(blank=True, verbose_name=_("Instagram"))
 
+    job = models.CharField(max_length=120, blank=True, verbose_name=_("job"))
+    birthday = models.DateField(_("birthday"), blank=True, null=True)
+    city = models.CharField(max_length=120, blank=True)
+
     bio = CleansedRichTextField(blank=True)
 
     def __str__(self):
@@ -129,3 +133,37 @@ class Membership(models.Model):
 
     def __str__(self):
         return f"{self.person}@{self.team}"
+
+class CandidateList(models.Model):
+    name = models.CharField(max_length=180)
+    sections = models.ManyToManyField(Section, blank=True)
+
+    class Meta:
+        verbose_name = _("candidate list")
+        verbose_name_plural = _("candidate lists")
+        ordering = ["name"]
+
+    def __str__(self):
+        return f"{self.name}"
+
+class Candidature(models.Model):
+    person = models.ForeignKey(Person, models.CASCADE, verbose_name=_("person"))
+    candidate_list = models.ForeignKey(CandidateList, models.CASCADE, verbose_name=_("list"), related_name="candidates")
+    image = ImageField(
+        _("image"),
+        blank=True,
+        null=True,
+        upload_to="people/",
+        auto_add_fields=True,
+        formats={"square": ["default", ("crop", (900, 900))],},
+    )
+
+    list_number = models.CharField(max_length=10, blank=True)
+    modifier = models.CharField(max_length=30, blank=True)
+    slogan = models.TextField(blank=True)
+    url = models.URLField(_("more information"), blank=True)
+
+    order = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.candidate_list.name} - {self.person}"

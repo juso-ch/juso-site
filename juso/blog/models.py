@@ -229,6 +229,8 @@ class FormPlugin(form_plugins.FormPlugin, PluginBase):
 class FormEntryCounterPlugin(form_plugins.EntryCounter, PluginBase):
     pass
 
+class CandidaturePlugin(people_plugins.CandidatePlugin, PluginBase):
+    pass
 
 plugins = [
     RichText,
@@ -242,4 +244,5 @@ plugins = [
     GlossaryRichText,
     FormPlugin,
     ArticlePlugin,
+    CandidaturePlugin,
 ]

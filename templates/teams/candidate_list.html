@@ -1,0 +1,82 @@
+{% load i18n %}
+<section class="candidate-list">
+  {% for candidature in candidate_list.candidates.all %}
+  <article class="candidature">
+    {% if candidature.image %}
+    <div class="image">
+      <img src="{{candidature.image.square}}">
+    </div>
+    {% elif candidature.person.image %}
+    <div class="image">
+      <img src="{{candidature.person.image.square}}">
+    </div>
+    {% endif %}
+    <div class="content">
+      <header>
+        <div class="name">
+          {% if candidature.list_number %}
+          <span class="list-number">
+          {{candidature.list_number}}
+          </span>
+          {% endif %}
+          {% if candidature.person.get_absolute_url %}
+          <a href="{{candidature.person.get_absolute_url}}">
+            {{candidature.person.first_name}}
+            {{candidature.person.last_name}}
+            <span class="modifier">{{candidature.modifier}}</span>
+          </a>
+          {% else %}
+          {{candidature.person.first_name}}
+          {{candidature.person.last_name}}
+          {{candidature.modifier}}
+          {% endif %}
+        </div>
+        <div class="slogan">
+          {{candidature.slogan}}
+        </div>
+      </header>
+      <section>
+        <div class="info">
+          {% if candidature.person.job %}
+          <div class="job">
+            <span class="bold">{% trans 'Job' %}:</span> {{candidature.person.job}}
+          </div>
+          {% endif %}
+        </div>
+        <div class="contact">
+          <div class="old">
+          {% if candidature.person.email %}
+          <a href="mailto:{{candidature.person.email}}" class="contact">
+            <i class="fas fa-envelope"></i>
+            {{candidature.person.email}}
+          </a>
+          {% endif %}
+          {% if candidature.person.phone %}
+          <a href="phone:{{candidature.person.phone}}" class="contact">
+            <i class="fas fa-phone"></i>
+            {{candidature.person.phone}}
+          </a>
+          {% endif %}
+          </div>
+          <div class="some">
+          {% if candidature.person.facebook %}
+          <a href="{{candidature.person.facebook}}" class="icon button">
+            <i class="fas fa-facebook"></i>
+          </a>
+          {% endif %}
+          {% if candidature.person.twitter %}
+          <a href="{{candidature.person.twitter}}" class="icon button">
+            <i class="fas fa-twitter"></i>
+          </a>
+          {% endif %}
+          {% if candidature.person.instagram %}
+          <a href="{{candidature.person.instagram}}" class="icon button">
+            <i class="fas fa-instagram"></i>
+          </a>
+          {% endif %}
+          </div>
+        </div>
+      </section>
+  </article>
+  {% endfor %}
+</section>

@@ -4,7 +4,7 @@ from django.db import models
 from django.template.loader import render_to_string
 from django.utils.translation import gettext_lazy as _
 
-from juso.people.models import Team
+from juso.people.models import Team, CandidateList
 
 
 class TeamPlugin(models.Model):
@@ -16,18 +16,6 @@ class TeamPlugin(models.Model):
         max_length=100,
         default="teams/default.html",
         choices=settings.TEAM_TEMPLATE_CHOICES,
-    )
-
-    columns = models.CharField(
-        _("columns"),
-        default="three",
-        max_length=10,
-        choices=(
-            ("two", _("2")),
-            ("three", _("3")),
-            ("four", _("4")),
-            ("five", _("5")),
-        ),
     )
 
     class Meta:
@@ -48,4 +36,29 @@ class TeamPluginInline(ContentEditorInline):
 def render_team(plugin, **kwargs):
     return render_to_string(
         plugin.template_key, {"team": plugin.team, "plugin": plugin,}
+    )
+
+class CandidatePlugin(models.Model):
+    candidate_list = models.ForeignKey(
+        CandidateList, models.CASCADE, verbose_name=_("candidate_list"), related_name="+"
+    )
+
+    class Meta:
+        abstract = True
+        verbose_name = "candidate list"
+        verbose_name_plural = "candidate lists"
+
+    def __str__(self):
+        return self.candidate_list.name
+
+
+class CandidateListPluginInline(ContentEditorInline):
+    autocomplete_fields = [
+        "candidate_list",
+    ]
+
+
+def render_candidate_list(plugin, **kwargs):
+    return render_to_string(
+        "teams/candidate_list.html", {"candidate_list": plugin.candidate_list, "plugin": plugin,}
     )

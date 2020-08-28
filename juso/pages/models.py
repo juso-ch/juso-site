@@ -141,11 +141,7 @@ class Page(
         "pages",
         (
             ("default", ("main", "footer")),
-            ("no_header_image", ("main", "footer")),
-            ("sidebar-right", ("main", "sidebar", "footer")),
-            ("sidebar-left", ("main", "sidebar", "footer")),
-            ("sidebar-both", ("main", "left", "right", "footer")),
-            ("fullwidth", ("main", "footer")),
+            ("feature_top", ("main", "sidebar", "feature")),
         ),
     )
 

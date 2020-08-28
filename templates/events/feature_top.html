@@ -1,0 +1,114 @@
+{% extends 'pages/feature_top.html' %}
+{% load feincms3 i18n %}
+{% block breadcrumbs %}
+{% include 'includes/breadcrumbs.html' with obj=event %}
+{% endblock %}
+{% block structured_data %}
+<script type="application/ld+json">
+  {
+      "@context": "https://schema.org",
+      "@type": "Event",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://{{page.site.host}}{{page.path}}"
+      },
+      "location": {
+      {% if event.location.is_physical %}
+        "@type": "Place",
+        "name": "{{event.location.name}}",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "{{event.location.street}}",
+          "addressLocality": "{{event.location.city}}",
+          "postalCode": "{{event.location.zip_code}}",
+          "addressCountry": "{{event.location.country}}",
+          {% if event.location.get_header_image %}
+          "photo": "https://{{page.site.host}}{{event.location.get_header_image.full}}",
+          {% endif %}
+          "url": "https://{{page.site.host}}{{event.location.get_absolute_url}}"
+        }
+      {% else %}
+        "@type": "VirtualLocation",
+        {% if event.location %}
+        "url": "https://{{page.site.host}}{{event.location.get_absolute_url}}",
+        "name": "{{event.location.name}}"
+        {% else %}
+        "name": "{%trans 'TBD' %}",
+        "url": "https://{{page.site.host}}{{event.get_absolute_url}}"
+        {% endif %}
+      {% endif %}
+      },
+      "eventStatus": "https://schema.org/EventScheduled",
+      {% if event.location.is_physical %}
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+
+      {% else %}
+      "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
+      {% endif %}
+      "description": "{{event.description}}",
+      "name": "{{event.title}}",
+      "image": [
+        "https://{{page.site.host}}{{event.get_header_image.full}}",
+        "https://{{page.site.host}}{{event.get_header_image.square}}",
+        "https://{{page.site.host}}{{event.get_header_image.mobile}}",
+        "https://{{page.site.host}}{{event.get_header_image.card}}"
+       ],
+      "startDate": "{{event.start_date|date:"c"}}",
+      "endDate": "{{event.end_date|date:"c"}}",
+       "organizer": {
+        "@type": "Organization",
+        "name": "{{top.title}}",
+        "url": "https://{{page.site.host}}",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://{{page.site.host}}/static/logo.png"
+        }
+      }
+    }
+</script>
+{% endblock %}
+
+{% block content %}
+<article class="{{event.category.slug}} event">
+  <section class="event-text">
+    {% render_region regions 'main' %}
+  </section>
+  <section class="event-info">
+    <div class="datetime">
+      {% include 'events/date_card.html' with date=event.start_date %}
+      <span class="to">
+        {% trans 'bis' %}
+      </span>
+      {% include 'events/date_card.html' with date=event.end_date %}
+    </div>
+    <div class="location card">
+      <h2>{{event.location.name}}</h2>
+      <address>
+        {% if event.location.is_physical %}
+        {{event.location.street}}<br/>
+        {{event.location.zip_code}} {{event.location.city}}<br/>
+        {% else %}
+        -
+        {% endif %}
+      </address>
+
+      {% if event.location.is_physical %}
+      <a href="{{event.location.maps}}" class="button" target="_blank">
+        {% trans "route" %}
+      </a>
+      {% endif %}
+    </div>
+    <div class="event-buttons">
+      <a class="button secondary" href="{{event.google_calendar}}" target="_blank">
+        Google
+      </a>
+      <a class="button secondary" href="{{event.outlook}}" target="_blank">
+        Outlook
+      </a>
+      <a class="button secondary" href="{{event.ical_link}}" target="_blank">
+        iCal
+      </a>
+    </div>
+  </section>
+</article>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends 'pages/feature_top.html' %}
+{% load feincms3 i18n %}
+
+{% block breadcrumbs %}
+{% include 'includes/breadcrumbs.html' with obj=article %}
+{% endblock %}
+
+{% block structured_data %}
+<script type="application/ld+json">
+  {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://{{page.site.host}}{{page.path}}"
+      },
+      "author": {
+      {% if article.author %}
+        "@type": "Person",
+        {% if article.author.email %}
+        "email": "{{article.author.email}}",
+        {% endif %}
+        {% if article.author.image %}
+        "image": "https://{{page.site.host}}{{article.author.image.square}}",
+        {% endif %}
+        {% if article.author.homepage %}
+        "url": "{{article.author.homepage}}",
+        {% endif %}
+        "name": "{{article.author.get_full_name}}"
+        {% else %}
+        "@type": "Organization",
+        "name": "{{top.title}}",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://{{page.site.host}}/static/logo.png"
+        }
+        {% endif %}
+      },
+      "headline": "{{article.title}}",
+      "image": [
+        "https://{{page.site.host}}{{article.get_header_image.full}}",
+        "https://{{page.site.host}}{{article.get_header_image.square}}",
+        "https://{{page.site.host}}{{article.get_header_image.mobile}}",
+        "https://{{page.site.host}}{{article.get_header_image.card}}"
+       ],
+      "datePublished": "{{article.publication_date|date:"c"}}",
+      "dateModified": "{{article.edited_date|date:"c"}}",
+       "publisher": {
+        "@type": "Organization",
+        "name": "{{top.title}}",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://{{page.site.host}}/static/logo.png"
+        }
+      }
+    }
+</script>
+{% endblock %}
+
+{% block content %}
+<article class="{{article.category.slug}} article">
+  <div class="info">
+    <i class="fas fa-calendar"></i>
+    {{article.publication_date|date:"d.m.Y"}}
+    {% if article.author %}
+    -
+    {% if article.author.get_absolute_url %}
+    <a href="{{article.author.get_absolute_url}}" class="author-info">
+    {{article.author.get_full_name}}
+    </a>
+    {% else %}
+    <span class="author-info">
+    {{article.author.get_full_name}}
+    </span>
+    {% endif %}
+    {% endif %}
+  </div>
+  {% render_region regions 'main' %}
+</article>
+{% if edit %}
+<a class="button" href="{% url 'admin:blog_article_change' article.pk %}">
+  {% trans "Edit" %}
+</a>
+{% endif %}
+{% endblock %}

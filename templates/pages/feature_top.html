@@ -1,0 +1,241 @@
+{% load sekizai_tags static menus feincms3 tools i18n translations cache %}
+{% top_page page as top %}
+
+{% all_menus request.LANGUAGE_CODE top as menus %}
+
+<!DOCTYPE html>
+<html lang="{{request.LANGUAGE_CODE}}">
+  <head>
+    <!-- Standard Meta -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    {% translation_head page obj as translations %}
+    {% for language, uri in translations %}
+    <link rel="alternate" hreflang="{{language}}"
+                          href="{{uri}}" />
+    {% endfor %}
+
+
+    <title>{% block title %}
+      {% if page is not top %}
+      {{title|default:page.title|nbsp}} - {% endif %}
+      {{top.title|nbsp}}
+      {% endblock %}</title>
+
+    {% block meta %}
+    {{meta_tags}}
+    {% endblock %}
+    {% if page.google_site_verification %}
+    <meta name="google-site-verification" content="{{page.google_site_verification}}" />
+    {% endif %}
+    {% block structured_data %}
+    {% endblock %}
+
+    {% include 'includes/base_style.html' %}
+
+    {% render_block 'css' %}
+    {% cache 600 top top.pk %}
+
+    {% for prefetch in top.get_prefeteches %}
+    <link rel="preload" href="{% static prefetch.0 %}" as="{{prefetch.1}}" {% if prefetch.1 == 'font'%}crossorigin{% endif %}>
+    {% endfor %}
+
+    {% if top.favicon %}
+    <link rel="apple-touch-icon" sizes="180x180" href="{{top.favicon.180}}" >
+    <link rel="icon" type="image/png" sizes="32x32" href="{{top.favicon.32}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{top.favicon.16}}">
+    {% else %}
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'apple-touch-icon.png' %}" >
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static '/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon-16x16.png' %}">
+    {% endif %}
+    <link rel="manifest" href="{% url 'pages:manifest' %}">
+    <meta name="theme-color" content="{{top.primary_color|default:"#eb141f"}}">
+    <style>
+:root{
+  {% if top.primary_color %}
+  --primary-color: {{top.primary_color}};
+    {% endif %}
+    {% if top.css_vars %}
+    {{top.css_vars|safe}}
+    {% endif %}
+}
+    </style>
+    {% endcache %}
+
+  </head>
+    <body class="{{page.category.slug}}">
+
+      {% button_menu request.LANGUAGE_CODE top as buttons %}
+      <div id="loading-bar" class="complete">
+      </div>
+
+      {% block page_header %}
+      <header
+        {% if header_image %}
+        style="background-image: url('{{header_image.full}}')"
+        class="background-image page featured"
+        {% else %}
+        class="page"
+        {% endif %}
+        >
+        <div class="top-bar">
+          <nav class="top">
+            {% include 'includes/top_navigation.html' with menu=menus.top %}
+            {% include 'includes/translations.html' with page=page obj=obj %}
+          </nav>
+
+        <nav class="buttons">
+          {% include 'includes/nav_buttons.html' with menu=buttons %}
+        </nav>
+        </div>
+        <span class="logo mobile-only" aria-label="{% trans 'Logo' %}">
+          <a title="{% trans 'logo' %}" href="{{top.get_absolute_url}}">
+            {% include 'includes/logo.svg' %}
+          </a>
+        </span>
+
+        <div class="feature-content">
+          {% render_region regions "feature" %}
+        </div>
+
+        {% block header %}
+        <h1 class="header">
+          {{title|default:page.title|nbsp}}
+        </h1>
+        {% endblock %}
+      </header>
+      {% endblock %}
+
+      <nav class="main feature-nav {% block main_nav_class %}{% endblock %}" id="mainNavigation">
+        <div class="branding">
+          <a class="brand" href="{{top.get_absolute_url}}">
+            <span class="logo">
+              {% include 'includes/logo.svg' %}
+            </span>
+            <span class="name">
+              {{top.title|nbsp}}
+            </span>
+          </a>
+        </div>
+        {% include 'includes/main_navigation.html' with menu=menus.main buttons=buttons %}
+      </nav>
+
+
+      <main>
+        {% block content %}
+        <article class="{{page.category.slug}}">
+          {% render_region regions "main" %}
+        </article>
+        {% if page.is_navigation %}
+        {% include 'pages/page_subnav.html' with pages=page.children.all %}
+        {% endif %}
+        {% if edit %}
+        <a class="button" href="{% url 'admin:pages_page_change' page.pk %}">
+          {% trans 'Edit' %}
+        </a>
+        {% endif %}
+        {% endblock %}
+      </main>
+
+
+      <footer>
+        {% block footer %}
+        <nav class="meta">
+          {% include 'includes/meta_menu.html' with menu=menus.main quicklinks=menus.quicklink%}
+          <div class="footer">
+            {% render_region regions "footer" %}
+          </div>
+          {% endblock %}
+        </nav>
+
+        <nav class="footer">
+          {% include 'includes/footer_menu.html' with menu=menus.footer %}
+        </nav>
+
+      </footer>
+
+      {% render_block 'js' %}
+
+      {% addtoblock 'js' %}
+      <script src="{% static 'js.cookie.min.js' %}"></script>
+      {% endaddtoblock %}
+
+      {% addtoblock 'js' %}
+      <script src="{% static 'forms/forms.js' %}"></script>
+      {% endaddtoblock %}
+
+      {% addtoblock 'js' %}
+      <script src="{% static 'theming.js' %}"></script>
+      {% endaddtoblock %}
+
+      {% addtoblock 'js' %}
+      <script src="{% static 'sticky.js' %}"></script>
+      {% endaddtoblock %}
+
+      {% addtoblock 'js' %}
+      <script src="{% static 'tools.js' %}"></script>
+      {% endaddtoblock %}
+
+      {% addtoblock 'js' %}
+      <script>
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/service-worker.js');
+          });
+        }
+        if (window.matchMedia('(display-mode: standalone)').matches) {  
+
+          window.addEventListener('DOMContentLoaded', (event) => {
+            document.getElementById('loading-bar').style.width = "75%";
+            document.getElementById('loading-bar').classList.remove('complete');
+          });
+
+          window.addEventListener('beforeunload', (event) => {
+            document.getElementById('loading-bar').classList.remove('complete');
+            document.getElementById('loading-bar').style.width = "25%";
+          });
+          window.addEventListener('load', function() {
+            document.getElementById('loading-bar').style.width = "100%";
+            window.setTimeout(function() {
+              document.getElementById('loading-bar').classList.add('complete');
+            }, 300);
+
+          });
+        }
+
+        window.addEventListener('load', function() {
+          window.localStorage.setItem(document.URL, document.title);
+          if(navigator.share) {
+            let shareButton = document.getElementById('share-api-button');
+            shareButton.classList.add('enabled');
+            shareButton.addEventListener('click', (event) => {
+              event.preventDefault();
+
+              let url = document.location.href;
+              const canonicalElement = document.querySelector('link[rel=canonical]');
+              if (canonicalElement !== null) {
+                url = canonicalElement.href;
+              }
+              navigator.share({
+                title: document.title,
+                url: url,
+              })
+                .then(() => console.log('Successful share'))
+                .catch((error) => console.log('Error sharing', error));
+
+            });
+          }
+        })
+      </script>
+      {% endaddtoblock %}
+      <nav id="mobile-menu">
+        {% include 'includes/mobile_menu.html' with menu=menus.main buttons=buttons footer=menus.footer top_menu=menus.top %}
+      </nav>
+      <div id="share-menu">
+        {% include 'includes/share_menu.html' %}
+      </div>
+
+    </body>
+</html>

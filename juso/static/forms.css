@@ -78,6 +78,16 @@ form .field {
   font-size: 0.9rem;
 }
 
+.feature-content  label {
+  color: var(--light-color);
+  top: -1rem;
+  font-size: 1.2rem;
+}
+
+.feature-content form {
+  padding: 0;
+}
+
 .field > input[type="checkbox"]{
   width: auto;
   display:  inline;

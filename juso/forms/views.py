@@ -1,4 +1,5 @@
 import numbers
+import hashlib
 
 import requests
 from django.conf import settings
@@ -42,11 +43,40 @@ def process_form(request, form):
                 field_entry.int_value = form.cleaned_data[field.slug]
                 field_entry.save()
 
-        if form.form.webhook or form.form.list_id:
-            data = form.form.webhook_dict.copy() if form.form.webhook_dict else dict()
-            data.update(form.cleaned_data)
-            url = form.form.webhook or  mailtrain_subscribe_url(form.form)
-            response = requests.post(url, data=data)
+        data = form.form.webhook_dict.copy() if form.form.webhook_dict else dict()
+        data.update(form.cleaned_data)
+
+        if form.form.webhook:
+            requests.post(form.form.webhook, data=data)
+
+        if form.form.list_id:
+            requests.post(mailtrain_subscribe_url(form.form), data=data)
+
+        if form.form.mailchimp_connection:
+            connection = form.form.mailchimp_connection
+            email = data.pop('email', '').lower().encode('utf-8')
+            email_hash = hashlib.md5(email).hexdigest()
+
+            mailchimp_data = {
+                'email_address': email,
+                'status_if_new': 'subscribed',
+                'status': 'subscribed',
+                'ip_signup': entry.ip,
+                'merge_fields': data,
+                'tags': (form.form.slug, )
+            }
+
+            headers = {'Content-Type': 'application/json'}
+            auth = ('key', connection.api_key)
+
+            url = f'https://{connection.api_server}.api.mailchimp.com/3.0/lists/{form.form.mailchimp_list_id}/members/{email_hash}'
+
+            r = requests.put(
+                url,
+                json=mailchimp_data,
+                headers=headers,
+                auth=auth,
+            )
 
 
         if form.form.email:

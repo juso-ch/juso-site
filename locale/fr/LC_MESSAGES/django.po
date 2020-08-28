@@ -971,13 +971,13 @@ msgstr "Rechercher"
 #, fuzzy
 #| msgid "locations"
 msgid "Enable Notifications"
-msgstr "lieux"
+msgstr ""
 
 #: templates/blog/article_list.html:25 templates/events/event_list.html:23
 #, fuzzy
 #| msgid "locations"
 msgid "Disable Notifications"
-msgstr "lieux"
+msgstr ""
 
 #: templates/blog/default.html:82 templates/pages/categorylinking_list.html:19
 #: templates/pages/default.html:13
@@ -990,15 +990,15 @@ msgstr "Lire plus"
 
 #: templates/events/default.html:79
 msgid "bis"
-msgstr ""
+msgstr "à"
 
 #: templates/events/default.html:92
 msgid "route"
-msgstr ""
+msgstr "itinéraire"
 
 #: templates/events/event_card.html:32
 msgid "Route"
-msgstr ""
+msgstr "Itinéraire"
 
 #: templates/events/event_card.html:53
 msgid "more info"
@@ -1019,7 +1019,7 @@ msgstr ""
 
 #: templates/forms/number_missing.html:7
 msgid "of"
-msgstr ""
+msgstr "de"
 
 #: templates/glossary/entry_list.html:28
 msgid "Keine Resultate!"

@@ -7,7 +7,7 @@ from feincms3.cleanse import CleansedRichTextField
 from juso.forms.forms import get_form_instance
 
 # Create your models here.
-from juso.sections.models import ContentMixin, get_template_list
+from juso.sections.models import ContentMixin, get_template_list, Section
 
 INPUT_TYPES = (
     ("text", _("text")),
@@ -39,6 +39,17 @@ SIZES = (
 )
 
 
+class MailchimpConnection(models.Model):
+    name = models.CharField(_("name"), max_length=30)
+    api_key = models.CharField(_("mailchimp api key"), max_length=180)
+    api_server = models.CharField(_("mailchimp api server"), max_length=20)
+
+    section = models.ForeignKey(Section, models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+
 class Form(ContentMixin):
     TEMPLATES = get_template_list("form", (("default", ("fields", "handlers"),),))
     fullwidth = models.BooleanField(_("full width"))
@@ -49,8 +60,12 @@ class Form(ContentMixin):
 
     email = models.CharField(_("e-mail"), max_length=1200, blank=True)
     webhook = models.URLField(_("webhook"), max_length=1200, blank=True)
-    list_id = models.CharField(_("list id"), max_length=30, blank=True)
+    list_id = models.CharField(_("mailtrain list id"), max_length=30, blank=True)
     webhook_dict = models.JSONField(_("webhook dict"), blank=True, null=True)
+
+    mailchimp_connection = models.ForeignKey(MailchimpConnection, models.SET_NULL, null=True, blank=True)
+    mailchimp_list_id = models.CharField(_("mailchimp list id"), max_length=100, blank=True)
+
 
     def get_instance(self, request):
         return get_form_instance(self, request)

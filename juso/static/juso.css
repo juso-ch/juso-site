@@ -44,11 +44,15 @@ a:visited {
   max-width: 65%;
 }
 
-.meta .text > p, .meta .text > ul, .meta .text > ol, .meta .wrapper > *, figure > img, figure > figcaption {
+.meta .text > p, .meta .text > ul, .meta .text > ol, .meta .wrapper > *, figure > img, figure > figcaption, .feature-content > .text > p, .feature-content > .text > ul, .feature-content > .text > ol, .feature-content .wrapper > *{
   max-width: 100%;
   font-weight: normal;
   text-transform: none;
   font-size: 1rem;
+}
+
+.feature-content > .text > p, .feature-content > .text > ul, .feature-content > .text > ol, .feature-content .wrapper > * {
+  font-size: 1.3rem;
 }
 
 
@@ -417,6 +421,7 @@ nav.subsites > a:hover > div.info {
   display: inline-block;
   line-height: 1em;
   margin: 0.5em 0;
+  word-break: normal;
 }
 
 .button.secondary {
@@ -495,6 +500,25 @@ header.page {
   min-height: 30vmax;
 }
 
+header.page.featured {
+  margin: 0;
+  min-height: 50vh;
+}
+
+header.page.featured h1.header {
+  margin-top: 0;
+}
+
+header .feature-content {
+  flex: 1 0;
+  width: 50%;
+  align-self: flex-end;
+  padding: 1em 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 header.page.no-background {
   min-height: 0;
   color: var(--text-color);
@@ -517,6 +541,14 @@ main, header.page, footer, nav.main {
   padding-right: 0.4rem;
   padding-left: var(--inner-padding);
   padding-right: var(--inner-padding);
+}
+
+nav.main.feature-nav {
+  color: var(--text-color);
+  background-color: var(--background-color);
+  margin-top: 0;
+  margin-bottom: 2em;
+  box-shadow: var(--box-shadow);
 }
 
 
@@ -581,7 +613,7 @@ header.page > .logo {
   flex: 0 0;
 }
 
-.sticky .logo{
+.sticky .logo, .feature-nav .logo{
   color: var(--highlight-color);
 }
 
@@ -712,6 +744,8 @@ nav#mobile-menu .logo {
     align-self: flex-end;
     display: block;
   }
+
+
   header.page.no-background > h1 {
     margin-top: -1em;
   }
@@ -742,6 +776,7 @@ nav#mobile-menu .logo {
     -ms-flex: 1 0 60%;
     flex: 1 0 60%;
   }
+
 }
 
 @media (max-width: 420px) {
@@ -1495,6 +1530,10 @@ time > .time >.minutes {
     -webkit-box-shadow: rgba(0, 0, 0, 0.4) 4px 4px 10px;
     box-shadow: rgba(0, 0, 0, 0.4) 4px 4px 10px;
     z-index: 4;
+  }
+
+  header .feature-content {
+    width: 100%;
   }
 
   .social-media-button {

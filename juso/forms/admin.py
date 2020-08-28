@@ -1,8 +1,12 @@
 import csv
+from datetime import datetime
+
+import xlsxwriter
 
 from content_editor.admin import ContentEditor, ContentEditorInline
 from django.contrib import admin, messages
 from django.db import models
+from django import forms
 from django.http import HttpResponse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -11,7 +15,7 @@ from flat_json_widget.widgets import FlatJsonWidget
 
 # Register your models here.
 
-from juso.forms.models import Form, FormField
+from juso.forms.models import Form, FormField, MailchimpConnection
 from juso.sections.models import Section
 from juso.utils import CopyContentMixin
 
@@ -61,7 +65,7 @@ class FormAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
         "language_code",
     ]
 
-    autocomplete_fields = ["section"]
+    autocomplete_fields = ["section", "mailchimp_connection"]
 
     search_fields = [
         "title",
@@ -94,13 +98,23 @@ class FormAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
                     "size",
                     "success_message",
                     "success_redirect",
-                    "webhook",
-                    'list_id',
-                    "webhook_dict",
-                    "email",
                     "fullwidth",
                 ),
             },
+        ),
+        (
+            _("collection"),
+            {
+                "classes": ('tabbed',),
+                "fields": (
+                    "email",
+                    "list_id",
+                    "webhook",
+                    "mailchimp_connection",
+                    "mailchimp_list_id",
+                    "webhook_dict",
+                )
+            }
         ),
         (
             _("meta"),
@@ -117,10 +131,9 @@ class FormAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
                 ),
             },
         ),
-        (_("translations"), {"classes": ("tabbed",), "fields": ("translations",)}),
     )
 
-    actions = ["export_form", "clear_form"]
+    actions = ["export_form", "clear_form", "export_form_xlsx"]
 
     inlines = [
         FormFieldInline.create(FormField),
@@ -128,13 +141,32 @@ class FormAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
 
     plugins = [FormField]
 
+    def get_fieldsets(self, request, obj=None):
+        fieldsets = super().get_fieldsets(request, obj=obj)
+
+        if obj is None or request.user.is_superuser:
+            return super().get_fieldsets(request, obj=obj)
+
+        sections = request.user.section_set.all()
+        if obj.section in sections:
+            return super().get_fieldsets(request, obj=obj)
+        return (
+            (
+                None,
+                {"fields": ("title", "slug", "section", "created_date", "edited_date",)},
+            ),
+        )
+
+
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
+
 
         if "section" not in form.base_fields:
             return form
 
         section_field = form.base_fields["section"]
+        form.base_fields['list_id'].widget = forms.PasswordInput()
 
         sections = request.user.section_set.all()
         section_field.initial = sections[0]
@@ -178,12 +210,65 @@ class FormAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
 
         return response
 
-    def clear_form(self, request, query):
+    def export_form_xlsx(self, request, query):
         form = query.first()
 
-        response = self.export_form(request, query)
+        if not self.can_access_entries(form, request):
+            return
+
+        entries, fields = form.entry_dict()
+
+        response = HttpResponse(content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+        response["Content-Disposition"] = f'attachment; filename="{form.slug}-{timezone.now():%Y%m%d%H%M}.xlsx"'
+
+        workbook = xlsxwriter.Workbook(response, {'remove_timezone': True})
+        worksheet = workbook.add_worksheet('answers')
+        bold = workbook.add_format({'bold': True})
+        date_format = workbook.add_format({'num_format': 'yy-mm-dd hh:mm'})
+
+        for col, field in enumerate(fields):
+            worksheet.write(0, col, field, bold)
+
+        for row, entry in enumerate(entries):
+            for col, field in enumerate(fields):
+                val = entry.get(field, '')
+                if isinstance(val, datetime):
+                    worksheet.write(row + 1, col, entry.get(field, ''), date_format)
+                else:
+                    worksheet.write(row + 1, col, entry.get(field, ''))
+
+        workbook.close()
+
+        return response
+
+
+    def clear_form(self, request, query):
+        form = query.first()
+        response = self.export_form_xlsx(request, query)
 
         if response:
             form.clear_entries()
 
         return response
+
+
+@admin.register(MailchimpConnection)
+class MailchimpConnectionAdmin(admin.ModelAdmin):
+
+    list_display = (
+        "name", "section", "api_server"
+    )
+
+    search_fields = (
+        "name", "section"
+    )
+
+    autocomplete_fields = (
+        "section",
+    )
+
+    def get_queryset(self, request):
+        if request.user.is_superuser:
+            return super().get_queryset(request)
+        sections = request.user.section_set.all()
+        return super().get_queryset(request).filter(section__in=sections)

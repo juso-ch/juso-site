@@ -23,7 +23,6 @@ async function submitForm(form){
     }
   });
 
-
 }
 
 window.addEventListener("load", function(event){

@@ -42,9 +42,7 @@ class Article(ContentMixin):
         "blog",
         (
             ("default", ("main",)),
-            ("sidebar-right", ("main", "sidebar")),
-            ("sidebar-left", ("main", "sidebar")),
-            ("fullwidth", ("main",)),
+            ("feature_top", ("main", "sidebar", "feature")),
         ),
     )
 

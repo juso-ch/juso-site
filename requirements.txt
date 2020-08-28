@@ -77,3 +77,4 @@ pywebpush
 future
 django-reversion
 django-flat-json-widget
+xlsxwriter

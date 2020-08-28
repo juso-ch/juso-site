@@ -119,7 +119,13 @@ def ical_calendar(queryset):
 
 
 class Event(ContentMixin):
-    TEMPLATES = get_template_list("events", (("default", ("main",),),))
+    TEMPLATES = get_template_list(
+        "events",
+        (
+            ("default", ("main",),),
+            ("feature_top", ("main", "sidebar", "feature")),
+        ),
+    )
 
     start_date = models.DateTimeField(_("start date"))
     end_date = models.DateTimeField(_("end date"))
@@ -161,24 +167,24 @@ class Event(ContentMixin):
             icon = f"https://{page.site.host}" + favicon["512"]
         else:
             icon = "https://" + page.site.host + "/static/logo.png"
-        return json.dumps(
-            {
-                "title": self.start_date.astimezone(
-                    pytz.timezone(settings.TIME_ZONE)
-                ).strftime("%d.%m.%Y %H:%M")
-                + " - "
-                + self.title,
-                "tagline": (self.location.name + "; " if self.location else "")
-                + self.tagline[:280],
-                "icon": icon,
-                "url": self.get_full_url(),
-                "badge": "https://" + page.site.host + "/static/badge.png",
-                "publication_date": self.publication_date.isoformat(),
-                "image": "https://" + page.site.host + self.get_header_image().full
-                if self.get_header_image()
-                else "",
-            }
-        )
+            return json.dumps(
+                {
+                    "title": self.start_date.astimezone(
+                        pytz.timezone(settings.TIME_ZONE)
+                    ).strftime("%d.%m.%Y %H:%M")
+                    + " - "
+                    + self.title,
+                    "tagline": (self.location.name + "; " if self.location else "")
+                    + self.tagline[:280],
+                    "icon": icon,
+                    "url": self.get_full_url(),
+                    "badge": "https://" + page.site.host + "/static/badge.png",
+                    "publication_date": self.publication_date.isoformat(),
+                    "image": "https://" + page.site.host + self.get_header_image().full
+                    if self.get_header_image()
+                    else "",
+                }
+            )
 
     def get_full_url(self):
         url = self.get_absolute_url()

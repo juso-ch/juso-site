@@ -257,7 +257,7 @@ class PageAdmin(VersionAdmin, CopyContentMixin, ContentEditor, TreeAdmin):
         page = models.Page.objects.get(pk=pk)
         form = DuplicateForm(page=page, request=request)
         if request.method == "POST":
-            form = DuplicateForm(request.POST, page=page, request=rueqest)
+            form = DuplicateForm(request.POST, page=page, request=request)
 
             if form.is_valid():
                 old_pk = page.pk

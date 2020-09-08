@@ -140,5 +140,9 @@ class ButtonInline(ContentEditorInline):
     )
 
 
+class VotingRecommendationInline(ContentEditorInline):
+    fields = ('title', 'recommendation', 'url', 'url_text', 'region', 'ordering')
+
+
 admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)

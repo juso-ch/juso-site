@@ -193,6 +193,7 @@ class Page(
         formats={
             "full": ["default", "darken", ("crop", (1920, 900))],
             "square": ["default", ("crop", (960, 960))],
+            "card": ["default", ("crop", (900, 600))],
             "mobile": ["default", ("crop", (740, 600))],
         },
         auto_add_fields=True,
@@ -428,6 +429,10 @@ class NavigationPlugin(PagesPlugin, PluginBase):
     pass
 
 
+class VotingRecommendationPlugin(juso.VotingRecommendation, PluginBase):
+    pass
+
+
 plugins = [
     RichText,
     Image,
@@ -443,4 +448,5 @@ plugins = [
     FormEntryCounterPlugin,
     NavigationPlugin,
     CandidaturePlugin,
+    VotingRecommendationPlugin,
 ]

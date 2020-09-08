@@ -17,7 +17,7 @@ from js_asset import JS
 from reversion.admin import VersionAdmin
 from tree_queries.forms import TreeNodeChoiceField
 
-from juso.admin import ButtonInline
+from juso.admin import ButtonInline, VotingRecommendationInline
 from juso.blog import plugins as blog_plugins
 from juso.events import plugins as event_plugins
 from juso.forms import plugins as form_plugins
@@ -87,6 +87,7 @@ class PageAdmin(VersionAdmin, CopyContentMixin, ContentEditor, TreeAdmin):
         plugins.external.ExternalInline.create(models.External),
         download.DownloadInline.create(models.Download),
         ButtonInline.create(models.Button),
+        VotingRecommendationInline.create(models.VotingRecommendationPlugin),
         people_plugins.TeamPluginInline.create(models.Team),
         people_plugins.CandidateListPluginInline.create(models.CandidaturePlugin),
         event_plugins.EventPluginInline.create(models.EventPlugin),

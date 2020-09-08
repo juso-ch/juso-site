@@ -89,3 +89,23 @@ class Button(AbstractBlock):
 
     def __str__(self):
         return f"{self.text}"
+
+
+class VotingRecommendation(models.Model):
+    title = models.CharField(max_length=300, verbose_name=_("title"))
+    url = models.URLField(verbose_name=_("url"))
+    url_text = models.CharField(max_length=130, verbose_name=_("link text"))
+
+    recommendation = models.CharField(max_length=10, choices=(
+        ('yes', _("yes")),
+        ('no', _("no")),
+        ('open', _("open")),
+    ))
+
+    class Meta:
+        abstract = True
+        verbose_name = _("voting recommendation")
+        verbose_name_plural = _("voting recommendations")
+
+    def __str__(self):
+        return self.title

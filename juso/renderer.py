@@ -37,6 +37,11 @@ def render_image(plugin, **kwargs):
 def render_block(plugin, **kwargs):
     return plugin.render_html()
 
+def render_voting_recommendation(plugin, **kwargs):
+    return render_to_string(
+        'plugins/voting_recommendation.html', {'plugin': plugin}
+    )
+
 
 def register_renderers(renderer, pages):
     renderer.register_string_renderer(pages.RichText, render_richtext)
@@ -46,6 +51,9 @@ def register_renderers(renderer, pages):
 
     if hasattr(pages, "NavigationPlugin"):
         renderer.register_string_renderer(pages.NavigationPlugin, render_navigation)
+
+    if hasattr(pages, "VotingRecommendationPlugin"):
+        renderer.register_string_renderer(pages.VotingRecommendationPlugin, render_voting_recommendation)
 
     renderer.register_string_renderer(pages.HTML, render_html)
 

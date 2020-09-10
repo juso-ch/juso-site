@@ -1,5 +1,5 @@
 # juso-site
-
+![CodeQL](https://github.com/juso-ch/juso-site/workflows/CodeQL/badge.svg)
 ## Features
 - Multisite support
 - PWA ready

@@ -107,22 +107,14 @@ class CandidateInline(OrderableAdmin, admin.StackedInline):
 
 @admin.register(CandidateList)
 class CandidateListAdmin(admin.ModelAdmin):
-    autocomplete_fields = [
-        'sections'
-    ]
+    autocomplete_fields = ["sections"]
 
-    list_display = [
-        'name'
-    ]
+    list_display = ["name"]
 
     list_filter = [
-        'sections',
+        "sections",
     ]
 
-    search_fields = [
-        'name'
-    ]
+    search_fields = ["name"]
 
-    inlines = [
-        CandidateInline
-    ]
+    inlines = [CandidateInline]

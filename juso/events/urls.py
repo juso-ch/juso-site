@@ -7,6 +7,7 @@ app_name = "events"
 
 urlpatterns = [
     path("", views.event_list, name="event-list"),
+    path("archive/", views.event_list, {"past": True}, name="event-archive"),
     path("subscribe/", webpush.subscribe_to_webpush, name="webpush-subscribe"),
     path("unsubscribe/", webpush.unsubscribe_from_webpush, name="webpush-unsubscribe"),
     path("is-subscribed/", webpush.is_subscribed, name="webpush-is-subscribed"),

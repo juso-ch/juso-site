@@ -7,26 +7,50 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('pages', '0081_auto_20200828_1724'),
+        ("pages", "0081_auto_20200828_1724"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='VotingRecommendationPlugin',
+            name="VotingRecommendationPlugin",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=300, verbose_name='title')),
-                ('url', models.URLField(verbose_name='url')),
-                ('url_text', models.CharField(max_length=130, verbose_name='link text')),
-                ('recommendation', models.CharField(choices=[('yes', 'yes'), ('no', 'no'), ('open', 'open')], max_length=10)),
-                ('region', models.CharField(max_length=255)),
-                ('ordering', models.IntegerField(default=0)),
-                ('parent', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='pages_votingrecommendationplugin_set', to='pages.page')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(max_length=300, verbose_name="title")),
+                ("url", models.URLField(verbose_name="url")),
+                (
+                    "url_text",
+                    models.CharField(max_length=130, verbose_name="link text"),
+                ),
+                (
+                    "recommendation",
+                    models.CharField(
+                        choices=[("yes", "yes"), ("no", "no"), ("open", "open")],
+                        max_length=10,
+                    ),
+                ),
+                ("region", models.CharField(max_length=255)),
+                ("ordering", models.IntegerField(default=0)),
+                (
+                    "parent",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="pages_votingrecommendationplugin_set",
+                        to="pages.page",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'voting recommendation',
-                'verbose_name_plural': 'voting recommendations',
-                'abstract': False,
+                "verbose_name": "voting recommendation",
+                "verbose_name_plural": "voting recommendations",
+                "abstract": False,
             },
         ),
     ]

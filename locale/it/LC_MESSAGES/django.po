@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-07 21:36+0200\n"
+"POT-Creation-Date: 2020-09-08 10:55+0200\n"
 "PO-Revision-Date: 2020-05-14 22:23+0200\n"
 "Language: it\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1126,6 +1126,10 @@ msgstr "Editare"
 #: templates/blog/plugins/default.html:52
 msgid "read more"
 msgstr "Leggi di più"
+
+#: templates/blog/plugins/simple_list.html:14
+msgid "vom"
+msgstr ""
 
 #: templates/events/default.html:36 templates/events/feature_top.html:36
 msgid "TBD"

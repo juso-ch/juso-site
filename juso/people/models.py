@@ -123,6 +123,9 @@ class Membership(models.Model):
         upload_to="people/",
         auto_add_fields=True,
         formats={"square": ["default", ("crop", (900, 900))],},
+        help_text=_(
+            "Only necessary if you want to use another picture for this position."
+        ),
     )
     order = models.IntegerField(default=0)
 
@@ -133,6 +136,7 @@ class Membership(models.Model):
 
     def __str__(self):
         return f"{self.person}@{self.team}"
+
 
 class CandidateList(models.Model):
     name = models.CharField(max_length=180)
@@ -146,9 +150,12 @@ class CandidateList(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+
 class Candidature(models.Model):
     person = models.ForeignKey(Person, models.CASCADE, verbose_name=_("person"))
-    candidate_list = models.ForeignKey(CandidateList, models.CASCADE, verbose_name=_("list"), related_name="candidates")
+    candidate_list = models.ForeignKey(
+        CandidateList, models.CASCADE, verbose_name=_("list"), related_name="candidates"
+    )
     image = ImageField(
         _("image"),
         blank=True,
@@ -156,6 +163,9 @@ class Candidature(models.Model):
         upload_to="people/",
         auto_add_fields=True,
         formats={"square": ["default", ("crop", (900, 900))],},
+        help_text=_(
+            "Only necessary if you want to use another picture for this candidature."
+        ),
     )
 
     list_number = models.CharField(max_length=10, blank=True)

@@ -40,10 +40,7 @@ class NameSpace(TranslationMixin):
 class Article(ContentMixin):
     TEMPLATES = get_template_list(
         "blog",
-        (
-            ("default", ("main",)),
-            ("feature_top", ("main", "sidebar", "feature")),
-        ),
+        (("default", ("main",)), ("feature_top", ("main", "sidebar", "feature")),),
     )
 
     namespace = models.ForeignKey(
@@ -227,8 +224,10 @@ class FormPlugin(form_plugins.FormPlugin, PluginBase):
 class FormEntryCounterPlugin(form_plugins.EntryCounter, PluginBase):
     pass
 
+
 class CandidaturePlugin(people_plugins.CandidatePlugin, PluginBase):
     pass
+
 
 plugins = [
     RichText,

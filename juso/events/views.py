@@ -16,10 +16,14 @@ from juso.sections.models import Section
 # Create your views here.
 
 
-def event_list_for_page(page, past_events=False):
+def event_list_for_page(page, past_events=False, all_events=False):
     qs = Event.objects.filter(language_code=page.language_code,)
-    if not past_events:
+    if all_events:
+        pass
+    elif not past_events:
         qs = qs.filter(end_date__gte=timezone.now())
+    else:
+        qs = qs.filter(end_date__lt=timezone.now()).order_by("-start_date")
 
     category = page.category
 
@@ -66,13 +70,13 @@ def location_detail(request, slug):
     )
 
 
-def event_list(request):
+def event_list(request, past=False):
     page = page_for_app_request(request)
     page.activate_language(request)
 
     ancestors = list(page.ancestors().reverse())
 
-    event_list = event_list_for_page(page)
+    event_list = event_list_for_page(page, past)
 
     if "section" in request.GET:
         event_list = event_list.filter(section__slug=request.GET["section"])
@@ -122,7 +126,7 @@ def event_detail(request, year, month, day, slug):
     page.activate_language(request)
 
     event = get_object_or_404(
-        event_list_for_page(page, past_events=True),
+        event_list_for_page(page, all_events=True),
         slug=slug,
         section=page.site.section,
         start_date__year=year,

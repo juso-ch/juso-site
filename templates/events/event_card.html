@@ -1,14 +1,22 @@
 {% load i18n %}
 <article class="{{event.category.slug}} card horizontal">
-  {% if event.get_header_image %}
   <a class="image" href="{{event.get_absolute_url}}">
+  {% if event.get_header_image %}
     <img src="{{event.get_header_image.card}}" alt="{{event.title}}"/>
-  </a>
+    {% else %}
+    <img src="{{page.get_header_image.card}}" alt="{{event.title}}"/>
   {% endif %}
+  </a>
   <div class="content">
-    <header class="header"><a href="{{event.get_absolute_url}}">
+    <header class="header">
+      <a href="{{event.get_absolute_url}}">
         {{event.title}}
       </a>
+      {% if not page.section == event.section %}
+      <h4>
+        {{event.section.name}}
+      </h4>
+      {% endif %}
     </header>
     <section>
       <div>

@@ -73,7 +73,7 @@ def page_detail(request, path=None):
 
 
 def error404(request, exception):
-    query = Article.objects.filter(slug=request.path.replace('/', ''))
+    query = Article.objects.filter(slug=request.path.replace("/", ""))
 
     if query.exists():
         return redirect(query[0].get_absolute_url())

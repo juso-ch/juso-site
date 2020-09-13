@@ -121,10 +121,7 @@ def ical_calendar(queryset):
 class Event(ContentMixin):
     TEMPLATES = get_template_list(
         "events",
-        (
-            ("default", ("main",),),
-            ("feature_top", ("main", "sidebar", "feature")),
-        ),
+        (("default", ("main",),), ("feature_top", ("main", "sidebar", "feature")),),
     )
 
     start_date = models.DateTimeField(_("start date"))
@@ -234,20 +231,21 @@ class Event(ContentMixin):
         )
 
     def ical_event(self):
-        start = self.start_date.strftime("%Y%m%dT%H%M00")
-        end = self.end_date.strftime("%Y%m%dT%H%M00")
-        timestamp = now().strftime("%Y%m%dT%H%M00")
-        return (
-            "BEGIN:VEVENT\r\n"
-            f"UID:{self.uuid}\r\n"
-            f"DTSTAMP:{timestamp}Z\r\n"
-            f"SUMMARY:{self.title}\r\n"
-            f"DTSTART:{start}Z\r\n"
-            f"DTEND:{end}Z\r\n"
-            f"DESCRIPTION:https://{self.section.site.host}{self.get_absolute_url()}\r\n"
-            f"LOCATION:{self.get_address()}\r\n"
-            "END:VEVENT\r\n"
-        )
+        with set_current_site(self.section.site):
+            start = self.start_date.strftime("%Y%m%dT%H%M00")
+            end = self.end_date.strftime("%Y%m%dT%H%M00")
+            timestamp = now().strftime("%Y%m%dT%H%M00")
+            return (
+                "BEGIN:VEVENT\r\n"
+                f"UID:{self.uuid}\r\n"
+                f"DTSTAMP:{timestamp}Z\r\n"
+                f"SUMMARY:{self.title}\r\n"
+                f"DTSTART:{start}Z\r\n"
+                f"DTEND:{end}Z\r\n"
+                f"DESCRIPTION:https://{self.section.site.host}{self.get_absolute_url()}\r\n"
+                f"LOCATION:{self.get_address()}\r\n"
+                "END:VEVENT\r\n"
+            )
 
     def get_absolute_url(self):
         try:
@@ -256,6 +254,7 @@ class Event(ContentMixin):
                 return reverse_app(
                     [f"{site.id}-events-{self.category}", f"{site.id}-events",],
                     "event-detail",
+                    urlconf=apps_urlconf(),
                     kwargs={
                         "slug": self.slug,
                         "day": self.start_date.day,

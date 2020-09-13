@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-07 21:36+0200\n"
+"POT-Creation-Date: 2020-09-08 10:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1110,6 +1110,10 @@ msgstr "Bearbeiten"
 #: templates/blog/plugins/default.html:52
 msgid "read more"
 msgstr "Mehr lesen"
+
+#: templates/blog/plugins/simple_list.html:14
+msgid "vom"
+msgstr ""
 
 #: templates/events/default.html:36 templates/events/feature_top.html:36
 msgid "TBD"

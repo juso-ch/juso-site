@@ -38,9 +38,13 @@ def render_team(plugin, **kwargs):
         plugin.template_key, {"team": plugin.team, "plugin": plugin,}
     )
 
+
 class CandidatePlugin(models.Model):
     candidate_list = models.ForeignKey(
-        CandidateList, models.CASCADE, verbose_name=_("candidate_list"), related_name="+"
+        CandidateList,
+        models.CASCADE,
+        verbose_name=_("candidate_list"),
+        related_name="+",
     )
 
     class Meta:
@@ -60,5 +64,6 @@ class CandidateListPluginInline(ContentEditorInline):
 
 def render_candidate_list(plugin, **kwargs):
     return render_to_string(
-        "teams/candidate_list.html", {"candidate_list": plugin.candidate_list, "plugin": plugin,}
+        "teams/candidate_list.html",
+        {"candidate_list": plugin.candidate_list, "plugin": plugin,},
     )

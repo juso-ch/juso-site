@@ -6,13 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0052_remove_team_columns'),
+        ("blog", "0052_remove_team_columns"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='article',
-            name='template_key',
-            field=models.CharField(choices=[('default', 'Standard'), ('feature_top', 'Feature_Top')], default='default', max_length=100, verbose_name='template'),
+            model_name="article",
+            name="template_key",
+            field=models.CharField(
+                choices=[("default", "Standard"), ("feature_top", "Feature_Top")],
+                default="default",
+                max_length=100,
+                verbose_name="template",
+            ),
         ),
     ]

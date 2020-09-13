@@ -96,11 +96,10 @@ class VotingRecommendation(models.Model):
     url = models.URLField(verbose_name=_("url"))
     url_text = models.CharField(max_length=130, verbose_name=_("link text"))
 
-    recommendation = models.CharField(max_length=10, choices=(
-        ('yes', _("yes")),
-        ('no', _("no")),
-        ('open', _("open")),
-    ))
+    recommendation = models.CharField(
+        max_length=10,
+        choices=(("yes", _("yes")), ("no", _("no")), ("open", _("open")),),
+    )
 
     class Meta:
         abstract = True

@@ -327,7 +327,7 @@ class DuplicateForm(forms.Form):
         if self.request.user.is_superuser:
             return
 
-        self.fields['site'].queryset = Site.objects.filter(
+        self.fields["site"].queryset = Site.objects.filter(
             section__in=self.request.user.section_set.all()
         )
 

@@ -1,3 +1,4 @@
+{% load i18n %}
 {% if plugin.title %}
 <h2>{{plugin.title}}</h2>
 {% endif %}
@@ -10,7 +11,7 @@
       {{article.title}}
       </span>
     </a>
-      vom
+    {% trans 'vom' %}
       <time datetime="{{article.publication_date|date:"c"}}">
         {{article.publication_date|date:"d.m.Y"}}
       </time>

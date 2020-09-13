@@ -23,17 +23,15 @@ class RegistrationForm(forms.Form):
     section = forms.ModelChoiceField(Section.objects.all())
     group = forms.ModelChoiceField(Group.objects.all(), required=False)
 
-
     def __init__(self, *args, **kwargs):
-        self.request = kwargs.pop('request')
+        self.request = kwargs.pop("request")
         super().__init__(*args, **kwargs)
 
         if self.request.user.is_superuser:
             return
 
-        self.fields['section'].queryset = self.request.user.section_set.all()
-        self.fields['group'].queryset = self.request.user.groups.all()
-
+        self.fields["section"].queryset = self.request.user.section_set.all()
+        self.fields["group"].queryset = self.request.user.groups.all()
 
 
 class CustomUserAdmin(UserAdmin):
@@ -51,9 +49,9 @@ class CustomUserAdmin(UserAdmin):
 
         if request.POST:
             if form.is_valid():
-                first_name = form.cleaned_data['first_name'].replace(' ', '')
-                last_name = form.cleaned_data['last_name'].replace(' ', '')
-                username = f'{first_name.lower()}.{last_name.lower()}'
+                first_name = form.cleaned_data["first_name"].replace(" ", "")
+                last_name = form.cleaned_data["last_name"].replace(" ", "")
+                username = f"{first_name.lower()}.{last_name.lower()}"
 
                 password = secrets.token_urlsafe(16)
 
@@ -61,14 +59,17 @@ class CustomUserAdmin(UserAdmin):
                     username = username + secrets.token_urlsafe(1)
 
                 user = User.objects.create_user(
-                    username, email=form.cleaned_data['email'], password=password,
-                    is_active=True, is_staff=True
+                    username,
+                    email=form.cleaned_data["email"],
+                    password=password,
+                    is_active=True,
+                    is_staff=True,
                 )
 
-                if form.cleaned_data['group']:
-                    user.groups.add(form.cleaned_data['group'])
+                if form.cleaned_data["group"]:
+                    user.groups.add(form.cleaned_data["group"])
 
-                section = form.cleaned_data['section']
+                section = form.cleaned_data["section"]
                 section.users.add(user)
                 section.save()
                 user.save()
@@ -90,19 +91,13 @@ Admin: https://{section.site.host}/admin/
                         password=password,
                         section=section,
                     ),
-                    'website@juso.ch',
+                    "website@juso.ch",
                     [user.email],
                 )
 
-                messages.success(
-                    request, _(f"Account for {username} created!")
-                )
+                messages.success(request, _(f"Account for {username} created!"))
 
-                return redirect(
-                    "admin:auth_user_changelist"
-                )
-
-
+                return redirect("admin:auth_user_changelist")
 
         context = dict(
             self.admin_site.each_context(request),
@@ -112,14 +107,14 @@ Admin: https://{section.site.host}/admin/
             opts=User._meta,
             model=User,
         )
-        return render(request, 'admin/register_new_user.html', context)
+        return render(request, "admin/register_new_user.html", context)
 
     def get_urls(self):
         urls = super().get_urls()
         return [
             path(
                 "register-new-user/",
-                user_passes_test(lambda user: user.is_staff, login_url='/admin/login/')(
+                user_passes_test(lambda user: user.is_staff, login_url="/admin/login/")(
                     self.admin_site.admin_view(self.register_new_user)
                 ),
                 name="auth_User_register_new_user",
@@ -141,7 +136,7 @@ class ButtonInline(ContentEditorInline):
 
 
 class VotingRecommendationInline(ContentEditorInline):
-    fields = ('title', 'recommendation', 'url', 'url_text', 'region', 'ordering')
+    fields = ("title", "recommendation", "url", "url_text", "region", "ordering")
 
 
 admin.site.unregister(User)

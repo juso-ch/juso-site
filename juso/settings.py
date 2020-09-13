@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "juso.forms.apps.FormsConfig",
     "juso.glossary.apps.GlossaryConfig",
     "juso.webpush.apps.WebpushConfig",
+    "juso.testimonials.apps.TestimonialsConfig",
     "juso.link_collections.apps.LinkCollectionsConfig",
     "django_celery_results",
 ]
@@ -344,5 +345,5 @@ HTML_SANITIZERS = {
     }
 }
 
-MAILTRAIN_URL = os.environ.get('MAILTRAIN_URL', '')
-MAILTRAIN_TOKEN = os.environ.get('MAILTRAIN_TOKEN', '')
+MAILTRAIN_URL = os.environ.get("MAILTRAIN_URL", "")
+MAILTRAIN_TOKEN = os.environ.get("MAILTRAIN_TOKEN", "")

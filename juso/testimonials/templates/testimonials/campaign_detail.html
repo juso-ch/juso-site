@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<div class="ui stackable grid">
+  <div class="ten wide column">
+<h1 class="ui primary header">
+  {{title|default:page.title}}
+</h1>
+  </div>
+  <div class="right floated six wide column">
+    <a href="{{create_url}}" class="ui big button primary right floated">Statement hochladen</a>
+  </div>
+</div>
+{% endblock %}
+{% block content %}
+<div class="ui basic segment">
+  <div class="">
+    <p>{{campaign.description}}</p>
+  </div>
+</div
+<div class="ui basic segment">
+  <div class="ui three stackable cards">
+    {% for testi in page_obj %}
+    <div class="card">
+      <div class="image">
+        <img class="ui image" src="{{testi.image.square}}">
+      </div>
+      <div class="content">
+        <div class="header">{{testi.first_name}} {{testi.last_name}}</div>
+        <div class="meta">{{testi.title}}</div>
+        <div class="description">{{testi.statement}}</div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% include 'pagination.html' with page=page_obj %}
+{% endblock %}

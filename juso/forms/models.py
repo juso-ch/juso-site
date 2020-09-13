@@ -1,3 +1,4 @@
+import uuid
 from content_editor.models import create_plugin_base
 from django.db import models
 from django.shortcuts import reverse
@@ -62,10 +63,15 @@ class Form(ContentMixin):
     webhook = models.URLField(_("webhook"), max_length=1200, blank=True)
     list_id = models.CharField(_("mailtrain list id"), max_length=30, blank=True)
     webhook_dict = models.JSONField(_("webhook dict"), blank=True, null=True)
+    linked_form = models.ForeignKey("self", models.SET_NULL, null=True, blank=True, related_name="linked_forms")
+    linking_field_slug = models.CharField(max_length=30, blank=True)
 
-    mailchimp_connection = models.ForeignKey(MailchimpConnection, models.SET_NULL, null=True, blank=True)
-    mailchimp_list_id = models.CharField(_("mailchimp list id"), max_length=100, blank=True)
-
+    mailchimp_connection = models.ForeignKey(
+        MailchimpConnection, models.SET_NULL, null=True, blank=True
+    )
+    mailchimp_list_id = models.CharField(
+        _("mailchimp list id"), max_length=100, blank=True
+    )
 
     def get_instance(self, request):
         return get_form_instance(self, request)
@@ -92,27 +98,27 @@ class Form(ContentMixin):
     def clear_entries(self):
         self.formentry_set.all().delete()
 
-    def entry_dict(self):
-        form_entries = []
-        fields = []
 
+    def get_fields(self):
+        fields = []
+        if self.linked_form:
+            fields += self.linked_form.get_fields()
         for field in FormField.objects.filter(parent=self):
             fields.append(field.slug)
+        return fields
+
+
+    def entry_dict(self):
+        form_entries = []
+
+        fields = self.get_fields()
 
         for entry in self.formentry_set.all():
-            values = {"ip": entry.ip, "created": entry.created}
-
-            for field in fields:
-                value = entry.fields.filter(field__slug=field)
-                if value.exists():
-                    values[field] = value[0].value
-                else:
-                    values[field] = ""
-
-            form_entries.append(values)
+            form_entries.append(entry.get_values())
 
         fields.append("ip")
         fields.append("created")
+        fields.append('sid')
 
         return form_entries, fields
 
@@ -159,6 +165,27 @@ class FormEntry(models.Model):
 
     created = models.DateTimeField(_("created"), auto_now_add=True)
     ip = models.GenericIPAddressField(_("ip address"), blank=True, null=True)
+    submission_id = models.UUIDField(default=uuid.uuid4)
+
+
+    def get_values(self):
+        values = dict()
+
+        if self.form.linked_form:
+            linked_sid = self.fields.filter(field__slug=self.form.linking_field_slug)
+
+            if linked_sid.exists():
+                other = self.form.linked_form.formentry_set.filter(submission_id=linked_sid[0].value)
+                if other.exists():
+                    values.update(other[0].get_values())
+
+        values.update({'ip': self.ip, 'created': self.created, 'sid': str(self.submission_id)})
+
+        for field in self.fields.all():
+            values[field.field.slug] = field.value
+
+        return values
+
 
     def __str__(self):
         return f"{self.form.title}: {self.created}"

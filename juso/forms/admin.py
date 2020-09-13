@@ -81,7 +81,7 @@ class FormAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
     )
 
     formfield_overrides = {
-        models.JSONField: {'widget': FlatJsonWidget},
+        models.JSONField: {"widget": FlatJsonWidget},
     }
 
     fieldsets = (
@@ -105,7 +105,7 @@ class FormAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
         (
             _("collection"),
             {
-                "classes": ('tabbed',),
+                "classes": ("tabbed",),
                 "fields": (
                     "email",
                     "list_id",
@@ -113,6 +113,16 @@ class FormAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
                     "mailchimp_connection",
                     "mailchimp_list_id",
                     "webhook_dict",
+                ),
+            },
+        ),
+        (
+            _("advanced"),
+            {
+                'classes': ("tabbed",),
+                'fields': (
+                    'linked_form',
+                    'linking_field_slug',
                 )
             }
         ),
@@ -153,20 +163,26 @@ class FormAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
         return (
             (
                 None,
-                {"fields": ("title", "slug", "section", "created_date", "edited_date",)},
+                {
+                    "fields": (
+                        "title",
+                        "slug",
+                        "section",
+                        "created_date",
+                        "edited_date",
+                    )
+                },
             ),
         )
 
-
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
-
 
         if "section" not in form.base_fields:
             return form
 
         section_field = form.base_fields["section"]
-        form.base_fields['list_id'].widget = forms.PasswordInput()
+        form.base_fields["list_id"].widget = forms.PasswordInput()
 
         sections = request.user.section_set.all()
         section_field.initial = sections[0]
@@ -191,7 +207,6 @@ class FormAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
             return False
         return True
 
-
     def export_form(self, request, query):
 
         form = query.first()
@@ -202,7 +217,9 @@ class FormAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
         entries, fields = form.entry_dict()
 
         response = HttpResponse(content_type="text/csv")
-        response["Content-Disposition"] = f'attachment; filename="{form.slug}-{timezone.now():%Y%m%d%H%M}.csv"'
+        response[
+            "Content-Disposition"
+        ] = f'attachment; filename="{form.slug}-{timezone.now():%Y%m%d%H%M}.csv"'
 
         writer = csv.DictWriter(response, fieldnames=fields)
         writer.writeheader()
@@ -218,29 +235,32 @@ class FormAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
 
         entries, fields = form.entry_dict()
 
-        response = HttpResponse(content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-        response["Content-Disposition"] = f'attachment; filename="{form.slug}-{timezone.now():%Y%m%d%H%M}.xlsx"'
+        response = HttpResponse(
+            content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        )
+        response[
+            "Content-Disposition"
+        ] = f'attachment; filename="{form.slug}-{timezone.now():%Y%m%d%H%M}.xlsx"'
 
-        workbook = xlsxwriter.Workbook(response, {'remove_timezone': True})
-        worksheet = workbook.add_worksheet('answers')
-        bold = workbook.add_format({'bold': True})
-        date_format = workbook.add_format({'num_format': 'yy-mm-dd hh:mm'})
+        workbook = xlsxwriter.Workbook(response, {"remove_timezone": True})
+        worksheet = workbook.add_worksheet("answers")
+        bold = workbook.add_format({"bold": True})
+        date_format = workbook.add_format({"num_format": "yy-mm-dd hh:mm"})
 
         for col, field in enumerate(fields):
             worksheet.write(0, col, field, bold)
 
         for row, entry in enumerate(entries):
             for col, field in enumerate(fields):
-                val = entry.get(field, '')
+                val = entry.get(field, "")
                 if isinstance(val, datetime):
-                    worksheet.write(row + 1, col, entry.get(field, ''), date_format)
+                    worksheet.write(row + 1, col, entry.get(field, ""), date_format)
                 else:
-                    worksheet.write(row + 1, col, entry.get(field, ''))
+                    worksheet.write(row + 1, col, entry.get(field, ""))
 
         workbook.close()
 
         return response
-
 
     def clear_form(self, request, query):
         form = query.first()
@@ -255,17 +275,11 @@ class FormAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
 @admin.register(MailchimpConnection)
 class MailchimpConnectionAdmin(admin.ModelAdmin):
 
-    list_display = (
-        "name", "section", "api_server"
-    )
+    list_display = ("name", "section", "api_server")
 
-    search_fields = (
-        "name", "section"
-    )
+    search_fields = ("name", "section")
 
-    autocomplete_fields = (
-        "section",
-    )
+    autocomplete_fields = ("section",)
 
     def get_queryset(self, request):
         if request.user.is_superuser:

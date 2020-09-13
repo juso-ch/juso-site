@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('forms', '0034_form_webhook_dict'),
+        ("forms", "0034_form_webhook_dict"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='form',
-            name='webhook_dict',
-            field=models.JSONField(default=dict, verbose_name='webhook dict'),
+            model_name="form",
+            name="webhook_dict",
+            field=models.JSONField(default=dict, verbose_name="webhook dict"),
         ),
     ]

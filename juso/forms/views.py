@@ -27,7 +27,7 @@ def form_view(request, pk):
 
 
 def mailtrain_subscribe_url(form):
-    return f'{settings.MAILTRAIN_URL}/api/subscribe/{form.list_id}/?access_token={settings.MAILTRAIN_TOKEN}'
+    return f"{settings.MAILTRAIN_URL}/api/subscribe/{form.list_id}/?access_token={settings.MAILTRAIN_TOKEN}"
 
 
 def process_form(request, form):
@@ -44,7 +44,7 @@ def process_form(request, form):
                 field_entry.save()
 
         data = form.form.webhook_dict.copy() if form.form.webhook_dict else dict()
-        data.update(form.cleaned_data)
+        data.update(entry.get_values())
 
         if form.form.webhook:
             requests.post(form.form.webhook, data=data)
@@ -54,30 +54,25 @@ def process_form(request, form):
 
         if form.form.mailchimp_connection:
             connection = form.form.mailchimp_connection
-            email = data.pop('email', '').lower().encode('utf-8')
+            email = data.pop("email", "").lower().encode("utf-8")
             email_hash = hashlib.md5(email).hexdigest()
 
             mailchimp_data = {
-                'email_address': email,
-                'status_if_new': 'subscribed',
-                'status': 'subscribed',
-                'ip_signup': entry.ip,
-                'merge_fields': data,
-                'tags': (form.form.slug, )
+                "email_address": email,
+                "status_if_new": "subscribed",
+                "status": "subscribed",
+                "ip_signup": entry.ip,
+                "merge_fields": data,
+                "tags": (form.form.slug,),
             }
 
-            headers = {'Content-Type': 'application/json'}
-            auth = ('key', connection.api_key)
+            headers = {"Content-Type": "application/json"}
+            auth = ("key", connection.api_key)
 
-            url = f'https://{connection.api_server}.api.mailchimp.com/3.0/lists/{form.form.mailchimp_list_id}/members/{email_hash}'
+            url = f"https://{connection.api_server}.api.mailchimp.com/3.0/lists/{form.form.mailchimp_list_id}/members/{email_hash}"
 
-            r = requests.put(
-                url,
-                json=mailchimp_data,
-                headers=headers,
-                auth=auth,
-            )
-
+            r = requests.put(url, json=mailchimp_data, headers=headers, auth=auth,)
+            data['email'] = email.decode()
 
         if form.form.email:
             message = (
@@ -87,10 +82,10 @@ def process_form(request, form):
                 f"\nIP: {entry.ip}"
                 "\n--------------------------"
             )
-            for field in form.form.forms_formfield_set.all():
-                message += f"\n{field.name}: {form.cleaned_data[field.slug]}"
+            for field in form.form.get_fields():
+                message += f"\n{field}: {data.get(field, '')}"
             message += "\n"
-            emails = [email.strip() for email in form.form.email.split(',')]
+            emails = [email.strip() for email in form.form.email.split(",")]
             send_mail(
                 f"Form Entry: {form.form.title}",
                 message,
@@ -99,13 +94,19 @@ def process_form(request, form):
                 False,
             )
 
+        data.update({
+            'ip': entry.ip,
+            'created': entry.created,
+            'sid': entry.submission_id,
+        })
+
         if form.form.success_redirect:
             response = HttpResponse(status=201)
-            response["URL"] = form.form.success_redirect
+            response["URL"] = form.form.success_redirect.format(**data)
             return response
 
         if form.form.success_message:
-            return HttpResponse(form.form.success_message, status=202)
+            return HttpResponse(form.form.success_message.format(**data), status=202)
 
         form = form.form.get_instance(None)
 

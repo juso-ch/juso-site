@@ -6,18 +6,18 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('forms', '0039_auto_20200825_0931'),
+        ("forms", "0039_auto_20200825_0931"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='mailchimpconnection',
-            old_name='mailchimp_api_key',
-            new_name='api_key',
+            model_name="mailchimpconnection",
+            old_name="mailchimp_api_key",
+            new_name="api_key",
         ),
         migrations.RenameField(
-            model_name='mailchimpconnection',
-            old_name='mailchimp_api_server',
-            new_name='api_server',
+            model_name="mailchimpconnection",
+            old_name="mailchimp_api_server",
+            new_name="api_server",
         ),
     ]

@@ -7,34 +7,65 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('sections', '0014_auto_20200712_1711'),
-        ('forms', '0038_auto_20200823_1125'),
+        ("sections", "0014_auto_20200712_1711"),
+        ("forms", "0038_auto_20200823_1125"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='form',
-            name='mailchimp_list_id',
-            field=models.CharField(blank=True, max_length=100, verbose_name='mailchimp list id'),
+            model_name="form",
+            name="mailchimp_list_id",
+            field=models.CharField(
+                blank=True, max_length=100, verbose_name="mailchimp list id"
+            ),
         ),
         migrations.AlterField(
-            model_name='form',
-            name='list_id',
-            field=models.CharField(blank=True, max_length=30, verbose_name='mailtrain list id'),
+            model_name="form",
+            name="list_id",
+            field=models.CharField(
+                blank=True, max_length=30, verbose_name="mailtrain list id"
+            ),
         ),
         migrations.CreateModel(
-            name='MailchimpConnection',
+            name="MailchimpConnection",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=30, verbose_name='name')),
-                ('mailchimp_api_key', models.CharField(max_length=180, verbose_name='mailchimp api key')),
-                ('mailchimp_api_server', models.CharField(max_length=20, verbose_name='mailchimp api server')),
-                ('section', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='sections.section')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=30, verbose_name="name")),
+                (
+                    "mailchimp_api_key",
+                    models.CharField(max_length=180, verbose_name="mailchimp api key"),
+                ),
+                (
+                    "mailchimp_api_server",
+                    models.CharField(
+                        max_length=20, verbose_name="mailchimp api server"
+                    ),
+                ),
+                (
+                    "section",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="sections.section",
+                    ),
+                ),
             ],
         ),
         migrations.AddField(
-            model_name='form',
-            name='mailchimp_connection',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='forms.mailchimpconnection'),
+            model_name="form",
+            name="mailchimp_connection",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to="forms.mailchimpconnection",
+            ),
         ),
     ]

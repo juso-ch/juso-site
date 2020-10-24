@@ -1,5 +1,5 @@
 {% load menus tools %}
-{% for main, children in menu|group_by_tree %}
+{% for main in menu|order_by_position %}
 <a href="{{main.get_absolute_url}}">
 {{main.title|nbsp}}
 </a>

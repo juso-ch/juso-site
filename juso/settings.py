@@ -74,6 +74,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+
 ROOT_URLCONF = "juso.urls"
 
 TEMPLATES = [
@@ -215,6 +216,11 @@ def superuser_callback(user):
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 DEBUG = int(os.environ.get("DEBUG", default=0))
 
+if DEBUG:
+    MIDDLEWARE.remove("feincms3_sites.middleware.redirect_to_site_middleware")
+    MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
+    INSTALLED_APPS.append("debug_toolbar")
+
 LANGUAGE_COOKIE_SECURE = not DEBUG
 LANGUAGE_COOKIE_SAMESITE = "strict"
 
@@ -263,11 +269,21 @@ CACHES = {
     }
 }
 
-EMAIL_HOST = "smtp"
-EMAIL_PORT = 25
 
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "webmaster@localhost")
 SERVER_EMAIL = os.environ.get("SERVER_EMAIL", "root@localhost")
+
+EMAIL_HOST = os.environ.get('SMTP_HOST', 'smtp')
+EMAIL_PORT = int(os.environ.get('SMTP_PORT', '25'))
+
+EMAIL_USE_TLS = int(os.environ.get('SMTP_TLS', '0'))
+EMAIL_USE_SSL = int(os.environ.get('SMTP_SSL', '0'))
+
+EMAIL_HOST_USER = os.environ.get('SMTP_USER', 'user')
+EMAIL_HOST_PASSWORD = os.environ.get('SMTP_PASSWORD', 'pw')
+
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", 'webmaster@localhost')
+SERVER_EMAIL = os.environ.get("SERVER_EMAIL", 'root@localhost')
 
 
 CELERY_BROKER_URL = "redis://redis:6379"
@@ -286,8 +302,11 @@ from html_sanitizer.sanitizer import (
     italic_span_to_em,
     tag_replacer,
     target_blank_noopener,
-    sanitize_href,
 )
+
+
+def sanitize_href(url):
+    return url
 
 
 def is_mergeable(e1, e2):
@@ -322,7 +341,7 @@ HTML_SANITIZERS = {
             "caption",
         },
         "attributes": {
-            "a": ("href", "name", "target", "title", "id", "rel"),
+            "a": ("href", "name", "target", "title", "id", "rel", "class"),
             "table": ("summary"),
         },
         "empty": {"hr", "a", "br"},
@@ -347,3 +366,16 @@ HTML_SANITIZERS = {
 
 MAILTRAIN_URL = os.environ.get("MAILTRAIN_URL", "")
 MAILTRAIN_TOKEN = os.environ.get("MAILTRAIN_TOKEN", "")
+
+def toolbar_callback(*args):
+    return DEBUG
+
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
+
+
+DEBUG_TOOLBAR_CONFIG = {
+    'SHOW_TOOLBAR_CALLBACK': 'juso.settings.toolbar_callback',
+}

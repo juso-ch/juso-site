@@ -72,6 +72,7 @@ class Form(ContentMixin):
     mailchimp_list_id = models.CharField(
         _("mailchimp list id"), max_length=100, blank=True
     )
+    tags = models.CharField(_("tags"), max_length=30, blank=True)
 
     def get_instance(self, request):
         return get_form_instance(self, request)
@@ -114,7 +115,7 @@ class Form(ContentMixin):
         fields = self.get_fields()
 
         for entry in self.formentry_set.all():
-            form_entries.append(entry.get_values())
+            form_entries.append(entry.get_values(fields))
 
         fields.append("ip")
         fields.append("created")
@@ -168,8 +169,11 @@ class FormEntry(models.Model):
     submission_id = models.UUIDField(default=uuid.uuid4)
 
 
-    def get_values(self):
+    def get_values(self, fields, json_safe=False):
         values = dict()
+
+        for field in fields:
+            values[field] = ''
 
         if self.form.linked_form:
             linked_sid = self.fields.filter(field__slug=self.form.linking_field_slug)
@@ -177,9 +181,13 @@ class FormEntry(models.Model):
             if linked_sid.exists():
                 other = self.form.linked_form.formentry_set.filter(submission_id=linked_sid[0].value)
                 if other.exists():
-                    values.update(other[0].get_values())
+                    values.update(other[0].get_values(fields, json_safe))
 
-        values.update({'ip': self.ip, 'created': self.created, 'sid': str(self.submission_id)})
+        values.update({
+            'ip': self.ip,
+            'created': str(self.created) if json_safe else self.created,
+            'sid': str(self.submission_id)
+        })
 
         for field in self.fields.all():
             values[field.field.slug] = field.value

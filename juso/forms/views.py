@@ -44,7 +44,7 @@ def process_form(request, form):
                 field_entry.save()
 
         data = form.form.webhook_dict.copy() if form.form.webhook_dict else dict()
-        data.update(entry.get_values())
+        data.update(entry.get_values(form.form.get_fields(), json_safe=True))
 
         if form.form.webhook:
             requests.post(form.form.webhook, data=data)
@@ -63,7 +63,7 @@ def process_form(request, form):
                 "status": "subscribed",
                 "ip_signup": entry.ip,
                 "merge_fields": data,
-                "tags": (form.form.slug,),
+                "tags": [x.strip() for x in form.form.tags.split(',')],
             }
 
             headers = {"Content-Type": "application/json"}
@@ -97,7 +97,7 @@ def process_form(request, form):
         data.update({
             'ip': entry.ip,
             'created': entry.created,
-            'sid': entry.submission_id,
+            'sid': str(entry.submission_id),
         })
 
         if form.form.success_redirect:
@@ -106,7 +106,8 @@ def process_form(request, form):
             return response
 
         if form.form.success_message:
-            return HttpResponse(form.form.success_message.format(**data), status=202)
+            message = form.form.success_message.replace('%7B', '{').replace('%7D', '}').format(**data).replace('{', '%7B').replace('}', '%7D')
+            return HttpResponse(message, status=202)
 
         form = form.form.get_instance(None)
 

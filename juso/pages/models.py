@@ -323,6 +323,7 @@ fonts/klima-bold-italic-web.woff2:font""",
         indexes = [
             models.Index(fields=["path", "site_id", "language_code", "is_active",]),
             models.Index(fields=["is_landing_page", "site_id", "language_code",]),
+            models.Index(fields=["is_active", "menu", "language_code"]),
         ]
 
         constraints = [

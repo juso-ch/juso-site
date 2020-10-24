@@ -118,6 +118,7 @@ class ArticleAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
         blog_plugins.ArticlePluginInline.create(models.ArticlePlugin),
         event_plugins.EventPluginInline.create(models.EventPlugin),
         form_plugins.FormPluginInline.create(models.FormPlugin),
+        form_plugins.EntryCounterInline.create(models.FormEntryCounterPlugin),
     )
 
     plugins = models.plugins

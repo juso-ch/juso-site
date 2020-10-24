@@ -28,6 +28,7 @@ def button_menu(language_code, top_page):
 @register.simple_tag
 def all_menus(language_code, top_page):
     menus = defaultdict(list)
+
     pages = (
         top_page.descendants()
         .with_tree_fields()
@@ -43,7 +44,6 @@ def all_menus(language_code, top_page):
 
 @register.filter
 def group_by_tree(iterable):
-
     iterable = sorted(iterable, key=lambda p: p.position)
 
     for element in iterable:

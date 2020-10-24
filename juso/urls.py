@@ -20,6 +20,7 @@ from django.contrib.auth import views as auth_views
 from django.http import HttpResponse
 from django.urls import include, path
 
+import debug_toolbar
 from juso import views
 
 
@@ -33,6 +34,7 @@ Disallow: /"""
 
 
 urlpatterns = [
+    path("__debug__/", include(debug_toolbar.urls)),
     path(
         "admin/password_reset/",
         auth_views.PasswordResetView.as_view(),

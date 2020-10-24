@@ -1,10 +1,11 @@
-{% load translations %}
-{% translations page obj as translations %}
+{% load translations cache %}
 <div class="translations">
-{% for translation in translations %}
-<a href="{{translation.1.get_absolute_url}}">{{translation.0}}</a>
-{% if not forloop.last %}
-<span>/</span>
-{% endif %}
-{% endfor %}
+{% for language_code, uri in translations %}
+{% if language_code != page.language_code %}
+  <a href="{{uri}}">{{language_code}}</a>
+  {% if not forloop.last %}
+  <span>/</span>
+  {% endif %}
+  {% endif %}
+  {% endfor %}
 </div>

@@ -1,8 +1,9 @@
 from django.conf import settings
-from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
+from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector, SearchHeadline
 from django.contrib.sitemaps import Sitemap
 from django.contrib.sitemaps.views import sitemap
 from django.contrib.syndication.views import Feed
+from django.views.decorators.csrf import ensure_csrf_cookie
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
@@ -29,7 +30,7 @@ def articles_for_page(page, qs=None, allow_future=False):
     if page.blog_namespace:
         qs = qs.filter(namespace=page.blog_namespace)
 
-    if page.sections.exists():
+    if page.sections.count():
         qs = qs.filter(section__in=page.sections.all())
     elif hasattr(page.site, "section"):
         qs = qs.filter(section=page.site.section)
@@ -40,6 +41,7 @@ def articles_for_page(page, qs=None, allow_future=False):
         return qs.filter(publication_date__lte=timezone.now())
 
 
+@ensure_csrf_cookie
 def article_list(request):
     page = page_for_app_request(request)
     page.activate_language(request)
@@ -60,13 +62,24 @@ def article_list(request):
             + SearchVector("category__name", weight="A")
             + SearchVector("blog_richtext_set__text", weight="A")
             + SearchVector("blog_glossaryrichtext_set__text", weight="A")
+            + SearchVector("author__first_name", weight="B")
+            + SearchVector("author__last_name", weight="B")
         )
         query = consume(request.GET["search"])
         q = request.GET["search"]
         article_list = (
-            article_list.annotate(rank=SearchRank(vector, query))
+            article_list.annotate(
+                rank=SearchRank(vector, query, cover_density=True),
+                headline=SearchHeadline(
+                    'blog_richtext_set__text',
+                    query,
+                    max_words=25,
+                    min_words=20,
+                    max_fragments=2,
+                )
+            )
             .filter(rank__gt=0)
-            .order_by("-publication_date__year", "-rank")
+            .order_by("-rank")
             .distinct()
         )
 
@@ -89,6 +102,7 @@ def article_list(request):
     )
 
 
+@ensure_csrf_cookie
 def category_list(request, slug):
     page = page_for_app_request(request)
     page.activate_language(request)
@@ -115,6 +129,7 @@ def category_list(request, slug):
     )
 
 
+@ensure_csrf_cookie
 def article_detail(request, slug):
     page = page_for_app_request(request)
     page.activate_language(request)

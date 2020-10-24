@@ -45,7 +45,11 @@
     </header>
     {% endif %}
     <div class="content">
+      {% if q %}
+      {{article.headline|safe}}
+      {% else %}
       {{article.tagline|truncatewords_html:"40"|safe}}
+      {% endif %}
     </div>
     <div class="extra content">
       <a href="{{article.get_absolute_url}}" class="button">

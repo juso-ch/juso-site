@@ -10,7 +10,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    {% translation_head page obj as translations %}
+    {% load_translations page obj as translations %}
     {% for language, uri in translations %}
     <link rel="alternate" hreflang="{{language}}"
                           href="{{uri}}" />

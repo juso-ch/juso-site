@@ -3,6 +3,7 @@ import json
 import bleach
 from content_editor.models import create_plugin_base
 from django.db import models
+from django.core.cache import cache
 from django.urls import NoReverseMatch
 from django.utils.translation import gettext_lazy as _
 from feincms3 import plugins
@@ -40,7 +41,10 @@ class NameSpace(TranslationMixin):
 class Article(ContentMixin):
     TEMPLATES = get_template_list(
         "blog",
-        (("default", ("main",)), ("feature_top", ("main", "sidebar", "feature")),),
+        (
+            ("default", ("main",)),
+            ("feature_top", ("main", "sidebar", "feature")),
+        ),
     )
 
     namespace = models.ForeignKey(
@@ -53,49 +57,54 @@ class Article(ContentMixin):
 
     @property
     def tagline(self):
-        if RichText.objects.filter(parent=self).exists():
-            return bleach.clean(
-                RichText.objects.filter(parent=self)[0].text, strip=True, tags=[],
-            )
-        if self.meta_description:
-            return self.meta_description
-        return ""
+        def get_tagline():
+            if RichText.objects.filter(parent=self).exists():
+                return bleach.clean(
+                    RichText.objects.filter(parent=self)[0].text, strip=True, tags=[],
+                )
+            if self.meta_description:
+                return self.meta_description
+            return ""
+        return cache.get_or_set(f'article-tagline-{self.pk}', get_tagline)
 
     def get_absolute_url(self):
-        try:
-            site = current_site()
-            if site == self.section.site:
-                return reverse_app(
-                    (
-                        f"{site.id}-blog-{self.namespace.name}-{self.category}",
-                        f"{site.id}-blog-{self.namespace.name}",
-                        f"{site.id}-blog-{self.category}",
-                        f"{site.id}-blog",
-                    ),
-                    "article-detail",
-                    kwargs={"slug": self.slug},
-                    languages=[self.language_code],
-                )
-            with set_current_site(self.section.site):
-                site = self.section.site
-                return (
-                    "//"
-                    + self.section.site.host
-                    + reverse_app(
-                        [
-                            f'{site.id}-blog-{self.namespace.name}-{self.category or ""}',
+        def _get_absolute_url():
+            try:
+                site = current_site()
+                if site == self.section.site:
+                    return reverse_app(
+                        (
+                            f"{site.id}-blog-{self.namespace.name}-{self.category}",
                             f"{site.id}-blog-{self.namespace.name}",
-                            f'{site.id}-blog-{self.category or ""}',
+                            f"{site.id}-blog-{self.category}",
                             f"{site.id}-blog",
-                        ],
+                        ),
                         "article-detail",
-                        urlconf=apps_urlconf(),
                         kwargs={"slug": self.slug},
                         languages=[self.language_code],
                     )
-                )
-        except NoReverseMatch:
-            return "#"
+                with set_current_site(self.section.site):
+                    site = self.section.site
+                    return (
+                        "//"
+                        + self.section.site.host
+                        + reverse_app(
+                            [
+                                f'{site.id}-blog-{self.namespace.name}-{self.category or ""}',
+                                f"{site.id}-blog-{self.namespace.name}",
+                                f'{site.id}-blog-{self.category or ""}',
+                                f"{site.id}-blog",
+                            ],
+                            "article-detail",
+                            urlconf=apps_urlconf(),
+                            kwargs={"slug": self.slug},
+                            languages=[self.language_code],
+                        )
+                    )
+            except NoReverseMatch:
+                return "#"
+        return cache.get_or_set(f'{current_site().id}article-absolute-url-{self.pk}', _get_absolute_url)
+
 
     def webpush_data(self, page):
         if favicon := page.top_page().favicon:

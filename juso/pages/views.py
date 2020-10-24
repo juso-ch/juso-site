@@ -4,6 +4,7 @@ from django.contrib.sitemaps.views import sitemap as sitemap_view
 from django.shortcuts import get_list_or_404, get_object_or_404, redirect, render
 from django.views.decorators.cache import cache_page
 from django.views.decorators.csrf import ensure_csrf_cookie
+from django.http.response import Http404
 from feincms3.regions import Regions
 from feincms3_meta.utils import meta_tags
 from feincms3_sites.middleware import current_site
@@ -23,7 +24,7 @@ def get_landing_page(request):
         is_landing_page=True, language_code=request.LANGUAGE_CODE
     )
 
-    if queryset.exists():
+    if bool(queryset):
         return queryset[0]
 
     return get_list_or_404(Page.objects.active(), is_landing_page=True,)[0]
@@ -33,21 +34,22 @@ def get_landing_page(request):
 def page_detail(request, path=None):
     page = Page.objects.active().filter(path=f"/{path}/" if path else "/")
 
-    if path is None and not page.exists():
+    if path is None and not bool(page):
         return redirect(get_landing_page(request).path)
 
-    if not page.exists():
+    if not bool(page):
         page = Page.objects.active().filter(path=f"/{request.LANGUAGE_CODE}/{path}/")
-        if page.exists():
+        if bool(page):
             return redirect(page[0].path)
 
         for language_code, _ in settings.LANGUAGES:
             page = Page.objects.active().filter(path=f"/{language_code}/{path}/")
 
-            if page.exists():
+            if bool(page):
                 return redirect(page[0].path)
+        raise Http404()
 
-    page = get_object_or_404(page)
+    page = page[0]
 
     if page.redirect_to_url or page.redirect_to_page:
         return redirect(page.redirect_to_url or page.redirect_to_page)
@@ -73,12 +75,15 @@ def page_detail(request, path=None):
 
 
 def error404(request, exception):
-    query = Article.objects.filter(slug=request.path.replace("/", ""))
+    query = Article.objects.filter(slug=[x for x in request.path.split('/') if x][-1])
 
-    if query.exists():
+    if bool(query):
         return redirect(query[0].get_absolute_url())
 
-    page = get_landing_page(request)
+    try:
+        page = get_landing_page(request)
+    except Http404:
+        page = Page.objects.first()
     page.activate_language(request)
 
     return render(
@@ -94,7 +99,11 @@ def error404(request, exception):
 
 
 def error500(request):
-    page = get_landing_page(request)
+    try:
+        page = get_landing_page(request)
+    except Http404:
+        page = Page.objects.first()
+    page.activate_language(request)
     page.activate_language(request)
     return render(
         request,

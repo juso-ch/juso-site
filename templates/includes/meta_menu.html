@@ -1,4 +1,5 @@
-{% load menus i18n tools %}
+{% load menus i18n tools cache %}
+{% cache 1200 meta_menu top.pk %}
 {% for main, children in menu|group_by_tree %}
 {% if main.in_meta %}
 <div class="meta-menu">
@@ -19,7 +20,7 @@
 <div class="meta-menu">
   <h4>{% trans "Quicklinks" %}</h4>
   <div>
-    {% for main, children in quicklinks|group_by_tree %}
+    {% for main in quicklinks|order_by_position %}
     <a href="{{main.get_absolute_url}}">
       {{main.title|nbsp}}
     </a>
@@ -27,3 +28,4 @@
   </div>
 </div>
 {% endif %}
+{% endcache %}

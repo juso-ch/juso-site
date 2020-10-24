@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib.sitemaps import Sitemap
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404, render
+from django.views.decorators.csrf import ensure_csrf_cookie
 from django.utils import timezone
 from feincms3.apps import page_for_app_request
 from feincms3.regions import Regions
@@ -30,7 +31,7 @@ def event_list_for_page(page, past_events=False, all_events=False):
     if category:
         qs = qs.filter(category=page.category)
 
-    if page.sections.exists():
+    if page.sections.count() > 0:
         qs = qs.filter(section__in=page.sections.all())
 
     elif hasattr(page.site, "section"):
@@ -38,7 +39,7 @@ def event_list_for_page(page, past_events=False, all_events=False):
 
     return qs
 
-
+@ensure_csrf_cookie
 def location_detail(request, slug):
     page = page_for_app_request(request)
     page.activate_language(request)
@@ -70,6 +71,7 @@ def location_detail(request, slug):
     )
 
 
+@ensure_csrf_cookie
 def event_list(request, past=False):
     page = page_for_app_request(request)
     page.activate_language(request)
@@ -121,6 +123,7 @@ def event_list_ical(request):
     return response
 
 
+@ensure_csrf_cookie
 def event_detail(request, year, month, day, slug):
     page = page_for_app_request(request)
     page.activate_language(request)
@@ -157,6 +160,7 @@ def event_detail(request, year, month, day, slug):
     )
 
 
+@ensure_csrf_cookie
 def event_list_for_section(request, pk):
     page = page_for_app_request(request)
     page.activate_language(request)

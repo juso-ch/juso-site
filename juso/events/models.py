@@ -6,6 +6,7 @@ import bleach
 import pytz
 from content_editor.models import Region, create_plugin_base
 from django.conf import settings
+from django.core.cache import cache
 from django.db import models
 from django.urls import NoReverseMatch
 from django.utils import timezone
@@ -139,13 +140,15 @@ class Event(ContentMixin):
 
     @property
     def tagline(self):
-        if RichText.objects.filter(parent=self).exists():
-            return bleach.clean(
-                RichText.objects.filter(parent=self)[0].text, strip=True, tags=[],
-            )
-        if self.meta_description:
-            return self.meta_description
-        return ""
+        def get_tagline():
+            if RichText.objects.filter(parent=self).exists():
+                return bleach.clean(
+                    RichText.objects.filter(parent=self)[0].text, strip=True, tags=[],
+                )
+            if self.meta_description:
+                return self.meta_description
+            return ""
+        return cache.get_or_set(f'event-tagline-{self.pk}', get_tagline)
 
     class Meta:
         verbose_name = _("event")
@@ -248,30 +251,12 @@ class Event(ContentMixin):
             )
 
     def get_absolute_url(self):
-        try:
-            site = current_site()
-            if site == self.section.site:
-                return reverse_app(
-                    [f"{site.id}-events-{self.category}", f"{site.id}-events",],
-                    "event-detail",
-                    urlconf=apps_urlconf(),
-                    kwargs={
-                        "slug": self.slug,
-                        "day": self.start_date.day,
-                        "month": self.start_date.month,
-                        "year": self.start_date.year,
-                    },
-                    languages=[self.language_code],
-                )
-            with set_current_site(self.section.site):
-                return (
-                    "//"
-                    + self.section.site.host
-                    + reverse_app(
-                        [
-                            f"{self.section.site.id}-events-{self.category}",
-                            f"{self.section.site.id}-events",
-                        ],
+        def _get_absolute_url():
+            try:
+                site = current_site()
+                if site == self.section.site:
+                    return reverse_app(
+                        [f"{site.id}-events-{self.category}", f"{site.id}-events",],
                         "event-detail",
                         urlconf=apps_urlconf(),
                         kwargs={
@@ -282,9 +267,29 @@ class Event(ContentMixin):
                         },
                         languages=[self.language_code],
                     )
-                )
-        except NoReverseMatch:
-            return "#"
+                with set_current_site(self.section.site):
+                    return (
+                        "//"
+                        + self.section.site.host
+                        + reverse_app(
+                            [
+                                f"{self.section.site.id}-events-{self.category}",
+                                f"{self.section.site.id}-events",
+                            ],
+                            "event-detail",
+                            urlconf=apps_urlconf(),
+                            kwargs={
+                                "slug": self.slug,
+                                "day": self.start_date.day,
+                                "month": self.start_date.month,
+                                "year": self.start_date.year,
+                            },
+                            languages=[self.language_code],
+                        )
+                    )
+            except NoReverseMatch:
+                return "#"
+        return cache.get_or_set(f'{current_site().id}:event-absolute-url-{self.pk}', _get_absolute_url)
 
 
 PluginBase = create_plugin_base(Event)

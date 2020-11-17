@@ -250,7 +250,10 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={"ordering": ["ordering"], "abstract": False,},
+            options={
+                "ordering": ["ordering"],
+                "abstract": False,
+            },
         ),
         migrations.CreateModel(
             name="FormEntryValue",

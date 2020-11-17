@@ -15,6 +15,7 @@ class Migration(migrations.Migration):
             options={"verbose_name": "page", "verbose_name_plural": "pages"},
         ),
         migrations.RemoveIndex(
-            model_name="page", name="pages_page_parent__9df5fb_idx",
+            model_name="page",
+            name="pages_page_parent__9df5fb_idx",
         ),
     ]

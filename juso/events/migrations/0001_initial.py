@@ -187,7 +187,10 @@ class Migration(migrations.Migration):
                 ("region", models.CharField(max_length=255)),
                 ("ordering", models.IntegerField(default=0)),
             ],
-            options={"verbose_name": "external content", "abstract": False,},
+            options={
+                "verbose_name": "external content",
+                "abstract": False,
+            },
         ),
         migrations.CreateModel(
             name="HTML",
@@ -367,7 +370,9 @@ class Migration(migrations.Migration):
                 ("lng", models.FloatField()),
                 ("lat", models.FloatField()),
             ],
-            options={"abstract": False,},
+            options={
+                "abstract": False,
+            },
         ),
         migrations.CreateModel(
             name="LocationImage",
@@ -455,7 +460,9 @@ class Migration(migrations.Migration):
                 ("name", models.CharField(max_length=200)),
                 ("slug", models.SlugField()),
             ],
-            options={"abstract": False,},
+            options={
+                "abstract": False,
+            },
         ),
         migrations.CreateModel(
             name="RichText",

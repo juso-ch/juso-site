@@ -11,7 +11,9 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RenameField(
-            model_name="eventplugin", old_name="all_articles", new_name="all_events",
+            model_name="eventplugin",
+            old_name="all_articles",
+            new_name="all_events",
         ),
         migrations.RenameField(
             model_name="eventplugin",

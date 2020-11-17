@@ -12,7 +12,17 @@ class GlossaryContentInline(RichTextInline):
     autocomplete_fields = ["entries"]
 
     fieldsets = (
-        (None, {"fields": ["text", "entries", "region", "ordering",]}),
+        (
+            None,
+            {
+                "fields": [
+                    "text",
+                    "entries",
+                    "region",
+                    "ordering",
+                ]
+            },
+        ),
         (
             _("advanced"),
             {"fields": ["update_glossary", "glossary_text"], "classes": ["collapse"]},
@@ -46,7 +56,10 @@ class GlossaryEntryAdmin(VersionAdmin, admin.ModelAdmin):
         ),
         (
             _("advanced"),
-            {"fields": ["auto_pattern", "pattern", "slug"], "classes": ["collapse"],},
+            {
+                "fields": ["auto_pattern", "pattern", "slug"],
+                "classes": ["collapse"],
+            },
         ),
     )
 

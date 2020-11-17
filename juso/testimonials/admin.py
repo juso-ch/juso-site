@@ -10,17 +10,35 @@ class CampaignAdmin(admin.ModelAdmin):
     search_fields = ["name"]
     list_display = ["name", "is_active", "email_validation"]
     fieldsets = (
-        (None, {"fields": ("name", "description", "is_active",)}),
+        (
+            None,
+            {
+                "fields": (
+                    "name",
+                    "description",
+                    "is_active",
+                )
+            },
+        ),
         (
             _("advanced"),
             {
                 "classes": ("collapse",),
-                "fields": ("template_name", "title_label", "email_validation",),
+                "fields": (
+                    "title_label",
+                    "email_validation",
+                ),
             },
         ),
         (
             _("meta"),
-            {"classes": ("collapse",), "fields": ("meta_title", "meta_description",)},
+            {
+                "classes": ("collapse",),
+                "fields": (
+                    "meta_title",
+                    "meta_description",
+                ),
+            },
         ),
     )
 

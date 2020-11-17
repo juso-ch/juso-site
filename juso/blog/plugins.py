@@ -67,7 +67,9 @@ class ArticlePlugin(TranslationMixin):
     )
 
     all_articles_override = models.CharField(
-        _("all article link text"), max_length=180, blank=True,
+        _("all article link text"),
+        max_length=180,
+        blank=True,
     )
 
     structured_data = models.BooleanField(_("include structured data"), default=False)
@@ -127,7 +129,9 @@ def get_article_list(plugin):
         return plugin.articles.all()
     from juso.blog.models import Article
 
-    articles = Article.objects.filter(language_code=plugin.language_code,)
+    articles = Article.objects.filter(
+        language_code=plugin.language_code,
+    )
 
     if plugin.category:
         articles = articles.filter(category=plugin.category)
@@ -148,5 +152,8 @@ def get_article_list(plugin):
 def render_articles(plugin, **kwargs):
     return render_to_string(
         plugin.template_key,
-        {"article_list": get_article_list(plugin), "plugin": plugin,},
+        {
+            "article_list": get_article_list(plugin),
+            "plugin": plugin,
+        },
     )

@@ -79,7 +79,10 @@ meta_fieldset = (
 def render_embed(plugin, **kwargs):
     return render_to_string(
         "plugins/embed.html",
-        {"json": oembed_json(plugin.url), "html": mark_safe(oembed_html(plugin.url)),},
+        {
+            "json": oembed_json(plugin.url),
+            "html": mark_safe(oembed_html(plugin.url)),
+        },
     )
 
 

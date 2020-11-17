@@ -33,7 +33,8 @@ class Migration(migrations.Migration):
             options={"verbose_name": "Download", "verbose_name_plural": "Downloads"},
         ),
         migrations.AlterModelOptions(
-            name="glossaryrichtext", options={"verbose_name": "Glossar Text"},
+            name="glossaryrichtext",
+            options={"verbose_name": "Glossar Text"},
         ),
         migrations.AlterModelOptions(
             name="namespace",

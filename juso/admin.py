@@ -124,7 +124,16 @@ Admin: https://{section.site.host}/admin/
 
 class ButtonInline(ContentEditorInline):
     fieldsets = (
-        (None, {"fields": (("text", "target"), "region", "ordering",)}),
+        (
+            None,
+            {
+                "fields": (
+                    "text", "target",
+                    "region",
+                    "ordering",
+                )
+            },
+        ),
         (
             _("display"),
             {

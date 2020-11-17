@@ -11,7 +11,10 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(model_name="page", name="all_events",),
+        migrations.RemoveField(
+            model_name="page",
+            name="all_events",
+        ),
         migrations.AddField(
             model_name="page",
             name="featured_categories",

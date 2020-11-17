@@ -35,7 +35,11 @@ class TeamPluginInline(ContentEditorInline):
 
 def render_team(plugin, **kwargs):
     return render_to_string(
-        plugin.template_key, {"team": plugin.team, "plugin": plugin,}
+        plugin.template_key,
+        {
+            "team": plugin.team,
+            "plugin": plugin,
+        },
     )
 
 
@@ -65,5 +69,8 @@ class CandidateListPluginInline(ContentEditorInline):
 def render_candidate_list(plugin, **kwargs):
     return render_to_string(
         "teams/candidate_list.html",
-        {"candidate_list": plugin.candidate_list, "plugin": plugin,},
+        {
+            "candidate_list": plugin.candidate_list,
+            "plugin": plugin,
+        },
     )

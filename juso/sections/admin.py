@@ -83,5 +83,11 @@ class CategoryAdmin(VersionAdmin, TreeAdmin):
             },
         ),
         MetaMixin.admin_fieldset(),
-        (_("translations"), {"classes": ("collapse",), "fields": ("translations",),}),
+        (
+            _("translations"),
+            {
+                "classes": ("collapse",),
+                "fields": ("translations",),
+            },
+        ),
     )

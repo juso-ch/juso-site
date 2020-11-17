@@ -52,7 +52,15 @@ class MailchimpConnection(models.Model):
 
 
 class Form(ContentMixin):
-    TEMPLATES = get_template_list("form", (("default", ("fields", "handlers"),),))
+    TEMPLATES = get_template_list(
+        "form",
+        (
+            (
+                "default",
+                ("fields", "handlers"),
+            ),
+        ),
+    )
     fullwidth = models.BooleanField(_("full width"))
     submit = models.CharField(max_length=200)
     size = models.TextField(_("size"), default="one", choices=SIZES)
@@ -63,7 +71,9 @@ class Form(ContentMixin):
     webhook = models.URLField(_("webhook"), max_length=1200, blank=True)
     list_id = models.CharField(_("mailtrain list id"), max_length=30, blank=True)
     webhook_dict = models.JSONField(_("webhook dict"), blank=True, null=True)
-    linked_form = models.ForeignKey("self", models.SET_NULL, null=True, blank=True, related_name="linked_forms")
+    linked_form = models.ForeignKey(
+        "self", models.SET_NULL, null=True, blank=True, related_name="linked_forms"
+    )
     linking_field_slug = models.CharField(max_length=30, blank=True)
 
     mailchimp_connection = models.ForeignKey(
@@ -91,14 +101,14 @@ class Form(ContentMixin):
     def aggregate(self, field_slug):
         return (
             FormEntryValue.objects.filter(
-                form_entry__form=self, field__slug=field_slug,
+                form_entry__form=self,
+                field__slug=field_slug,
             ).aggregate(r=models.Sum("int_value"))["r"]
             or 0
         )
 
     def clear_entries(self):
         self.formentry_set.all().delete()
-
 
     def get_fields(self):
         fields = []
@@ -107,7 +117,6 @@ class Form(ContentMixin):
         for field in FormField.objects.filter(parent=self):
             fields.append(field.slug)
         return fields
-
 
     def entry_dict(self):
         form_entries = []
@@ -119,7 +128,7 @@ class Form(ContentMixin):
 
         fields.append("ip")
         fields.append("created")
-        fields.append('sid')
+        fields.append("sid")
 
         return form_entries, fields
 
@@ -168,32 +177,34 @@ class FormEntry(models.Model):
     ip = models.GenericIPAddressField(_("ip address"), blank=True, null=True)
     submission_id = models.UUIDField(default=uuid.uuid4)
 
-
     def get_values(self, fields, json_safe=False):
         values = dict()
 
         for field in fields:
-            values[field] = ''
+            values[field] = ""
 
         if self.form.linked_form:
             linked_sid = self.fields.filter(field__slug=self.form.linking_field_slug)
 
             if linked_sid.exists():
-                other = self.form.linked_form.formentry_set.filter(submission_id=linked_sid[0].value)
+                other = self.form.linked_form.formentry_set.filter(
+                    submission_id=linked_sid[0].value
+                )
                 if other.exists():
                     values.update(other[0].get_values(fields, json_safe))
 
-        values.update({
-            'ip': self.ip,
-            'created': str(self.created) if json_safe else self.created,
-            'sid': str(self.submission_id)
-        })
+        values.update(
+            {
+                "ip": self.ip,
+                "created": str(self.created) if json_safe else self.created,
+                "sid": str(self.submission_id),
+            }
+        )
 
         for field in self.fields.all():
             values[field.field.slug] = field.value
 
         return values
-
 
     def __str__(self):
         return f"{self.form.title}: {self.created}"

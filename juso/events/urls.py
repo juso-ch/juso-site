@@ -17,6 +17,10 @@ urlpatterns = [
         views.event_detail,
         name="event-detail",
     ),
-    path("ical/", views.event_list_ical, name="event-list-ical",),
+    path(
+        "ical/",
+        views.event_list_ical,
+        name="event-list-ical",
+    ),
     path("location/<slug:slug>/", views.location_detail, name="location-detail"),
 ]

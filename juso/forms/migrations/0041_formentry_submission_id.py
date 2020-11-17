@@ -7,13 +7,13 @@ import uuid
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('forms', '0040_auto_20200825_0943'),
+        ("forms", "0040_auto_20200825_0943"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='formentry',
-            name='submission_id',
+            model_name="formentry",
+            name="submission_id",
             field=models.UUIDField(default=uuid.uuid4),
         ),
     ]

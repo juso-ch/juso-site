@@ -48,14 +48,10 @@ class PageAdmin(VersionAdmin, CopyContentMixin, ContentEditor, TreeAdmin):
     list_display = [
         "indented_title",
         "move_column",
-        "slug",
-        "static_path",
         "path",
         "is_active",
         "language_code",
-        "template_key",
         "application",
-        "position",
     ]
     actions = ["open_duplicate_form"]
 
@@ -103,11 +99,18 @@ class PageAdmin(VersionAdmin, CopyContentMixin, ContentEditor, TreeAdmin):
     readonly_fields = ["app_instance_namespace"]
 
     fieldsets = (
-        (None, {"fields": ("title", "parent",)}),
+        (
+            None,
+            {
+                "fields": (
+                    "title",
+                    "parent",
+                )
+            },
+        ),
         (
             _("settings"),
             {
-                "classes": ("tabbed",),
                 "fields": (
                     "is_active",
                     "menu",
@@ -123,7 +126,12 @@ class PageAdmin(VersionAdmin, CopyContentMixin, ContentEditor, TreeAdmin):
             _("path"),
             {
                 "classes": ("tabbed",),
-                "fields": ("slug", "static_path", "path", "site",),
+                "fields": (
+                    "slug",
+                    "static_path",
+                    "path",
+                    "site",
+                ),
             },
         ),
         (
@@ -146,7 +154,10 @@ class PageAdmin(VersionAdmin, CopyContentMixin, ContentEditor, TreeAdmin):
             _("redirect"),
             {
                 "classes": ("tabbed",),
-                "fields": ("redirect_to_page", "redirect_to_url",),
+                "fields": (
+                    "redirect_to_page",
+                    "redirect_to_url",
+                ),
             },
         ),
         (_("translations"), {"classes": ("tabbed",), "fields": ("translations",)}),
@@ -182,7 +193,10 @@ class PageAdmin(VersionAdmin, CopyContentMixin, ContentEditor, TreeAdmin):
             "admin/js/jquery.init.js",
             JS(
                 "https://kit.fontawesome.com/91a6274901.js",
-                {"async": "async", "crossorigin": "anonymous",},
+                {
+                    "async": "async",
+                    "crossorigin": "anonymous",
+                },
                 static=False,
             ),
             "admin/plugin_buttons.js",
@@ -238,7 +252,8 @@ class PageAdmin(VersionAdmin, CopyContentMixin, ContentEditor, TreeAdmin):
     def open_duplicate_form(self, request, queryset):
         return redirect(
             reverse(
-                "admin:pages_Page_duplicate_page_tree", kwargs={"pk": queryset[0].pk},
+                "admin:pages_Page_duplicate_page_tree",
+                kwargs={"pk": queryset[0].pk},
             )
         )
 

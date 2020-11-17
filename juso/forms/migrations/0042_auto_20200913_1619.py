@@ -7,18 +7,24 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('forms', '0041_formentry_submission_id'),
+        ("forms", "0041_formentry_submission_id"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='form',
-            name='linked_form',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='linked_forms', to='forms.form'),
+            model_name="form",
+            name="linked_form",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="linked_forms",
+                to="forms.form",
+            ),
         ),
         migrations.AddField(
-            model_name='form',
-            name='linking_field_slug',
+            model_name="form",
+            name="linking_field_slug",
             field=models.CharField(blank=True, max_length=30),
         ),
     ]

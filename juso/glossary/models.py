@@ -53,7 +53,9 @@ class Entry(TranslationMixin):
         try:
             return (
                 reverse_app(
-                    [f"{site.id}-glossary"], "glossary", languages=[self.language_code],
+                    [f"{site.id}-glossary"],
+                    "glossary",
+                    languages=[self.language_code],
                 )
                 + f"#{self.slug}"
             )

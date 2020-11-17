@@ -27,7 +27,10 @@ def get_landing_page(request):
     if bool(queryset):
         return queryset[0]
 
-    return get_list_or_404(Page.objects.active(), is_landing_page=True,)[0]
+    return get_list_or_404(
+        Page.objects.active(),
+        is_landing_page=True,
+    )[0]
 
 
 @ensure_csrf_cookie
@@ -35,24 +38,38 @@ def page_detail(request, path=None):
     page = Page.objects.active().filter(path=f"/{path}/" if path else "/")
 
     if path is None and not bool(page):
-        return redirect(get_landing_page(request).path)
+        return redirect(
+            get_landing_page(request).path
+            + (("?" + request.GET.urlencode()) if request.GET else "")
+        )
 
     if not bool(page):
         page = Page.objects.active().filter(path=f"/{request.LANGUAGE_CODE}/{path}/")
         if bool(page):
-            return redirect(page[0].path)
+            return redirect(
+                page[0].path + (("?" + request.GET.urlencode()) if request.GET else "")
+            )
 
         for language_code, _ in settings.LANGUAGES:
             page = Page.objects.active().filter(path=f"/{language_code}/{path}/")
 
             if bool(page):
-                return redirect(page[0].path)
+                return redirect(
+                    page[0].path
+                    + (("?" + request.GET.urlencode()) if request.GET else "")
+                )
         raise Http404()
 
     page = page[0]
 
     if page.redirect_to_url or page.redirect_to_page:
-        return redirect(page.redirect_to_url or page.redirect_to_page)
+        return redirect(
+            page.redirect_to_url
+            or (
+                page.redirect_to_page.get_absolute_url()
+                + (("?" + request.GET.urlencode()) if request.GET else "")
+            )
+        )
 
     edit = (
         request.user.is_authenticated
@@ -69,13 +86,17 @@ def page_detail(request, path=None):
             "edit": edit,
             "header_image": page.get_header_image(),
             "meta_tags": meta_tags([page] + ancestors, request=request),
-            "regions": Regions.from_item(page, renderer=renderer, timeout=60,),
+            "regions": Regions.from_item(
+                page,
+                renderer=renderer,
+                timeout=60,
+            ),
         },
     )
 
 
 def error404(request, exception):
-    query = Article.objects.filter(slug=[x for x in request.path.split('/') if x][-1])
+    query = Article.objects.filter(slug=[x for x in request.path.split("/") if x][-1])
 
     if bool(query):
         return redirect(query[0].get_absolute_url())
@@ -92,7 +113,11 @@ def error404(request, exception):
         {
             "exception": exception,
             "page": page,
-            "regions": Regions.from_item(page, renderer=renderer, timeout=60,),
+            "regions": Regions.from_item(
+                page,
+                renderer=renderer,
+                timeout=60,
+            ),
             "header_image": page.get_header_image(),
         },
     )
@@ -110,7 +135,11 @@ def error500(request):
         "500.html",
         {
             "page": page,
-            "regions": Regions.from_item(page, renderer=renderer, timeout=60,),
+            "regions": Regions.from_item(
+                page,
+                renderer=renderer,
+                timeout=60,
+            ),
             "header_image": page.get_header_image(),
         },
     )
@@ -118,13 +147,17 @@ def error500(request):
 
 def webmanifest(request):
     page = get_landing_page(request) or get_object_or_404(
-        Page.objects.active(), path="/",
+        Page.objects.active(),
+        path="/",
     )
 
     return render(
         request,
         "manifest.webmanifest",
-        {"page": page, "color": page.primary_color or settings.DEFAULT_COLOR,},
+        {
+            "page": page,
+            "color": page.primary_color or settings.DEFAULT_COLOR,
+        },
     )
 
 
@@ -134,11 +167,17 @@ def service_worker(request):
 
 def offline_view(request):
     page = get_landing_page(request) or get_object_or_404(
-        Page.objects.active(), path="/",
+        Page.objects.active(),
+        path="/",
     )
 
     return render(
-        request, "offline.html", {"page": page, "color": settings.DEFAULT_COLOR,}
+        request,
+        "offline.html",
+        {
+            "page": page,
+            "color": settings.DEFAULT_COLOR,
+        },
     )
 
 
@@ -146,7 +185,8 @@ def sitemap_index(request, path=None):
     sitemaps = {}
 
     top_page = get_object_or_404(
-        Page.objects.active(), path=f"/{path}/" if path else "/",
+        Page.objects.active(),
+        path=f"/{path}/" if path else "/",
     )
 
     sitemaps["pages"] = PageSitemap(top_page)
@@ -164,7 +204,10 @@ def sitemap_index(request, path=None):
     ):
         sitemaps[category_page.slug] = CategorySitemap(category_page)
 
-    return sitemap_view(request, sitemaps,)
+    return sitemap_view(
+        request,
+        sitemaps,
+    )
 
 
 class PageSitemap(Sitemap):

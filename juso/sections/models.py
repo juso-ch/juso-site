@@ -28,7 +28,11 @@ from juso.models import TranslationMixin
 class Category(TranslationMixin, MetaMixin, TreeNode):
     name = models.CharField(max_length=200, verbose_name=_("name"))
     slug = models.SlugField(verbose_name=_("slug"))
-    color = models.CharField(max_length=7, verbose_name=_("color"), blank=True,)
+    color = models.CharField(
+        max_length=7,
+        verbose_name=_("color"),
+        blank=True,
+    )
 
     header_image = ImageField(
         _("header image"),
@@ -124,7 +128,10 @@ class ContentMixin(TranslationMixin, MetaMixin, TemplateMixin):
     )
 
     generated_meta_image = models.ImageField(
-        _("generated meta image"), upload_to="meta", blank=True, null=True,
+        _("generated meta image"),
+        upload_to="meta",
+        blank=True,
+        null=True,
     )
 
     @property
@@ -178,7 +185,10 @@ class ContentMixin(TranslationMixin, MetaMixin, TemplateMixin):
                         width=3,
                     )
                     draw.text(
-                        (x, y), text, text_color, font=font,
+                        (x, y),
+                        text,
+                        text_color,
+                        font=font,
                     )
 
                 f = BytesIO()
@@ -204,7 +214,11 @@ class ContentMixin(TranslationMixin, MetaMixin, TemplateMixin):
 
     tags = TaggableManager(blank=True)
 
-    section = models.ForeignKey(Section, models.CASCADE, verbose_name=_("section"),)
+    section = models.ForeignKey(
+        Section,
+        models.CASCADE,
+        verbose_name=_("section"),
+    )
 
     def __str__(self):
         return self.title

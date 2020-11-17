@@ -13,7 +13,12 @@ renderer.register_string_renderer(
 
 
 def render_form_field(field):
-    return render_to_string(f"forms/fields/{field.input_type}.html", {"field": field,})
+    return render_to_string(
+        f"forms/fields/{field.input_type}.html",
+        {
+            "field": field,
+        },
+    )
 
 
 renderer.register_string_renderer(

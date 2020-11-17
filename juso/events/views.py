@@ -18,7 +18,9 @@ from juso.sections.models import Section
 
 
 def event_list_for_page(page, past_events=False, all_events=False):
-    qs = Event.objects.filter(language_code=page.language_code,)
+    qs = Event.objects.filter(
+        language_code=page.language_code,
+    )
     if all_events:
         pass
     elif not past_events:
@@ -39,6 +41,7 @@ def event_list_for_page(page, past_events=False, all_events=False):
 
     return qs
 
+
 @ensure_csrf_cookie
 def location_detail(request, slug):
     page = page_for_app_request(request)
@@ -56,10 +59,14 @@ def location_detail(request, slug):
             "obj": location,
             "title": location.name,
             "header_image": location.header_image or page.get_header_image(),
-            "event_list": location.event_set.filter(end_date__gte=timezone.now(),),
+            "event_list": location.event_set.filter(
+                end_date__gte=timezone.now(),
+            ),
             "meta_tags": meta_tags([location, page] + ancestors, request=request),
             "regions": Regions.from_item(
-                location, renderer=location_renderer, timeout=60,
+                location,
+                renderer=location_renderer,
+                timeout=60,
             ),
             "page_regions": Regions.from_item(
                 page,
@@ -87,7 +94,9 @@ def event_list(request, past=False):
         request,
         event_list,
         {
-            "location_list": Location.objects.filter(event__in=event_list,).distinct(),
+            "location_list": Location.objects.filter(
+                event__in=event_list,
+            ).distinct(),
             "page": page,
             "header_image": page.get_header_image(),
             "vapid_public_key": settings.VAPID_PUBLIC_KEY,
@@ -148,8 +157,15 @@ def event_detail(request, year, month, day, slug):
             "obj": event,
             "header_image": event.get_header_image() or page.get_header_image(),
             "title": event.title,
-            "meta_tags": meta_tags([event, page] + ancestors, request=request,),
-            "regions": Regions.from_item(event, renderer=renderer, timeout=60,),
+            "meta_tags": meta_tags(
+                [event, page] + ancestors,
+                request=request,
+            ),
+            "regions": Regions.from_item(
+                event,
+                renderer=renderer,
+                timeout=60,
+            ),
             "page_regions": Regions.from_item(
                 page,
                 renderer=pages.renderer.renderer,

@@ -105,7 +105,9 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={"abstract": False,},
+            options={
+                "abstract": False,
+            },
         ),
         migrations.CreateModel(
             name="FormPlugin",
@@ -140,10 +142,18 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={"abstract": False,},
+            options={
+                "abstract": False,
+            },
         ),
-        migrations.RemoveField(model_name="header", name="parent",),
-        migrations.RemoveField(model_name="button", name="inverted",),
+        migrations.RemoveField(
+            model_name="header",
+            name="parent",
+        ),
+        migrations.RemoveField(
+            model_name="button",
+            name="inverted",
+        ),
         migrations.AlterField(
             model_name="button",
             name="style",
@@ -155,6 +165,10 @@ class Migration(migrations.Migration):
                 verbose_name="style",
             ),
         ),
-        migrations.DeleteModel(name="Divider",),
-        migrations.DeleteModel(name="Header",),
+        migrations.DeleteModel(
+            name="Divider",
+        ),
+        migrations.DeleteModel(
+            name="Header",
+        ),
     ]

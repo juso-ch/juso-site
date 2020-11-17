@@ -80,7 +80,14 @@ class Page(
             {
                 "urlconf": "juso.people.urls",
                 "app_instance_namespace": lambda page: "-".join(
-                    (str(x) for x in [page.site_id, page.application,] if x)
+                    (
+                        str(x)
+                        for x in [
+                            page.site_id,
+                            page.application,
+                        ]
+                        if x
+                    )
                 ),
             },
         ),
@@ -92,7 +99,11 @@ class Page(
                 "app_instance_namespace": lambda page: "-".join(
                     (
                         str(x)
-                        for x in [page.site_id, page.application, page.category,]
+                        for x in [
+                            page.site_id,
+                            page.application,
+                            page.category,
+                        ]
                         if x
                     )
                 ),
@@ -146,7 +157,8 @@ class Page(
     )
 
     is_landing_page = models.BooleanField(
-        default=False, verbose_name=_("is landing page"),
+        default=False,
+        verbose_name=_("is landing page"),
     )
 
     position = models.PositiveIntegerField(
@@ -169,7 +181,9 @@ class Page(
     )
 
     sections = models.ManyToManyField(
-        "sections.Section", verbose_name=_("sections"), blank=True,
+        "sections.Section",
+        verbose_name=_("sections"),
+        blank=True,
     )
 
     category = models.ForeignKey(
@@ -247,7 +261,9 @@ class Page(
     def tagline(self):
         if RichText.objects.filter(parent=self).exists():
             return bleach.clean(
-                RichText.objects.filter(parent=self)[0].text, strip=True, tags=[],
+                RichText.objects.filter(parent=self)[0].text,
+                strip=True,
+                tags=[],
             )
         if self.meta_description:
             return self.meta_description
@@ -279,7 +295,9 @@ fonts/klima-bold-italic-web.woff2:font""",
         if not self.is_landing_page or self._is_landing_page == self.is_landing_page:
             return super().save(*args, **kwargs)
         Page.objects.filter(
-            is_landing_page=True, language_code=self.language_code, site=self.site,
+            is_landing_page=True,
+            language_code=self.language_code,
+            site=self.site,
         ).update(is_landing_page=False)
         return super().save(*args, **kwargs)
 
@@ -321,8 +339,21 @@ fonts/klima-bold-italic-web.woff2:font""",
         verbose_name = _("page")
         verbose_name_plural = _("pages")
         indexes = [
-            models.Index(fields=["path", "site_id", "language_code", "is_active",]),
-            models.Index(fields=["is_landing_page", "site_id", "language_code",]),
+            models.Index(
+                fields=[
+                    "path",
+                    "site_id",
+                    "language_code",
+                    "is_active",
+                ]
+            ),
+            models.Index(
+                fields=[
+                    "is_landing_page",
+                    "site_id",
+                    "language_code",
+                ]
+            ),
             models.Index(fields=["is_active", "menu", "language_code"]),
         ]
 

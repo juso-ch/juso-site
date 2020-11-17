@@ -1,5 +1,10 @@
 from django.conf import settings
-from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector, SearchHeadline
+from django.contrib.postgres.search import (
+    SearchQuery,
+    SearchRank,
+    SearchVector,
+    SearchHeadline,
+)
 from django.contrib.sitemaps import Sitemap
 from django.contrib.sitemaps.views import sitemap
 from django.contrib.syndication.views import Feed
@@ -71,12 +76,12 @@ def article_list(request):
             article_list.annotate(
                 rank=SearchRank(vector, query, cover_density=True),
                 headline=SearchHeadline(
-                    'blog_richtext_set__text',
+                    "blog_richtext_set__text",
                     query,
                     max_words=25,
                     min_words=20,
                     max_fragments=2,
-                )
+                ),
             )
             .filter(rank__gt=0)
             .order_by("-rank")
@@ -95,7 +100,9 @@ def article_list(request):
             "category_list": category_list,
             "meta_tags": meta_tags([page] + ancestors, request=request),
             "regions": Regions.from_item(
-                page, renderer=pages.renderer.renderer, timeout=60,
+                page,
+                renderer=pages.renderer.renderer,
+                timeout=60,
             ),
         },
         paginate_by=12,
@@ -153,7 +160,11 @@ def article_detail(request, slug):
             "header_image": article.get_header_image() or page.get_header_image(),
             "title": article.title,
             "meta_tags": meta_tags([article, page] + ancestors, request=request),
-            "regions": Regions.from_item(article, renderer=renderer, timeout=60,),
+            "regions": Regions.from_item(
+                article,
+                renderer=renderer,
+                timeout=60,
+            ),
             "page_regions": Regions.from_item(
                 page,
                 renderer=pages.renderer.renderer,

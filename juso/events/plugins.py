@@ -34,13 +34,20 @@ class EventPlugin(TranslationMixin):
     )
 
     all_events_override = models.CharField(
-        _("all events link text"), max_length=180, blank=True,
+        _("all events link text"),
+        max_length=180,
+        blank=True,
     )
 
     @property
     def columns(self):
         if self.events.exists():
-            return number_word(min(self.events.count(), self.count,))
+            return number_word(
+                min(
+                    self.events.count(),
+                    self.count,
+                )
+            )
         return number_word(self.count)
 
     template_key = models.CharField(
@@ -60,7 +67,9 @@ class EventPlugin(TranslationMixin):
     )
 
     sections = models.ManyToManyField(
-        Section, blank=True, related_name="%(app_label)s_%(class)s",
+        Section,
+        blank=True,
+        related_name="%(app_label)s_%(class)s",
     )
 
     def __str__(self):
@@ -127,5 +136,9 @@ def get_event_list(plugin):
 
 def render_events(plugin, **kwargs):
     return render_to_string(
-        plugin.template_key, {"events": get_event_list(plugin), "plugin": plugin,}
+        plugin.template_key,
+        {
+            "events": get_event_list(plugin),
+            "plugin": plugin,
+        },
     )

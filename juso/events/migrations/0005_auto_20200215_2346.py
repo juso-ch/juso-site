@@ -22,7 +22,10 @@ class Migration(migrations.Migration):
                 "verbose_name_plural": "locations",
             },
         ),
-        migrations.AlterModelOptions(name="namespace", options={"ordering": ["name"]},),
+        migrations.AlterModelOptions(
+            name="namespace",
+            options={"ordering": ["name"]},
+        ),
         migrations.AddField(
             model_name="location",
             name="section",

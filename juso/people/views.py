@@ -83,7 +83,10 @@ def teams_for_section(request):
 
     return render_list(
         request,
-        Team.objects.filter(section=section, language_code=page.language_code,),
+        Team.objects.filter(
+            section=section,
+            language_code=page.language_code,
+        ),
         {
             "page": page,
             "meta_tags": meta_tags([page] + ancestors, request=request),

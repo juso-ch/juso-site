@@ -11,6 +11,8 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RenameField(
-            model_name="categorylinking", old_name="ohter_site", new_name="other_site",
+            model_name="categorylinking",
+            old_name="ohter_site",
+            new_name="other_site",
         ),
     ]

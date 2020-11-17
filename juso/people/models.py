@@ -16,7 +16,11 @@ from juso.sections.models import Section
 
 class Person(models.Model):
     user = models.OneToOneField(
-        User, models.SET_NULL, verbose_name=_("user"), blank=True, null=True,
+        User,
+        models.SET_NULL,
+        verbose_name=_("user"),
+        blank=True,
+        null=True,
     )
 
     sections = models.ManyToManyField(Section, blank=True, verbose_name=_("sections"))
@@ -27,7 +31,9 @@ class Person(models.Model):
         null=True,
         upload_to="people/",
         auto_add_fields=True,
-        formats={"square": ["default", ("crop", (900, 900))],},
+        formats={
+            "square": ["default", ("crop", (900, 900))],
+        },
     )
 
     first_name = models.CharField(max_length=100, verbose_name=_("first name"))
@@ -122,7 +128,9 @@ class Membership(models.Model):
         null=True,
         upload_to="people/",
         auto_add_fields=True,
-        formats={"square": ["default", ("crop", (900, 900))],},
+        formats={
+            "square": ["default", ("crop", (900, 900))],
+        },
         help_text=_(
             "Only necessary if you want to use another picture for this position."
         ),
@@ -162,7 +170,9 @@ class Candidature(models.Model):
         null=True,
         upload_to="people/",
         auto_add_fields=True,
-        formats={"square": ["default", ("crop", (900, 900))],},
+        formats={
+            "square": ["default", ("crop", (900, 900))],
+        },
         help_text=_(
             "Only necessary if you want to use another picture for this candidature."
         ),

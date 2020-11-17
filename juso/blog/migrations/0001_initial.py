@@ -146,7 +146,10 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={"verbose_name": "article", "verbose_name_plural": "articles",},
+            options={
+                "verbose_name": "article",
+                "verbose_name_plural": "articles",
+            },
         ),
         migrations.CreateModel(
             name="NameSpace",
@@ -338,7 +341,10 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={"verbose_name": "external content", "abstract": False,},
+            options={
+                "verbose_name": "external content",
+                "abstract": False,
+            },
         ),
         migrations.CreateModel(
             name="Download",

@@ -59,6 +59,8 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={"verbose_name": "rich text",},
+            options={
+                "verbose_name": "rich text",
+            },
         ),
     ]

@@ -14,8 +14,14 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(model_name="header", name="parent",),
-        migrations.RemoveField(model_name="button", name="inverted",),
+        migrations.RemoveField(
+            model_name="header",
+            name="parent",
+        ),
+        migrations.RemoveField(
+            model_name="button",
+            name="inverted",
+        ),
         migrations.AlterField(
             model_name="button",
             name="color",
@@ -60,6 +66,10 @@ class Migration(migrations.Migration):
                 verbose_name="form",
             ),
         ),
-        migrations.DeleteModel(name="Divider",),
-        migrations.DeleteModel(name="Header",),
+        migrations.DeleteModel(
+            name="Divider",
+        ),
+        migrations.DeleteModel(
+            name="Header",
+        ),
     ]

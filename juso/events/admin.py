@@ -31,9 +31,6 @@ class EventAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
         "title",
         "slug",
         "start_date",
-        "end_date",
-        "location",
-        "category",
         "language_code",
     ]
 
@@ -68,7 +65,10 @@ class EventAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
                 "fields": (
                     "title",
                     "author",
-                    ("start_date", "end_date",),
+                    (
+                        "start_date",
+                        "end_date",
+                    ),
                     "location",
                     "category",
                     "tags",
@@ -80,8 +80,13 @@ class EventAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
         (
             _("settings"),
             {
-                "classes": ("tabbed",),
-                "fields": ("language_code", "slug", "section", "template_key",),
+                "classes": ("collapse",),
+                "fields": (
+                    "language_code",
+                    "slug",
+                    "section",
+                    "template_key",
+                ),
             },
         ),
         MetaMixin.admin_fieldset(),
@@ -113,7 +118,10 @@ class EventAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
             "admin/js/jquery.init.js",
             JS(
                 "https://kit.fontawesome.com/7655daeee1.js",
-                {"async": "async", "crossorigin": "anonymous",},
+                {
+                    "async": "async",
+                    "crossorigin": "anonymous",
+                },
                 static=False,
             ),
             "admin/plugin_buttons.js",
@@ -175,7 +183,20 @@ class LocationAdmin(VersionAdmin, ContentEditor):
     autocomplete_fields = ["section", "translations"]
 
     fieldsets = (
-        (None, {"fields": ("name", "street", ("city", "zip_code",), "country",)}),
+        (
+            None,
+            {
+                "fields": (
+                    "name",
+                    "street",
+                    (
+                        "city",
+                        "zip_code",
+                    ),
+                    "country",
+                )
+            },
+        ),
         (
             _("advanced"),
             {

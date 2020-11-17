@@ -11,7 +11,15 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(model_name="event", name="namespace",),
-        migrations.RemoveField(model_name="eventplugin", name="namespace",),
-        migrations.DeleteModel(name="NameSpace",),
+        migrations.RemoveField(
+            model_name="event",
+            name="namespace",
+        ),
+        migrations.RemoveField(
+            model_name="eventplugin",
+            name="namespace",
+        ),
+        migrations.DeleteModel(
+            name="NameSpace",
+        ),
     ]

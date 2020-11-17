@@ -67,5 +67,8 @@ class Migration(migrations.Migration):
             name="name",
             field=models.CharField(max_length=200, verbose_name="Name"),
         ),
-        migrations.AlterUniqueTogether(name="event", unique_together=set(),),
+        migrations.AlterUniqueTogether(
+            name="event",
+            unique_together=set(),
+        ),
     ]

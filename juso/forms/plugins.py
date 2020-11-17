@@ -55,7 +55,10 @@ class EntryCounter(models.Model):
 
     template_key = models.CharField(
         _("template"),
-        choices=(("forms/bar.html", _("bar")), ("forms/number.html", _("number")),),
+        choices=(
+            ("forms/bar.html", _("bar")),
+            ("forms/number.html", _("number")),
+        ),
         default="forms/bar.html",
         max_length=40,
     )

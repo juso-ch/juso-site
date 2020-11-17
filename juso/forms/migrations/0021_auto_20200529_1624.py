@@ -10,9 +10,18 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(model_name="form", name="generated_meta_image_height",),
-        migrations.RemoveField(model_name="form", name="generated_meta_image_ppoi",),
-        migrations.RemoveField(model_name="form", name="generated_meta_image_width",),
+        migrations.RemoveField(
+            model_name="form",
+            name="generated_meta_image_height",
+        ),
+        migrations.RemoveField(
+            model_name="form",
+            name="generated_meta_image_ppoi",
+        ),
+        migrations.RemoveField(
+            model_name="form",
+            name="generated_meta_image_width",
+        ),
         migrations.AlterField(
             model_name="form",
             name="generated_meta_image",

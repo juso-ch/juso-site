@@ -11,11 +11,16 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RemoveField(
-            model_name="article", name="generated_meta_image_height",
+            model_name="article",
+            name="generated_meta_image_height",
         ),
-        migrations.RemoveField(model_name="article", name="generated_meta_image_ppoi",),
         migrations.RemoveField(
-            model_name="article", name="generated_meta_image_width",
+            model_name="article",
+            name="generated_meta_image_ppoi",
+        ),
+        migrations.RemoveField(
+            model_name="article",
+            name="generated_meta_image_width",
         ),
         migrations.AlterField(
             model_name="article",

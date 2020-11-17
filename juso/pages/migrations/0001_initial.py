@@ -30,7 +30,9 @@ class Migration(migrations.Migration):
                 ("region", models.CharField(max_length=255)),
                 ("ordering", models.IntegerField(default=0)),
             ],
-            options={"verbose_name": "external",},
+            options={
+                "verbose_name": "external",
+            },
         ),
         migrations.CreateModel(
             name="HTML",
@@ -54,7 +56,10 @@ class Migration(migrations.Migration):
                 ("region", models.CharField(max_length=255)),
                 ("ordering", models.IntegerField(default=0)),
             ],
-            options={"verbose_name": "HTML", "verbose_name_plural": "HTML",},
+            options={
+                "verbose_name": "HTML",
+                "verbose_name_plural": "HTML",
+            },
         ),
         migrations.CreateModel(
             name="Image",
@@ -112,7 +117,10 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={"verbose_name": "image", "verbose_name_plural": "images",},
+            options={
+                "verbose_name": "image",
+                "verbose_name_plural": "images",
+            },
         ),
         migrations.CreateModel(
             name="Page",
@@ -295,7 +303,10 @@ class Migration(migrations.Migration):
                     models.BooleanField(default=False, verbose_name="is landing page"),
                 ),
             ],
-            options={"verbose_name": "page", "verbose_name_plural": "page",},
+            options={
+                "verbose_name": "page",
+                "verbose_name_plural": "page",
+            },
         ),
         migrations.CreateModel(
             name="RichText",
@@ -313,7 +324,9 @@ class Migration(migrations.Migration):
                 ("region", models.CharField(max_length=255)),
                 ("ordering", models.IntegerField(default=0)),
             ],
-            options={"verbose_name": "rich text",},
+            options={
+                "verbose_name": "rich text",
+            },
         ),
         migrations.CreateModel(
             name="Team",

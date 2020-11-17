@@ -11,7 +11,8 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterModelOptions(
-            name="formplugin", options={"verbose_name": "form"},
+            name="formplugin",
+            options={"verbose_name": "form"},
         ),
         migrations.AlterField(
             model_name="page",

@@ -18,7 +18,9 @@ def top_page(page):
 def button_menu(language_code, top_page):
     pages = (
         top_page.descendants()
-        .exclude(is_active=False,)
+        .exclude(
+            is_active=False,
+        )
         .filter(menu="buttons", language_code=language_code)
     )
 

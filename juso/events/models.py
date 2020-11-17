@@ -39,7 +39,10 @@ class Location(MetaMixin, TranslationMixin):
     city = models.CharField(max_length=100, verbose_name=_("city"))
     zip_code = models.CharField(max_length=20, verbose_name=_("zip code"))
     country = models.CharField(max_length=200, verbose_name=_("country"))
-    is_physical = models.BooleanField(verbose_name=_("is physical"), default=True,)
+    is_physical = models.BooleanField(
+        verbose_name=_("is physical"),
+        default=True,
+    )
 
     header_image = ImageField(
         _("header image"),
@@ -122,7 +125,13 @@ def ical_calendar(queryset):
 class Event(ContentMixin):
     TEMPLATES = get_template_list(
         "events",
-        (("default", ("main",),), ("feature_top", ("main", "sidebar", "feature")),),
+        (
+            (
+                "default",
+                ("main",),
+            ),
+            ("feature_top", ("main", "sidebar", "feature")),
+        ),
     )
 
     start_date = models.DateTimeField(_("start date"))
@@ -143,12 +152,15 @@ class Event(ContentMixin):
         def get_tagline():
             if RichText.objects.filter(parent=self).exists():
                 return bleach.clean(
-                    RichText.objects.filter(parent=self)[0].text, strip=True, tags=[],
+                    RichText.objects.filter(parent=self)[0].text,
+                    strip=True,
+                    tags=[],
                 )
             if self.meta_description:
                 return self.meta_description
             return ""
-        return cache.get_or_set(f'event-tagline-{self.pk}', get_tagline)
+
+        return cache.get_or_set(f"event-tagline-{self.pk}", get_tagline)
 
     class Meta:
         verbose_name = _("event")
@@ -256,7 +268,10 @@ class Event(ContentMixin):
                 site = current_site()
                 if site == self.section.site:
                     return reverse_app(
-                        [f"{site.id}-events-{self.category}", f"{site.id}-events",],
+                        [
+                            f"{site.id}-events-{self.category}",
+                            f"{site.id}-events",
+                        ],
                         "event-detail",
                         urlconf=apps_urlconf(),
                         kwargs={
@@ -289,7 +304,10 @@ class Event(ContentMixin):
                     )
             except NoReverseMatch:
                 return "#"
-        return cache.get_or_set(f'{current_site().id}:event-absolute-url-{self.pk}', _get_absolute_url)
+
+        return cache.get_or_set(
+            f"{current_site().id}:event-absolute-url-{self.pk}", _get_absolute_url
+        )
 
 
 PluginBase = create_plugin_base(Event)

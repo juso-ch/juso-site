@@ -1,5 +1,6 @@
 from admin_ordering.admin import OrderableAdmin
 from django.contrib import admin
+from django.utils.translation import ugettext as _
 from reversion.admin import VersionAdmin
 
 # Register your models here.
@@ -42,6 +43,22 @@ class PersonAdmin(VersionAdmin, admin.ModelAdmin):
         "first_name",
         "last_name",
     ]
+
+    fieldsets = (
+        (None, {
+            'fields': ('first_name', 'last_name', 'user', 'image'),
+        }),
+        (_("social media"), {
+            'fields': ('facebook', 'twitter', 'instagram'),
+        }),
+        (_("contact"), {
+            'fields': ('email', 'homepage', 'phone'),
+        }),
+        (_("other"), {
+            'fields': ('job', 'birthday', 'city', 'bio'),
+        })
+
+    )
 
     list_filter = ["sections", "teams"]
 

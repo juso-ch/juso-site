@@ -192,7 +192,10 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={"verbose_name": "campaign", "verbose_name_plural": "campaigns",},
+            options={
+                "verbose_name": "campaign",
+                "verbose_name_plural": "campaigns",
+            },
         ),
         migrations.CreateModel(
             name="Testimonial",

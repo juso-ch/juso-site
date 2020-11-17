@@ -18,6 +18,8 @@ from reversion.admin import VersionAdmin
 from flat_json_widget.widgets import FlatJsonWidget
 from django.contrib.auth.decorators import user_passes_test
 
+from js_asset import JS
+
 # Register your models here.
 
 from juso.forms.models import Form, FormField, MailchimpConnection
@@ -92,7 +94,15 @@ class FormAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
     fieldsets = (
         (
             None,
-            {"fields": ("title", "slug", "section", "created_date", "edited_date",)},
+            {
+                "fields": (
+                    "title",
+                    "slug",
+                    "section",
+                    "created_date",
+                    "edited_date",
+                )
+            },
         ),
         (
             _("settings"),
@@ -125,12 +135,12 @@ class FormAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
         (
             _("advanced"),
             {
-                'classes': ("tabbed",),
-                'fields': (
-                    'linked_form',
-                    'linking_field_slug',
-                )
-            }
+                "classes": ("tabbed",),
+                "fields": (
+                    "linked_form",
+                    "linking_field_slug",
+                ),
+            },
         ),
         (
             _("meta"),
@@ -157,9 +167,24 @@ class FormAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
 
     plugins = [FormField]
 
+    class Media:
+        js = (
+            "admin/js/jquery.init.js",
+            JS(
+                "https://kit.fontawesome.com/91a6274901.js",
+                {
+                    "async": "async",
+                    "crossorigin": "anonymous",
+                },
+                static=False,
+            ),
+            "admin/plugin_buttons.js",
+        )
+
     def result_link(self, obj):
         url = reverse("admin:forms_Form_show_results", args=(obj.pk,))
         return mark_safe(f'<a href="{url}">{obj.count()}</a>')
+
     result_link.short_description = _("results")
 
     def get_urls(self):
@@ -195,7 +220,6 @@ class FormAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
             has_view_permission=True,
         )
 
-
         return render(request, "admin/form_results.html", context)
 
     def get_fieldsets(self, request, obj=None):
@@ -229,7 +253,7 @@ class FormAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
             return form
 
         section_field = form.base_fields["section"]
-#        form.base_fields["list_id"].widget = forms.PasswordInput()
+        #        form.base_fields["list_id"].widget = forms.PasswordInput()
 
         sections = request.user.section_set.all()
         section_field.initial = sections[0]

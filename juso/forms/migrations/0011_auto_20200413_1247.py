@@ -10,8 +10,14 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(model_name="formfield", name="email",),
-        migrations.RemoveField(model_name="formfield", name="webhook",),
+        migrations.RemoveField(
+            model_name="formfield",
+            name="email",
+        ),
+        migrations.RemoveField(
+            model_name="formfield",
+            name="webhook",
+        ),
         migrations.AddField(
             model_name="form",
             name="email",

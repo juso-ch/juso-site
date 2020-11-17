@@ -50,6 +50,7 @@ def translation_head(page, obj=None, scheme="https:"):
                 uri = scheme + "//" + page.site.host + uri
             yield translation.language_code, uri
 
+
 def get_uri(obj, page, scheme):
     uri = obj.get_absolute_url()
     if uri.startswith("//"):

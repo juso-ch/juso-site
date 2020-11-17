@@ -17,9 +17,9 @@
       ['_table', '<i class="fas fa-table"></i>'],
       ['_team', '<i class="fas fa-users"></i>'],
       ['_person', '<i class="fas fa-user"></i>'],
-      ['_eventplugin', '<i class="fas fa-calendar-star"></i>'],
+      ['_eventplugin', '<i class="fas fa-calendar"></i>'],
       ['_articleplugin', '<i class="fas fa-newspaper"></i>'],
-      
+
     ]
 
     for (var i = 0; i < buttons.length; ++i) {
@@ -27,5 +27,41 @@
       ContentEditor.addPluginButton('blog' + buttons[i][0], buttons[i][1])
       ContentEditor.addPluginButton('events' + buttons[i][0], buttons[i][1])
     }
-  })
+
+    const updateCollapseListeners = function() {
+      $('.toggle-inline-fieldset').not('.toggle-listener-installed').on('click', function(){
+        const cardHeader = this.parentElement.parentElement;
+        const collapse = cardHeader.nextElementSibling;
+        collapse.classList.toggle('show');
+      });
+      $('.toggle-inline-fieldset').addClass('toggle-listener-installed');
+    };
+
+
+    const callback = function(mutationsList, observer) {
+      applySelect2();
+      updateCollapseListeners();
+    };
+
+
+    const config = {
+      attributes: false,
+      childList: true,
+      subtree: false
+    };
+
+    const observer = new MutationObserver(callback);
+
+    observer.observe(document.getElementsByClassName('order-machine')[0], config);
+
+    updateCollapseListeners();
+
+    $('.control-unit > select').select2({theme: "classic"}).on("change", function () {
+      ContentEditor.addContent(this.value);
+      console.log(this.value);
+      this.value = "";
+    });
+
+  });
+
 })(django.jQuery)

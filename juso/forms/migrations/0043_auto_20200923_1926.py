@@ -6,17 +6,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('forms', '0042_auto_20200913_1619'),
+        ("forms", "0042_auto_20200913_1619"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='form',
-            name='tags',
+            model_name="form",
+            name="tags",
         ),
         migrations.AddField(
-            model_name='form',
-            name='tags',
-            field=models.CharField(blank=True, max_length=30, verbose_name='tags'),
+            model_name="form",
+            name="tags",
+            field=models.CharField(blank=True, max_length=30, verbose_name="tags"),
         ),
     ]

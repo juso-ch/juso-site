@@ -1928,3 +1928,13 @@ a.download {
   background-color: var(--grey);
 }
 
+.external.YouTube iframe {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+.external.YouTube {
+    padding-bottom: 65.25%;
+    height: 0;
+    position: relative;
+}

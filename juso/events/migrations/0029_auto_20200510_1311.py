@@ -16,7 +16,9 @@ class Migration(migrations.Migration):
             field=models.CharField(blank=True, max_length=180, verbose_name="Titel"),
         ),
         migrations.AlterField(
-            model_name="event", name="slug", field=models.SlugField(max_length=180),
+            model_name="event",
+            name="slug",
+            field=models.SlugField(max_length=180),
         ),
         migrations.AddIndex(
             model_name="event",

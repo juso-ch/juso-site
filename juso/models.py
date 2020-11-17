@@ -44,7 +44,11 @@ class ColorField(models.CharField):
 
 
 class AbstractBlock(models.Model):
-    text = models.CharField(_("text"), max_length=240, blank=True,)
+    text = models.CharField(
+        _("text"),
+        max_length=240,
+        blank=True,
+    )
 
     color = ColorField()
 
@@ -98,7 +102,11 @@ class VotingRecommendation(models.Model):
 
     recommendation = models.CharField(
         max_length=10,
-        choices=(("yes", _("yes")), ("no", _("no")), ("open", _("open")),),
+        choices=(
+            ("yes", _("yes")),
+            ("no", _("no")),
+            ("open", _("open")),
+        ),
     )
 
     class Meta:

@@ -11,7 +11,9 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name="membership", name="order", field=models.IntegerField(default=0),
+            model_name="membership",
+            name="order",
+            field=models.IntegerField(default=0),
         ),
         migrations.AlterField(
             model_name="team",

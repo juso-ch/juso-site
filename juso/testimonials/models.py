@@ -43,7 +43,9 @@ class Testimonial(models.Model):
     image = ImageField(
         _("image"),
         auto_add_fields=True,
-        formats={"square": ["default", ("crop", (660, 660))],},
+        formats={
+            "square": ["default", ("crop", (660, 660))],
+        },
     )
 
     validated = models.BooleanField(_("validate"), default=False)

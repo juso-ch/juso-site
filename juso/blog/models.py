@@ -60,12 +60,15 @@ class Article(ContentMixin):
         def get_tagline():
             if RichText.objects.filter(parent=self).exists():
                 return bleach.clean(
-                    RichText.objects.filter(parent=self)[0].text, strip=True, tags=[],
+                    RichText.objects.filter(parent=self)[0].text,
+                    strip=True,
+                    tags=[],
                 )
             if self.meta_description:
                 return self.meta_description
             return ""
-        return cache.get_or_set(f'article-tagline-{self.pk}', get_tagline)
+
+        return cache.get_or_set(f"article-tagline-{self.pk}", get_tagline)
 
     def get_absolute_url(self):
         def _get_absolute_url():
@@ -103,8 +106,10 @@ class Article(ContentMixin):
                     )
             except NoReverseMatch:
                 return "#"
-        return cache.get_or_set(f'{current_site().id}article-absolute-url-{self.pk}', _get_absolute_url)
 
+        return cache.get_or_set(
+            f"{current_site().id}article-absolute-url-{self.pk}", _get_absolute_url
+        )
 
     def webpush_data(self, page):
         if favicon := page.top_page().favicon:
@@ -138,8 +143,20 @@ class Article(ContentMixin):
         ordering = ["-publication_date"]
         indexes = [
             models.Index(fields=["language_code"]),
-            models.Index(fields=["category_id", "language_code", "namespace_id",]),
-            models.Index(fields=["language_code", "namespace_id", "section_id",]),
+            models.Index(
+                fields=[
+                    "category_id",
+                    "language_code",
+                    "namespace_id",
+                ]
+            ),
+            models.Index(
+                fields=[
+                    "language_code",
+                    "namespace_id",
+                    "section_id",
+                ]
+            ),
         ]
         constraints = [
             models.UniqueConstraint(

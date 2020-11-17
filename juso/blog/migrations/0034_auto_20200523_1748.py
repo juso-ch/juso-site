@@ -47,7 +47,8 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.AlterModelOptions(
-            name="glossaryrichtext", options={"verbose_name": "glossary text"},
+            name="glossaryrichtext",
+            options={"verbose_name": "glossary text"},
         ),
         migrations.AlterModelOptions(
             name="image",

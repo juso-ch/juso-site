@@ -41,6 +41,8 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={"verbose_name": "glossary text",},
+            options={
+                "verbose_name": "glossary text",
+            },
         ),
     ]

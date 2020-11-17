@@ -10,7 +10,10 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AlterModelOptions(name="formplugin", options={},),
+        migrations.AlterModelOptions(
+            name="formplugin",
+            options={},
+        ),
         migrations.AlterField(
             model_name="page",
             name="menu",

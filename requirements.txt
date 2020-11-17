@@ -79,3 +79,5 @@ django-reversion
 django-flat-json-widget
 xlsxwriter
 django-debug-toolbar
+django-jazzmin==2.4.1
+docutils

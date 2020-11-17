@@ -31,7 +31,12 @@ def render_html(plugin):
 
 
 def render_image(plugin, **kwargs):
-    return render_to_string("plugins/image.html", {"plugin": plugin,})
+    return render_to_string(
+        "plugins/image.html",
+        {
+            "plugin": plugin,
+        },
+    )
 
 
 def render_block(plugin, **kwargs):
@@ -61,7 +66,8 @@ def register_renderers(renderer, pages):
     renderer.register_string_renderer(pages.External, render_embed)
 
     renderer.register_string_renderer(
-        pages.Image, render_image,
+        pages.Image,
+        render_image,
     )
 
     renderer.register_string_renderer(pages.Download, download.render_download)
@@ -81,9 +87,11 @@ def register_renderers(renderer, pages):
     renderer.register_string_renderer(pages.Button, render_block)
 
     renderer.register_string_renderer(
-        pages.FormPlugin, form_plugins.render_form,
+        pages.FormPlugin,
+        form_plugins.render_form,
     )
 
     renderer.register_string_renderer(
-        pages.FormEntryCounterPlugin, form_plugins.render_counter,
+        pages.FormEntryCounterPlugin,
+        form_plugins.render_counter,
     )

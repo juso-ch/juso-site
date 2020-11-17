@@ -31,10 +31,7 @@ class ArticleAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
         "title",
         "slug",
         "publication_date",
-        "category",
         "section",
-        "language_code",
-        "namespace",
     )
 
     list_filter = (
@@ -42,11 +39,6 @@ class ArticleAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
         "section",
         "language_code",
         "category",
-    )
-
-    list_editable = (
-        "language_code",
-        "slug",
     )
 
     date_hierarchy = "publication_date"
@@ -129,7 +121,10 @@ class ArticleAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
             "admin/js/jquery.init.js",
             JS(
                 "https://kit.fontawesome.com/91a6274901.js",
-                {"async": "async", "crossorigin": "anonymous",},
+                {
+                    "async": "async",
+                    "crossorigin": "anonymous",
+                },
                 static=False,
             ),
             "admin/plugin_buttons.js",

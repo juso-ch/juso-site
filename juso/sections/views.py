@@ -35,7 +35,9 @@ def category_list(request):
             "header_image": page.get_header_image(),
             "meta_tags": meta_tags([page] + ancestors, request=request),
             "regions": Regions.from_item(
-                page, renderer=pages.renderer.renderer, timeout=60,
+                page,
+                renderer=pages.renderer.renderer,
+                timeout=60,
             ),
         },
         paginate_by=100,

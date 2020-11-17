@@ -4,7 +4,8 @@ from django.utils.translation import ugettext as _
 from reversion.admin import VersionAdmin
 
 # Register your models here.
-from juso.people.models import Membership, Person, Team, CandidateList, Candidature
+from juso.people.models import (CandidateList, Candidature, Membership, Person,
+                                Team)
 
 
 class TeamInline(admin.TabularInline):
@@ -45,19 +46,30 @@ class PersonAdmin(VersionAdmin, admin.ModelAdmin):
     ]
 
     fieldsets = (
-        (None, {
-            'fields': ('first_name', 'last_name', 'user', 'image'),
-        }),
-        (_("social media"), {
-            'fields': ('facebook', 'twitter', 'instagram'),
-        }),
-        (_("contact"), {
-            'fields': ('email', 'homepage', 'phone'),
-        }),
-        (_("other"), {
-            'fields': ('job', 'birthday', 'city', 'bio'),
-        })
-
+        (
+            None,
+            {
+                "fields": ("first_name", "last_name", "user", "image"),
+            },
+        ),
+        (
+            _("social media"),
+            {
+                "fields": ("facebook", "twitter", "instagram"),
+            },
+        ),
+        (
+            _("contact"),
+            {
+                "fields": ("email", "homepage", "phone"),
+            },
+        ),
+        (
+            _("other"),
+            {
+                "fields": ("job", "birthday", "city", "bio"),
+            },
+        ),
     )
 
     list_filter = ["sections", "teams"]

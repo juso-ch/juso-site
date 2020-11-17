@@ -2,8 +2,8 @@ import json
 
 import bleach
 from content_editor.models import create_plugin_base
-from django.db import models
 from django.core.cache import cache
+from django.db import models
 from django.urls import NoReverseMatch
 from django.utils.translation import gettext_lazy as _
 from feincms3 import plugins

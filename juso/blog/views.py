@@ -1,17 +1,13 @@
 from django.conf import settings
-from django.contrib.postgres.search import (
-    SearchQuery,
-    SearchRank,
-    SearchVector,
-    SearchHeadline,
-)
+from django.contrib.postgres.search import (SearchHeadline, SearchQuery,
+                                            SearchRank, SearchVector)
 from django.contrib.sitemaps import Sitemap
 from django.contrib.sitemaps.views import sitemap
 from django.contrib.syndication.views import Feed
-from django.views.decorators.csrf import ensure_csrf_cookie
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
+from django.views.decorators.csrf import ensure_csrf_cookie
 from feincms3.apps import page_for_app_request
 from feincms3.regions import Regions
 from feincms3.shortcuts import render_list

@@ -4,7 +4,7 @@ from django.db import models
 from django.template.loader import render_to_string
 from django.utils.translation import gettext_lazy as _
 
-from juso.people.models import Team, CandidateList
+from juso.people.models import CandidateList, Team
 
 
 class TeamPlugin(models.Model):

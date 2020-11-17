@@ -1,4 +1,5 @@
 import uuid
+
 from content_editor.models import create_plugin_base
 from django.db import models
 from django.shortcuts import reverse
@@ -6,9 +7,8 @@ from django.utils.translation import gettext_lazy as _
 from feincms3.cleanse import CleansedRichTextField
 
 from juso.forms.forms import get_form_instance
-
 # Create your models here.
-from juso.sections.models import ContentMixin, get_template_list, Section
+from juso.sections.models import ContentMixin, Section, get_template_list
 
 INPUT_TYPES = (
     ("text", _("text")),

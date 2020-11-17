@@ -5,14 +5,15 @@ from django.conf import settings
 from django.contrib import admin
 from django.shortcuts import redirect, render, reverse
 from django.urls import path
-from django.utils.translation import gettext_lazy as _, pgettext
 from django.utils.html import format_html, mark_safe
+from django.utils.translation import gettext_lazy as _
+from django.utils.translation import pgettext
 from feincms3 import plugins
-from feincms3.admin import TreeAdmin, MoveForm
+from feincms3.admin import MoveForm, TreeAdmin
 from feincms3_meta.models import MetaMixin
 from feincms3_sites.admin import SiteAdmin
-from feincms3_sites.models import Site
 from feincms3_sites.middleware import current_site
+from feincms3_sites.models import Site
 from js_asset import JS
 from reversion.admin import VersionAdmin
 from tree_queries.forms import TreeNodeChoiceField

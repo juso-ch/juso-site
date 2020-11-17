@@ -3,28 +3,27 @@ import json
 from datetime import datetime
 
 import xlsxwriter
-
 from content_editor.admin import ContentEditor, ContentEditorInline
-from django.contrib import admin, messages
-from django.db import models
-from django.urls import path
 from django import forms
+from django.contrib import admin, messages
+from django.contrib.auth.decorators import user_passes_test
+from django.db import models
 from django.http import HttpResponse
+from django.shortcuts import redirect, render, reverse
+from django.urls import path
 from django.utils import timezone
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext_lazy as _
-from django.shortcuts import render, redirect, reverse
-from reversion.admin import VersionAdmin
 from flat_json_widget.widgets import FlatJsonWidget
-from django.contrib.auth.decorators import user_passes_test
-
 from js_asset import JS
-
-# Register your models here.
+from reversion.admin import VersionAdmin
 
 from juso.forms.models import Form, FormField, MailchimpConnection
 from juso.sections.models import Section
 from juso.utils import CopyContentMixin
+
+# Register your models here.
+
 
 
 class FormFieldInline(ContentEditorInline):

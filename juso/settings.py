@@ -13,8 +13,9 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
-
 from django.utils.translation import gettext_lazy as _
+from html_sanitizer.sanitizer import (bold_span_to_strong, italic_span_to_em,
+                                      tag_replacer, target_blank_noopener)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -307,12 +308,6 @@ VAPID_PRIVATE_KEY = os.environ.get("VAPID_PRIVATE_KEY", "")
 VAPID_PUBLIC_KEY = os.environ.get("VAPID_PUBLIC_KEY", "")
 
 
-from html_sanitizer.sanitizer import (
-    bold_span_to_strong,
-    italic_span_to_em,
-    tag_replacer,
-    target_blank_noopener,
-)
 
 
 def sanitize_href(url):
@@ -510,7 +505,7 @@ JAZZMIN_SETTINGS = {
     "changeform_format": "vertical_tabs",
     # override change forms on a per modeladmin basis
     "changeform_format_overrides": {
-#        "auth.user": "collapsible",
+        #        "auth.user": "collapsible",
         "auth.group": "vertical_tabs",
     },
     # Add a language dropdown into the admin

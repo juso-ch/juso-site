@@ -5,8 +5,8 @@ from feincms3.shortcuts import render_list
 from feincms3_meta.utils import meta_tags
 
 from juso import pages
-from juso.people.models import Person, Team
 from juso.blog.models import Article
+from juso.people.models import Person, Team
 
 # Create your views here.
 

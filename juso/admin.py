@@ -1,16 +1,15 @@
 import secrets
-from django.contrib import messages
-from content_editor.admin import ContentEditorInline
-from django.contrib import admin
-from django.urls import path
-from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.models import User, Group
-from django.utils.translation import gettext_lazy as _
-from django.core.mail import send_mail
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import user_passes_test
 
+from content_editor.admin import ContentEditorInline
 from django import forms
+from django.contrib import admin, messages
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.models import Group, User
+from django.core.mail import send_mail
+from django.shortcuts import redirect, render
+from django.urls import path
+from django.utils.translation import gettext_lazy as _
 
 from juso.sections.models import Section
 
@@ -128,7 +127,8 @@ class ButtonInline(ContentEditorInline):
             None,
             {
                 "fields": (
-                    "text", "target",
+                    "text",
+                    "target",
                     "region",
                     "ordering",
                 )

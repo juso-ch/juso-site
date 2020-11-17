@@ -2,8 +2,8 @@ from django.conf import settings
 from django.contrib.sitemaps import Sitemap
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404, render
-from django.views.decorators.csrf import ensure_csrf_cookie
 from django.utils import timezone
+from django.views.decorators.csrf import ensure_csrf_cookie
 from feincms3.apps import page_for_app_request
 from feincms3.regions import Regions
 from feincms3.shortcuts import render_list

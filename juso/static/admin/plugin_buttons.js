@@ -34,14 +34,24 @@
         const collapse = cardHeader.nextElementSibling;
         collapse.classList.toggle('show');
       });
+
+      $('.inline-controls select').not('.region-listener-installed').select2({theme: 'classic'}).on('change', function() {
+        var $inline = $(this.parentElement.parentElement);
+        $inline.attr('data-region', this.value);
+        var regionInput = $inline.find('.field-region input');
+        regionInput.val(this.value);
+      });
+
       $('.toggle-inline-fieldset').addClass('toggle-listener-installed');
+      $('.inline-controls select').addClass('region-listener-installed');
     };
 
 
     const callback = function(mutationsList, observer) {
-      applySelect2();
       updateCollapseListeners();
+      applySelect2();
     };
+
 
 
     const config = {
@@ -58,9 +68,16 @@
 
     $('.control-unit > select').select2({theme: "classic"}).on("change", function () {
       ContentEditor.addContent(this.value);
-      console.log(this.value);
       this.value = "";
     });
+
+    $('.inline-controls select').select2({theme: "classic"}).on('change', function() {
+      var $inline = $(this.parentElement.parentElement);
+      $inline.attr('data-region', this.value);
+      var regionInput = $inline.find('.field-region input');
+      regionInput.val(this.value);
+    });
+    $('.inline-controls select').addClass('region-listener-installed');
 
   });
 

@@ -1,11 +1,12 @@
-from django.shortcuts import render, redirect
-from feincms3.apps import page_for_app_request, reverse_app
-
-from feincms3_meta.utils import meta_tags
-from feincms3.regions import Regions
 from django.core.paginator import Paginator
-from .forms import TestimonialForm
+from django.shortcuts import redirect, render
+from feincms3.apps import page_for_app_request, reverse_app
+from feincms3.regions import Regions
+from feincms3_meta.utils import meta_tags
+
 from juso.pages.renderer import renderer
+
+from .forms import TestimonialForm
 
 # Create your views here.
 

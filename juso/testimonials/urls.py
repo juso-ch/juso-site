@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import index, create
+
+from .views import create, index
 
 app_name = "testimonials"
 

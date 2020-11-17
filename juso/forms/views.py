@@ -1,5 +1,5 @@
-import numbers
 import hashlib
+import numbers
 
 import requests
 from django.conf import settings
@@ -9,9 +9,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from ipaddr import client_ip
 
-from juso.forms import models
+from juso.forms import models, tasks
 from juso.forms.plugins import render_form
-from juso.forms import tasks
 
 # Create your views here.
 

@@ -1,6 +1,7 @@
+import bleach
 from content_editor.models import create_plugin_base
-from django.core.validators import MinValueValidator
 from django.conf import settings
+from django.core.validators import MinValueValidator
 from django.db import models, transaction
 from django.utils.translation import gettext_lazy as _
 from feincms3 import plugins as feincms3_plugins
@@ -12,7 +13,6 @@ from feincms3_sites.models import AbstractPage
 from imagefield.fields import ImageField
 from imagefield.processing import register
 from PIL import ImageEnhance, ImageOps
-import bleach
 
 from juso import models as juso
 from juso.blog import plugins as article_plugins

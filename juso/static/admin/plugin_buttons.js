@@ -20,7 +20,31 @@
       ['_eventplugin', '<i class="fas fa-calendar"></i>'],
       ['_articleplugin', '<i class="fas fa-newspaper"></i>'],
 
-    ]
+    ];
+    var orderMachine = $(".order-machine");
+
+    function reorderInlines(context) {
+      context = orderMachine;
+      var inlines = context.find(".inline-related");
+      inlines.not(".empty-form").each(function () {
+        $(document).trigger("content-editor:deactivate", [$(this)]);
+
+        //        ensureDraggable($(this));
+      });
+
+      inlines.detach();
+      orderMachine.append(inlines);
+
+      inlines.each(function () {
+        var ordering = $(".field-ordering input", this).val() || 1e9;
+        this.style.order = ordering;
+        //        ensureDraggable($(this));
+      });
+
+      inlines.not(".empty-form").each(function () {
+        $(document).trigger("content-editor:activate", [$(this)]);
+      });
+    }
 
     for (var i = 0; i < buttons.length; ++i) {
       ContentEditor.addPluginButton('pages' + buttons[i][0], buttons[i][1])
@@ -35,11 +59,16 @@
         collapse.classList.toggle('show');
       });
 
-      $('.inline-controls select').not('.region-listener-installed').select2({theme: 'classic'}).on('change', function() {
+      $('.inline-controls select').not('.region-listener-installed').select2({theme: 'classic', width: '100%'}).on('change', function() {
         var $inline = $(this.parentElement.parentElement);
         $inline.attr('data-region', this.value);
         var regionInput = $inline.find('.field-region input');
         regionInput.val(this.value);
+        reorderInlines();
+        $('.tab[data-region="' + this.value + '"]').click();
+        $('.tab.active').removeClass('active');
+        $('.tab[data-region="' + this.value + '"]').addClass('active');
+
       });
 
       $('.toggle-inline-fieldset').addClass('toggle-listener-installed');
@@ -71,11 +100,12 @@
       this.value = "";
     });
 
-    $('.inline-controls select').select2({theme: "classic"}).on('change', function() {
+    $('.inline-controls select').select2({theme: "classic", width: '100%'}).on('change', function() {
       var $inline = $(this.parentElement.parentElement);
       $inline.attr('data-region', this.value);
       var regionInput = $inline.find('.field-region input');
       regionInput.val(this.value);
+      reorderInlines();
     });
     $('.inline-controls select').addClass('region-listener-installed');
 

@@ -232,6 +232,7 @@ class LocationAdmin(VersionAdmin, ContentEditor):
             location = locator.geocode(
                 f"{obj.street}, {obj.zip_code} {obj.city}, {obj.country}"
             )
-            obj.lat = location.latitude
-            obj.lng = location.longitude
+            if location:
+                obj.lat = location.latitude
+                obj.lng = location.longitude
         super().save_model(request, obj, form, change)

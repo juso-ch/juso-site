@@ -44,9 +44,10 @@ class CustomUserAdmin(UserAdmin):
     change_list_template = "admin/user/change_list.html"
 
     def register_new_user(self, request):
-        form = RegistrationForm(request.POST, request=request)
+        form = RegistrationForm(request=request)
 
         if request.POST:
+            form = RegistrationForm(request.POST, request=request)
             if form.is_valid():
                 first_name = form.cleaned_data["first_name"].replace(" ", "")
                 last_name = form.cleaned_data["last_name"].replace(" ", "")

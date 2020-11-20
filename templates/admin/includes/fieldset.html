@@ -21,7 +21,7 @@
           {% for line in fieldset %}
           {% for field in line %}
           <div class="form-group{% if line.fields|length_is:'1' and line.errors %} errors{% endif %}{% if not line.has_visible_field %} hidden{% endif %}{% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% endfor %}">
-            <div class="row">
+            <div class="form-row">
               <label class="col-sm-12 text-left">
                 {{ field.field.label|capfirst }}
                 {% if field.field.field.required %}

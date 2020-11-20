@@ -128,3 +128,9 @@ width: 200px;
 .fieldBox  {
   width: 100%;
 }
+
+.flat-json h2 {
+  font-weight: 700;
+  font-size: 14px;
+  padding-left: 5px;
+}

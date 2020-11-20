@@ -4,6 +4,7 @@ from datetime import datetime
 
 import xlsxwriter
 from content_editor.admin import ContentEditor, ContentEditorInline
+from admin_ordering.admin import OrderableAdmin
 from django import forms
 from django.contrib import admin, messages
 from django.contrib.auth.decorators import user_passes_test
@@ -25,8 +26,10 @@ from juso.utils import CopyContentMixin
 # Register your models here.
 
 
-
-class FormFieldInline(ContentEditorInline):
+class FormFieldInline(OrderableAdmin, admin.TabularInline):
+    model = FormField
+    ordering_field = "ordering"
+    ordering_field_hide_input = True
     fieldsets = (
         (
             None,
@@ -109,7 +112,7 @@ class FormEntryAdmin(admin.ModelAdmin):
 
 
 @admin.register(Form)
-class FormAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
+class FormAdmin(VersionAdmin, CopyContentMixin):
     list_display = [
         "title",
         "slug",
@@ -214,7 +217,7 @@ class FormAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
     actions = ["export_form", "clear_form", "export_form_xlsx"]
 
     inlines = [
-        FormFieldInline.create(FormField),
+        FormFieldInline,
     ]
 
     plugins = [FormField]

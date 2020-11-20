@@ -471,6 +471,7 @@ JAZZMIN_SETTINGS = {
         "people.Team": "fas fa-users",
         "forms.Form": "fab fa-wpforms",
         "forms.MailchimpConnection": "fab fa-mailchimp",
+        "forms.FormEntry": "fas fa-grip-lines",
         "link_collections.Collection": "fas fa-list",
         "glossary.Entry": "fas fa-book-open",
         "sections.Category": "fas fa-tags",
@@ -536,6 +537,8 @@ JAZZMIN_UI_TWEAKS = {
     "dark_mode_theme": "",
     "actions_sticky_top": True,
 }
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 if DEBUG:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"

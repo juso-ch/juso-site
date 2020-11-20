@@ -29,7 +29,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 INSTALLED_APPS = [
     "django_su",
     "jazzmin",
-    "django.contrib.admindocs",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -374,7 +373,7 @@ MAILTRAIN_TOKEN = os.environ.get("MAILTRAIN_TOKEN", "")
 
 
 def toolbar_callback(*args):
-    return DEBUG
+    return False
 
 
 INTERNAL_IPS = [
@@ -414,13 +413,14 @@ JAZZMIN_SETTINGS = {
         {"model": "pages.Page"},
         # App with dropdown menu to all its models pages (Permissions checked against models)
         {"app": "events"},
-        {"app": "people"},
+        {'name': "Support", 'url': 'https://github.com/juso-ch/juso-site/wiki', 'icon': 'fas fa-question-circle'}
     ],
     #############
     # User Menu #
     #############
     # Additional links to include in the user menu on the top right ("app" url type is not allowed)
-    "usermenu_links": [],
+    "usermenu_links": [
+    ],
     #############
     # Side Menu #
     #############

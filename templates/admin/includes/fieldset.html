@@ -19,9 +19,9 @@
 
         <fieldset>
           {% for line in fieldset %}
+          {% for field in line %}
           <div class="form-group{% if line.fields|length_is:'1' and line.errors %} errors{% endif %}{% if not line.has_visible_field %} hidden{% endif %}{% for field in line %}{% if field.field.name %} field-{{ field.field.name }}{% endif %}{% endfor %}">
             <div class="row">
-              {% for field in line %}
               <label class="col-sm-12 text-left">
                 {{ field.field.label|capfirst }}
                 {% if field.field.field.required %}
@@ -29,10 +29,10 @@
                 {% endif %}
               </label>
               <div class="{% if not line.fields|length_is:'1' %} col-auto  fieldBox {% else %} col-sm-12 {% endif %}
-                               {% if field.field.name %} field-{{ field.field.name }}{% endif %}
-                               {% if not field.is_readonly and field.errors %} errors{% endif %}
-                               {% if field.field.is_hidden %} hidden {% endif %}
-                               {% if field.is_checkcard %} checkcard-row{% endif %}">
+                                {% if field.field.name %} field-{{ field.field.name }}{% endif %}
+                                {% if not field.is_readonly and field.errors %} errors{% endif %}
+                                {% if field.field.is_hidden %} hidden {% endif %}
+                                {% if field.is_checkcard %} checkcard-row{% endif %}">
                 {% if field.is_readonly %}
                 <div class="readonly" style="margin-top: 7px;">{{ field.contents }}</div>
                 {% else %}
@@ -48,9 +48,9 @@
                   {% if line.fields|length_is:'1' %}{{ line.errors }}{% endif %}
                 </div>
               </div>
-              {% endfor %}
             </div>
           </div>
+          {% endfor %}
           {% endfor %}
         </fieldset>
 

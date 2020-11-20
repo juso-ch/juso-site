@@ -40,7 +40,6 @@ urlpatterns = [
         auth_views.PasswordResetView.as_view(),
         name="admin_password_reset",
     ),
-    path("admin/doc/", include("django.contrib.admindocs.urls")),
     path(
         "admin/password_reset/done/",
         auth_views.PasswordResetDoneView.as_view(),

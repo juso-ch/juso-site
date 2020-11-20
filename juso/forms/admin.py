@@ -20,7 +20,7 @@ from django.contrib.auth.decorators import user_passes_test
 
 # Register your models here.
 
-from juso.forms.models import Form, FormField, MailchimpConnection
+from juso.forms.models import Form, FormField, MailchimpConnection, FormEntry, FormEntryValue
 from juso.sections.models import Section
 from juso.utils import CopyContentMixin
 
@@ -52,6 +52,59 @@ class FormFieldInline(ContentEditorInline):
             },
         ),
     )
+
+
+class FormEntryValueInline(admin.TabularInline):
+    model = FormEntryValue
+
+    fields = ['field', 'value']
+
+    can_delete = False
+
+    readonly_fields = ['field']
+
+    formfield_overrides = {
+        models.TextField: {'widget': forms.TextInput}
+    }
+
+    extra = 0
+
+    def has_add_permission(self, request, obj=None):
+        return False
+
+
+@admin.register(FormEntry)
+class FormEntryAdmin(admin.ModelAdmin):
+    list_display = [
+        'submission_id',
+        'ip',
+        'created',
+        'form',
+    ]
+
+    readonly_fields = ['form', 'ip', 'submission_id']
+
+    search_fields = [
+        'fields__value',
+        'ip',
+    ]
+
+    list_filter = [
+        'form',
+    ]
+
+    inlines = [FormEntryValueInline]
+
+    ordering = ['created']
+
+    date_hierarchy = 'created'
+
+
+    def get_queryset(self, request):
+        if request.user.is_superuser:
+            return super().get_queryset(request)
+        sections = request.user.section_set.all()
+        return super().get_queryset(request).filter(form__section__in=sections)
 
 
 @admin.register(Form)

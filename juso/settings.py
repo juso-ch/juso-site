@@ -477,7 +477,7 @@ JAZZMIN_SETTINGS = {
         "forms.Form": "fab fa-wpforms",
         "forms.MailchimpConnection": "fab fa-mailchimp",
         "forms.FormEntry": "fas fa-grip-lines",
-        "forms.Webhook": "fas fa-anchor",
+        "forms.Webhook": "fas fa-paper-plane",
         "link_collections.Collection": "fas fa-list",
         "glossary.Entry": "fas fa-book-open",
         "sections.Category": "fas fa-tags",

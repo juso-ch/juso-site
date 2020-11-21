@@ -81,3 +81,4 @@ xlsxwriter
 django-debug-toolbar
 django-jazzmin==2.4.1
 docutils
+phonenumbers

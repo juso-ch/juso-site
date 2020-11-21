@@ -20,8 +20,8 @@ def process_entry(pk):
     data = form.webhook_dict.copy() if form.webhook_dict else dict()
     data.update(entry.get_values(form.get_fields(), json_safe=True))
 
-    if form.webhook:
-        requests.post(form.webhook, data=data)
+    for webhook in form.webhooks.all():
+        webhook.send_webhook(entry)
 
     if form.list_id:
         requests.post(mailtrain_subscribe_url(form), data=data)

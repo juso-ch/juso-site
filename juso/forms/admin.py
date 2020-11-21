@@ -19,7 +19,15 @@ from flat_json_widget.widgets import FlatJsonWidget
 from js_asset import JS
 from reversion.admin import VersionAdmin
 
-from juso.forms.models import Form, FormField, MailchimpConnection, FormEntry, FormEntryValue
+from juso.forms.models import (
+    Form,
+    FormField,
+    MailchimpConnection,
+    FormEntry,
+    FormEntryValue,
+    Webhook,
+    WebhookField,
+)
 from juso.sections.models import Section
 from juso.utils import CopyContentMixin
 
@@ -61,15 +69,13 @@ class FormFieldInline(OrderableAdmin, admin.TabularInline):
 class FormEntryValueInline(admin.TabularInline):
     model = FormEntryValue
 
-    fields = ['field', 'value']
+    fields = ["field", "value"]
 
     can_delete = False
 
-    readonly_fields = ['field']
+    readonly_fields = ["field"]
 
-    formfield_overrides = {
-        models.TextField: {'widget': forms.TextInput}
-    }
+    formfield_overrides = {models.TextField: {"widget": forms.TextInput}}
 
     extra = 0
 
@@ -80,29 +86,28 @@ class FormEntryValueInline(admin.TabularInline):
 @admin.register(FormEntry)
 class FormEntryAdmin(admin.ModelAdmin):
     list_display = [
-        'submission_id',
-        'ip',
-        'created',
-        'form',
+        "submission_id",
+        "ip",
+        "created",
+        "form",
     ]
 
-    readonly_fields = ['form', 'ip', 'submission_id']
+    readonly_fields = ["form", "ip", "submission_id"]
 
     search_fields = [
-        'fields__value',
-        'ip',
+        "fields__value",
+        "ip",
     ]
 
     list_filter = [
-        'form',
+        "form",
     ]
 
     inlines = [FormEntryValueInline]
 
-    ordering = ['created']
+    ordering = ["created"]
 
-    date_hierarchy = 'created'
-
+    date_hierarchy = "created"
 
     def get_queryset(self, request):
         if request.user.is_superuser:
@@ -127,7 +132,7 @@ class FormAdmin(VersionAdmin, CopyContentMixin):
         "language_code",
     ]
 
-    autocomplete_fields = ["section", "mailchimp_connection"]
+    autocomplete_fields = ["section", "mailchimp_connection", "webhooks"]
 
     search_fields = [
         "title",
@@ -179,10 +184,9 @@ class FormAdmin(VersionAdmin, CopyContentMixin):
                 "fields": (
                     "email",
                     "list_id",
-                    "webhook",
+                    "webhooks",
                     "mailchimp_connection",
                     "mailchimp_list_id",
-                    "webhook_dict",
                     "tags",
                 ),
             },
@@ -414,3 +418,24 @@ class MailchimpConnectionAdmin(admin.ModelAdmin):
             return super().get_queryset(request)
         sections = request.user.section_set.all()
         return super().get_queryset(request).filter(section__in=sections)
+
+
+class WebhookFieldInline(admin.TabularInline):
+    model = WebhookField
+
+
+@admin.register(Webhook)
+class WebhookAdmin(admin.ModelAdmin):
+    list_display = ("name", "owner")
+
+    search_fields = ("name",)
+
+    autocomplete_fields = ("owner",)
+
+    inlines = [WebhookFieldInline]
+
+    def get_queryset(self, request):
+        if request.user.is_superuser:
+            return super().get_queryset(request)
+        sections = request.user.section_set.all()
+        return super().get_queryset(request).filter(onwer__in=sections)

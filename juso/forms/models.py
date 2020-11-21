@@ -1,12 +1,18 @@
 import uuid
 
+
 from content_editor.models import create_plugin_base
 from django.db import models
 from django.shortcuts import reverse
 from django.utils.translation import gettext_lazy as _
 from feincms3.cleanse import CleansedRichTextField
 
+import phonenumbers
+import requests
+
+
 from juso.forms.forms import get_form_instance
+
 # Create your models here.
 from juso.sections.models import ContentMixin, Section, get_template_list
 
@@ -71,6 +77,8 @@ class Form(ContentMixin):
     webhook = models.URLField(_("webhook"), max_length=1200, blank=True)
     list_id = models.CharField(_("mailtrain list id"), max_length=30, blank=True)
     webhook_dict = models.JSONField(_("webhook dict"), blank=True, null=True)
+    webhooks = models.ManyToManyField("Webhook", blank=True)
+
     linked_form = models.ForeignKey(
         "self", models.SET_NULL, null=True, blank=True, related_name="linked_forms"
     )
@@ -228,3 +236,60 @@ class FormEntryValue(models.Model):
     class Meta:
         verbose_name = _("form entry value")
         verbose_name_plural = _("form entry values")
+
+
+class Webhook(models.Model):
+    name = models.CharField(max_length=200)
+    url = models.URLField(max_length=800)
+
+    owner = models.ForeignKey(Section, models.CASCADE)
+
+    def send_webhook(self, entry):
+        form = entry.form
+
+        entry_data = entry.get_values(form.get_fields(), json_safe=False)
+        data = {}
+
+        for field in self.fields.all():
+            data[field.webhook_slug] = field.convert_data(
+                entry_data.get(field.form_slug), form
+            )
+
+        print(data)
+        requests.post(self.url, data=data)
+
+    def __str__(self):
+        return self.name
+
+
+class WebhookField(models.Model):
+    form_slug = models.SlugField(help_text=_("slug of the field in the form"))
+    webhook_slug = models.CharField(
+        max_length=200, help_text=_("name of the field in the request to the webhook")
+    )
+
+    field_converter = models.CharField(
+        max_length=200, blank=True, help_text=_("apply a converter on the user input")
+    )
+    field_converter_args = models.CharField(
+        max_length=200, blank=True, help_text=_("arguments for the converter")
+    )
+
+    webhook = models.ForeignKey(Webhook, models.CASCADE, related_name="fields")
+
+    def convert_data(self, value, form):
+        if self.field_converter == "constant":
+            return self.field_converter_args
+
+        if self.field_converter == "phonenumber":
+            country, output = [x.strip() for x in self.field_converter_args.split(",")]
+            parsed = phonenumbers.parse(value, country)
+
+            return phonenumbers.format_number(
+                parsed, getattr(phonenumbers.PhoneNumberFormat, output)
+            )
+
+        if self.field_converter == "toint":
+            return int(value)
+
+        return value

@@ -4,8 +4,7 @@ from django.utils.translation import ugettext as _
 from reversion.admin import VersionAdmin
 
 # Register your models here.
-from juso.people.models import (CandidateList, Candidature, Membership, Person,
-                                Team)
+from juso.people.models import CandidateList, Candidature, Membership, Person, Team
 
 
 class TeamInline(admin.TabularInline):

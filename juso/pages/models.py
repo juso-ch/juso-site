@@ -57,6 +57,7 @@ class Page(
     """
     This ist the main entity of the cms
     """
+
     APPLICATIONS = [
         (
             "blog",

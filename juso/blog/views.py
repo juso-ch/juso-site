@@ -1,6 +1,10 @@
 from django.conf import settings
-from django.contrib.postgres.search import (SearchHeadline, SearchQuery,
-                                            SearchRank, SearchVector)
+from django.contrib.postgres.search import (
+    SearchHeadline,
+    SearchQuery,
+    SearchRank,
+    SearchVector,
+)
 from django.contrib.sitemaps import Sitemap
 from django.contrib.sitemaps.views import sitemap
 from django.contrib.syndication.views import Feed

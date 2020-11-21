@@ -14,8 +14,12 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 
 from django.utils.translation import gettext_lazy as _
-from html_sanitizer.sanitizer import (bold_span_to_strong, italic_span_to_em,
-                                      tag_replacer, target_blank_noopener)
+from html_sanitizer.sanitizer import (
+    bold_span_to_strong,
+    italic_span_to_em,
+    tag_replacer,
+    target_blank_noopener,
+)
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -307,8 +311,6 @@ VAPID_PRIVATE_KEY = os.environ.get("VAPID_PRIVATE_KEY", "")
 VAPID_PUBLIC_KEY = os.environ.get("VAPID_PUBLIC_KEY", "")
 
 
-
-
 def sanitize_href(url):
     return url
 
@@ -413,14 +415,17 @@ JAZZMIN_SETTINGS = {
         {"model": "pages.Page"},
         # App with dropdown menu to all its models pages (Permissions checked against models)
         {"app": "events"},
-        {'name': "Support", 'url': 'https://github.com/juso-ch/juso-site/wiki', 'icon': 'fas fa-question-circle'}
+        {
+            "name": "Support",
+            "url": "https://github.com/juso-ch/juso-site/wiki",
+            "icon": "fas fa-question-circle",
+        },
     ],
     #############
     # User Menu #
     #############
     # Additional links to include in the user menu on the top right ("app" url type is not allowed)
-    "usermenu_links": [
-    ],
+    "usermenu_links": [],
     #############
     # Side Menu #
     #############
@@ -472,6 +477,7 @@ JAZZMIN_SETTINGS = {
         "forms.Form": "fab fa-wpforms",
         "forms.MailchimpConnection": "fab fa-mailchimp",
         "forms.FormEntry": "fas fa-grip-lines",
+        "forms.Webhook": "fas fa-anchor",
         "link_collections.Collection": "fas fa-list",
         "glossary.Entry": "fas fa-book-open",
         "sections.Category": "fas fa-tags",
@@ -538,7 +544,7 @@ JAZZMIN_UI_TWEAKS = {
     "actions_sticky_top": True,
 }
 
-X_FRAME_OPTIONS = 'SAMEORIGIN'
+X_FRAME_OPTIONS = "SAMEORIGIN"
 
 if DEBUG:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"

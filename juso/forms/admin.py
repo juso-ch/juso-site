@@ -43,9 +43,7 @@ class FormFieldInline(OrderableAdmin, admin.TabularInline):
             None,
             {
                 "fields": (
-                    ("name", "slug", "input_type", "required"),
-                    "ordering",
-                    "region",
+                    ("name", "ordering", "slug", "input_type", "required"),
                 )
             },
         ),

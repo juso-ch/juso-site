@@ -141,19 +141,19 @@ class Form(ContentMixin):
         return form_entries, fields
 
 
-PluginBase = create_plugin_base(Form)
 
+class FormField(models.Model):
+    name = models.CharField(_("name"), max_length=140, help_text=_("label for form field"))
+    input_type = models.CharField(_("type"), choices=INPUT_TYPES, max_length=140, help_text=_("type of the input field"))
+    parent = models.ForeignKey(Form, models.CASCADE)
 
-class FormField(PluginBase):
-    name = models.CharField(_("name"), max_length=140)
-    input_type = models.CharField(_("type"), choices=INPUT_TYPES, max_length=140)
-
-    slug = models.SlugField()
-    required = models.BooleanField(_("required"))
-    help_text = models.CharField(_("help text"), max_length=240, blank=True)
-    choices = models.TextField(_("choices"), blank=True)
-    initial = models.TextField(_("initial"), max_length=240, blank=True)
-    size = models.TextField(_("size"), default="one", choices=SIZES)
+    slug = models.SlugField(help_text=_("name that will be used in export headings"))
+    required = models.BooleanField(_("required"), help_text=_("force people to provide this value"))
+    help_text = models.CharField(_("help text"), max_length=240, blank=True, help_text=_("additional info for people"))
+    choices = models.TextField(_("choices"), blank=True, help_text=_("provide the options for a choice field"))
+    initial = models.TextField(_("initial"), max_length=240, blank=True, help_text=_("initial value for this field"))
+    size = models.TextField(_("size"), default="one", choices=SIZES, help_text=_("proportion of the field"))
+    ordering = models.IntegerField(default=10)
 
     unique = models.BooleanField(
         _("unique"),

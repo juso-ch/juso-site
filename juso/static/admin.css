@@ -134,3 +134,18 @@ width: 200px;
   font-size: 14px;
   padding-left: 5px;
 }
+
+.admin-ordering-field.admin-ordering-field-hide-input .admin-ordering-field-input-wrapper input {
+    width: 0;
+}
+.ui-sortable .vLargeTextField {
+    height: 8em;
+    width: 10em;
+}
+
+.ui-sortable .vTextField {
+  width: 10em;
+}
+.vTextField {
+  width: 12em;
+}

@@ -7,6 +7,7 @@ from django.core.mail import send_mail
 from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
+from django.views.decorators.csrf import csrf_exempt
 from ipaddr import client_ip
 
 from juso.forms import models
@@ -15,6 +16,7 @@ from juso.forms.plugins import render_form
 # Create your views here.
 
 
+@csrf_exempt
 def form_view(request, pk):
     form = get_object_or_404(models.Form, pk=pk).get_instance(request)
 

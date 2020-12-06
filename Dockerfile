@@ -10,7 +10,7 @@ ENV PYTHONUNBUFFERED 1
 
 RUN apt-get update && \
   apt-get install -y \
-    netcat
+    netcat sox flite
 
 # install dependencies
 RUN pip install --upgrade pip

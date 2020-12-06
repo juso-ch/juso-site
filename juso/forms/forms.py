@@ -5,6 +5,7 @@ from types import MethodType
 from django import forms
 from django.forms import widgets
 
+from captcha.fields import CaptchaField
 from juso.forms import models
 from juso.sections.models import Section
 
@@ -29,6 +30,18 @@ class DynamicForm(forms.Form):
 
                     if values.exists():
                         raise forms.ValidationError(bound_field.unique_error)
+                    return self.cleaned_data[bound_field.slug]
+
+                self.__dict__[f"clean_{field.slug}"] = MethodType(
+                    clean_field, self)
+
+            if field.disallow_text:
+                bound_field = field
+
+                def clean_field(self):
+                    if bound_field.disallow_text in self.cleaned_data[
+                            bound_field.slug]:
+                        raise forms.ValidationError("illegal text")
                     return self.cleaned_data[bound_field.slug]
 
                 self.__dict__[f"clean_{field.slug}"] = MethodType(
@@ -138,6 +151,7 @@ INPUT_TYPES = {
     "hidden": HiddenField,
     "section": forms.ModelChoiceField,
     "honeypot": HoneypotField,
+    "captcha": CaptchaField,
 }
 
 

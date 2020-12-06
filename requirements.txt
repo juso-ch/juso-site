@@ -79,3 +79,4 @@ django-reversion
 django-flat-json-widget
 xlsxwriter
 django-debug-toolbar
+django-simple-captcha

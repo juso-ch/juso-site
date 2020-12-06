@@ -13,12 +13,10 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
-
 from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
@@ -57,6 +55,7 @@ INSTALLED_APPS = [
     "juso.testimonials.apps.TestimonialsConfig",
     "juso.link_collections.apps.LinkCollectionsConfig",
     "django_celery_results",
+    "captcha",
 ]
 
 MIDDLEWARE = [
@@ -74,7 +73,6 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-
 ROOT_URLCONF = "juso.urls"
 
 TEMPLATES = [
@@ -89,7 +87,9 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "sekizai.context_processors.sekizai",
             ],
-            "builtins": ["feincms3.templatetags.feincms3",],
+            "builtins": [
+                "feincms3.templatetags.feincms3",
+            ],
             "loaders": [
                 (
                     "juso.template.SiteTemplateLoader",
@@ -105,19 +105,27 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "juso.wsgi.application"
 
-
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+        "NAME":
+        "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
+    {
+        "NAME":
+        "django.contrib.auth.password_validation.MinimumLengthValidator",
+    },
+    {
+        "NAME":
+        "django.contrib.auth.password_validation.CommonPasswordValidator",
+    },
+    {
+        "NAME":
+        "django.contrib.auth.password_validation.NumericPasswordValidator",
+    },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
@@ -130,7 +138,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
@@ -142,51 +149,50 @@ STATIC_URL = "/static/"
 # Configure django-ckeditor
 CKEDITOR_CONFIGS = {
     "default": {
-        "toolbar": "Custom",
-        "format_tags": "h1;h2;h3;h4;p;pre",
-        "toolbar_Custom": [
-            [
-                "Format",
-                "RemoveFormat",
-                "-",
-                "Undo",
-                "Redo",
-                "-",
-                "Bold",
-                "Italic",
-                "Strike",
-                "Subscript",
-                "Superscript",
-                "-",
-                "NumberedList",
-                "BulletedList",
-                "Table",
-                "Blockquote",
-                "-",
-                "Anchor",
-                "Link",
-                "Unlink",
-                "-",
-                "HorizontalRule",
-                "SpecialChar",
-                "-",
-                "ShowBlocks",
-                "Source",
-            ]
-        ],
+        "toolbar":
+        "Custom",
+        "format_tags":
+        "h1;h2;h3;h4;p;pre",
+        "toolbar_Custom": [[
+            "Format",
+            "RemoveFormat",
+            "-",
+            "Undo",
+            "Redo",
+            "-",
+            "Bold",
+            "Italic",
+            "Strike",
+            "Subscript",
+            "Superscript",
+            "-",
+            "NumberedList",
+            "BulletedList",
+            "Table",
+            "Blockquote",
+            "-",
+            "Anchor",
+            "Link",
+            "Unlink",
+            "-",
+            "HorizontalRule",
+            "SpecialChar",
+            "-",
+            "ShowBlocks",
+            "Source",
+        ]],
     },
 }
 CKEDITOR_CONFIGS["richtext-plugin"] = CKEDITOR_CONFIGS["default"]
 
-TEAM_TEMPLATE_CHOICES = (("teams/default.html", _("default")),)
+TEAM_TEMPLATE_CHOICES = (("teams/default.html", _("default")), )
 
-EVENT_TEMPLATE_CHOICES = (("events/plugins/default.html", _("default")),)
+EVENT_TEMPLATE_CHOICES = (("events/plugins/default.html", _("default")), )
 
 BLOG_TEMPLATE_CHOICES = (
     ("blog/plugins/default.html", _("default")),
     ("blog/plugins/simple_list.html", _("list")),
 )
-
 
 LANGUAGES = (
     ("de", _("German")),
@@ -203,7 +209,9 @@ AUTHENTICATION_BACKENDS = [
     "django_su.backends.SuBackend",
 ]
 
-AJAX_LOOKUP_CHANNELS = {"django_su": dict(model="auth.user", search_field="username")}
+AJAX_LOOKUP_CHANNELS = {
+    "django_su": dict(model="auth.user", search_field="username")
+}
 
 SU_LOGIN_REDIRECT_URL = "/admin/"
 SU_LOGOUT_REDIRECT_URL = "/admin/"
@@ -239,13 +247,13 @@ FONTAWESOME_5_ICON_CLASS = "semantic_ui"
 
 SECRET_KEY = os.environ.get("SECRET_KEY", "changeme")
 
-
 ALLOWED_HOSTS = ["*"]
 
 DATABASES = {
     "default": {
         "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
-        "NAME": os.environ.get("POSTGRES_DB", os.path.join(BASE_DIR, "db.sqlite3")),
+        "NAME": os.environ.get("POSTGRES_DB",
+                               os.path.join(BASE_DIR, "db.sqlite3")),
         "USER": os.environ.get("POSTGRES_USER", "user"),
         "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "password"),
         "HOST": os.environ.get("SQL_HOST", "localhost"),
@@ -253,14 +261,11 @@ DATABASES = {
     }
 }
 
-
 DEFAULT_COLOR = "#eb141f"
 
-
-LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
+LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"), )
 
 MAPS_URL = "https://www.google.com/maps/dir/My+Location/{location.lat},{location.lng}"
-
 
 CACHES = {
     "default": {
@@ -269,8 +274,8 @@ CACHES = {
     }
 }
 
-
-DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "webmaster@localhost")
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL",
+                                    "webmaster@localhost")
 SERVER_EMAIL = os.environ.get("SERVER_EMAIL", "root@localhost")
 
 EMAIL_HOST = os.environ.get('SMTP_HOST', 'smtp')
@@ -282,9 +287,9 @@ EMAIL_USE_SSL = int(os.environ.get('SMTP_SSL', '0'))
 EMAIL_HOST_USER = os.environ.get('SMTP_USER', 'user')
 EMAIL_HOST_PASSWORD = os.environ.get('SMTP_PASSWORD', 'pw')
 
-DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", 'webmaster@localhost')
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL",
+                                    'webmaster@localhost')
 SERVER_EMAIL = os.environ.get("SERVER_EMAIL", 'root@localhost')
-
 
 CELERY_BROKER_URL = "redis://redis:6379"
 
@@ -295,7 +300,6 @@ VAPID_EMAIL = os.environ.get("VAPID_EMAIL", "")
 
 VAPID_PRIVATE_KEY = os.environ.get("VAPID_PRIVATE_KEY", "")
 VAPID_PUBLIC_KEY = os.environ.get("VAPID_PUBLIC_KEY", "")
-
 
 from html_sanitizer.sanitizer import (
     bold_span_to_strong,
@@ -347,10 +351,14 @@ HTML_SANITIZERS = {
         "empty": {"hr", "a", "br"},
         "separate": {"a", "p", "li"},
         "whitespace": {"br"},
-        "keep_typographic_whitespace": False,
-        "add_nofollow": False,
-        "autolink": False,
-        "sanitize_href": sanitize_href,
+        "keep_typographic_whitespace":
+        False,
+        "add_nofollow":
+        False,
+        "autolink":
+        False,
+        "sanitize_href":
+        sanitize_href,
         "element_preprocessors": [
             bold_span_to_strong,
             italic_span_to_em,
@@ -360,12 +368,14 @@ HTML_SANITIZERS = {
             target_blank_noopener,
         ],
         "element_postprocessors": [],
-        "is_mergeable": is_mergeable,
+        "is_mergeable":
+        is_mergeable,
     }
 }
 
 MAILTRAIN_URL = os.environ.get("MAILTRAIN_URL", "")
 MAILTRAIN_TOKEN = os.environ.get("MAILTRAIN_TOKEN", "")
+
 
 def toolbar_callback(*args):
     return DEBUG
@@ -375,7 +385,10 @@ INTERNAL_IPS = [
     '127.0.0.1',
 ]
 
-
 DEBUG_TOOLBAR_CONFIG = {
     'SHOW_TOOLBAR_CALLBACK': 'juso.settings.toolbar_callback',
 }
+
+CAPTCHA_FLITE_PATH = "/usr/bin/flite"
+
+CAPTCHA_SOX_PATH = "/usr/bin/sox"

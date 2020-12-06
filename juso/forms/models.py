@@ -28,6 +28,7 @@ INPUT_TYPES = (
     ("hidden", _("hidden")),
     ("section", _("section")),
     ("honeypot", _("honeypot")),
+    ("captcha", _("Captcha")),
 )
 
 SIZES = (
@@ -145,6 +146,7 @@ class FormField(PluginBase):
     choices = models.TextField(_("choices"), blank=True)
     initial = models.TextField(_("initial"), max_length=240, blank=True)
     size = models.TextField(_("size"), default="one", choices=SIZES)
+    disallow_text = models.CharField(max_length=40, blank=True)
 
     unique = models.BooleanField(
         _("unique"),

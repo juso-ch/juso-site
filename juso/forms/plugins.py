@@ -34,15 +34,19 @@ class EntryCounter(models.Model):
         default="50, 100, 500, 1000",
     )
 
-    prefix = models.CharField(max_length=100, blank=True, verbose_name=_("pefix"))
-    suffix = models.CharField(max_length=100, blank=True, verbose_name=_("suffix"))
+    prefix = models.CharField(max_length=100,
+                              blank=True,
+                              verbose_name=_("pefix"))
+    suffix = models.CharField(max_length=100,
+                              blank=True,
+                              verbose_name=_("suffix"))
 
-    prefix_missing = models.CharField(
-        max_length=100, blank=True, verbose_name=_("pefix missing")
-    )
-    suffix_missing = models.CharField(
-        max_length=100, blank=True, verbose_name=_("suffix missing")
-    )
+    prefix_missing = models.CharField(max_length=100,
+                                      blank=True,
+                                      verbose_name=_("pefix missing"))
+    suffix_missing = models.CharField(max_length=100,
+                                      blank=True,
+                                      verbose_name=_("suffix missing"))
     aggregate_field = models.SlugField(
         _("aggregate field"),
         blank=True,
@@ -55,7 +59,10 @@ class EntryCounter(models.Model):
 
     template_key = models.CharField(
         _("template"),
-        choices=(("forms/bar.html", _("bar")), ("forms/number.html", _("number")),),
+        choices=(
+            ("forms/bar.html", _("bar")),
+            ("forms/number.html", _("number")),
+        ),
         default="forms/bar.html",
         max_length=40,
     )
@@ -77,11 +84,13 @@ def render_form(form_plugin, request=None):
 
     form_html = render_to_string("forms/form.html", {"form": form})
 
-    script = render_to_string("forms/script.html", {"form": form})
+    script = render_to_string("forms/script.html", {
+        "form": form,
+        "form_plugin": form_plugin
+    })
 
     return f"""
 <div class="wrapper" id="form-wrapper-{form_plugin.id}">
-{form_html}
 </div>
 {script}
 """

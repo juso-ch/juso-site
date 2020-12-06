@@ -40,7 +40,7 @@ class FormFieldInline(ContentEditorInline):
         (
             _("advanced"),
             {
-                "classes": ("collapse",),
+                "classes": ("collapse", ),
                 "fields": (
                     "size",
                     "choices",
@@ -48,6 +48,7 @@ class FormFieldInline(ContentEditorInline):
                     "help_text",
                     "unique",
                     "unique_error",
+                    "disallow_text",
                 ),
             },
         ),
@@ -63,9 +64,7 @@ class FormEntryValueInline(admin.TabularInline):
 
     readonly_fields = ['field']
 
-    formfield_overrides = {
-        models.TextField: {'widget': forms.TextInput}
-    }
+    formfield_overrides = {models.TextField: {'widget': forms.TextInput}}
 
     extra = 0
 
@@ -99,7 +98,6 @@ class FormEntryAdmin(admin.ModelAdmin):
 
     date_hierarchy = 'created'
 
-
     def get_queryset(self, request):
         if request.user.is_superuser:
             return super().get_queryset(request)
@@ -130,7 +128,7 @@ class FormAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
     ]
 
     prepopulated_fields = {
-        "slug": ("title",),
+        "slug": ("title", ),
     }
 
     readonly_fields = (
@@ -139,18 +137,28 @@ class FormAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
     )
 
     formfield_overrides = {
-        models.JSONField: {"widget": FlatJsonWidget},
+        models.JSONField: {
+            "widget": FlatJsonWidget
+        },
     }
 
     fieldsets = (
         (
             None,
-            {"fields": ("title", "slug", "section", "created_date", "edited_date",)},
+            {
+                "fields": (
+                    "title",
+                    "slug",
+                    "section",
+                    "created_date",
+                    "edited_date",
+                )
+            },
         ),
         (
             _("settings"),
             {
-                "classes": ("tabbed",),
+                "classes": ("tabbed", ),
                 "fields": (
                     "submit",
                     "size",
@@ -163,7 +171,7 @@ class FormAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
         (
             _("collection"),
             {
-                "classes": ("tabbed",),
+                "classes": ("tabbed", ),
                 "fields": (
                     "email",
                     "list_id",
@@ -175,20 +183,17 @@ class FormAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
                 ),
             },
         ),
-        (
-            _("advanced"),
-            {
-                'classes': ("tabbed",),
-                'fields': (
-                    'linked_form',
-                    'linking_field_slug',
-                )
-            }
-        ),
+        (_("advanced"), {
+            'classes': ("tabbed", ),
+            'fields': (
+                'linked_form',
+                'linking_field_slug',
+            )
+        }),
         (
             _("meta"),
             {
-                "classes": ("tabbed",),
+                "classes": ("tabbed", ),
                 "fields": (
                     "meta_title",
                     "meta_author",
@@ -211,8 +216,9 @@ class FormAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
     plugins = [FormField]
 
     def result_link(self, obj):
-        url = reverse("admin:forms_Form_show_results", args=(obj.pk,))
+        url = reverse("admin:forms_Form_show_results", args=(obj.pk, ))
         return mark_safe(f'<a href="{url}">{obj.count()}</a>')
+
     result_link.short_description = _("results")
 
     def get_urls(self):
@@ -220,9 +226,9 @@ class FormAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
         return [
             path(
                 "results/<int:pk>/",
-                user_passes_test(lambda user: user.is_staff, login_url="/admin/login/")(
-                    self.admin_site.admin_view(self.show_results)
-                ),
+                user_passes_test(
+                    lambda user: user.is_staff, login_url="/admin/login/")(
+                        self.admin_site.admin_view(self.show_results)),
                 name="forms_Form_show_results",
             )
         ] + urls
@@ -248,7 +254,6 @@ class FormAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
             has_view_permission=True,
         )
 
-
         return render(request, "admin/form_results.html", context)
 
     def get_fieldsets(self, request, obj=None):
@@ -260,20 +265,18 @@ class FormAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
         sections = request.user.section_set.all()
         if obj.section in sections:
             return super().get_fieldsets(request, obj=obj)
-        return (
-            (
-                None,
-                {
-                    "fields": (
-                        "title",
-                        "slug",
-                        "section",
-                        "created_date",
-                        "edited_date",
-                    )
-                },
-            ),
-        )
+        return ((
+            None,
+            {
+                "fields": (
+                    "title",
+                    "slug",
+                    "section",
+                    "created_date",
+                    "edited_date",
+                )
+            },
+        ), )
 
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
@@ -282,7 +285,7 @@ class FormAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
             return form
 
         section_field = form.base_fields["section"]
-#        form.base_fields["list_id"].widget = forms.PasswordInput()
+        #        form.base_fields["list_id"].widget = forms.PasswordInput()
 
         sections = request.user.section_set.all()
         section_field.initial = sections[0]
@@ -318,8 +321,7 @@ class FormAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
 
         response = HttpResponse(content_type="text/csv")
         response[
-            "Content-Disposition"
-        ] = f'attachment; filename="{form.slug}-{timezone.now():%Y%m%d%H%M}.csv"'
+            "Content-Disposition"] = f'attachment; filename="{form.slug}-{timezone.now():%Y%m%d%H%M}.csv"'
 
         writer = csv.DictWriter(response, fieldnames=fields)
         writer.writeheader()
@@ -330,12 +332,12 @@ class FormAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
     def export_form_xlsx(self, request, query):
 
         response = HttpResponse(
-            content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            content_type=
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
 
         response[
-            "Content-Disposition"
-        ] = f'attachment; filename="form-export-{timezone.now():%Y%m%d%H%M}.xlsx"'
+            "Content-Disposition"] = f'attachment; filename="form-export-{timezone.now():%Y%m%d%H%M}.xlsx"'
 
         workbook = xlsxwriter.Workbook(response, {"remove_timezone": True})
         bold = workbook.add_format({"bold": True})
@@ -356,7 +358,8 @@ class FormAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
                 for col, field in enumerate(fields):
                     val = entry.get(field, "")
                     if isinstance(val, datetime):
-                        worksheet.write(row + 1, col, entry.get(field, ""), date_format)
+                        worksheet.write(row + 1, col, entry.get(field, ""),
+                                        date_format)
                     else:
                         worksheet.write(row + 1, col, entry.get(field, ""))
 
@@ -381,7 +384,7 @@ class MailchimpConnectionAdmin(admin.ModelAdmin):
 
     search_fields = ("name", "section")
 
-    autocomplete_fields = ("section",)
+    autocomplete_fields = ("section", )
 
     def get_queryset(self, request):
         if request.user.is_superuser:

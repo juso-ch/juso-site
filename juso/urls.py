@@ -58,6 +58,7 @@ urlpatterns = [
     path("su/", include("django_su.urls")),
     path("admin/", admin.site.urls),
     path("forms/", include("juso.forms.urls")),
+    path('captcha/', include('captcha.urls')),
     path("robots.txt", robots_view),
     path("", include("juso.pages.urls")),
 ]
@@ -67,4 +68,5 @@ handler404 = "juso.pages.views.error404"
 handler500 = "juso.pages.views.error500"
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

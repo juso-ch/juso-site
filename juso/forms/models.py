@@ -27,8 +27,8 @@ INPUT_TYPES = (
     ("url", _("url")),
     ("hidden", _("hidden")),
     ("section", _("section")),
+    ("honeypot", _("honeypot")),
 )
-
 
 SIZES = (
     ("one", _("one")),
@@ -52,7 +52,10 @@ class MailchimpConnection(models.Model):
 
 
 class Form(ContentMixin):
-    TEMPLATES = get_template_list("form", (("default", ("fields", "handlers"),),))
+    TEMPLATES = get_template_list("form", ((
+        "default",
+        ("fields", "handlers"),
+    ), ))
     fullwidth = models.BooleanField(_("full width"))
     submit = models.CharField(max_length=200)
     size = models.TextField(_("size"), default="one", choices=SIZES)
@@ -61,17 +64,24 @@ class Form(ContentMixin):
 
     email = models.CharField(_("e-mail"), max_length=1200, blank=True)
     webhook = models.URLField(_("webhook"), max_length=1200, blank=True)
-    list_id = models.CharField(_("mailtrain list id"), max_length=30, blank=True)
+    list_id = models.CharField(_("mailtrain list id"),
+                               max_length=30,
+                               blank=True)
     webhook_dict = models.JSONField(_("webhook dict"), blank=True, null=True)
-    linked_form = models.ForeignKey("self", models.SET_NULL, null=True, blank=True, related_name="linked_forms")
+    linked_form = models.ForeignKey("self",
+                                    models.SET_NULL,
+                                    null=True,
+                                    blank=True,
+                                    related_name="linked_forms")
     linking_field_slug = models.CharField(max_length=30, blank=True)
 
-    mailchimp_connection = models.ForeignKey(
-        MailchimpConnection, models.SET_NULL, null=True, blank=True
-    )
-    mailchimp_list_id = models.CharField(
-        _("mailchimp list id"), max_length=100, blank=True
-    )
+    mailchimp_connection = models.ForeignKey(MailchimpConnection,
+                                             models.SET_NULL,
+                                             null=True,
+                                             blank=True)
+    mailchimp_list_id = models.CharField(_("mailchimp list id"),
+                                         max_length=100,
+                                         blank=True)
     tags = models.CharField(_("tags"), max_length=30, blank=True)
 
     def get_instance(self, request):
@@ -89,16 +99,13 @@ class Form(ContentMixin):
         return self.formentry_set.count()
 
     def aggregate(self, field_slug):
-        return (
-            FormEntryValue.objects.filter(
-                form_entry__form=self, field__slug=field_slug,
-            ).aggregate(r=models.Sum("int_value"))["r"]
-            or 0
-        )
+        return (FormEntryValue.objects.filter(
+            form_entry__form=self,
+            field__slug=field_slug,
+        ).aggregate(r=models.Sum("int_value"))["r"] or 0)
 
     def clear_entries(self):
         self.formentry_set.all().delete()
-
 
     def get_fields(self):
         fields = []
@@ -107,7 +114,6 @@ class Form(ContentMixin):
         for field in FormField.objects.filter(parent=self):
             fields.append(field.slug)
         return fields
-
 
     def entry_dict(self):
         form_entries = []
@@ -129,7 +135,9 @@ PluginBase = create_plugin_base(Form)
 
 class FormField(PluginBase):
     name = models.CharField(_("name"), max_length=140)
-    input_type = models.CharField(_("type"), choices=INPUT_TYPES, max_length=140)
+    input_type = models.CharField(_("type"),
+                                  choices=INPUT_TYPES,
+                                  max_length=140)
 
     slug = models.SlugField()
     required = models.BooleanField(_("required"))
@@ -168,7 +176,6 @@ class FormEntry(models.Model):
     ip = models.GenericIPAddressField(_("ip address"), blank=True, null=True)
     submission_id = models.UUIDField(default=uuid.uuid4)
 
-
     def get_values(self, fields, json_safe=False):
         values = dict()
 
@@ -176,10 +183,12 @@ class FormEntry(models.Model):
             values[field] = ''
 
         if self.form.linked_form:
-            linked_sid = self.fields.filter(field__slug=self.form.linking_field_slug)
+            linked_sid = self.fields.filter(
+                field__slug=self.form.linking_field_slug)
 
             if linked_sid.exists():
-                other = self.form.linked_form.formentry_set.filter(submission_id=linked_sid[0].value)
+                other = self.form.linked_form.formentry_set.filter(
+                    submission_id=linked_sid[0].value)
                 if other.exists():
                     values.update(other[0].get_values(fields, json_safe))
 
@@ -194,7 +203,6 @@ class FormEntry(models.Model):
 
         return values
 
-
     def __str__(self):
         return f"{self.form.title}: {self.created}"
 
@@ -204,9 +212,10 @@ class FormEntry(models.Model):
 
 
 class FormEntryValue(models.Model):
-    form_entry = models.ForeignKey(
-        FormEntry, models.CASCADE, related_name="fields", verbose_name=_("fields")
-    )
+    form_entry = models.ForeignKey(FormEntry,
+                                   models.CASCADE,
+                                   related_name="fields",
+                                   verbose_name=_("fields"))
     field = models.ForeignKey(FormField, models.CASCADE)
     value = models.TextField(_("value"), blank=True, null=True)
     int_value = models.IntegerField(_("int value"), default=0)

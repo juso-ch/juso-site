@@ -57,6 +57,7 @@ class FormFieldInline(OrderableAdmin, admin.TabularInline):
                     "help_text",
                     "unique",
                     "unique_error",
+                    "disallow_text",
                 ),
             },
         ),

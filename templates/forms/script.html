@@ -1,8 +1,19 @@
 <script>
   window.addEventListener("load", function(event){
-    window.addEventListener("submit", function(event){
-      event.preventDefault();
-      submitForm(event.target);
+      let wrapper = document.getElementById("form-wrapper-{{form_plugin.id}}");
+      fetch("{{form.form.get_absolute_url}}", {
+          method: "GET",
+          mode: 'cors', // no-cors, *cors, same-origin
+          cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+          credentials: 'same-origin', // include, *same-origin, omit
+        }).then(response => {
+            response.text().then(text => {
+                wrapper.innerHTML = text;
+              });
+          });
+      window.addEventListener("submit", function(event){
+          event.preventDefault();
+          submitForm(event.target);
+        });
     });
-  });
 </script>

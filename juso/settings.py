@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     "juso.testimonials.apps.TestimonialsConfig",
     "juso.link_collections.apps.LinkCollectionsConfig",
     "django_celery_results",
+    "captcha",
 ]
 
 MIDDLEWARE = [
@@ -306,7 +307,6 @@ VAPID_EMAIL = os.environ.get("VAPID_EMAIL", "")
 
 VAPID_PRIVATE_KEY = os.environ.get("VAPID_PRIVATE_KEY", "")
 VAPID_PUBLIC_KEY = os.environ.get("VAPID_PUBLIC_KEY", "")
-
 
 def sanitize_href(url):
     return url
@@ -575,3 +575,7 @@ X_FRAME_OPTIONS = "SAMEORIGIN"
 
 if DEBUG:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+CAPTCHA_FLITE_PATH = "/usr/bin/flite"
+
+CAPTCHA_SOX_PATH = "/usr/bin/sox"

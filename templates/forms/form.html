@@ -9,6 +9,19 @@
   {% for field in form %}
   {% if field.is_hidden %}
   {{field}}
+  {% elif field.field.is_honeypot %}
+  <div class="field two {% if field.errors %}error{% endif %} {% if field.field.required %} required{% endif %}">
+    {{field}}
+    <label for="{{field.id_for_label}}">
+      {{field.label}}
+    </label>
+    <small>{{field.help_text}}</small>
+    {% if field.errors %}
+    <div class="error message">
+      {{field.errors}}
+    </div>
+    {% endif %}
+  </div>
   {% else %}
   <div class="field {{field.field.size}} {% if field.errors %}error{% endif %} {% if field.field.required %} required{% endif %}">
     {{field}}

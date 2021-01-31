@@ -84,11 +84,13 @@ def render_form(form_plugin, request=None):
 
     form_html = render_to_string("forms/form.html", {"form": form})
 
-    script = render_to_string("forms/script.html", {"form": form})
+    script = render_to_string("forms/script.html", {
+        "form": form,
+        "form_plugin": form_plugin
+    })
 
     return f"""
 <div class="wrapper" id="form-wrapper-{form_plugin.id}">
-{form_html}
 </div>
 {script}
 """

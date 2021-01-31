@@ -5,6 +5,7 @@ from types import MethodType
 from django import forms
 from django.forms import widgets
 
+from captcha.fields import CaptchaField
 from juso.forms import models
 from juso.sections.models import Section
 
@@ -34,6 +35,18 @@ class DynamicForm(forms.Form):
                 self.__dict__[f"clean_{field.slug}"] = MethodType(
                     clean_field, self)
 
+            if field.disallow_text:
+                bound_field = field
+
+                def clean_field(self):
+                    if bound_field.disallow_text in self.cleaned_data[
+                            bound_field.slug]:
+                        raise forms.ValidationError("illegal text")
+                    return self.cleaned_data[bound_field.slug]
+
+                self.__dict__[f"clean_{field.slug}"] = MethodType(
+                    clean_field, self)
+
 
 class HiddenField(forms.Field):
     widget = forms.HiddenInput
@@ -53,6 +66,17 @@ class CustomChoiceField(forms.ChoiceField):
 
 class TextField(forms.CharField):
     widget = widgets.Textarea
+
+
+class HoneypotField(forms.CharField):
+    widget = widgets.TextInput
+
+    def is_honeypot(self):
+        return True
+
+    def validate(self, value):
+        if value:
+            raise forms.ValidationError("invalid value")
 
 
 def get_form_instance(form: models.Form, request=None):
@@ -92,7 +116,6 @@ def get_field_instance(field, request):
             label=field.name,
             help_text=field.help_text,
             initial=field.initial,
-            queryset=Section.objects.filter(
                 name__in=(l.strip() for l in field.choices.split("\n")))
             if field.choices else Section.objects.all(),
         )
@@ -126,6 +149,8 @@ INPUT_TYPES = {
     "url": forms.URLField,
     "hidden": HiddenField,
     "section": forms.ModelChoiceField,
+    "honeypot": HoneypotField,
+    "captcha": CaptchaField,
 }
 
 

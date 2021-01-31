@@ -10,7 +10,7 @@ ENV PYTHONUNBUFFERED 1
 
 RUN apt-get update && \
   apt-get install -y \
-    netcat
+    netcat flite sox gettext
 
 # install dependencies
 RUN pip install --upgrade pip
@@ -42,6 +42,8 @@ RUN chown -R app:app $APP_HOME
 
 # change to the app user
 USER app
+
+RUN python manage.py compilemessages
 
 # run entrypoint.prod.sh
 ENTRYPOINT ["/home/app/web/entrypoint.prod.sh"]

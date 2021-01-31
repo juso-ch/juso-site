@@ -31,6 +31,8 @@ INPUT_TYPES = (
     ("url", _("url")),
     ("hidden", _("hidden")),
     ("section", _("section")),
+    ("honeypot", _("honeypot")),
+    ("captcha", _("Captcha")),
 )
 
 SIZES = (

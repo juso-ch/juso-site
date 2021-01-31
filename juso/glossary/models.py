@@ -21,8 +21,7 @@ def update_glossary(html, entries):
             f'<input type="checkbox" id="gl-{entry.pk}" class="toggle">'
             '<span class="glossary-content">'
             f'<dfn><a href="{entry.get_absolute_url()}">{entry.name}</a></dfn>: '
-            f"{entry.intro}</span>"
-        )
+            f"{entry.intro}</span>")
         html = re.sub(entry.pattern, repl, html, count=2)
     return html
 
@@ -37,7 +36,10 @@ class Entry(TranslationMixin):
     pattern = models.CharField(_("pattern"), max_length=200, blank=True)
     intro = models.TextField(blank=True)
     content = CleansedRichTextField(blank=True)
-    category = models.ForeignKey(Category, models.SET_NULL, null=True, blank=True)
+    category = models.ForeignKey(Category,
+                                 models.SET_NULL,
+                                 null=True,
+                                 blank=True)
 
     class Meta:
         ordering = ["name"]
@@ -50,14 +52,11 @@ class Entry(TranslationMixin):
     def get_absolute_url(self):
         site = current_site()
         try:
-            return (
-                reverse_app(
-                    [f"{site.id}-glossary"],
-                    "glossary",
-                    languages=[self.language_code],
-                )
-                + f"#{self.slug}"
-            )
+            return (reverse_app(
+                [f"{site.id}-glossary"],
+                "glossary",
+                languages=[self.language_code],
+            ) + f"#{self.slug}")
         except:
             return "#"
 

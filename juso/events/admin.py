@@ -55,7 +55,7 @@ class EventAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
     ]
 
     prepopulated_fields = {
-        "slug": ("title",),
+        "slug": ("title", ),
     }
 
     fieldsets = (
@@ -80,7 +80,7 @@ class EventAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
         (
             _("settings"),
             {
-                "classes": ("collapse",),
+                "classes": ("collapse", ),
                 "fields": (
                     "language_code",
                     "slug",
@@ -90,7 +90,10 @@ class EventAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
             },
         ),
         MetaMixin.admin_fieldset(),
-        (_("translations"), {"classes": ("tabbed",), "fields": ("translations",)}),
+        (_("translations"), {
+            "classes": ("tabbed", ),
+            "fields": ("translations", )
+        }),
     )
 
     inlines = [
@@ -100,7 +103,8 @@ class EventAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
         plugins.external.ExternalInline.create(models.External),
         download.DownloadInline.create(models.Download),
         people_plugins.TeamPluginInline.create(models.Team),
-        people_plugins.CandidateListPluginInline.create(models.CandidaturePlugin),
+        people_plugins.CandidateListPluginInline.create(
+            models.CandidaturePlugin),
         blog_plugins.ArticlePluginInline.create(models.ArticlePlugin),
         event_plugins.EventPluginInline.create(models.EventPlugin),
         ButtonInline.create(models.Button),
@@ -140,10 +144,10 @@ class EventAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
     def send_webpush(self, request, queryset):
         for event in queryset:
             pages = Page.objects.filter(
-                (Q(application="events") & Q(language_code=event.language_code))
+                (Q(application="events")
+                 & Q(language_code=event.language_code))
                 & (Q(category__isnull=True) | Q(category=event.category))
-                & (Q(site__section=event.section) | Q(sections=event.section))
-            )
+                & (Q(site__section=event.section) | Q(sections=event.section)))
 
             for page in pages:
                 subscriptions = webpush.Subscription.objects.filter(page=page)
@@ -178,7 +182,7 @@ class LocationAdmin(VersionAdmin, ContentEditor):
 
     list_filter = ["city"]
 
-    prepopulated_fields = {"slug": ("name",)}
+    prepopulated_fields = {"slug": ("name", )}
 
     autocomplete_fields = ["section", "translations"]
 
@@ -200,7 +204,7 @@ class LocationAdmin(VersionAdmin, ContentEditor):
         (
             _("advanced"),
             {
-                "classes": ("tabbed",),
+                "classes": ("tabbed", ),
                 "fields": (
                     "section",
                     "slug",
@@ -213,7 +217,10 @@ class LocationAdmin(VersionAdmin, ContentEditor):
             },
         ),
         MetaMixin.admin_fieldset(),
-        (_("translations"), {"classes": ("tabbed",), "fields": ("translations",)}),
+        (_("translations"), {
+            "classes": ("tabbed", ),
+            "fields": ("translations", )
+        }),
     )
 
     inlines = [
@@ -230,8 +237,7 @@ class LocationAdmin(VersionAdmin, ContentEditor):
         if not change and obj.is_physical:
             locator = Nominatim(user_agent=settings.NOMINATIM_USER_AGENT)
             location = locator.geocode(
-                f"{obj.street}, {obj.zip_code} {obj.city}, {obj.country}"
-            )
+                f"{obj.street}, {obj.zip_code} {obj.city}, {obj.country}")
             if location:
                 obj.lat = location.latitude
                 obj.lng = location.longitude

@@ -25,16 +25,20 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "text",
-                    models.CharField(blank=True, max_length=240, verbose_name="Text"),
+                    models.CharField(blank=True,
+                                     max_length=240,
+                                     verbose_name="Text"),
                 ),
                 (
                     "inverted",
-                    models.BooleanField(default=False, verbose_name="inverted"),
+                    models.BooleanField(default=False,
+                                        verbose_name="inverted"),
                 ),
                 (
                     "level",
                     models.SmallIntegerField(
-                        choices=[(1, "h1"), (2, "h2"), (3, "h3"), (4, "h4"), (5, "h5")],
+                        choices=[(1, "h1"), (2, "h2"), (3, "h3"), (4, "h4"),
+                                 (5, "h5")],
                         verbose_name="level",
                     ),
                 ),
@@ -69,17 +73,20 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "text",
-                    models.CharField(blank=True, max_length=240, verbose_name="Text"),
+                    models.CharField(blank=True,
+                                     max_length=240,
+                                     verbose_name="Text"),
                 ),
                 (
                     "inverted",
-                    models.BooleanField(default=False, verbose_name="inverted"),
+                    models.BooleanField(default=False,
+                                        verbose_name="inverted"),
                 ),
                 (
                     "color",
-                    models.CharField(
-                        blank=True, choices=[("red", "red")], max_length=20
-                    ),
+                    models.CharField(blank=True,
+                                     choices=[("red", "red")],
+                                     max_length=20),
                 ),
                 (
                     "alignment",
@@ -93,8 +100,10 @@ class Migration(migrations.Migration):
                         verbose_name="alignment",
                     ),
                 ),
-                ("hidden", models.BooleanField(default=False, verbose_name="hidden")),
-                ("section", models.BooleanField(default=False, verbose_name="section")),
+                ("hidden",
+                 models.BooleanField(default=False, verbose_name="hidden")),
+                ("section",
+                 models.BooleanField(default=False, verbose_name="section")),
                 ("region", models.CharField(max_length=255)),
                 ("ordering", models.IntegerField(default=0)),
                 (
@@ -124,17 +133,20 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "text",
-                    models.CharField(blank=True, max_length=240, verbose_name="Text"),
+                    models.CharField(blank=True,
+                                     max_length=240,
+                                     verbose_name="Text"),
                 ),
                 (
                     "inverted",
-                    models.BooleanField(default=False, verbose_name="inverted"),
+                    models.BooleanField(default=False,
+                                        verbose_name="inverted"),
                 ),
                 (
                     "color",
-                    models.CharField(
-                        blank=True, choices=[("red", "red")], max_length=20
-                    ),
+                    models.CharField(blank=True,
+                                     choices=[("red", "red")],
+                                     max_length=20),
                 ),
                 (
                     "style",
@@ -151,7 +163,8 @@ class Migration(migrations.Migration):
                         verbose_name="style",
                     ),
                 ),
-                ("target", models.CharField(max_length=800, verbose_name="Ziel")),
+                ("target", models.CharField(max_length=800,
+                                            verbose_name="Ziel")),
                 ("region", models.CharField(max_length=255)),
                 ("ordering", models.IntegerField(default=0)),
                 (

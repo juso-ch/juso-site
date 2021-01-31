@@ -23,17 +23,23 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='formfield',
             name='parent',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='forms.form'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to='forms.form'),
         ),
         migrations.AlterField(
             model_name='webhookfield',
             name='field_converter',
-            field=models.CharField(blank=True, help_text='apply a converter on the user input', max_length=200),
+            field=models.CharField(
+                blank=True,
+                help_text='apply a converter on the user input',
+                max_length=200),
         ),
         migrations.AlterField(
             model_name='webhookfield',
             name='field_converter_args',
-            field=models.CharField(blank=True, help_text='arguments for the converter', max_length=200),
+            field=models.CharField(blank=True,
+                                   help_text='arguments for the converter',
+                                   max_length=200),
         ),
         migrations.AlterField(
             model_name='webhookfield',
@@ -43,6 +49,8 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='webhookfield',
             name='webhook_slug',
-            field=models.CharField(help_text='name of the field in the request to the webhook', max_length=200),
+            field=models.CharField(
+                help_text='name of the field in the request to the webhook',
+                max_length=200),
         ),
     ]

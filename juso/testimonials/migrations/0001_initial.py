@@ -70,18 +70,21 @@ class Migration(migrations.Migration):
                         help_text="Set the Open Graph video.",
                         upload_to="meta/video/%Y/%m",
                         validators=[
-                            django.core.validators.FileExtensionValidator(["mp4"])
+                            django.core.validators.FileExtensionValidator(
+                                ["mp4"])
                         ],
                         verbose_name="video",
                     ),
                 ),
                 (
                     "meta_video_width",
-                    models.IntegerField(default=1920, verbose_name="video width"),
+                    models.IntegerField(default=1920,
+                                        verbose_name="video width"),
                 ),
                 (
                     "meta_video_height",
-                    models.IntegerField(default=1080, verbose_name="video height"),
+                    models.IntegerField(default=1080,
+                                        verbose_name="video height"),
                 ),
                 (
                     "meta_card_type",
@@ -101,18 +104,21 @@ class Migration(migrations.Migration):
                     "meta_twitter_site",
                     models.CharField(
                         blank=True,
-                        help_text="The Twitter @username the card should be attributed to.",
+                        help_text=
+                        "The Twitter @username the card should be attributed to.",
                         max_length=30,
                         verbose_name="twitter site",
                     ),
                 ),
                 (
                     "meta_player_width",
-                    models.IntegerField(default=1920, verbose_name="player width"),
+                    models.IntegerField(default=1920,
+                                        verbose_name="player width"),
                 ),
                 (
                     "meta_player_height",
-                    models.IntegerField(default=1080, verbose_name="player height"),
+                    models.IntegerField(default=1080,
+                                        verbose_name="player height"),
                 ),
                 (
                     "meta_player",
@@ -151,37 +157,47 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "meta_image_width",
-                    models.PositiveIntegerField(blank=True, editable=False, null=True),
+                    models.PositiveIntegerField(blank=True,
+                                                editable=False,
+                                                null=True),
                 ),
                 (
                     "meta_image_height",
-                    models.PositiveIntegerField(blank=True, editable=False, null=True),
+                    models.PositiveIntegerField(blank=True,
+                                                editable=False,
+                                                null=True),
                 ),
                 (
                     "meta_image_ppoi",
-                    imagefield.fields.PPOIField(default="0.5x0.5", max_length=20),
+                    imagefield.fields.PPOIField(default="0.5x0.5",
+                                                max_length=20),
                 ),
                 (
                     "language_code",
                     models.CharField(
-                        choices=[("de", "German"), ("fr", "French"), ("it", "Italian")],
+                        choices=[("de", "German"), ("fr", "French"),
+                                 ("it", "Italian")],
                         default="de",
                         max_length=10,
                         verbose_name="language",
                     ),
                 ),
-                ("name", models.CharField(max_length=100, verbose_name="Name")),
+                ("name", models.CharField(max_length=100,
+                                          verbose_name="Name")),
                 (
                     "description",
-                    models.CharField(max_length=240, verbose_name="Beschreibung"),
+                    models.CharField(max_length=240,
+                                     verbose_name="Beschreibung"),
                 ),
                 (
                     "title_label",
-                    models.CharField(max_length=180, verbose_name="label for title"),
+                    models.CharField(max_length=180,
+                                     verbose_name="label for title"),
                 ),
                 (
                     "email_validation",
-                    models.BooleanField(verbose_name="enable email validation"),
+                    models.BooleanField(
+                        verbose_name="enable email validation"),
                 ),
                 ("is_active", models.BooleanField(verbose_name="ist aktiv")),
                 (
@@ -217,8 +233,10 @@ class Migration(migrations.Migration):
                     "last_name",
                     models.CharField(max_length=180, verbose_name="Nachname"),
                 ),
-                ("email", models.EmailField(max_length=254, verbose_name="E-Mail")),
-                ("title", models.CharField(max_length=180, verbose_name="Titel")),
+                ("email",
+                 models.EmailField(max_length=254, verbose_name="E-Mail")),
+                ("title", models.CharField(max_length=180,
+                                           verbose_name="Titel")),
                 ("created_at", models.DateTimeField(auto_now_add=True)),
                 ("statement", models.TextField(verbose_name="statement")),
                 (
@@ -232,20 +250,27 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "validated",
-                    models.BooleanField(default=False, verbose_name="validate"),
+                    models.BooleanField(default=False,
+                                        verbose_name="validate"),
                 ),
-                ("public", models.BooleanField(default=False, verbose_name="public")),
+                ("public",
+                 models.BooleanField(default=False, verbose_name="public")),
                 (
                     "image_width",
-                    models.PositiveIntegerField(blank=True, editable=False, null=True),
+                    models.PositiveIntegerField(blank=True,
+                                                editable=False,
+                                                null=True),
                 ),
                 (
                     "image_height",
-                    models.PositiveIntegerField(blank=True, editable=False, null=True),
+                    models.PositiveIntegerField(blank=True,
+                                                editable=False,
+                                                null=True),
                 ),
                 (
                     "image_ppoi",
-                    imagefield.fields.PPOIField(default="0.5x0.5", max_length=20),
+                    imagefield.fields.PPOIField(default="0.5x0.5",
+                                                max_length=20),
                 ),
                 (
                     "campaign",

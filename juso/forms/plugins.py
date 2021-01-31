@@ -34,15 +34,19 @@ class EntryCounter(models.Model):
         default="50, 100, 500, 1000",
     )
 
-    prefix = models.CharField(max_length=100, blank=True, verbose_name=_("pefix"))
-    suffix = models.CharField(max_length=100, blank=True, verbose_name=_("suffix"))
+    prefix = models.CharField(max_length=100,
+                              blank=True,
+                              verbose_name=_("pefix"))
+    suffix = models.CharField(max_length=100,
+                              blank=True,
+                              verbose_name=_("suffix"))
 
-    prefix_missing = models.CharField(
-        max_length=100, blank=True, verbose_name=_("pefix missing")
-    )
-    suffix_missing = models.CharField(
-        max_length=100, blank=True, verbose_name=_("suffix missing")
-    )
+    prefix_missing = models.CharField(max_length=100,
+                                      blank=True,
+                                      verbose_name=_("pefix missing"))
+    suffix_missing = models.CharField(max_length=100,
+                                      blank=True,
+                                      verbose_name=_("suffix missing"))
     aggregate_field = models.SlugField(
         _("aggregate field"),
         blank=True,

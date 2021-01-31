@@ -19,7 +19,5 @@ class Migration(migrations.Migration):
             model_name="eventplugin",
             name="namespace",
         ),
-        migrations.DeleteModel(
-            name="NameSpace",
-        ),
+        migrations.DeleteModel(name="NameSpace", ),
     ]

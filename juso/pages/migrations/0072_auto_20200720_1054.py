@@ -12,8 +12,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddConstraint(
             model_name="page",
-            constraint=models.UniqueConstraint(
-                fields=("path", "site_id"), name="unique_page_for_path"
-            ),
+            constraint=models.UniqueConstraint(fields=("path", "site_id"),
+                                               name="unique_page_for_path"),
         ),
     ]

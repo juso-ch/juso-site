@@ -54,13 +54,11 @@ def process_entry(pk):
         data["email"] = email.decode()
 
     if form.email:
-        message = (
-            f"Form: {form.title} ({form.pk})"
-            f"\nEntry-ID: {entry.pk}"
-            f"\nCreated: {entry.created}"
-            f"\nIP: {entry.ip}"
-            "\n--------------------------"
-        )
+        message = (f"Form: {form.title} ({form.pk})"
+                   f"\nEntry-ID: {entry.pk}"
+                   f"\nCreated: {entry.created}"
+                   f"\nIP: {entry.ip}"
+                   "\n--------------------------")
         for field in form.get_fields():
             message += f"\n{field}: {data.get(field, '')}"
         message += "\n"

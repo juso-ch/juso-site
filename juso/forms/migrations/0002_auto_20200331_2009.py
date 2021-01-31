@@ -13,7 +13,9 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="formfield",
             name="initial",
-            field=models.TextField(blank=True, max_length=240, verbose_name="initial"),
+            field=models.TextField(blank=True,
+                                   max_length=240,
+                                   verbose_name="initial"),
         ),
         migrations.AlterField(
             model_name="formfield",

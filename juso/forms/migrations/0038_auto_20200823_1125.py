@@ -13,6 +13,8 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="form",
             name="webhook_dict",
-            field=models.JSONField(blank=True, null=True, verbose_name="webhook dict"),
+            field=models.JSONField(blank=True,
+                                   null=True,
+                                   verbose_name="webhook dict"),
         ),
     ]

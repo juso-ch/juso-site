@@ -8,9 +8,10 @@ from juso.people.models import CandidateList, Team
 
 
 class TeamPlugin(models.Model):
-    team = models.ForeignKey(
-        Team, models.CASCADE, verbose_name=_("team"), related_name="+"
-    )
+    team = models.ForeignKey(Team,
+                             models.CASCADE,
+                             verbose_name=_("team"),
+                             related_name="+")
 
     template_key = models.CharField(
         max_length=100,

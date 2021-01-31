@@ -59,7 +59,9 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="person",
             name="email",
-            field=models.EmailField(blank=True, max_length=254, verbose_name="E-Mail"),
+            field=models.EmailField(blank=True,
+                                    max_length=254,
+                                    verbose_name="E-Mail"),
         ),
         migrations.AlterField(
             model_name="person",
@@ -69,14 +71,16 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="person",
             name="phone",
-            field=models.CharField(blank=True, max_length=20, verbose_name="Handy"),
+            field=models.CharField(blank=True,
+                                   max_length=20,
+                                   verbose_name="Handy"),
         ),
         migrations.AlterField(
             model_name="person",
             name="sections",
-            field=models.ManyToManyField(
-                blank=True, to="sections.Section", verbose_name="Sektionen"
-            ),
+            field=models.ManyToManyField(blank=True,
+                                         to="sections.Section",
+                                         verbose_name="Sektionen"),
         ),
         migrations.AlterField(
             model_name="person",

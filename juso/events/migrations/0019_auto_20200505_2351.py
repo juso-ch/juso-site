@@ -21,7 +21,10 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterModelOptions(
             name="download",
-            options={"verbose_name": "Download", "verbose_name_plural": "Downloads"},
+            options={
+                "verbose_name": "Download",
+                "verbose_name_plural": "Downloads"
+            },
         ),
         migrations.AlterModelOptions(
             name="event",
@@ -93,14 +96,15 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="download",
             name="download_text",
-            field=models.CharField(max_length=200, verbose_name="Download Text"),
+            field=models.CharField(max_length=200,
+                                   verbose_name="Download Text"),
         ),
         migrations.AlterField(
             model_name="download",
             name="link_classes",
-            field=models.CharField(
-                blank=True, max_length=200, verbose_name="Link Klassen (css)"
-            ),
+            field=models.CharField(blank=True,
+                                   max_length=200,
+                                   verbose_name="Link Klassen (css)"),
         ),
         migrations.AlterField(
             model_name="event",
@@ -127,14 +131,14 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="event",
             name="created_date",
-            field=models.DateTimeField(
-                auto_now_add=True, verbose_name="Erstellungsdatum"
-            ),
+            field=models.DateTimeField(auto_now_add=True,
+                                       verbose_name="Erstellungsdatum"),
         ),
         migrations.AlterField(
             model_name="event",
             name="edited_date",
-            field=models.DateTimeField(auto_now=True, verbose_name="Bearbeitungsdatum"),
+            field=models.DateTimeField(auto_now=True,
+                                       verbose_name="Bearbeitungsdatum"),
         ),
         migrations.AlterField(
             model_name="event",
@@ -176,9 +180,8 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="event",
             name="publication_date",
-            field=models.DateTimeField(
-                default=django.utils.timezone.now, verbose_name="Publikationsdatum"
-            ),
+            field=models.DateTimeField(default=django.utils.timezone.now,
+                                       verbose_name="Publikationsdatum"),
         ),
         migrations.AlterField(
             model_name="event",
@@ -260,7 +263,9 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="image",
             name="caption",
-            field=models.CharField(blank=True, max_length=200, verbose_name="Titel"),
+            field=models.CharField(blank=True,
+                                   max_length=200,
+                                   verbose_name="Titel"),
         ),
         migrations.AlterField(
             model_name="location",
@@ -323,13 +328,16 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="locationimage",
             name="caption",
-            field=models.CharField(blank=True, max_length=200, verbose_name="Titel"),
+            field=models.CharField(blank=True,
+                                   max_length=200,
+                                   verbose_name="Titel"),
         ),
         migrations.AlterField(
             model_name="team",
             name="columns",
             field=models.CharField(
-                choices=[("two", "2"), ("three", "3"), ("four", "4"), ("five", "5")],
+                choices=[("two", "2"), ("three", "3"), ("four", "4"),
+                         ("five", "5")],
                 default="three",
                 max_length=10,
                 verbose_name="Spalten",

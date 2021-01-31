@@ -10,7 +10,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        #        ('forms', '0026_auto_20200701_0932'),
+    #        ('forms', '0026_auto_20200701_0932'),
         ("events", "0042_auto_20200626_1201"),
     ]
 
@@ -42,7 +42,8 @@ class Migration(migrations.Migration):
                         verbose_name="steps",
                     ),
                 ),
-                ("start", models.IntegerField(default=0, verbose_name="start")),
+                ("start", models.IntegerField(default=0,
+                                              verbose_name="start")),
                 ("region", models.CharField(max_length=255)),
                 ("ordering", models.IntegerField(default=0)),
                 (

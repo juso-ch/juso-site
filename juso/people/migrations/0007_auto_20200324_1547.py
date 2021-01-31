@@ -23,7 +23,9 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="person",
             name="phone",
-            field=models.CharField(blank=True, max_length=20, verbose_name="phone"),
+            field=models.CharField(blank=True,
+                                   max_length=20,
+                                   verbose_name="phone"),
         ),
         migrations.AddField(
             model_name="person",

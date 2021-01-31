@@ -30,13 +30,15 @@ class Migration(migrations.Migration):
                 (
                     "language_code",
                     models.CharField(
-                        choices=[("de", "German"), ("fr", "French"), ("it", "Italian")],
+                        choices=[("de", "German"), ("fr", "French"),
+                                 ("it", "Italian")],
                         default="de",
                         max_length=10,
                         verbose_name="language",
                     ),
                 ),
-                ("count", models.IntegerField(default=3, verbose_name="count")),
+                ("count", models.IntegerField(default=3,
+                                              verbose_name="count")),
                 (
                     "template_key",
                     models.CharField(
@@ -165,10 +167,6 @@ class Migration(migrations.Migration):
                 verbose_name="style",
             ),
         ),
-        migrations.DeleteModel(
-            name="Divider",
-        ),
-        migrations.DeleteModel(
-            name="Header",
-        ),
+        migrations.DeleteModel(name="Divider", ),
+        migrations.DeleteModel(name="Header", ),
     ]

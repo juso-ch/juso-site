@@ -14,8 +14,8 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="articleplugin",
             name="sections",
-            field=models.ManyToManyField(
-                blank=True, related_name="events_articleplugin", to="sections.Section"
-            ),
+            field=models.ManyToManyField(blank=True,
+                                         related_name="events_articleplugin",
+                                         to="sections.Section"),
         ),
     ]

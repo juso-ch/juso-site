@@ -42,15 +42,14 @@ class FormFieldInline(OrderableAdmin, admin.TabularInline):
         (
             None,
             {
-                "fields": (
-                    ("name", "ordering", "slug", "input_type", "required"),
-                )
+                "fields":
+                (("name", "ordering", "slug", "input_type", "required"), )
             },
         ),
         (
             _("advanced"),
             {
-                "classes": ("collapse",),
+                "classes": ("collapse", ),
                 "fields": (
                     "size",
                     "choices",
@@ -137,7 +136,7 @@ class FormAdmin(VersionAdmin, CopyContentMixin):
     ]
 
     prepopulated_fields = {
-        "slug": ("title",),
+        "slug": ("title", ),
     }
 
     readonly_fields = (
@@ -146,7 +145,9 @@ class FormAdmin(VersionAdmin, CopyContentMixin):
     )
 
     formfield_overrides = {
-        models.JSONField: {"widget": FlatJsonWidget},
+        models.JSONField: {
+            "widget": FlatJsonWidget
+        },
     }
 
     fieldsets = (
@@ -165,7 +166,7 @@ class FormAdmin(VersionAdmin, CopyContentMixin):
         (
             _("settings"),
             {
-                "classes": ("tabbed",),
+                "classes": ("tabbed", ),
                 "fields": (
                     "submit",
                     "size",
@@ -178,7 +179,7 @@ class FormAdmin(VersionAdmin, CopyContentMixin):
         (
             _("collection"),
             {
-                "classes": ("tabbed",),
+                "classes": ("tabbed", ),
                 "fields": (
                     "email",
                     "list_id",
@@ -192,7 +193,7 @@ class FormAdmin(VersionAdmin, CopyContentMixin):
         (
             _("advanced"),
             {
-                "classes": ("tabbed",),
+                "classes": ("tabbed", ),
                 "fields": (
                     "linked_form",
                     "linking_field_slug",
@@ -202,7 +203,7 @@ class FormAdmin(VersionAdmin, CopyContentMixin):
         (
             _("meta"),
             {
-                "classes": ("tabbed",),
+                "classes": ("tabbed", ),
                 "fields": (
                     "meta_title",
                     "meta_author",
@@ -239,7 +240,7 @@ class FormAdmin(VersionAdmin, CopyContentMixin):
         )
 
     def result_link(self, obj):
-        url = reverse("admin:forms_Form_show_results", args=(obj.pk,))
+        url = reverse("admin:forms_Form_show_results", args=(obj.pk, ))
         return mark_safe(f'<a href="{url}">{obj.count()}</a>')
 
     result_link.short_description = _("results")
@@ -249,9 +250,9 @@ class FormAdmin(VersionAdmin, CopyContentMixin):
         return [
             path(
                 "results/<int:pk>/",
-                user_passes_test(lambda user: user.is_staff, login_url="/admin/login/")(
-                    self.admin_site.admin_view(self.show_results)
-                ),
+                user_passes_test(
+                    lambda user: user.is_staff, login_url="/admin/login/")(
+                        self.admin_site.admin_view(self.show_results)),
                 name="forms_Form_show_results",
             )
         ] + urls
@@ -288,20 +289,18 @@ class FormAdmin(VersionAdmin, CopyContentMixin):
         sections = request.user.section_set.all()
         if obj.section in sections:
             return super().get_fieldsets(request, obj=obj)
-        return (
-            (
-                None,
-                {
-                    "fields": (
-                        "title",
-                        "slug",
-                        "section",
-                        "created_date",
-                        "edited_date",
-                    )
-                },
-            ),
-        )
+        return ((
+            None,
+            {
+                "fields": (
+                    "title",
+                    "slug",
+                    "section",
+                    "created_date",
+                    "edited_date",
+                )
+            },
+        ), )
 
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
@@ -346,8 +345,7 @@ class FormAdmin(VersionAdmin, CopyContentMixin):
 
         response = HttpResponse(content_type="text/csv")
         response[
-            "Content-Disposition"
-        ] = f'attachment; filename="{form.slug}-{timezone.now():%Y%m%d%H%M}.csv"'
+            "Content-Disposition"] = f'attachment; filename="{form.slug}-{timezone.now():%Y%m%d%H%M}.csv"'
 
         writer = csv.DictWriter(response, fieldnames=fields)
         writer.writeheader()
@@ -358,12 +356,12 @@ class FormAdmin(VersionAdmin, CopyContentMixin):
     def export_form_xlsx(self, request, query):
 
         response = HttpResponse(
-            content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            content_type=
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         )
 
         response[
-            "Content-Disposition"
-        ] = f'attachment; filename="form-export-{timezone.now():%Y%m%d%H%M}.xlsx"'
+            "Content-Disposition"] = f'attachment; filename="form-export-{timezone.now():%Y%m%d%H%M}.xlsx"'
 
         workbook = xlsxwriter.Workbook(response, {"remove_timezone": True})
         bold = workbook.add_format({"bold": True})
@@ -384,7 +382,8 @@ class FormAdmin(VersionAdmin, CopyContentMixin):
                 for col, field in enumerate(fields):
                     val = entry.get(field, "")
                     if isinstance(val, datetime):
-                        worksheet.write(row + 1, col, entry.get(field, ""), date_format)
+                        worksheet.write(row + 1, col, entry.get(field, ""),
+                                        date_format)
                     else:
                         worksheet.write(row + 1, col, entry.get(field, ""))
 
@@ -409,7 +408,7 @@ class MailchimpConnectionAdmin(admin.ModelAdmin):
 
     search_fields = ("name", "section")
 
-    autocomplete_fields = ("section",)
+    autocomplete_fields = ("section", )
 
     def get_queryset(self, request):
         if request.user.is_superuser:
@@ -426,9 +425,9 @@ class WebhookFieldInline(admin.TabularInline):
 class WebhookAdmin(admin.ModelAdmin):
     list_display = ("name", "owner")
 
-    search_fields = ("name",)
+    search_fields = ("name", )
 
-    autocomplete_fields = ("owner",)
+    autocomplete_fields = ("owner", )
 
     inlines = [WebhookFieldInline]
 

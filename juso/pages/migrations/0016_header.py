@@ -25,22 +25,26 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "text",
-                    models.CharField(blank=True, max_length=240, verbose_name="Text"),
+                    models.CharField(blank=True,
+                                     max_length=240,
+                                     verbose_name="Text"),
                 ),
                 (
                     "inverted",
-                    models.BooleanField(default=False, verbose_name="inverted"),
+                    models.BooleanField(default=False,
+                                        verbose_name="inverted"),
                 ),
                 (
                     "color",
-                    models.CharField(
-                        blank=True, choices=[("red", "red")], max_length=20
-                    ),
+                    models.CharField(blank=True,
+                                     choices=[("red", "red")],
+                                     max_length=20),
                 ),
                 (
                     "level",
                     models.SmallIntegerField(
-                        choices=[(1, "h1"), (2, "h2"), (3, "h3"), (4, "h4"), (5, "h5")],
+                        choices=[(1, "h1"), (2, "h2"), (3, "h3"), (4, "h4"),
+                                 (5, "h5")],
                         verbose_name="level",
                     ),
                 ),

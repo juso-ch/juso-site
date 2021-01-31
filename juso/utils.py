@@ -62,7 +62,7 @@ class CopyContentMixin:
 meta_fieldset = (
     _("meta"),
     {
-        "classes": ("tabbed",),
+        "classes": ("tabbed", ),
         "fields": (
             "meta_title",
             "meta_author",

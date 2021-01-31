@@ -14,7 +14,6 @@ class Migration(migrations.Migration):
             model_name="namespace",
             name="translations",
             field=models.ManyToManyField(
-                related_name="_namespace_translations_+", to="blog.NameSpace"
-            ),
+                related_name="_namespace_translations_+", to="blog.NameSpace"),
         ),
     ]

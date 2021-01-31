@@ -17,7 +17,10 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterModelOptions(
             name="category",
-            options={"verbose_name": "category", "verbose_name_plural": "categories"},
+            options={
+                "verbose_name": "category",
+                "verbose_name_plural": "categories"
+            },
         ),
         migrations.AlterModelOptions(
             name="section",
@@ -30,7 +33,9 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="category",
             name="color",
-            field=models.CharField(blank=True, max_length=7, verbose_name="color"),
+            field=models.CharField(blank=True,
+                                   max_length=7,
+                                   verbose_name="color"),
         ),
         migrations.AlterField(
             model_name="category",
@@ -77,8 +82,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="section",
             name="users",
-            field=models.ManyToManyField(
-                to=settings.AUTH_USER_MODEL, verbose_name="users"
-            ),
+            field=models.ManyToManyField(to=settings.AUTH_USER_MODEL,
+                                         verbose_name="users"),
         ),
     ]

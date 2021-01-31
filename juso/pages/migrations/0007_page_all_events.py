@@ -13,6 +13,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="page",
             name="all_events",
-            field=models.BooleanField(default=False, verbose_name="all events"),
+            field=models.BooleanField(default=False,
+                                      verbose_name="all events"),
         ),
     ]

@@ -15,7 +15,8 @@ class Migration(migrations.Migration):
             name="unique",
             field=models.BooleanField(
                 default=False,
-                help_text="restricts people to only submit one value for this form",
+                help_text=
+                "restricts people to only submit one value for this form",
                 verbose_name="uniques",
             ),
         ),

@@ -13,6 +13,8 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="form",
             name="list_id",
-            field=models.CharField(blank=True, max_length=30, verbose_name="list id"),
+            field=models.CharField(blank=True,
+                                   max_length=30,
+                                   verbose_name="list id"),
         ),
     ]

@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
             model_name="category",
             name="translations",
             field=models.ManyToManyField(
-                related_name="_category_translations_+", to="sections.Category"
-            ),
+                related_name="_category_translations_+",
+                to="sections.Category"),
         ),
     ]

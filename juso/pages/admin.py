@@ -58,7 +58,7 @@ class PageAdmin(VersionAdmin, CopyContentMixin, ContentEditor, TreeAdmin):
 
     list_per_page = 50
 
-    prepopulated_fields = {"slug": ("title",)}
+    prepopulated_fields = {"slug": ("title", )}
 
     autocomplete_fields = [
         "site",
@@ -86,7 +86,8 @@ class PageAdmin(VersionAdmin, CopyContentMixin, ContentEditor, TreeAdmin):
         ButtonInline.create(models.Button),
         VotingRecommendationInline.create(models.VotingRecommendationPlugin),
         people_plugins.TeamPluginInline.create(models.Team),
-        people_plugins.CandidateListPluginInline.create(models.CandidaturePlugin),
+        people_plugins.CandidateListPluginInline.create(
+            models.CandidaturePlugin),
         event_plugins.EventPluginInline.create(models.EventPlugin),
         blog_plugins.ArticlePluginInline.create(models.ArticlePlugin),
         GlossaryContentInline.create(models.GlossaryRichText),
@@ -126,7 +127,7 @@ class PageAdmin(VersionAdmin, CopyContentMixin, ContentEditor, TreeAdmin):
         (
             _("path"),
             {
-                "classes": ("tabbed",),
+                "classes": ("tabbed", ),
                 "fields": (
                     "slug",
                     "static_path",
@@ -138,7 +139,7 @@ class PageAdmin(VersionAdmin, CopyContentMixin, ContentEditor, TreeAdmin):
         (
             _("application"),
             {
-                "classes": ("tabbed",),
+                "classes": ("tabbed", ),
                 "fields": (
                     "application",
                     "category",
@@ -154,18 +155,21 @@ class PageAdmin(VersionAdmin, CopyContentMixin, ContentEditor, TreeAdmin):
         (
             _("redirect"),
             {
-                "classes": ("tabbed",),
+                "classes": ("tabbed", ),
                 "fields": (
                     "redirect_to_page",
                     "redirect_to_url",
                 ),
             },
         ),
-        (_("translations"), {"classes": ("tabbed",), "fields": ("translations",)}),
+        (_("translations"), {
+            "classes": ("tabbed", ),
+            "fields": ("translations", )
+        }),
         (
             _("advanced"),
             {
-                "classes": ("tabbed",),
+                "classes": ("tabbed", ),
                 "fields": (
                     "in_meta",
                     "is_navigation",
@@ -185,9 +189,10 @@ class PageAdmin(VersionAdmin, CopyContentMixin, ContentEditor, TreeAdmin):
     mptt_level_indent = 30
 
     def move_view(self, request, obj):
-        return self.action_form_view(
-            request, obj, form_class=ResctrictedMoveForm, title=_("Move %s") % obj
-        )
+        return self.action_form_view(request,
+                                     obj,
+                                     form_class=ResctrictedMoveForm,
+                                     title=_("Move %s") % obj)
 
     class Media:
         js = (
@@ -205,10 +210,9 @@ class PageAdmin(VersionAdmin, CopyContentMixin, ContentEditor, TreeAdmin):
 
     def get_inline_instances(self, request, obj=None):
         inlines = super().get_inline_instances(request, obj)
-        if (
-            hasattr(obj, "pk")
-            and models.Page.objects.get(pk=obj.pk).application == "categories"
-        ):
+        if (hasattr(obj, "pk")
+                and models.Page.objects.get(pk=obj.pk).application
+                == "categories"):
             return inlines
         return inlines[:-1]
 
@@ -255,8 +259,7 @@ class PageAdmin(VersionAdmin, CopyContentMixin, ContentEditor, TreeAdmin):
             reverse(
                 "admin:pages_Page_duplicate_page_tree",
                 kwargs={"pk": queryset[0].pk},
-            )
-        )
+            ))
 
     open_duplicate_form.short_description = _("Duplicate page-tree")
 
@@ -344,8 +347,7 @@ class DuplicateForm(forms.Form):
             return
 
         self.fields["site"].queryset = Site.objects.filter(
-            section__in=self.request.user.section_set.all()
-        )
+            section__in=self.request.user.section_set.all())
 
 
 class SiteAdmin(SiteAdmin):
@@ -368,19 +370,23 @@ class ResctrictedMoveForm(MoveForm):
         super().__init__(*args, **kwargs)
 
         queryset = self.model._default_manager.filter(
-            site=self.instance.site
-        ).with_tree_fields()
+            site=self.instance.site).with_tree_fields()
 
         self.fields["of"] = TreeNodeChoiceField(
             label=pgettext("MoveForm", "Of"),
             required=False,
-            queryset=queryset.exclude(pk__in=queryset.descendants(self.instance)),
+            queryset=queryset.exclude(
+                pk__in=queryset.descendants(self.instance)),
             label_from_instance=lambda obj: "{}{}".format(
-                "".join(["*** " if obj == self.instance else "--- "] * obj.tree_depth),
+                "".join(["*** " if obj == self.instance else "--- "] * obj.
+                        tree_depth),
                 obj,
             ),
         )
-        self.fields["of"].widget.attrs.update({"size": 30, "style": "height:auto"})
+        self.fields["of"].widget.attrs.update({
+            "size": 30,
+            "style": "height:auto"
+        })
 
 
 admin.site.unregister(Site)

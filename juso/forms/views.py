@@ -30,8 +30,7 @@ def form_view(request, pk):
                 "form": form,
                 "disable_js": True,
             },
-        )
-    )
+        ))
 
 
 def process_form(request, form):
@@ -42,7 +41,7 @@ def process_form(request, form):
             ip=client_ip(request),
         )
 
-        for field in form.form.forms_formfield_set.all():
+        for field in form.form.formfield_set.all():
             field_entry = models.FormEntryValue.objects.create(
                 field=field,
                 form_entry=entry,
@@ -54,16 +53,15 @@ def process_form(request, form):
 
         tasks.process_entry.delay(entry.pk)
 
-        data = form.form.webhook_dict.copy() if form.form.webhook_dict else dict()
+        data = form.form.webhook_dict.copy(
+        ) if form.form.webhook_dict else dict()
         data.update(entry.get_values(form.form.get_fields(), json_safe=True))
 
-        data.update(
-            {
-                "ip": entry.ip,
-                "created": entry.created,
-                "sid": str(entry.submission_id),
-            }
-        )
+        data.update({
+            "ip": entry.ip,
+            "created": entry.created,
+            "sid": str(entry.submission_id),
+        })
 
         if form.form.success_redirect:
             response = HttpResponse(status=201)
@@ -71,13 +69,9 @@ def process_form(request, form):
             return response
 
         if form.form.success_message:
-            message = (
-                form.form.success_message.replace("%7B", "{")
-                .replace("%7D", "}")
-                .format(**data)
-                .replace("{", "%7B")
-                .replace("}", "%7D")
-            )
+            message = (form.form.success_message.replace("%7B", "{").replace(
+                "%7D", "}").format(**data).replace("{",
+                                                   "%7B").replace("}", "%7D"))
             return HttpResponse(message, status=202)
 
         form = form.form.get_instance(None)
@@ -89,5 +83,4 @@ def process_form(request, form):
                 "form": form,
                 "disable_js": True,
             },
-        )
-    )
+        ))

@@ -17,7 +17,8 @@ class Migration(migrations.Migration):
             field=imagefield.fields.ImageField(
                 blank=True,
                 height_field="image_height",
-                help_text="Only necessary if you want to use another picture for this candidature.",
+                help_text=
+                "Only necessary if you want to use another picture for this candidature.",
                 null=True,
                 upload_to="people/",
                 verbose_name="image",
@@ -30,7 +31,8 @@ class Migration(migrations.Migration):
             field=imagefield.fields.ImageField(
                 blank=True,
                 height_field="image_height",
-                help_text="Only necessary if you want to use another picture for this position.",
+                help_text=
+                "Only necessary if you want to use another picture for this position.",
                 null=True,
                 upload_to="people/",
                 verbose_name="image",

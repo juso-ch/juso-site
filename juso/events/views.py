@@ -18,9 +18,7 @@ from juso.sections.models import Section
 
 
 def event_list_for_page(page, past_events=False, all_events=False):
-    qs = Event.objects.filter(
-        language_code=page.language_code,
-    )
+    qs = Event.objects.filter(language_code=page.language_code, )
     if all_events:
         pass
     elif not past_events:
@@ -54,21 +52,28 @@ def location_detail(request, slug):
         request,
         "events/location_detail.html",
         {
-            "page": page,
-            "location": location,
-            "obj": location,
-            "title": location.name,
-            "header_image": location.header_image or page.get_header_image(),
-            "event_list": location.event_set.filter(
-                end_date__gte=timezone.now(),
-            ),
-            "meta_tags": meta_tags([location, page] + ancestors, request=request),
-            "regions": Regions.from_item(
+            "page":
+            page,
+            "location":
+            location,
+            "obj":
+            location,
+            "title":
+            location.name,
+            "header_image":
+            location.header_image or page.get_header_image(),
+            "event_list":
+            location.event_set.filter(end_date__gte=timezone.now(), ),
+            "meta_tags":
+            meta_tags([location, page] + ancestors, request=request),
+            "regions":
+            Regions.from_item(
                 location,
                 renderer=location_renderer,
                 timeout=60,
             ),
-            "page_regions": Regions.from_item(
+            "page_regions":
+            Regions.from_item(
                 page,
                 renderer=pages.renderer.renderer,
                 timeout=60,
@@ -94,14 +99,18 @@ def event_list(request, past=False):
         request,
         event_list,
         {
-            "location_list": Location.objects.filter(
-                event__in=event_list,
-            ).distinct(),
-            "page": page,
-            "header_image": page.get_header_image(),
-            "vapid_public_key": settings.VAPID_PUBLIC_KEY,
-            "meta_tags": meta_tags([page] + ancestors, request=request),
-            "regions": Regions.from_item(
+            "location_list":
+            Location.objects.filter(event__in=event_list, ).distinct(),
+            "page":
+            page,
+            "header_image":
+            page.get_header_image(),
+            "vapid_public_key":
+            settings.VAPID_PUBLIC_KEY,
+            "meta_tags":
+            meta_tags([page] + ancestors, request=request),
+            "regions":
+            Regions.from_item(
                 page,
                 renderer=pages.renderer.renderer,
                 timeout=60,
@@ -123,7 +132,7 @@ def event_list_ical(request):
     if "section" in request.GET:
         event_list = event_list.filter(section__slug=request.GET["section"])
 
-    event_list = event_list[: int(request.GET.get("limit", "30"))]
+    event_list = event_list[:int(request.GET.get("limit", "30"))]
 
     calendar = ical_calendar(event_list)
 
@@ -152,21 +161,29 @@ def event_detail(request, year, month, day, slug):
         request,
         event.template.template_name,
         {
-            "page": page,
-            "event": event,
-            "obj": event,
-            "header_image": event.get_header_image() or page.get_header_image(),
-            "title": event.title,
-            "meta_tags": meta_tags(
+            "page":
+            page,
+            "event":
+            event,
+            "obj":
+            event,
+            "header_image":
+            event.get_header_image() or page.get_header_image(),
+            "title":
+            event.title,
+            "meta_tags":
+            meta_tags(
                 [event, page] + ancestors,
                 request=request,
             ),
-            "regions": Regions.from_item(
+            "regions":
+            Regions.from_item(
                 event,
                 renderer=renderer,
                 timeout=60,
             ),
-            "page_regions": Regions.from_item(
+            "page_regions":
+            Regions.from_item(
                 page,
                 renderer=pages.renderer.renderer,
                 timeout=60,
@@ -193,16 +210,21 @@ def event_list_for_section(request, pk):
         request,
         event_list_for_page(page),
         {
-            "page": page,
-            "header_image": page.get_header_image(),
-            "meta_tags": meta_tags([page] + ancestors, request=request),
-            "regions": Regions.from_item(
+            "page":
+            page,
+            "header_image":
+            page.get_header_image(),
+            "meta_tags":
+            meta_tags([page] + ancestors, request=request),
+            "regions":
+            Regions.from_item(
                 page,
                 renderer=pages.renderer.renderer,
                 timeout=60,
                 inherit_from=ancestors,
             ),
-            "section": section,
+            "section":
+            section,
         },
         paginate_by=20,
     )

@@ -25,7 +25,8 @@ class Migration(migrations.Migration):
                 (
                     "language_code",
                     models.CharField(
-                        choices=[("de", "German"), ("fr", "French"), ("it", "Italian")],
+                        choices=[("de", "German"), ("fr", "French"),
+                                 ("it", "Italian")],
                         default="de",
                         max_length=10,
                         verbose_name="language",
@@ -35,9 +36,11 @@ class Migration(migrations.Migration):
                 ("slug", models.SlugField(unique=True, verbose_name="Slug")),
                 (
                     "auto_pattern",
-                    models.BooleanField(default=True, verbose_name="auto-pattern"),
+                    models.BooleanField(default=True,
+                                        verbose_name="auto-pattern"),
                 ),
-                ("pattern", models.CharField(max_length=200, verbose_name="pattern")),
+                ("pattern",
+                 models.CharField(max_length=200, verbose_name="pattern")),
                 ("content", models.TextField()),
                 (
                     "translations",

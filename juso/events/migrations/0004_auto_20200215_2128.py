@@ -20,7 +20,10 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterModelOptions(
             name="location",
-            options={"verbose_name": "location", "verbose_name_plural": "locations"},
+            options={
+                "verbose_name": "location",
+                "verbose_name_plural": "locations"
+            },
         ),
         migrations.AlterField(
             model_name="location",

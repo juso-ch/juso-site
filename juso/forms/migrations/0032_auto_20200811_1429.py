@@ -13,6 +13,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="formentryvalue",
             name="value",
-            field=models.TextField(blank=True, null=True, verbose_name="value"),
+            field=models.TextField(blank=True, null=True,
+                                   verbose_name="value"),
         ),
     ]

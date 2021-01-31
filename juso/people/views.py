@@ -19,7 +19,8 @@ def person_detail(request, pk):
 
     articles = Article.objects.filter(author=person)
 
-    memberships = person.membership_set.filter(team__language_code=page.language_code)
+    memberships = person.membership_set.filter(
+        team__language_code=page.language_code)
 
     ancestors = list(page.ancestors().reverse())
 
@@ -27,19 +28,27 @@ def person_detail(request, pk):
         request,
         "people/person_detail.html",
         {
-            "page": page,
-            "person": person,
-            "memberships": memberships,
-            "articles": articles,
-            "header_image": page.get_header_image(),
-            "title": person.get_full_name(),
-            "meta_tags": meta_tags(
+            "page":
+            page,
+            "person":
+            person,
+            "memberships":
+            memberships,
+            "articles":
+            articles,
+            "header_image":
+            page.get_header_image(),
+            "title":
+            person.get_full_name(),
+            "meta_tags":
+            meta_tags(
                 [page] + ancestors,
                 request=request,
                 title=person.get_full_name(),
                 description=person.description(),
             ),
-            "regions": Regions.from_item(
+            "regions":
+            Regions.from_item(
                 page,
                 renderer=pages.renderer.renderer,
                 timeout=60,
@@ -61,10 +70,14 @@ def team_detail(request, pk):
         request,
         "people/team_detail.html",
         {
-            "page": page,
-            "team": team,
-            "meta_tags": meta_tags([page] + ancestors, request=request),
-            "regions": Regions.from_item(
+            "page":
+            page,
+            "team":
+            team,
+            "meta_tags":
+            meta_tags([page] + ancestors, request=request),
+            "regions":
+            Regions.from_item(
                 page,
                 renderer=pages.renderer.renderer,
                 timeout=60,
@@ -88,9 +101,12 @@ def teams_for_section(request):
             language_code=page.language_code,
         ),
         {
-            "page": page,
-            "meta_tags": meta_tags([page] + ancestors, request=request),
-            "regions": Regions.from_item(
+            "page":
+            page,
+            "meta_tags":
+            meta_tags([page] + ancestors, request=request),
+            "regions":
+            Regions.from_item(
                 page,
                 renderer=pages.renderer.renderer,
                 timeout=60,

@@ -13,8 +13,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="page",
             name="translations",
-            field=models.ManyToManyField(
-                related_name="_page_translations_+", to="pages.Page"
-            ),
+            field=models.ManyToManyField(related_name="_page_translations_+",
+                                         to="pages.Page"),
         ),
     ]

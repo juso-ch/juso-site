@@ -13,11 +13,13 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="page",
             name="in_meta",
-            field=models.BooleanField(default=False, verbose_name="in meta menu"),
+            field=models.BooleanField(default=False,
+                                      verbose_name="in meta menu"),
         ),
         migrations.AddField(
             model_name="page",
             name="is_navigation",
-            field=models.BooleanField(default=False, verbose_name="display navigation"),
+            field=models.BooleanField(default=False,
+                                      verbose_name="display navigation"),
         ),
     ]

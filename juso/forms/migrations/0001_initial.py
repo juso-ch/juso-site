@@ -87,15 +87,20 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "meta_image_width",
-                    models.PositiveIntegerField(blank=True, editable=False, null=True),
+                    models.PositiveIntegerField(blank=True,
+                                                editable=False,
+                                                null=True),
                 ),
                 (
                     "meta_image_height",
-                    models.PositiveIntegerField(blank=True, editable=False, null=True),
+                    models.PositiveIntegerField(blank=True,
+                                                editable=False,
+                                                null=True),
                 ),
                 (
                     "meta_image_ppoi",
-                    imagefield.fields.PPOIField(default="0.5x0.5", max_length=20),
+                    imagefield.fields.PPOIField(default="0.5x0.5",
+                                                max_length=20),
                 ),
                 (
                     "template_key",
@@ -109,13 +114,15 @@ class Migration(migrations.Migration):
                 (
                     "language_code",
                     models.CharField(
-                        choices=[("de", "German"), ("fr", "French"), ("it", "Italian")],
+                        choices=[("de", "German"), ("fr", "French"),
+                                 ("it", "Italian")],
                         default="de",
                         max_length=10,
                         verbose_name="language",
                     ),
                 ),
-                ("title", models.CharField(max_length=200, verbose_name="Titel")),
+                ("title", models.CharField(max_length=200,
+                                           verbose_name="Titel")),
                 ("slug", models.SlugField(verbose_name="Slug")),
                 (
                     "publication_date",
@@ -126,11 +133,13 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "created_date",
-                    models.DateTimeField(auto_now_add=True, verbose_name="created at"),
+                    models.DateTimeField(auto_now_add=True,
+                                         verbose_name="created at"),
                 ),
                 (
                     "edited_date",
-                    models.DateTimeField(auto_now=True, verbose_name="edited at"),
+                    models.DateTimeField(auto_now=True,
+                                         verbose_name="edited at"),
                 ),
                 (
                     "author",
@@ -172,9 +181,9 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "translations",
-                    models.ManyToManyField(
-                        blank=True, related_name="_form_translations_+", to="forms.Form"
-                    ),
+                    models.ManyToManyField(blank=True,
+                                           related_name="_form_translations_+",
+                                           to="forms.Form"),
                 ),
             ],
             options={
@@ -197,19 +206,20 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "created",
-                    models.DateTimeField(auto_now_add=True, verbose_name="created"),
+                    models.DateTimeField(auto_now_add=True,
+                                         verbose_name="created"),
                 ),
                 (
                     "ip",
-                    models.GenericIPAddressField(
-                        blank=True, null=True, verbose_name="ip address"
-                    ),
+                    models.GenericIPAddressField(blank=True,
+                                                 null=True,
+                                                 verbose_name="ip address"),
                 ),
                 (
                     "form",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="forms.Form"
-                    ),
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="forms.Form"),
                 ),
             ],
         ),
@@ -227,12 +237,13 @@ class Migration(migrations.Migration):
                 ),
                 ("region", models.CharField(max_length=255)),
                 ("ordering", models.IntegerField(default=0)),
-                ("name", models.CharField(max_length=140, verbose_name="name")),
+                ("name", models.CharField(max_length=140,
+                                          verbose_name="name")),
                 (
                     "input_type",
-                    models.CharField(
-                        choices=[("", "")], max_length=140, verbose_name="type"
-                    ),
+                    models.CharField(choices=[("", "")],
+                                     max_length=140,
+                                     verbose_name="type"),
                 ),
                 ("slug", models.SlugField()),
                 ("required", models.BooleanField(verbose_name="required")),
@@ -240,7 +251,8 @@ class Migration(migrations.Migration):
                     "help_text",
                     models.CharField(max_length=240, verbose_name="help_text"),
                 ),
-                ("choices", models.TextField(blank=True, verbose_name="choices")),
+                ("choices", models.TextField(blank=True,
+                                             verbose_name="choices")),
                 (
                     "parent",
                     models.ForeignKey(

@@ -85,15 +85,20 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "meta_image_width",
-                    models.PositiveIntegerField(blank=True, editable=False, null=True),
+                    models.PositiveIntegerField(blank=True,
+                                                editable=False,
+                                                null=True),
                 ),
                 (
                     "meta_image_height",
-                    models.PositiveIntegerField(blank=True, editable=False, null=True),
+                    models.PositiveIntegerField(blank=True,
+                                                editable=False,
+                                                null=True),
                 ),
                 (
                     "meta_image_ppoi",
-                    imagefield.fields.PPOIField(default="0.5x0.5", max_length=20),
+                    imagefield.fields.PPOIField(default="0.5x0.5",
+                                                max_length=20),
                 ),
                 (
                     "template_key",
@@ -112,13 +117,15 @@ class Migration(migrations.Migration):
                 (
                     "language_code",
                     models.CharField(
-                        choices=[("de", "German"), ("fr", "French"), ("it", "Italian")],
+                        choices=[("de", "German"), ("fr", "French"),
+                                 ("it", "Italian")],
                         default="de",
                         max_length=10,
                         verbose_name="language",
                     ),
                 ),
-                ("title", models.CharField(max_length=200, verbose_name="Titel")),
+                ("title", models.CharField(max_length=200,
+                                           verbose_name="Titel")),
                 ("slug", models.SlugField(verbose_name="Slug")),
                 (
                     "publication_date",
@@ -129,11 +136,13 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "created_date",
-                    models.DateTimeField(auto_now_add=True, verbose_name="created at"),
+                    models.DateTimeField(auto_now_add=True,
+                                         verbose_name="created at"),
                 ),
                 (
                     "edited_date",
-                    models.DateTimeField(auto_now=True, verbose_name="edited at"),
+                    models.DateTimeField(auto_now=True,
+                                         verbose_name="edited at"),
                 ),
                 (
                     "author",
@@ -166,7 +175,8 @@ class Migration(migrations.Migration):
                 (
                     "language_code",
                     models.CharField(
-                        choices=[("de", "German"), ("fr", "French"), ("it", "Italian")],
+                        choices=[("de", "German"), ("fr", "French"),
+                                 ("it", "Italian")],
                         default="de",
                         max_length=10,
                         verbose_name="language",
@@ -193,7 +203,8 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("text", feincms3.cleanse.CleansedRichTextField(verbose_name="text")),
+                ("text",
+                 feincms3.cleanse.CleansedRichTextField(verbose_name="text")),
                 ("region", models.CharField(max_length=255)),
                 ("ordering", models.IntegerField(default=0)),
                 (
@@ -262,9 +273,9 @@ class Migration(migrations.Migration):
                 ("ordering", models.IntegerField(default=0)),
                 (
                     "caption",
-                    models.CharField(
-                        blank=True, max_length=200, verbose_name="caption"
-                    ),
+                    models.CharField(blank=True,
+                                     max_length=200,
+                                     verbose_name="caption"),
                 ),
                 (
                     "parent",
@@ -296,7 +307,8 @@ class Migration(migrations.Migration):
                 (
                     "html",
                     models.TextField(
-                        help_text="The content will be inserted directly into the page. It is VERY important that the HTML snippet is well-formed!",
+                        help_text=
+                        "The content will be inserted directly into the page. It is VERY important that the HTML snippet is well-formed!",
                         verbose_name="HTML",
                     ),
                 ),
@@ -360,17 +372,19 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "document",
-                    models.FileField(upload_to="downloads/", verbose_name="Datei"),
+                    models.FileField(upload_to="downloads/",
+                                     verbose_name="Datei"),
                 ),
                 (
                     "download_text",
-                    models.CharField(max_length=200, verbose_name="download text"),
+                    models.CharField(max_length=200,
+                                     verbose_name="download text"),
                 ),
                 (
                     "link_classes",
-                    models.CharField(
-                        blank=True, max_length=200, verbose_name="link classes (css)"
-                    ),
+                    models.CharField(blank=True,
+                                     max_length=200,
+                                     verbose_name="link classes (css)"),
                 ),
                 ("region", models.CharField(max_length=255)),
                 ("ordering", models.IntegerField(default=0)),

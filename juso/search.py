@@ -17,16 +17,14 @@ def consume(qs):
     query = None
 
     for result in results:
-        if result[0]:  # And
+        if result[0]:    # And
             query = query & consume(result[0])
 
-        if result[1].strip():  # Phrase
+        if result[1].strip():    # Phrase
             query = combine_query(
-                query, SearchQuery(result[1].strip(), search_type="phrase")
-            )
+                query, SearchQuery(result[1].strip(), search_type="phrase"))
 
-        if result[2].strip():  # Keywords
+        if result[2].strip():    # Keywords
             query = combine_query(
-                query, SearchQuery(result[2].strip(), search_type="plain")
-            )
+                query, SearchQuery(result[2].strip(), search_type="plain"))
     return query

@@ -95,7 +95,8 @@ Admin: https://{section.site.host}/admin/
                     [user.email],
                 )
 
-                messages.success(request, _(f"Account for {username} created!"))
+                messages.success(request,
+                                 _(f"Account for {username} created!"))
 
                 return redirect("admin:auth_user_changelist")
 
@@ -114,9 +115,9 @@ Admin: https://{section.site.host}/admin/
         return [
             path(
                 "register-new-user/",
-                user_passes_test(lambda user: user.is_staff, login_url="/admin/login/")(
-                    self.admin_site.admin_view(self.register_new_user)
-                ),
+                user_passes_test(
+                    lambda user: user.is_staff, login_url="/admin/login/")(
+                        self.admin_site.admin_view(self.register_new_user)),
                 name="auth_User_register_new_user",
             )
         ] + urls
@@ -138,7 +139,7 @@ class ButtonInline(ContentEditorInline):
         (
             _("display"),
             {
-                "classes": ("collapse",),
+                "classes": ("collapse", ),
                 "fields": ("color", "style", "line_break", "align"),
             },
         ),
@@ -146,7 +147,8 @@ class ButtonInline(ContentEditorInline):
 
 
 class VotingRecommendationInline(ContentEditorInline):
-    fields = ("title", "recommendation", "url", "url_text", "region", "ordering")
+    fields = ("title", "recommendation", "url", "url_text", "region",
+              "ordering")
 
 
 admin.site.unregister(User)

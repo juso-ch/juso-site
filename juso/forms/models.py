@@ -1,6 +1,5 @@
 import uuid
 
-
 from content_editor.models import create_plugin_base
 from django.db import models
 from django.shortcuts import reverse
@@ -9,7 +8,6 @@ from feincms3.cleanse import CleansedRichTextField
 
 import phonenumbers
 import requests
-
 
 from juso.forms.forms import get_form_instance
 
@@ -35,7 +33,6 @@ INPUT_TYPES = (
     ("section", _("section")),
 )
 
-
 SIZES = (
     ("one", _("one")),
     ("one-half", _("one half")),
@@ -60,12 +57,10 @@ class MailchimpConnection(models.Model):
 class Form(ContentMixin):
     TEMPLATES = get_template_list(
         "form",
-        (
-            (
-                "default",
-                ("fields", "handlers"),
-            ),
-        ),
+        ((
+            "default",
+            ("fields", "handlers"),
+        ), ),
     )
     fullwidth = models.BooleanField(_("full width"))
     submit = models.CharField(max_length=200)
@@ -75,21 +70,26 @@ class Form(ContentMixin):
 
     email = models.CharField(_("e-mail"), max_length=1200, blank=True)
     webhook = models.URLField(_("webhook"), max_length=1200, blank=True)
-    list_id = models.CharField(_("mailtrain list id"), max_length=30, blank=True)
+    list_id = models.CharField(_("mailtrain list id"),
+                               max_length=30,
+                               blank=True)
     webhook_dict = models.JSONField(_("webhook dict"), blank=True, null=True)
     webhooks = models.ManyToManyField("Webhook", blank=True)
 
-    linked_form = models.ForeignKey(
-        "self", models.SET_NULL, null=True, blank=True, related_name="linked_forms"
-    )
+    linked_form = models.ForeignKey("self",
+                                    models.SET_NULL,
+                                    null=True,
+                                    blank=True,
+                                    related_name="linked_forms")
     linking_field_slug = models.CharField(max_length=30, blank=True)
 
-    mailchimp_connection = models.ForeignKey(
-        MailchimpConnection, models.SET_NULL, null=True, blank=True
-    )
-    mailchimp_list_id = models.CharField(
-        _("mailchimp list id"), max_length=100, blank=True
-    )
+    mailchimp_connection = models.ForeignKey(MailchimpConnection,
+                                             models.SET_NULL,
+                                             null=True,
+                                             blank=True)
+    mailchimp_list_id = models.CharField(_("mailchimp list id"),
+                                         max_length=100,
+                                         blank=True)
     tags = models.CharField(_("tags"), max_length=30, blank=True)
 
     def get_instance(self, request):
@@ -107,13 +107,10 @@ class Form(ContentMixin):
         return self.formentry_set.count()
 
     def aggregate(self, field_slug):
-        return (
-            FormEntryValue.objects.filter(
-                form_entry__form=self,
-                field__slug=field_slug,
-            ).aggregate(r=models.Sum("int_value"))["r"]
-            or 0
-        )
+        return (FormEntryValue.objects.filter(
+            form_entry__form=self,
+            field__slug=field_slug,
+        ).aggregate(r=models.Sum("int_value"))["r"] or 0)
 
     def clear_entries(self):
         self.formentry_set.all().delete()
@@ -141,18 +138,36 @@ class Form(ContentMixin):
         return form_entries, fields
 
 
-
 class FormField(models.Model):
-    name = models.CharField(_("name"), max_length=140, help_text=_("label for form field"))
-    input_type = models.CharField(_("type"), choices=INPUT_TYPES, max_length=140, help_text=_("type of the input field"))
+    name = models.CharField(_("name"),
+                            max_length=140,
+                            help_text=_("label for form field"))
+    input_type = models.CharField(_("type"),
+                                  choices=INPUT_TYPES,
+                                  max_length=140,
+                                  help_text=_("type of the input field"))
     parent = models.ForeignKey(Form, models.CASCADE)
 
-    slug = models.SlugField(help_text=_("name that will be used in export headings"))
-    required = models.BooleanField(_("required"), help_text=_("force people to provide this value"))
-    help_text = models.CharField(_("help text"), max_length=240, blank=True, help_text=_("additional info for people"))
-    choices = models.TextField(_("choices"), blank=True, help_text=_("provide the options for a choice field"))
-    initial = models.TextField(_("initial"), max_length=240, blank=True, help_text=_("initial value for this field"))
-    size = models.TextField(_("size"), default="one", choices=SIZES, help_text=_("proportion of the field"))
+    slug = models.SlugField(
+        help_text=_("name that will be used in export headings"))
+    required = models.BooleanField(
+        _("required"), help_text=_("force people to provide this value"))
+    help_text = models.CharField(_("help text"),
+                                 max_length=240,
+                                 blank=True,
+                                 help_text=_("additional info for people"))
+    choices = models.TextField(
+        _("choices"),
+        blank=True,
+        help_text=_("provide the options for a choice field"))
+    initial = models.TextField(_("initial"),
+                               max_length=240,
+                               blank=True,
+                               help_text=_("initial value for this field"))
+    size = models.TextField(_("size"),
+                            default="one",
+                            choices=SIZES,
+                            help_text=_("proportion of the field"))
     ordering = models.IntegerField(default=10)
 
     unique = models.BooleanField(
@@ -192,22 +207,20 @@ class FormEntry(models.Model):
             values[field] = ""
 
         if self.form.linked_form:
-            linked_sid = self.fields.filter(field__slug=self.form.linking_field_slug)
+            linked_sid = self.fields.filter(
+                field__slug=self.form.linking_field_slug)
 
             if linked_sid.exists():
                 other = self.form.linked_form.formentry_set.filter(
-                    submission_id=linked_sid[0].value
-                )
+                    submission_id=linked_sid[0].value)
                 if other.exists():
                     values.update(other[0].get_values(fields, json_safe))
 
-        values.update(
-            {
-                "ip": self.ip,
-                "created": str(self.created) if json_safe else self.created,
-                "sid": str(self.submission_id),
-            }
-        )
+        values.update({
+            "ip": self.ip,
+            "created": str(self.created) if json_safe else self.created,
+            "sid": str(self.submission_id),
+        })
 
         for field in self.fields.all():
             values[field.field.slug] = field.value
@@ -223,9 +236,10 @@ class FormEntry(models.Model):
 
 
 class FormEntryValue(models.Model):
-    form_entry = models.ForeignKey(
-        FormEntry, models.CASCADE, related_name="fields", verbose_name=_("fields")
-    )
+    form_entry = models.ForeignKey(FormEntry,
+                                   models.CASCADE,
+                                   related_name="fields",
+                                   verbose_name=_("fields"))
     field = models.ForeignKey(FormField, models.CASCADE)
     value = models.TextField(_("value"), blank=True, null=True)
     int_value = models.IntegerField(_("int value"), default=0)
@@ -252,8 +266,7 @@ class Webhook(models.Model):
 
         for field in self.fields.all():
             data[field.webhook_slug] = field.convert_data(
-                entry_data.get(field.form_slug), form
-            )
+                entry_data.get(field.form_slug), form)
 
         print(data)
         requests.post(self.url, data=data)
@@ -265,15 +278,15 @@ class Webhook(models.Model):
 class WebhookField(models.Model):
     form_slug = models.SlugField(help_text=_("slug of the field in the form"))
     webhook_slug = models.CharField(
-        max_length=200, help_text=_("name of the field in the request to the webhook")
-    )
+        max_length=200,
+        help_text=_("name of the field in the request to the webhook"))
 
     field_converter = models.CharField(
-        max_length=200, blank=True, help_text=_("apply a converter on the user input")
-    )
+        max_length=200,
+        blank=True,
+        help_text=_("apply a converter on the user input"))
     field_converter_args = models.CharField(
-        max_length=200, blank=True, help_text=_("arguments for the converter")
-    )
+        max_length=200, blank=True, help_text=_("arguments for the converter"))
 
     webhook = models.ForeignKey(Webhook, models.CASCADE, related_name="fields")
 
@@ -282,12 +295,13 @@ class WebhookField(models.Model):
             return self.field_converter_args
 
         if self.field_converter == "phonenumber":
-            country, output = [x.strip() for x in self.field_converter_args.split(",")]
+            country, output = [
+                x.strip() for x in self.field_converter_args.split(",")
+            ]
             parsed = phonenumbers.parse(value, country)
 
             return phonenumbers.format_number(
-                parsed, getattr(phonenumbers.PhoneNumberFormat, output)
-            )
+                parsed, getattr(phonenumbers.PhoneNumberFormat, output))
 
         if self.field_converter == "toint":
             return int(value)

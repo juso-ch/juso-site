@@ -13,7 +13,9 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="eventplugin",
             name="title",
-            field=models.CharField(blank=True, max_length=180, verbose_name="Titel"),
+            field=models.CharField(blank=True,
+                                   max_length=180,
+                                   verbose_name="Titel"),
         ),
         migrations.AlterField(
             model_name="wpimport",

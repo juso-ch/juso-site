@@ -46,13 +46,13 @@ def darken(get_image):
 
 
 class Page(
-    AppsMixin,
-    TranslationMixin,
-    MetaMixin,
-    TemplateMixin,
-    RedirectMixin,
-    MenuMixin,
-    AbstractPage,
+        AppsMixin,
+        TranslationMixin,
+        MetaMixin,
+        TemplateMixin,
+        RedirectMixin,
+        MenuMixin,
+        AbstractPage,
 ):
     """
     This ist the main entity of the cms
@@ -63,83 +63,73 @@ class Page(
             "blog",
             _("blog"),
             {
-                "urlconf": "juso.blog.urls",
-                "app_instance_namespace": lambda page: "-".join(
-                    (
-                        str(x)
-                        for x in [
-                            page.site_id,
-                            page.application,
-                            page.blog_namespace.name if page.blog_namespace else None,
-                            page.category,
-                        ]
-                        if x
-                    )
-                ),
+                "urlconf":
+                "juso.blog.urls",
+                "app_instance_namespace":
+                lambda page: "-".join((str(x) for x in [
+                    page.site_id,
+                    page.application,
+                    page.blog_namespace.name if page.blog_namespace else None,
+                    page.category,
+                ] if x)),
             },
         ),
         (
             "people",
             _("people"),
             {
-                "urlconf": "juso.people.urls",
-                "app_instance_namespace": lambda page: "-".join(
-                    (
-                        str(x)
-                        for x in [
-                            page.site_id,
-                            page.application,
-                        ]
-                        if x
-                    )
-                ),
+                "urlconf":
+                "juso.people.urls",
+                "app_instance_namespace":
+                lambda page: "-".join((str(x) for x in [
+                    page.site_id,
+                    page.application,
+                ] if x)),
             },
         ),
         (
             "events",
             _("events"),
             {
-                "urlconf": "juso.events.urls",
-                "app_instance_namespace": lambda page: "-".join(
-                    (
-                        str(x)
-                        for x in [
-                            page.site_id,
-                            page.application,
-                            page.category,
-                        ]
-                        if x
-                    )
-                ),
+                "urlconf":
+                "juso.events.urls",
+                "app_instance_namespace":
+                lambda page: "-".join((str(x) for x in [
+                    page.site_id,
+                    page.application,
+                    page.category,
+                ] if x)),
             },
         ),
         (
             "categories",
             _("categories"),
             {
-                "urlconf": "juso.sections.urls",
-                "app_instance_namespace": lambda page: str(page.site_id)
-                + "-"
-                + "categories",
+                "urlconf":
+                "juso.sections.urls",
+                "app_instance_namespace":
+                lambda page: str(page.site_id) + "-" + "categories",
             },
         ),
         (
             "glossary",
             _("glossary"),
             {
-                "urlconf": "juso.glossary.urls",
-                "app_instance_namespace": lambda page: str(page.site_id)
-                + "-"
-                + "glossary",
+                "urlconf":
+                "juso.glossary.urls",
+                "app_instance_namespace":
+                lambda page: str(page.site_id) + "-" + "glossary",
             },
         ),
         (
             "collection",
             _("collection"),
             {
-                "urlconf": "juso.link_collections.urls",
+                "urlconf":
+                "juso.link_collections.urls",
                 "required_fields": ["collection"],
-                "app_instance_namespace": lambda page: str(page.slug) + "-collections",
+                "app_instance_namespace":
+                lambda page: str(page.slug) + "-collections",
             },
         ),
     ]
@@ -250,12 +240,14 @@ class Page(
         auto_add_fields=True,
     )
 
-    primary_color = models.CharField(_("primary color"), max_length=7, blank=True)
+    primary_color = models.CharField(_("primary color"),
+                                     max_length=7,
+                                     blank=True)
 
     css_vars = models.TextField(_("css vars"), blank=True)
-    fonts = models.TextField(
-        _("fonts"), default="klima", help_text=_("fonts loaded on the site")
-    )
+    fonts = models.TextField(_("fonts"),
+                             default="klima",
+                             help_text=_("fonts loaded on the site"))
 
     @property
     def description(self):
@@ -308,7 +300,8 @@ fonts/klima-bold-italic-web.woff2:font""",
     def get_absolute_url(self, *args, **kwargs):
 
         if self.redirect_to_url or self.redirect_to_page:
-            return self.redirect_to_url or self.redirect_to_page.get_absolute_url()
+            return self.redirect_to_url or self.redirect_to_page.get_absolute_url(
+            )
 
         site = current_site()
         if site == self.site:
@@ -343,28 +336,23 @@ fonts/klima-bold-italic-web.woff2:font""",
         verbose_name = _("page")
         verbose_name_plural = _("pages")
         indexes = [
-            models.Index(
-                fields=[
-                    "path",
-                    "site_id",
-                    "language_code",
-                    "is_active",
-                ]
-            ),
-            models.Index(
-                fields=[
-                    "is_landing_page",
-                    "site_id",
-                    "language_code",
-                ]
-            ),
+            models.Index(fields=[
+                "path",
+                "site_id",
+                "language_code",
+                "is_active",
+            ]),
+            models.Index(fields=[
+                "is_landing_page",
+                "site_id",
+                "language_code",
+            ]),
             models.Index(fields=["is_active", "menu", "language_code"]),
         ]
 
         constraints = [
-            models.UniqueConstraint(
-                fields=["path", "site_id"], name="unique_page_for_path"
-            )
+            models.UniqueConstraint(fields=["path", "site_id"],
+                                    name="unique_page_for_path")
         ]
 
 
@@ -447,9 +435,11 @@ class CategoryLinking(models.Model):
 
     description = feincms3_plugins.richtext.CleansedRichTextField(blank=True)
     order = models.IntegerField(default=10)
-    other_site = models.ForeignKey(
-        Page, models.CASCADE, blank=True, null=True, related_name="+"
-    )
+    other_site = models.ForeignKey(Page,
+                                   models.CASCADE,
+                                   blank=True,
+                                   null=True,
+                                   related_name="+")
 
     def __str__(self):
         return self.category.name

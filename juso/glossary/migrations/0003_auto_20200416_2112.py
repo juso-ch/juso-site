@@ -13,6 +13,8 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="entry",
             name="pattern",
-            field=models.CharField(blank=True, max_length=200, verbose_name="pattern"),
+            field=models.CharField(blank=True,
+                                   max_length=200,
+                                   verbose_name="pattern"),
         ),
     ]

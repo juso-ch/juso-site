@@ -21,11 +21,15 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="form",
             name="email",
-            field=models.EmailField(blank=True, max_length=254, verbose_name="e-mail"),
+            field=models.EmailField(blank=True,
+                                    max_length=254,
+                                    verbose_name="e-mail"),
         ),
         migrations.AddField(
             model_name="form",
             name="webhook",
-            field=models.URLField(blank=True, max_length=1200, verbose_name="webhook"),
+            field=models.URLField(blank=True,
+                                  max_length=1200,
+                                  verbose_name="webhook"),
         ),
     ]

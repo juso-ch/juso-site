@@ -5,9 +5,9 @@ from feincms3.mixins import LanguageMixin
 
 
 class TranslationMixin(LanguageMixin):
-    translations = models.ManyToManyField(
-        "self", related_name=_("translations"), blank=True
-    )
+    translations = models.ManyToManyField("self",
+                                          related_name=_("translations"),
+                                          blank=True)
 
     def get_translation_for(self, language_code):
         qs = self.translations.filter(language_code=language_code)

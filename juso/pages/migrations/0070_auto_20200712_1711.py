@@ -26,8 +26,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AddIndex(
             model_name="page",
-            index=models.Index(
-                fields=["parent_id"], name="pages_page_parent__9df5fb_idx"
-            ),
+            index=models.Index(fields=["parent_id"],
+                               name="pages_page_parent__9df5fb_idx"),
         ),
     ]

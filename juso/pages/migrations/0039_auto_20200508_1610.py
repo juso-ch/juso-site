@@ -51,8 +51,8 @@ class Migration(migrations.Migration):
                 (
                     "page",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="pages.Page"
-                    ),
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="pages.Page"),
                 ),
             ],
             options={

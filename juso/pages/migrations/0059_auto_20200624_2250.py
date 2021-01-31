@@ -27,7 +27,9 @@ class Migration(migrations.Migration):
                 blank=True,
                 help_text="Set the Open Graph video.",
                 upload_to="meta/video/%Y/%m",
-                validators=[django.core.validators.FileExtensionValidator(["mp4"])],
+                validators=[
+                    django.core.validators.FileExtensionValidator(["mp4"])
+                ],
                 verbose_name="video",
             ),
         ),

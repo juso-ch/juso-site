@@ -25,12 +25,14 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("text", feincms3.cleanse.CleansedRichTextField(verbose_name="text")),
+                ("text",
+                 feincms3.cleanse.CleansedRichTextField(verbose_name="text")),
                 ("region", models.CharField(max_length=255)),
                 ("ordering", models.IntegerField(default=0)),
                 (
                     "entries",
-                    models.ManyToManyField(to="glossary.Entry", verbose_name="entries"),
+                    models.ManyToManyField(to="glossary.Entry",
+                                           verbose_name="entries"),
                 ),
                 (
                     "parent",

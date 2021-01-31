@@ -6,10 +6,8 @@ from juso.forms import models
 
 renderer = TemplatePluginRenderer()
 
-
 renderer.register_string_renderer(
-    models.RichText, lambda plugin: plugins.richtext.render_richtext(plugin)
-)
+    models.RichText, lambda plugin: plugins.richtext.render_richtext(plugin))
 
 
 def render_form_field(field):
@@ -21,6 +19,5 @@ def render_form_field(field):
     )
 
 
-renderer.register_string_renderer(
-    models.FormField, lambda plugin: render_form_field(plugin)
-)
+renderer.register_string_renderer(models.FormField,
+                                  lambda plugin: render_form_field(plugin))

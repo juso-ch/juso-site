@@ -13,8 +13,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="event",
             name="slug",
-            field=models.SlugField(
-                unique_for_date=models.DateTimeField(verbose_name="Start-Datum")
-            ),
+            field=models.SlugField(unique_for_date=models.DateTimeField(
+                verbose_name="Start-Datum")),
         ),
     ]

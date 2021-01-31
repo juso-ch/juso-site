@@ -66,10 +66,6 @@ class Migration(migrations.Migration):
                 verbose_name="form",
             ),
         ),
-        migrations.DeleteModel(
-            name="Divider",
-        ),
-        migrations.DeleteModel(
-            name="Header",
-        ),
+        migrations.DeleteModel(name="Divider", ),
+        migrations.DeleteModel(name="Header", ),
     ]

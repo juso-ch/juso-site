@@ -15,7 +15,8 @@ class Migration(migrations.Migration):
             name="align",
             field=models.CharField(
                 blank=True,
-                choices=[("", "Standard"), ("center", "center"), ("right", "right")],
+                choices=[("", "Standard"), ("center", "center"),
+                         ("right", "right")],
                 max_length=30,
                 verbose_name="alignment",
             ),

@@ -21,32 +21,35 @@ def glossary(request):
     q = ""
 
     if "search" in request.GET and request.GET["search"]:
-        vector = SearchVector("name", weight="A") + SearchVector("content", weight="B")
+        vector = SearchVector("name", weight="A") + SearchVector("content",
+                                                                 weight="B")
         query = consume(request.GET["search"])
         print(query)
         q = request.GET["search"]
         print(q)
 
-        entries = (
-            entries.annotate(rank=SearchRank(vector, query))
-            .filter(rank__gte=0.1)
-            .order_by("-rank")
-        )
+        entries = (entries.annotate(rank=SearchRank(vector, query)).filter(
+            rank__gte=0.1).order_by("-rank"))
 
     return render_list(
         request,
         entries,
         {
-            "page": page,
-            "meta_tags": meta_tags([page] + ancestors, request=request),
-            "header_image": page.get_header_image(),
-            "regions": Regions.from_item(
+            "page":
+            page,
+            "meta_tags":
+            meta_tags([page] + ancestors, request=request),
+            "header_image":
+            page.get_header_image(),
+            "regions":
+            Regions.from_item(
                 page,
                 renderer=pages.renderer.renderer,
                 timeout=60,
                 inherit_from=ancestors,
             ),
-            "search": q,
+            "search":
+            q,
         },
         paginate_by=50,
     )

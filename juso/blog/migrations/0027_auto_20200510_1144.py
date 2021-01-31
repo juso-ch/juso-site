@@ -16,9 +16,9 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="eventplugin",
             name="sections",
-            field=models.ManyToManyField(
-                blank=True, related_name="blog_eventplugin", to="sections.Section"
-            ),
+            field=models.ManyToManyField(blank=True,
+                                         related_name="blog_eventplugin",
+                                         to="sections.Section"),
         ),
         migrations.AlterField(
             model_name="formplugin",

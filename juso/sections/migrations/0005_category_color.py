@@ -13,8 +13,8 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="category",
             name="color",
-            field=models.CharField(
-                default="#ff000", max_length=7, verbose_name="color"
-            ),
+            field=models.CharField(default="#ff000",
+                                   max_length=7,
+                                   verbose_name="color"),
         ),
     ]

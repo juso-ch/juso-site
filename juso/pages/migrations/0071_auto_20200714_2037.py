@@ -12,7 +12,10 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterModelOptions(
             name="page",
-            options={"verbose_name": "page", "verbose_name_plural": "pages"},
+            options={
+                "verbose_name": "page",
+                "verbose_name_plural": "pages"
+            },
         ),
         migrations.RemoveIndex(
             model_name="page",

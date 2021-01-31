@@ -41,14 +41,14 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="form",
             name="created_date",
-            field=models.DateTimeField(
-                auto_now_add=True, verbose_name="Erstellungsdatum"
-            ),
+            field=models.DateTimeField(auto_now_add=True,
+                                       verbose_name="Erstellungsdatum"),
         ),
         migrations.AlterField(
             model_name="form",
             name="edited_date",
-            field=models.DateTimeField(auto_now=True, verbose_name="Bearbeitungsdatum"),
+            field=models.DateTimeField(auto_now=True,
+                                       verbose_name="Bearbeitungsdatum"),
         ),
         migrations.AlterField(
             model_name="form",
@@ -65,9 +65,8 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="form",
             name="publication_date",
-            field=models.DateTimeField(
-                default=django.utils.timezone.now, verbose_name="Publikationsdatum"
-            ),
+            field=models.DateTimeField(default=django.utils.timezone.now,
+                                       verbose_name="Publikationsdatum"),
         ),
         migrations.AlterField(
             model_name="form",

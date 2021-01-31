@@ -13,6 +13,8 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="image",
             name="title",
-            field=models.CharField(blank=True, max_length=200, verbose_name="title"),
+            field=models.CharField(blank=True,
+                                   max_length=200,
+                                   verbose_name="title"),
         ),
     ]

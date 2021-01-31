@@ -49,7 +49,8 @@ class Migration(migrations.Migration):
                 (
                     "html",
                     models.TextField(
-                        help_text="The content will be inserted directly into the page. It is VERY important that the HTML snippet is well-formed!",
+                        help_text=
+                        "The content will be inserted directly into the page. It is VERY important that the HTML snippet is well-formed!",
                         verbose_name="HTML",
                     ),
                 ),
@@ -112,9 +113,9 @@ class Migration(migrations.Migration):
                 ("ordering", models.IntegerField(default=0)),
                 (
                     "caption",
-                    models.CharField(
-                        blank=True, max_length=200, verbose_name="caption"
-                    ),
+                    models.CharField(blank=True,
+                                     max_length=200,
+                                     verbose_name="caption"),
                 ),
             ],
             options={
@@ -136,9 +137,11 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "is_active",
-                    models.BooleanField(default=True, verbose_name="is active"),
+                    models.BooleanField(default=True,
+                                        verbose_name="is active"),
                 ),
-                ("title", models.CharField(max_length=200, verbose_name="title")),
+                ("title", models.CharField(max_length=200,
+                                           verbose_name="title")),
                 ("slug", models.SlugField(verbose_name="slug")),
                 (
                     "position",
@@ -148,24 +151,28 @@ class Migration(migrations.Migration):
                         validators=[
                             django.core.validators.MinValueValidator(
                                 limit_value=1,
-                                message="Position is expected to be greater than zero.",
+                                message=
+                                "Position is expected to be greater than zero.",
                             )
                         ],
                     ),
                 ),
                 (
                     "static_path",
-                    models.BooleanField(default=False, verbose_name="static path"),
+                    models.BooleanField(default=False,
+                                        verbose_name="static path"),
                 ),
                 (
                     "path",
                     models.CharField(
                         blank=True,
-                        help_text="Generated automatically if 'static path' is unset.",
+                        help_text=
+                        "Generated automatically if 'static path' is unset.",
                         max_length=1000,
                         validators=[
                             django.core.validators.RegexValidator(
-                                message="Path must start and end with a slash (/).",
+                                message=
+                                "Path must start and end with a slash (/).",
                                 regex="^/(|.+/)$",
                             )
                         ],
@@ -228,15 +235,20 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "meta_image_width",
-                    models.PositiveIntegerField(blank=True, editable=False, null=True),
+                    models.PositiveIntegerField(blank=True,
+                                                editable=False,
+                                                null=True),
                 ),
                 (
                     "meta_image_height",
-                    models.PositiveIntegerField(blank=True, editable=False, null=True),
+                    models.PositiveIntegerField(blank=True,
+                                                editable=False,
+                                                null=True),
                 ),
                 (
                     "meta_image_ppoi",
-                    imagefield.fields.PPOIField(default="0.5x0.5", max_length=20),
+                    imagefield.fields.PPOIField(default="0.5x0.5",
+                                                max_length=20),
                 ),
                 (
                     "menu",
@@ -268,7 +280,8 @@ class Migration(migrations.Migration):
                 (
                     "language_code",
                     models.CharField(
-                        choices=[("de", "German"), ("fr", "French"), ("it", "Italian")],
+                        choices=[("de", "German"), ("fr", "French"),
+                                 ("it", "Italian")],
                         default="de",
                         max_length=10,
                         verbose_name="language",
@@ -276,9 +289,9 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "redirect_to_url",
-                    models.CharField(
-                        blank=True, max_length=200, verbose_name="Redirect to URL"
-                    ),
+                    models.CharField(blank=True,
+                                     max_length=200,
+                                     verbose_name="Redirect to URL"),
                 ),
                 (
                     "application",
@@ -300,7 +313,8 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "is_landing_page",
-                    models.BooleanField(default=False, verbose_name="is landing page"),
+                    models.BooleanField(default=False,
+                                        verbose_name="is landing page"),
                 ),
             ],
             options={
@@ -320,7 +334,8 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("text", feincms3.cleanse.CleansedRichTextField(verbose_name="text")),
+                ("text",
+                 feincms3.cleanse.CleansedRichTextField(verbose_name="text")),
                 ("region", models.CharField(max_length=255)),
                 ("ordering", models.IntegerField(default=0)),
             ],

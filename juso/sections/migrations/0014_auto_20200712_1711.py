@@ -12,12 +12,13 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddIndex(
             model_name="category",
-            index=models.Index(fields=["slug"], name="sections_ca_slug_94ece0_idx"),
+            index=models.Index(fields=["slug"],
+                               name="sections_ca_slug_94ece0_idx"),
         ),
         migrations.AddConstraint(
             model_name="category",
             constraint=models.UniqueConstraint(
-                fields=("slug", "language_code"), name="unique_slug_for_language"
-            ),
+                fields=("slug", "language_code"),
+                name="unique_slug_for_language"),
         ),
     ]

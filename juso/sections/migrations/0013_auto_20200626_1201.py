@@ -38,19 +38,22 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="category",
             name="meta_player_height",
-            field=models.IntegerField(default=1080, verbose_name="player height"),
+            field=models.IntegerField(default=1080,
+                                      verbose_name="player height"),
         ),
         migrations.AddField(
             model_name="category",
             name="meta_player_width",
-            field=models.IntegerField(default=1920, verbose_name="player width"),
+            field=models.IntegerField(default=1920,
+                                      verbose_name="player width"),
         ),
         migrations.AddField(
             model_name="category",
             name="meta_twitter_site",
             field=models.CharField(
                 blank=True,
-                help_text="The Twitter @username the card should be attributed to.",
+                help_text=
+                "The Twitter @username the card should be attributed to.",
                 max_length=30,
                 verbose_name="twitter site",
             ),

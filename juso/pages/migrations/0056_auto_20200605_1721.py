@@ -25,23 +25,28 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="page",
             name="favicon_height",
-            field=models.PositiveIntegerField(blank=True, editable=False, null=True),
+            field=models.PositiveIntegerField(blank=True,
+                                              editable=False,
+                                              null=True),
         ),
         migrations.AddField(
             model_name="page",
             name="favicon_ppoi",
-            field=imagefield.fields.PPOIField(default="0.5x0.5", max_length=20),
+            field=imagefield.fields.PPOIField(default="0.5x0.5",
+                                              max_length=20),
         ),
         migrations.AddField(
             model_name="page",
             name="favicon_width",
-            field=models.PositiveIntegerField(blank=True, editable=False, null=True),
+            field=models.PositiveIntegerField(blank=True,
+                                              editable=False,
+                                              null=True),
         ),
         migrations.AddField(
             model_name="page",
             name="primary_color",
-            field=models.CharField(
-                blank=True, max_length=7, verbose_name="primary color"
-            ),
+            field=models.CharField(blank=True,
+                                   max_length=7,
+                                   verbose_name="primary color"),
         ),
     ]

@@ -13,6 +13,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="location",
             name="is_physical",
-            field=models.BooleanField(default=True, verbose_name="is physical"),
+            field=models.BooleanField(default=True,
+                                      verbose_name="is physical"),
         ),
     ]

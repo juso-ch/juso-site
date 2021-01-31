@@ -26,16 +26,21 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="membership",
             name="image_height",
-            field=models.PositiveIntegerField(blank=True, editable=False, null=True),
+            field=models.PositiveIntegerField(blank=True,
+                                              editable=False,
+                                              null=True),
         ),
         migrations.AddField(
             model_name="membership",
             name="image_ppoi",
-            field=imagefield.fields.PPOIField(default="0.5x0.5", max_length=20),
+            field=imagefield.fields.PPOIField(default="0.5x0.5",
+                                              max_length=20),
         ),
         migrations.AddField(
             model_name="membership",
             name="image_width",
-            field=models.PositiveIntegerField(blank=True, editable=False, null=True),
+            field=models.PositiveIntegerField(blank=True,
+                                              editable=False,
+                                              null=True),
         ),
     ]

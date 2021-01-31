@@ -40,14 +40,13 @@ class Migration(migrations.Migration):
             model_name="membership",
             name="person",
             field=models.ForeignKey(
-                on_delete=django.db.models.deletion.CASCADE, to="people.Person"
-            ),
+                on_delete=django.db.models.deletion.CASCADE,
+                to="people.Person"),
         ),
         migrations.AddField(
             model_name="membership",
             name="team",
             field=models.ForeignKey(
-                on_delete=django.db.models.deletion.CASCADE, to="people.Team"
-            ),
+                on_delete=django.db.models.deletion.CASCADE, to="people.Team"),
         ),
     ]

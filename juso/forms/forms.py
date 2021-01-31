@@ -15,7 +15,7 @@ class DynamicForm(forms.Form):
         self.request = request
         super().__init__(*args, **kwargs)
 
-        for field in self.form.forms_formfield_set.all():
+        for field in self.form.formfield_set.all():
             self.fields[field.slug] = get_field_instance(field, request)
             if field.unique:
                 bound_field = field
@@ -31,7 +31,8 @@ class DynamicForm(forms.Form):
                         raise forms.ValidationError(bound_field.unique_error)
                     return self.cleaned_data[bound_field.slug]
 
-                self.__dict__[f"clean_{field.slug}"] = MethodType(clean_field, self)
+                self.__dict__[f"clean_{field.slug}"] = MethodType(
+                    clean_field, self)
 
 
 class HiddenField(forms.Field):
@@ -62,7 +63,9 @@ def get_form_instance(form: models.Form, request=None):
     dynamic_form = DynamicForm(request=request, form=form)
 
     if request and request.POST:
-        dynamic_form = DynamicForm(request=request, form=form, data=request.POST)
+        dynamic_form = DynamicForm(request=request,
+                                   form=form,
+                                   data=request.POST)
 
     return dynamic_form
 
@@ -79,7 +82,8 @@ def get_field_instance(field, request):
             required=field.required,
             label=field.name,
             help_text=field.help_text,
-            choices=((l.strip(), l.strip()) for l in field.choices.split("\n")),
+            choices=((l.strip(), l.strip())
+                     for l in field.choices.split("\n")),
             initial=field.initial,
         )
     elif field.input_type == "section":
@@ -89,10 +93,8 @@ def get_field_instance(field, request):
             help_text=field.help_text,
             initial=field.initial,
             queryset=Section.objects.filter(
-                name__in=(l.strip() for l in field.choices.split("\n"))
-            )
-            if field.choices
-            else Section.objects.all(),
+                name__in=(l.strip() for l in field.choices.split("\n")))
+            if field.choices else Section.objects.all(),
         )
     else:
         instance = cls(

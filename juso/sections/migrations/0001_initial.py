@@ -27,7 +27,8 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("name", models.CharField(max_length=100, verbose_name="Name")),
+                ("name", models.CharField(max_length=100,
+                                          verbose_name="Name")),
                 ("slug", models.SlugField(unique=True, verbose_name="Slug")),
                 (
                     "parent",
@@ -51,9 +52,8 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "users",
-                    models.ManyToManyField(
-                        to=settings.AUTH_USER_MODEL, verbose_name="Benutzer"
-                    ),
+                    models.ManyToManyField(to=settings.AUTH_USER_MODEL,
+                                           verbose_name="Benutzer"),
                 ),
             ],
             options={
@@ -77,13 +77,15 @@ class Migration(migrations.Migration):
                 (
                     "language_code",
                     models.CharField(
-                        choices=[("de", "German"), ("fr", "French"), ("it", "Italian")],
+                        choices=[("de", "German"), ("fr", "French"),
+                                 ("it", "Italian")],
                         default="de",
                         max_length=10,
                         verbose_name="language",
                     ),
                 ),
-                ("name", models.CharField(max_length=200, verbose_name="Name")),
+                ("name", models.CharField(max_length=200,
+                                          verbose_name="Name")),
                 ("slug", models.SlugField(verbose_name="Slug")),
                 (
                     "parent",

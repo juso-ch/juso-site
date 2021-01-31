@@ -31,9 +31,9 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="formfield",
             name="help_text",
-            field=models.CharField(
-                blank=True, max_length=240, verbose_name="help text"
-            ),
+            field=models.CharField(blank=True,
+                                   max_length=240,
+                                   verbose_name="help text"),
         ),
         migrations.CreateModel(
             name="RichText",
@@ -47,7 +47,8 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("text", feincms3.cleanse.CleansedRichTextField(verbose_name="text")),
+                ("text",
+                 feincms3.cleanse.CleansedRichTextField(verbose_name="text")),
                 ("region", models.CharField(max_length=255)),
                 ("ordering", models.IntegerField(default=0)),
                 (

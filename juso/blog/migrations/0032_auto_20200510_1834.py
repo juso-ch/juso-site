@@ -27,9 +27,9 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="eventplugin",
             name="all_articles_override",
-            field=models.CharField(
-                blank=True, max_length=180, verbose_name="all events link text"
-            ),
+            field=models.CharField(blank=True,
+                                   max_length=180,
+                                   verbose_name="all events link text"),
         ),
         migrations.AlterField(
             model_name="button",

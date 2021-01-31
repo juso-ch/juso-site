@@ -26,7 +26,10 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterModelOptions(
             name="download",
-            options={"verbose_name": "download", "verbose_name_plural": "downloads"},
+            options={
+                "verbose_name": "download",
+                "verbose_name_plural": "downloads"
+            },
         ),
         migrations.AlterModelOptions(
             name="eventplugin",
@@ -37,7 +40,10 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterModelOptions(
             name="page",
-            options={"verbose_name": "page", "verbose_name_plural": "page"},
+            options={
+                "verbose_name": "page",
+                "verbose_name_plural": "page"
+            },
         ),
         migrations.AlterField(
             model_name="articleplugin",
@@ -81,7 +87,9 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="articleplugin",
             name="title",
-            field=models.CharField(blank=True, max_length=180, verbose_name="title"),
+            field=models.CharField(blank=True,
+                                   max_length=180,
+                                   verbose_name="title"),
         ),
         migrations.AlterField(
             model_name="button",
@@ -117,24 +125,28 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="button",
             name="text",
-            field=models.CharField(blank=True, max_length=240, verbose_name="text"),
+            field=models.CharField(blank=True,
+                                   max_length=240,
+                                   verbose_name="text"),
         ),
         migrations.AlterField(
             model_name="download",
             name="document",
-            field=models.FileField(upload_to="downloads/", verbose_name="File"),
+            field=models.FileField(upload_to="downloads/",
+                                   verbose_name="File"),
         ),
         migrations.AlterField(
             model_name="download",
             name="download_text",
-            field=models.CharField(max_length=200, verbose_name="download text"),
+            field=models.CharField(max_length=200,
+                                   verbose_name="download text"),
         ),
         migrations.AlterField(
             model_name="download",
             name="link_classes",
-            field=models.CharField(
-                blank=True, max_length=200, verbose_name="link classes (css)"
-            ),
+            field=models.CharField(blank=True,
+                                   max_length=200,
+                                   verbose_name="link classes (css)"),
         ),
         migrations.AlterField(
             model_name="eventplugin",
@@ -181,7 +193,9 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="eventplugin",
             name="title",
-            field=models.CharField(blank=True, max_length=180, verbose_name="title"),
+            field=models.CharField(blank=True,
+                                   max_length=180,
+                                   verbose_name="title"),
         ),
         migrations.AlterField(
             model_name="formplugin",
@@ -207,7 +221,8 @@ class Migration(migrations.Migration):
             model_name="team",
             name="columns",
             field=models.CharField(
-                choices=[("two", "2"), ("three", "3"), ("four", "4"), ("five", "5")],
+                choices=[("two", "2"), ("three", "3"), ("four", "4"),
+                         ("five", "5")],
                 default="three",
                 max_length=10,
                 verbose_name="columns",

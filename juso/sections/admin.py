@@ -20,14 +20,19 @@ class SectionAdmin(VersionAdmin, TreeAdmin):
     autocomplete_fields = ["site", "parent"]
 
     prepopulated_fields = {
-        "slug": ("name",),
+        "slug": ("name", ),
     }
 
     filter_horizontal = ["users"]
 
     fieldsets = (
-        (None, {"fields": ("name", "users", "parent")}),
-        (_("advanced"), {"classes": ("collapse",), "fields": ("slug", "site")}),
+        (None, {
+            "fields": ("name", "users", "parent")
+        }),
+        (_("advanced"), {
+            "classes": ("collapse", ),
+            "fields": ("slug", "site")
+        }),
     )
 
     def has_delete_permission(self, request, obj=None):
@@ -63,7 +68,7 @@ class CategoryAdmin(VersionAdmin, TreeAdmin):
     ]
     list_filter = ["language_code"]
     search_fields = ["name", "slug"]
-    prepopulated_fields = {"slug": ("name",)}
+    prepopulated_fields = {"slug": ("name", )}
 
     autocomplete_fields = ["parent", "translations"]
 
@@ -86,8 +91,8 @@ class CategoryAdmin(VersionAdmin, TreeAdmin):
         (
             _("translations"),
             {
-                "classes": ("collapse",),
-                "fields": ("translations",),
+                "classes": ("collapse", ),
+                "fields": ("translations", ),
             },
         ),
     )

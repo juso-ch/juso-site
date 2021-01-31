@@ -23,11 +23,13 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="article",
             name="meta_video_height",
-            field=models.IntegerField(default=1080, verbose_name="video height"),
+            field=models.IntegerField(default=1080,
+                                      verbose_name="video height"),
         ),
         migrations.AddField(
             model_name="article",
             name="meta_video_width",
-            field=models.IntegerField(default=1920, verbose_name="video width"),
+            field=models.IntegerField(default=1920,
+                                      verbose_name="video width"),
         ),
     ]

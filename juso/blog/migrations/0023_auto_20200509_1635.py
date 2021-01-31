@@ -39,7 +39,8 @@ class Migration(migrations.Migration):
                 ("slug", models.SlugField(unique=True)),
                 (
                     "import_file",
-                    models.FileField(upload_to="", verbose_name="wordpress file"),
+                    models.FileField(upload_to="",
+                                     verbose_name="wordpress file"),
                 ),
                 ("completed", models.BooleanField(default=False)),
                 (
@@ -71,7 +72,8 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("nicename", models.CharField(max_length=100, verbose_name="Name")),
+                ("nicename",
+                 models.CharField(max_length=100, verbose_name="Name")),
                 (
                     "target",
                     models.ForeignKey(
@@ -83,8 +85,8 @@ class Migration(migrations.Migration):
                 (
                     "wp_import",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="blog.WPImport"
-                    ),
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="blog.WPImport"),
                 ),
             ],
         ),

@@ -26,7 +26,8 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("subscription_info", django.contrib.postgres.fields.jsonb.JSONField()),
+                ("subscription_info",
+                 django.contrib.postgres.fields.jsonb.JSONField()),
                 (
                     "page",
                     models.ForeignKey(

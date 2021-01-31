@@ -14,7 +14,8 @@ class Migration(migrations.Migration):
             model_name="location",
             name="language_code",
             field=models.CharField(
-                choices=[("de", "German"), ("fr", "French"), ("it", "Italian")],
+                choices=[("de", "German"), ("fr", "French"),
+                         ("it", "Italian")],
                 default="de",
                 max_length=10,
                 verbose_name="language",
@@ -24,14 +25,13 @@ class Migration(migrations.Migration):
             model_name="location",
             name="translations",
             field=models.ManyToManyField(
-                related_name="_location_translations_+", to="events.Location"
-            ),
+                related_name="_location_translations_+", to="events.Location"),
         ),
         migrations.AddField(
             model_name="namespace",
             name="translations",
             field=models.ManyToManyField(
-                related_name="_namespace_translations_+", to="events.NameSpace"
-            ),
+                related_name="_namespace_translations_+",
+                to="events.NameSpace"),
         ),
     ]

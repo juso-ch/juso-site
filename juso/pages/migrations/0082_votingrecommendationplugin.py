@@ -23,7 +23,8 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("title", models.CharField(max_length=300, verbose_name="title")),
+                ("title", models.CharField(max_length=300,
+                                           verbose_name="title")),
                 ("url", models.URLField(verbose_name="url")),
                 (
                     "url_text",
@@ -32,7 +33,8 @@ class Migration(migrations.Migration):
                 (
                     "recommendation",
                     models.CharField(
-                        choices=[("yes", "yes"), ("no", "no"), ("open", "open")],
+                        choices=[("yes", "yes"), ("no", "no"),
+                                 ("open", "open")],
                         max_length=10,
                     ),
                 ),

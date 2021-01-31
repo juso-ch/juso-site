@@ -28,8 +28,8 @@ class Migration(migrations.Migration):
                 (
                     "pages",
                     models.ManyToManyField(
-                        related_name="_navigationplugin_pages_+", to="pages.Page"
-                    ),
+                        related_name="_navigationplugin_pages_+",
+                        to="pages.Page"),
                 ),
                 (
                     "parent",

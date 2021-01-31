@@ -13,11 +13,15 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="formentrycounterplugin",
             name="prefix",
-            field=models.CharField(blank=True, max_length=100, verbose_name="pefix"),
+            field=models.CharField(blank=True,
+                                   max_length=100,
+                                   verbose_name="pefix"),
         ),
         migrations.AddField(
             model_name="formentrycounterplugin",
             name="suffix",
-            field=models.CharField(blank=True, max_length=100, verbose_name="suffix"),
+            field=models.CharField(blank=True,
+                                   max_length=100,
+                                   verbose_name="suffix"),
         ),
     ]

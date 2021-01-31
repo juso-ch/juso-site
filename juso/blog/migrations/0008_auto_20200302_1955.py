@@ -14,7 +14,8 @@ class Migration(migrations.Migration):
             model_name="article",
             name="translations",
             field=models.ManyToManyField(
-                blank=True, related_name="_article_translations_+", to="blog.Article"
-            ),
+                blank=True,
+                related_name="_article_translations_+",
+                to="blog.Article"),
         ),
     ]

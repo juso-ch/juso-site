@@ -63,8 +63,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AddIndex(
             model_name="formfield",
-            index=models.Index(
-                fields=["parent", "slug"], name="forms_formf_parent__6a8ee3_idx"
-            ),
+            index=models.Index(fields=["parent", "slug"],
+                               name="forms_formf_parent__6a8ee3_idx"),
         ),
     ]

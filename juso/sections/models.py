@@ -53,9 +53,8 @@ class Category(TranslationMixin, MetaMixin, TreeNode):
         verbose_name_plural = _("categories")
         indexes = [models.Index(fields=["slug"])]
         constraints = [
-            models.UniqueConstraint(
-                fields=["slug", "language_code"], name="unique_slug_for_language"
-            )
+            models.UniqueConstraint(fields=["slug", "language_code"],
+                                    name="unique_slug_for_language")
         ]
 
     @property
@@ -66,7 +65,7 @@ class Category(TranslationMixin, MetaMixin, TreeNode):
         site = current_site()
         try:
             return reverse_app(
-                (str(site.id) + "-categories",),
+                (str(site.id) + "-categories", ),
                 "category-detail",
                 languages=[self.language_code],
                 kwargs={"slug": self.slug},
@@ -87,9 +86,10 @@ class Category(TranslationMixin, MetaMixin, TreeNode):
 
 class Section(TreeNode):
     name = models.CharField(max_length=100, verbose_name=_("name"))
-    site = models.OneToOneField(
-        Site, models.CASCADE, verbose_name=_("site"), related_name="section"
-    )
+    site = models.OneToOneField(Site,
+                                models.CASCADE,
+                                verbose_name=_("site"),
+                                related_name="section")
     users = models.ManyToManyField(User, verbose_name=_("users"))
     slug = models.SlugField(unique=True, verbose_name=_("slug"))
 
@@ -137,28 +137,27 @@ class ContentMixin(TranslationMixin, MetaMixin, TemplateMixin):
     @property
     def image(self):
         try:
-            if (
-                settings.DEBUG or not self.generated_meta_image
-            ) and self.get_header_image():
+            if (settings.DEBUG or
+                    not self.generated_meta_image) and self.get_header_image():
                 orig = self.get_header_image()
-                img = Image.open(
-                    get_storage_class()().open(
-                        self.get_header_image().some[1:].partition("/")[2]
-                    )
-                )
+                img = Image.open(get_storage_class()().open(
+                    self.get_header_image().some[1:].partition("/")[2]))
                 draw = ImageDraw.Draw(img)
                 font = ImageFont.truetype(
-                    "juso/static/fonts/Montserrat-ExtraBold.ttf", int(1200 / 30)
-                )
+                    "juso/static/fonts/Montserrat-ExtraBold.ttf",
+                    int(1200 / 30))
                 color = ImageColor.getcolor(self.get_color(), "RGB")
 
-                title = textwrap.wrap(self.title.upper(), 35, break_long_words=True)
+                title = textwrap.wrap(self.title.upper(),
+                                      35,
+                                      break_long_words=True)
                 line = 0
                 line_space = 10
                 padding_top = 5
                 padding_bottom = 14
                 padding_side = 15
-                line_height = int(1200 / 30) + line_space + padding_bottom + padding_top
+                line_height = int(
+                    1200 / 30) + line_space + padding_bottom + padding_top
                 width = 1200
                 height = 600
 
@@ -195,22 +194,26 @@ class ContentMixin(TranslationMixin, MetaMixin, TemplateMixin):
 
                 img.save(f, format="JPEG", quality=100)
 
-                self.generated_meta_image.save(orig.some.split("/")[-1], files.File(f))
+                self.generated_meta_image.save(
+                    orig.some.split("/")[-1], files.File(f))
             return self.generated_meta_image
-        except:  # Anything could happen, but it's not really a priority
+        except:    # Anything could happen, but it's not really a priority
             return None
 
-    publication_date = models.DateTimeField(
-        default=timezone.now, verbose_name=_("publication date")
-    )
+    publication_date = models.DateTimeField(default=timezone.now,
+                                            verbose_name=_("publication date"))
 
-    created_date = models.DateTimeField(auto_now_add=True, verbose_name=_("created at"))
+    created_date = models.DateTimeField(auto_now_add=True,
+                                        verbose_name=_("created at"))
 
-    edited_date = models.DateTimeField(auto_now=True, verbose_name=_("edited at"))
+    edited_date = models.DateTimeField(auto_now=True,
+                                       verbose_name=_("edited at"))
 
-    category = models.ForeignKey(
-        Category, models.SET_NULL, blank=True, null=True, verbose_name=_("category")
-    )
+    category = models.ForeignKey(Category,
+                                 models.SET_NULL,
+                                 blank=True,
+                                 null=True,
+                                 verbose_name=_("category"))
 
     tags = TaggableManager(blank=True)
 
@@ -238,7 +241,8 @@ class ContentMixin(TranslationMixin, MetaMixin, TemplateMixin):
     class Meta:
         abstract = True
         constraints = [
-            models.UniqueConstraint(fields=["slug", "section"], name="slug_unique")
+            models.UniqueConstraint(fields=["slug", "section"],
+                                    name="slug_unique")
         ]
         indexes = [models.Index(fields=["slug"])]
         ordering = ["-publication_date"]
@@ -270,6 +274,5 @@ def get_template_list(app_name, templates):
                 Region(key=region, title=region.title(), inherited=True)
                 for region in template[1]
             ],
-        )
-        for template in templates
+        ) for template in templates
     ]

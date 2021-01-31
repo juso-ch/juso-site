@@ -32,7 +32,8 @@ def translations(page, obj=None):
 @register.simple_tag
 def translation_head(page, obj=None, scheme="https:"):
     if obj:
-        yield obj.language_code, scheme + "//" + page.site.host + obj.get_absolute_url()
+        yield obj.language_code, scheme + "//" + page.site.host + obj.get_absolute_url(
+        )
         for translation in obj.translations.all():
             uri = translation.get_absolute_url()
             if uri.startswith("//"):
@@ -63,7 +64,8 @@ def get_uri(obj, page, scheme):
 def list_of_translations(page, obj=None, scheme="https:"):
 
     if obj:
-        yield obj.language_code, scheme + "//" + page.site.host + obj.get_absolute_url()
+        yield obj.language_code, scheme + "//" + page.site.host + obj.get_absolute_url(
+        )
     else:
         yield page.language_code, scheme + "//" + page.site.host + page.path
 

@@ -13,8 +13,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="articleplugin",
             name="structured_data",
-            field=models.BooleanField(
-                default=False, verbose_name="include structured data"
-            ),
+            field=models.BooleanField(default=False,
+                                      verbose_name="include structured data"),
         ),
     ]

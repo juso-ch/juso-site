@@ -24,8 +24,8 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="page",
             name="sections",
-            field=models.ManyToManyField(
-                blank=True, to="sections.Section", verbose_name="sections"
-            ),
+            field=models.ManyToManyField(blank=True,
+                                         to="sections.Section",
+                                         verbose_name="sections"),
         ),
     ]

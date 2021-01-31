@@ -42,12 +42,10 @@ class EventPlugin(TranslationMixin):
     @property
     def columns(self):
         if self.events.exists():
-            return number_word(
-                min(
-                    self.events.count(),
-                    self.count,
-                )
-            )
+            return number_word(min(
+                self.events.count(),
+                self.count,
+            ))
         return number_word(self.count)
 
     template_key = models.CharField(
@@ -102,7 +100,7 @@ class EventPluginInline(ContentEditorInline):
         (
             _("advanced"),
             {
-                "classes": ("collapse",),
+                "classes": ("collapse", ),
                 "fields": (
                     "sections",
                     "template_key",
@@ -119,9 +117,8 @@ def get_event_list(plugin):
         return plugin.events.all()
     from juso.events.models import Event
 
-    events = Event.objects.filter(
-        language_code=plugin.language_code, end_date__gte=timezone.now()
-    )
+    events = Event.objects.filter(language_code=plugin.language_code,
+                                  end_date__gte=timezone.now())
 
     if plugin.category:
         events = events.filter(category=plugin.category)
@@ -131,7 +128,7 @@ def get_event_list(plugin):
     else:
         events = events.filter(section__site=current_site())
 
-    return events[: plugin.count]
+    return events[:plugin.count]
 
 
 def render_events(plugin, **kwargs):

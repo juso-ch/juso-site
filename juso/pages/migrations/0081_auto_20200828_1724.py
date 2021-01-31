@@ -14,7 +14,8 @@ class Migration(migrations.Migration):
             model_name="page",
             name="template_key",
             field=models.CharField(
-                choices=[("default", "Standard"), ("feature_top", "Feature_Top")],
+                choices=[("default", "Standard"),
+                         ("feature_top", "Feature_Top")],
                 default="default",
                 max_length=100,
                 verbose_name="template",

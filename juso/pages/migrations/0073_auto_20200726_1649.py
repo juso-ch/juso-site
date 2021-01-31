@@ -14,7 +14,8 @@ class Migration(migrations.Migration):
             model_name="page",
             name="prefetches",
             field=models.TextField(
-                default="fonts/klima-bold-italic-web.woff2:font\nfonts/klima-ultra-web.woff2:font\nklima-regular-web.woff2:font",
+                default=
+                "fonts/klima-bold-italic-web.woff2:font\nfonts/klima-ultra-web.woff2:font\nklima-regular-web.woff2:font",
                 help_text="files that should be preloaded",
                 verbose_name="prefetch",
             ),

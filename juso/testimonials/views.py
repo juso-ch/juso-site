@@ -24,16 +24,21 @@ def create(request):
 
         if form.is_valid():
             form.save()
-            return redirect(reverse_app(f"testimonials-{campaign.pk}", "index"))
+            return redirect(reverse_app(f"testimonials-{campaign.pk}",
+                                        "index"))
 
     return render(
         request,
         page.template_key,
         {
-            "form": form,
-            "campaign": campaign,
-            "page": page,
-            "regions": Regions.from_item(
+            "form":
+            form,
+            "campaign":
+            campaign,
+            "page":
+            page,
+            "regions":
+            Regions.from_item(
                 page,
                 renderer=renderer,
                 timeout=60,
@@ -61,12 +66,18 @@ def index(request):
         request,
         page.template_key,
         {
-            "campaign": campaign,
-            "page_obj": page_obj,
-            "page": page,
-            "meta_tags": meta_tags([page] + ancestors, request=request),
-            "create_url": create_url,
-            "regions": Regions.from_item(
+            "campaign":
+            campaign,
+            "page_obj":
+            page_obj,
+            "page":
+            page,
+            "meta_tags":
+            meta_tags([page] + ancestors, request=request),
+            "create_url":
+            create_url,
+            "regions":
+            Regions.from_item(
                 page,
                 renderer=renderer,
                 timeout=60,

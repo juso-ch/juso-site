@@ -13,8 +13,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="team",
             name="translations",
-            field=models.ManyToManyField(
-                related_name="_team_translations_+", to="people.Team"
-            ),
+            field=models.ManyToManyField(related_name="_team_translations_+",
+                                         to="people.Team"),
         ),
     ]

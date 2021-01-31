@@ -13,11 +13,15 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="button",
             name="text",
-            field=models.CharField(blank=True, max_length=240, verbose_name="Text"),
+            field=models.CharField(blank=True,
+                                   max_length=240,
+                                   verbose_name="Text"),
         ),
         migrations.AlterField(
             model_name="divider",
             name="text",
-            field=models.CharField(blank=True, max_length=240, verbose_name="Text"),
+            field=models.CharField(blank=True,
+                                   max_length=240,
+                                   verbose_name="Text"),
         ),
     ]

@@ -27,9 +27,9 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="articleplugin",
             name="all_articles_override",
-            field=models.CharField(
-                blank=True, max_length=180, verbose_name="all article link text"
-            ),
+            field=models.CharField(blank=True,
+                                   max_length=180,
+                                   verbose_name="all article link text"),
         ),
         migrations.AlterField(
             model_name="articleplugin",

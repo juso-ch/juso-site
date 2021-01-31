@@ -12,8 +12,8 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddConstraint(
             model_name="article",
-            constraint=models.UniqueConstraint(
-                fields=("slug", "namespace_id", "section_id"), name="unique_path"
-            ),
+            constraint=models.UniqueConstraint(fields=("slug", "namespace_id",
+                                                       "section_id"),
+                                               name="unique_path"),
         ),
     ]

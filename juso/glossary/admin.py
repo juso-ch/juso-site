@@ -25,7 +25,10 @@ class GlossaryContentInline(RichTextInline):
         ),
         (
             _("advanced"),
-            {"fields": ["update_glossary", "glossary_text"], "classes": ["collapse"]},
+            {
+                "fields": ["update_glossary", "glossary_text"],
+                "classes": ["collapse"]
+            },
         ),
     )
 
@@ -35,7 +38,7 @@ class GlossaryEntryAdmin(VersionAdmin, admin.ModelAdmin):
     search_fields = ["name"]
 
     prepopulated_fields = {
-        "slug": ("name",),
+        "slug": ("name", ),
     }
 
     list_filter = ["category", "language_code"]

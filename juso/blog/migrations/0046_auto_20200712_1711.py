@@ -12,9 +12,8 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddIndex(
             model_name="article",
-            index=models.Index(
-                fields=["language_code"], name="blog_articl_languag_9ee77e_idx"
-            ),
+            index=models.Index(fields=["language_code"],
+                               name="blog_articl_languag_9ee77e_idx"),
         ),
         migrations.AddIndex(
             model_name="article",

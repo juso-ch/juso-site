@@ -57,7 +57,7 @@ class ArticleAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
     )
 
     prepopulated_fields = {
-        "slug": ("title",),
+        "slug": ("title", ),
     }
 
     readonly_fields = (
@@ -82,7 +82,7 @@ class ArticleAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
         (
             _("settings"),
             {
-                "classes": ("tabbed",),
+                "classes": ("tabbed", ),
                 "fields": (
                     "language_code",
                     "slug",
@@ -94,7 +94,10 @@ class ArticleAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
             },
         ),
         MetaMixin.admin_fieldset(),
-        (_("translations"), {"classes": ("tabbed",), "fields": ("translations",)}),
+        (_("translations"), {
+            "classes": ("tabbed", ),
+            "fields": ("translations", )
+        }),
     )
 
     inlines = (
@@ -105,7 +108,8 @@ class ArticleAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
         ButtonInline.create(models.Button),
         download.DownloadInline.create(models.Download),
         people_plugins.TeamPluginInline.create(models.Team),
-        people_plugins.CandidateListPluginInline.create(models.CandidaturePlugin),
+        people_plugins.CandidateListPluginInline.create(
+            models.CandidaturePlugin),
         GlossaryContentInline.create(models.GlossaryRichText),
         blog_plugins.ArticlePluginInline.create(models.ArticlePlugin),
         event_plugins.EventPluginInline.create(models.EventPlugin),
@@ -133,11 +137,13 @@ class ArticleAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
     def send_webpush(self, request, queryset):
         for article in queryset:
             pages = Page.objects.filter(
-                (Q(application="blog") & Q(language_code=article.language_code))
+                (Q(application="blog")
+                 & Q(language_code=article.language_code))
                 & (Q(category__isnull=True) | Q(category=article.category))
-                & (Q(blog_namespace__isnull=True) | Q(blog_namespace=article.namespace))
-                & (Q(site__section=article.section) | Q(sections=article.section))
-            )
+                & (Q(blog_namespace__isnull=True)
+                   | Q(blog_namespace=article.namespace))
+                & (Q(site__section=article.section)
+                   | Q(sections=article.section)))
 
             for page in pages:
                 subscriptions = webpush.Subscription.objects.filter(page=page)
@@ -165,7 +171,7 @@ class ArticleAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
 
 @admin.register(NameSpace)
 class NamespaceAdmin(admin.ModelAdmin):
-    search_fields = ("name",)
+    search_fields = ("name", )
 
     list_display = (
         "name",
@@ -173,24 +179,26 @@ class NamespaceAdmin(admin.ModelAdmin):
         "language_code",
     )
 
-    list_filter = ("language_code",)
+    list_filter = ("language_code", )
 
-    prepopulated_fields = {"slug": ("name",)}
+    prepopulated_fields = {"slug": ("name", )}
 
-    autocomplete_fields = ("translations",)
+    autocomplete_fields = ("translations", )
 
-    fieldsets = ((None, {"fields": ("name", "slug", "language_code", "translations")}),)
+    fieldsets = ((None, {
+        "fields": ("name", "slug", "language_code", "translations")
+    }), )
 
 
 class WPImportMappingInline(admin.TabularInline):
     model = models.NamespaceMapping
     extra = 3
 
-    autocomplete_fields = ("target",)
+    autocomplete_fields = ("target", )
 
 
 @admin.register(models.WPImport)
 class WPImportAdmin(admin.ModelAdmin):
     autocomplete_fields = ("section", "default_namespace")
 
-    inlines = (WPImportMappingInline,)
+    inlines = (WPImportMappingInline, )

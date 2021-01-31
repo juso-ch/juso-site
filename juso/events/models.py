@@ -55,9 +55,11 @@ class Location(MetaMixin, TranslationMixin):
         null=True,
     )
 
-    section = models.ForeignKey(
-        Section, models.SET_NULL, blank=True, null=True, verbose_name=_("section")
-    )
+    section = models.ForeignKey(Section,
+                                models.SET_NULL,
+                                blank=True,
+                                null=True,
+                                verbose_name=_("section"))
 
     website = models.URLField(blank=True, verbose_name=_("website"))
 
@@ -89,20 +91,16 @@ class Location(MetaMixin, TranslationMixin):
         try:
             site = current_site()
             if not self.section or site == self.section.site:
-                return reverse_app(
-                    [f"{site.pk}-events"], "location-detail", kwargs={"slug": self.slug}
-                )
+                return reverse_app([f"{site.pk}-events"],
+                                   "location-detail",
+                                   kwargs={"slug": self.slug})
             with set_current_site(self.section.site):
-                return (
-                    "//"
-                    + self.section.site.host
-                    + reverse_app(
-                        [f"{self.section.site.id}-events"],
-                        "location-detail",
-                        urlconf=apps_urlconf(),
-                        kwargs={"slug": self.slug},
-                    )
-                )
+                return ("//" + self.section.site.host + reverse_app(
+                    [f"{self.section.site.id}-events"],
+                    "location-detail",
+                    urlconf=apps_urlconf(),
+                    kwargs={"slug": self.slug},
+                ))
         except NoReverseMatch:
             return "#"
 
@@ -115,9 +113,10 @@ class LocationImage(plugins.image.Image, LocationPluginBase):
 
 
 def ical_calendar(queryset):
-    begin = (
-        "BEGIN:VCALENDAR\r\n" "VERSION:2.0\r\n" "METHOD:PUBLISH\r\n" "PRODID:JUSO\r\n"
-    )
+    begin = ("BEGIN:VCALENDAR\r\n"
+             "VERSION:2.0\r\n"
+             "METHOD:PUBLISH\r\n"
+             "PRODID:JUSO\r\n")
     events = "".join(e.ical_event() for e in queryset)
     return begin + events + "END:VCALENDAR\r\n"
 
@@ -128,7 +127,7 @@ class Event(ContentMixin):
         (
             (
                 "default",
-                ("main",),
+                ("main", ),
             ),
             ("feature_top", ("main", "sidebar", "feature")),
         ),
@@ -139,9 +138,11 @@ class Event(ContentMixin):
     slug = models.SlugField(max_length=180)
     uuid = models.UUIDField(default=uuid.uuid4)
 
-    location = models.ForeignKey(
-        Location, models.SET_NULL, blank=True, null=True, verbose_name=_("location")
-    )
+    location = models.ForeignKey(Location,
+                                 models.SET_NULL,
+                                 blank=True,
+                                 null=True,
+                                 verbose_name=_("location"))
 
     @property
     def description(self):
@@ -179,24 +180,26 @@ class Event(ContentMixin):
             icon = f"https://{page.site.host}" + favicon["512"]
         else:
             icon = "https://" + page.site.host + "/static/logo.png"
-            return json.dumps(
-                {
-                    "title": self.start_date.astimezone(
-                        pytz.timezone(settings.TIME_ZONE)
-                    ).strftime("%d.%m.%Y %H:%M")
-                    + " - "
-                    + self.title,
-                    "tagline": (self.location.name + "; " if self.location else "")
-                    + self.tagline[:280],
-                    "icon": icon,
-                    "url": self.get_full_url(),
-                    "badge": "https://" + page.site.host + "/static/badge.png",
-                    "publication_date": self.publication_date.isoformat(),
-                    "image": "https://" + page.site.host + self.get_header_image().full
-                    if self.get_header_image()
-                    else "",
-                }
-            )
+            return json.dumps({
+                "title":
+                self.start_date.astimezone(pytz.timezone(
+                    settings.TIME_ZONE)).strftime("%d.%m.%Y %H:%M") + " - " +
+                self.title,
+                "tagline":
+                (self.location.name + "; " if self.location else "") +
+                self.tagline[:280],
+                "icon":
+                icon,
+                "url":
+                self.get_full_url(),
+                "badge":
+                "https://" + page.site.host + "/static/badge.png",
+                "publication_date":
+                self.publication_date.isoformat(),
+                "image":
+                "https://" + page.site.host + self.get_header_image().full
+                if self.get_header_image() else "",
+            })
 
     def get_full_url(self):
         url = self.get_absolute_url()
@@ -213,37 +216,44 @@ class Event(ContentMixin):
     def google_calendar(self):
         start = self.start_date.strftime("%Y%m%dT%H%M00")
         end = self.end_date.strftime("%Y%m%dT%H%M00")
-        query = urllib.parse.urlencode(
-            {
-                "action": "TEMPLATE",
-                "dates": f"{start}/{end}",
-                "text": f"{self.title} ({self.section.name})",
-                "location": self.get_address(),
-                "details": f"https://{self.section.site.host}{self.get_absolute_url()}",
-            }
-        )
+        query = urllib.parse.urlencode({
+            "action":
+            "TEMPLATE",
+            "dates":
+            f"{start}/{end}",
+            "text":
+            f"{self.title} ({self.section.name})",
+            "location":
+            self.get_address(),
+            "details":
+            f"https://{self.section.site.host}{self.get_absolute_url()}",
+        })
         return f"https://www.google.com/calendar/render?{query}"
 
     def outlook(self):
         start = self.start_date.strftime("%Y%m%dT%H%M00")
         end = self.end_date.strftime("%Y%m%dT%H%M00")
-        query = urllib.parse.urlencode(
-            {
-                "path": "/calendar/action/compose",
-                "rru": "addevent",
-                "startdt": start,
-                "enddt": end,
-                "subject": f"{self.title} ({self.section.name})",
-                "location": self.get_address(),
-                "body": f"https://{self.section.site.host}{self.get_absolute_url()}",
-            }
-        )
+        query = urllib.parse.urlencode({
+            "path":
+            "/calendar/action/compose",
+            "rru":
+            "addevent",
+            "startdt":
+            start,
+            "enddt":
+            end,
+            "subject":
+            f"{self.title} ({self.section.name})",
+            "location":
+            self.get_address(),
+            "body":
+            f"https://{self.section.site.host}{self.get_absolute_url()}",
+        })
         return f"https://outlook.live.com/owa/?{query}"
 
     def ical_link(self):
         return "data:text/calendar;charset=utf8," + urllib.parse.quote(
-            ical_calendar([self])
-        )
+            ical_calendar([self]))
 
     def ical_event(self):
         with set_current_site(self.section.site):
@@ -259,8 +269,7 @@ class Event(ContentMixin):
                 f"DTEND:{end}Z\r\n"
                 f"DESCRIPTION:https://{self.section.site.host}{self.get_absolute_url()}\r\n"
                 f"LOCATION:{self.get_address()}\r\n"
-                "END:VEVENT\r\n"
-            )
+                "END:VEVENT\r\n")
 
     def get_absolute_url(self):
         def _get_absolute_url():
@@ -283,31 +292,27 @@ class Event(ContentMixin):
                         languages=[self.language_code],
                     )
                 with set_current_site(self.section.site):
-                    return (
-                        "//"
-                        + self.section.site.host
-                        + reverse_app(
-                            [
-                                f"{self.section.site.id}-events-{self.category}",
-                                f"{self.section.site.id}-events",
-                            ],
-                            "event-detail",
-                            urlconf=apps_urlconf(),
-                            kwargs={
-                                "slug": self.slug,
-                                "day": self.start_date.day,
-                                "month": self.start_date.month,
-                                "year": self.start_date.year,
-                            },
-                            languages=[self.language_code],
-                        )
-                    )
+                    return ("//" + self.section.site.host + reverse_app(
+                        [
+                            f"{self.section.site.id}-events-{self.category}",
+                            f"{self.section.site.id}-events",
+                        ],
+                        "event-detail",
+                        urlconf=apps_urlconf(),
+                        kwargs={
+                            "slug": self.slug,
+                            "day": self.start_date.day,
+                            "month": self.start_date.month,
+                            "year": self.start_date.year,
+                        },
+                        languages=[self.language_code],
+                    ))
             except NoReverseMatch:
                 return "#"
 
         return cache.get_or_set(
-            f"{current_site().id}:event-absolute-url-{self.pk}", _get_absolute_url
-        )
+            f"{current_site().id}:event-absolute-url-{self.pk}",
+            _get_absolute_url)
 
 
 PluginBase = create_plugin_base(Event)

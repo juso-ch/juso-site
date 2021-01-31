@@ -25,7 +25,8 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 ("name", models.CharField(max_length=180)),
-                ("sections", models.ManyToManyField(blank=True, to="sections.Section")),
+                ("sections",
+                 models.ManyToManyField(blank=True, to="sections.Section")),
             ],
             options={
                 "verbose_name": "candidate list",
@@ -36,7 +37,9 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="person",
             name="birthday",
-            field=models.DateField(blank=True, null=True, verbose_name="birthday"),
+            field=models.DateField(blank=True,
+                                   null=True,
+                                   verbose_name="birthday"),
         ),
         migrations.AddField(
             model_name="person",
@@ -46,7 +49,9 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="person",
             name="job",
-            field=models.CharField(blank=True, max_length=120, verbose_name="job"),
+            field=models.CharField(blank=True,
+                                   max_length=120,
+                                   verbose_name="job"),
         ),
         migrations.CreateModel(
             name="Candidature",
@@ -63,7 +68,8 @@ class Migration(migrations.Migration):
                 ("list_number", models.CharField(blank=True, max_length=10)),
                 ("modifier", models.CharField(blank=True, max_length=30)),
                 ("slogan", models.TextField(blank=True)),
-                ("url", models.URLField(blank=True, verbose_name="more information")),
+                ("url",
+                 models.URLField(blank=True, verbose_name="more information")),
                 ("order", models.PositiveIntegerField(default=0)),
                 (
                     "candidate_list",

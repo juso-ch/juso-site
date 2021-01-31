@@ -17,6 +17,8 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="form",
             name="tags",
-            field=models.CharField(blank=True, max_length=30, verbose_name="tags"),
+            field=models.CharField(blank=True,
+                                   max_length=30,
+                                   verbose_name="tags"),
         ),
     ]

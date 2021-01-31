@@ -42,7 +42,6 @@ class Migration(migrations.Migration):
             model_name="form",
             name="success_message",
             field=feincms3.cleanse.CleansedRichTextField(
-                blank=True, verbose_name="success message"
-            ),
+                blank=True, verbose_name="success message"),
         ),
     ]

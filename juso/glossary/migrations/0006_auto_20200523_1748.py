@@ -13,7 +13,8 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="entry",
             name="auto_pattern",
-            field=models.BooleanField(default=True, verbose_name="auto-pattern"),
+            field=models.BooleanField(default=True,
+                                      verbose_name="auto-pattern"),
         ),
         migrations.AlterField(
             model_name="entry",
@@ -23,7 +24,9 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="entry",
             name="pattern",
-            field=models.CharField(blank=True, max_length=200, verbose_name="pattern"),
+            field=models.CharField(blank=True,
+                                   max_length=200,
+                                   verbose_name="pattern"),
         ),
         migrations.AlterField(
             model_name="entry",

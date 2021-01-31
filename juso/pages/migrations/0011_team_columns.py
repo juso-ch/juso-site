@@ -14,7 +14,8 @@ class Migration(migrations.Migration):
             model_name="team",
             name="columns",
             field=models.CharField(
-                choices=[("two", "2"), ("three", "3"), ("four", "4"), ("five", "5")],
+                choices=[("two", "2"), ("three", "3"), ("four", "4"),
+                         ("five", "5")],
                 default="three",
                 max_length=10,
                 verbose_name="columns",

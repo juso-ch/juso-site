@@ -27,7 +27,8 @@ from juso.sections.models import Category
 
 
 def articles_for_page(page, qs=None, allow_future=False):
-    qs = qs if qs else models.Article.objects.filter(language_code=page.language_code)
+    qs = qs if qs else models.Article.objects.filter(
+        language_code=page.language_code)
 
     if page.category:
         qs = qs.filter(category=page.category)
@@ -52,54 +53,54 @@ def article_list(request):
     page.activate_language(request)
 
     article_list = articles_for_page(page)
-    category_list = Category.objects.filter(article__in=article_list).distinct()
+    category_list = Category.objects.filter(
+        article__in=article_list).distinct()
 
     if request.GET.get("category", None):
         article_list = article_list.filter(
-            category__slug__in=request.GET.getlist("category")
-        )
+            category__slug__in=request.GET.getlist("category"))
 
     q = ""
 
     if request.GET.get("search", ""):
-        vector = (
-            SearchVector("title", weight="A")
-            + SearchVector("category__name", weight="A")
-            + SearchVector("blog_richtext_set__text", weight="A")
-            + SearchVector("blog_glossaryrichtext_set__text", weight="A")
-            + SearchVector("author__first_name", weight="B")
-            + SearchVector("author__last_name", weight="B")
-        )
+        vector = (SearchVector("title", weight="A") +
+                  SearchVector("category__name", weight="A") +
+                  SearchVector("blog_richtext_set__text", weight="A") +
+                  SearchVector("blog_glossaryrichtext_set__text", weight="A") +
+                  SearchVector("author__first_name", weight="B") +
+                  SearchVector("author__last_name", weight="B"))
         query = consume(request.GET["search"])
         q = request.GET["search"]
-        article_list = (
-            article_list.annotate(
-                rank=SearchRank(vector, query, cover_density=True),
-                headline=SearchHeadline(
-                    "blog_richtext_set__text",
-                    query,
-                    max_words=25,
-                    min_words=20,
-                    max_fragments=2,
-                ),
-            )
-            .filter(rank__gt=0)
-            .order_by("-rank")
-            .distinct()
-        )
+        article_list = (article_list.annotate(
+            rank=SearchRank(vector, query, cover_density=True),
+            headline=SearchHeadline(
+                "blog_richtext_set__text",
+                query,
+                max_words=25,
+                min_words=20,
+                max_fragments=2,
+            ),
+        ).filter(rank__gt=0).order_by("-rank").distinct())
 
     ancestors = list(page.ancestors().reverse())
     return render_list(
         request,
         article_list,
         {
-            "page": page,
-            "q": q,
-            "header_image": page.get_header_image(),
-            "vapid_public_key": settings.VAPID_PUBLIC_KEY,
-            "category_list": category_list,
-            "meta_tags": meta_tags([page] + ancestors, request=request),
-            "regions": Regions.from_item(
+            "page":
+            page,
+            "q":
+            q,
+            "header_image":
+            page.get_header_image(),
+            "vapid_public_key":
+            settings.VAPID_PUBLIC_KEY,
+            "category_list":
+            category_list,
+            "meta_tags":
+            meta_tags([page] + ancestors, request=request),
+            "regions":
+            Regions.from_item(
                 page,
                 renderer=pages.renderer.renderer,
                 timeout=60,
@@ -122,10 +123,14 @@ def category_list(request, slug):
         request,
         articles,
         {
-            "page": page,
-            "header_image": page.get_header_image(),
-            "meta_tags": meta_tags([page] + ancestors, request=request),
-            "regions": Regions.from_item(
+            "page":
+            page,
+            "header_image":
+            page.get_header_image(),
+            "meta_tags":
+            meta_tags([page] + ancestors, request=request),
+            "regions":
+            Regions.from_item(
                 page,
                 renderer=pages.renderer.renderer,
                 timeout=60,
@@ -141,31 +146,39 @@ def article_detail(request, slug):
     page = page_for_app_request(request)
     page.activate_language(request)
 
-    article = get_object_or_404(articles_for_page(page, allow_future=True), slug=slug)
+    article = get_object_or_404(articles_for_page(page, allow_future=True),
+                                slug=slug)
 
     ancestors = list(page.ancestors().reverse())
-    edit = (
-        request.user.is_authenticated
-        and request.user.section_set.filter(pk=article.section.pk).exists()
-    )
+    edit = (request.user.is_authenticated and
+            request.user.section_set.filter(pk=article.section.pk).exists())
 
     return render(
         request,
         article.template.template_name,
         {
-            "page": page,
-            "article": article,
-            "obj": article,
-            "edit": edit,
-            "header_image": article.get_header_image() or page.get_header_image(),
-            "title": article.title,
-            "meta_tags": meta_tags([article, page] + ancestors, request=request),
-            "regions": Regions.from_item(
+            "page":
+            page,
+            "article":
+            article,
+            "obj":
+            article,
+            "edit":
+            edit,
+            "header_image":
+            article.get_header_image() or page.get_header_image(),
+            "title":
+            article.title,
+            "meta_tags":
+            meta_tags([article, page] + ancestors, request=request),
+            "regions":
+            Regions.from_item(
                 article,
                 renderer=renderer,
                 timeout=60,
             ),
-            "page_regions": Regions.from_item(
+            "page_regions":
+            Regions.from_item(
                 page,
                 renderer=pages.renderer.renderer,
                 timeout=60,
@@ -215,13 +228,13 @@ class ArticleFeed(Feed):
         if obj.category:
             return obj.category.name
         return [
-            x
-            for x in articles_for_page(obj).values_list("category__name", flat=True)
+            x for x in articles_for_page(obj).values_list("category__name",
+                                                          flat=True)
             if x is not None
         ]
 
     def items(self, obj):
-        return articles_for_page(obj)[: self.limit]
+        return articles_for_page(obj)[:self.limit]
 
     def item_title(self, item):
         return item.title

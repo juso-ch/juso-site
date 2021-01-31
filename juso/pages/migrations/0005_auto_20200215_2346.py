@@ -16,7 +16,8 @@ class Migration(migrations.Migration):
             name="application",
             field=models.CharField(
                 blank=True,
-                choices=[("blog", "blog"), ("people", "people"), ("events", "events")],
+                choices=[("blog", "blog"), ("people", "people"),
+                         ("events", "events")],
                 max_length=20,
                 verbose_name="application",
             ),
@@ -35,17 +36,19 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "document",
-                    models.FileField(upload_to="downloads/", verbose_name="Datei"),
+                    models.FileField(upload_to="downloads/",
+                                     verbose_name="Datei"),
                 ),
                 (
                     "download_text",
-                    models.CharField(max_length=200, verbose_name="download text"),
+                    models.CharField(max_length=200,
+                                     verbose_name="download text"),
                 ),
                 (
                     "link_classes",
-                    models.CharField(
-                        blank=True, max_length=200, verbose_name="link classes (css)"
-                    ),
+                    models.CharField(blank=True,
+                                     max_length=200,
+                                     verbose_name="link classes (css)"),
                 ),
                 ("region", models.CharField(max_length=255)),
                 ("ordering", models.IntegerField(default=0)),

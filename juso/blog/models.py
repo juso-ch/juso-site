@@ -42,14 +42,14 @@ class Article(ContentMixin):
     TEMPLATES = get_template_list(
         "blog",
         (
-            ("default", ("main",)),
+            ("default", ("main", )),
             ("feature_top", ("main", "sidebar", "feature")),
         ),
     )
 
-    namespace = models.ForeignKey(
-        NameSpace, models.PROTECT, verbose_name=_("namespace")
-    )
+    namespace = models.ForeignKey(NameSpace,
+                                  models.PROTECT,
+                                  verbose_name=_("namespace"))
 
     @property
     def description(self):
@@ -88,47 +88,47 @@ class Article(ContentMixin):
                     )
                 with set_current_site(self.section.site):
                     site = self.section.site
-                    return (
-                        "//"
-                        + self.section.site.host
-                        + reverse_app(
-                            [
-                                f'{site.id}-blog-{self.namespace.name}-{self.category or ""}',
-                                f"{site.id}-blog-{self.namespace.name}",
-                                f'{site.id}-blog-{self.category or ""}',
-                                f"{site.id}-blog",
-                            ],
-                            "article-detail",
-                            urlconf=apps_urlconf(),
-                            kwargs={"slug": self.slug},
-                            languages=[self.language_code],
-                        )
-                    )
+                    return ("//" + self.section.site.host + reverse_app(
+                        [
+                            f'{site.id}-blog-{self.namespace.name}-{self.category or ""}',
+                            f"{site.id}-blog-{self.namespace.name}",
+                            f'{site.id}-blog-{self.category or ""}',
+                            f"{site.id}-blog",
+                        ],
+                        "article-detail",
+                        urlconf=apps_urlconf(),
+                        kwargs={"slug": self.slug},
+                        languages=[self.language_code],
+                    ))
             except NoReverseMatch:
                 return "#"
 
         return cache.get_or_set(
-            f"{current_site().id}article-absolute-url-{self.pk}", _get_absolute_url
-        )
+            f"{current_site().id}article-absolute-url-{self.pk}",
+            _get_absolute_url)
 
     def webpush_data(self, page):
         if favicon := page.top_page().favicon:
             icon = f"https://{page.site.host}" + favicon["512"]
         else:
             icon = "https://" + page.site.host + "/static/logo.png"
-        return json.dumps(
-            {
-                "title": self.title,
-                "tagline": self.tagline[:280],
-                "icon": icon,
-                "url": self.get_full_url(),
-                "badge": "https://" + page.site.host + "/static/badge.png",
-                "publication_date": self.publication_date.isoformat(),
-                "image": ("https://" + page.site.host + self.get_header_image().full)
-                if self.get_header_image()
-                else "",
-            }
-        )
+        return json.dumps({
+            "title":
+            self.title,
+            "tagline":
+            self.tagline[:280],
+            "icon":
+            icon,
+            "url":
+            self.get_full_url(),
+            "badge":
+            "https://" + page.site.host + "/static/badge.png",
+            "publication_date":
+            self.publication_date.isoformat(),
+            "image":
+            ("https://" + page.site.host +
+             self.get_header_image().full) if self.get_header_image() else "",
+        })
 
     def get_full_url(self):
         url = self.get_absolute_url()
@@ -143,37 +143,34 @@ class Article(ContentMixin):
         ordering = ["-publication_date"]
         indexes = [
             models.Index(fields=["language_code"]),
-            models.Index(
-                fields=[
-                    "category_id",
-                    "language_code",
-                    "namespace_id",
-                ]
-            ),
-            models.Index(
-                fields=[
-                    "language_code",
-                    "namespace_id",
-                    "section_id",
-                ]
-            ),
+            models.Index(fields=[
+                "category_id",
+                "language_code",
+                "namespace_id",
+            ]),
+            models.Index(fields=[
+                "language_code",
+                "namespace_id",
+                "section_id",
+            ]),
         ]
         constraints = [
             models.UniqueConstraint(
-                fields=["slug", "namespace_id", "section_id"], name="unique_path"
-            )
+                fields=["slug", "namespace_id", "section_id"],
+                name="unique_path")
         ]
 
 
 class WPImport(models.Model):
     slug = models.SlugField(_("slug"), unique=True)
     import_file = models.FileField(verbose_name=_("wordpress file"))
-    section = models.ForeignKey(
-        "sections.Section", models.CASCADE, verbose_name=_("section")
-    )
-    default_namespace = models.ForeignKey(
-        NameSpace, models.CASCADE, related_name="+", verbose_name=_("default namespace")
-    )
+    section = models.ForeignKey("sections.Section",
+                                models.CASCADE,
+                                verbose_name=_("section"))
+    default_namespace = models.ForeignKey(NameSpace,
+                                          models.CASCADE,
+                                          related_name="+",
+                                          verbose_name=_("default namespace"))
     completed = models.BooleanField(default=False, verbose_name=_("completed"))
 
     def __str__(self):
@@ -185,7 +182,9 @@ class WPImport(models.Model):
 
 
 class NamespaceMapping(models.Model):
-    wp_import = models.ForeignKey(WPImport, models.CASCADE, related_name="mappings")
+    wp_import = models.ForeignKey(WPImport,
+                                  models.CASCADE,
+                                  related_name="mappings")
     nicename = models.CharField(_("name"), max_length=100)
     target = models.ForeignKey(NameSpace, models.CASCADE, related_name="+")
 

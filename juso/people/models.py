@@ -23,7 +23,9 @@ class Person(models.Model):
         null=True,
     )
 
-    sections = models.ManyToManyField(Section, blank=True, verbose_name=_("sections"))
+    sections = models.ManyToManyField(Section,
+                                      blank=True,
+                                      verbose_name=_("sections"))
 
     image = ImageField(
         _("image"),
@@ -41,7 +43,9 @@ class Person(models.Model):
 
     email = models.EmailField(blank=True, verbose_name=_("e-mail"))
     homepage = models.URLField(blank=True, verbose_name=_("homepage"))
-    phone = models.CharField(blank=True, max_length=20, verbose_name=_("phone"))
+    phone = models.CharField(blank=True,
+                             max_length=20,
+                             verbose_name=_("phone"))
 
     facebook = models.URLField(blank=True, verbose_name=_("Facebook"))
     twitter = models.URLField(blank=True, verbose_name=_("Twitter"))
@@ -71,9 +75,9 @@ class Person(models.Model):
     def get_absolute_url(self):
         try:
             site = current_site()
-            return reverse_app(
-                [f"{site.id}-people"], "person-detail", kwargs={"pk": self.pk}
-            )
+            return reverse_app([f"{site.id}-people"],
+                               "person-detail",
+                               kwargs={"pk": self.pk})
         except NoReverseMatch:
             return ""
 
@@ -81,11 +85,14 @@ class Person(models.Model):
 class Team(TranslationMixin):
     name = models.CharField(max_length=200, verbose_name=_("name"))
 
-    section = models.ForeignKey(Section, models.CASCADE, verbose_name=_("section"))
+    section = models.ForeignKey(Section,
+                                models.CASCADE,
+                                verbose_name=_("section"))
 
-    members = models.ManyToManyField(
-        Person, through="Membership", related_name="teams", verbose_name=_("members")
-    )
+    members = models.ManyToManyField(Person,
+                                     through="Membership",
+                                     related_name="teams",
+                                     verbose_name=_("members"))
 
     order = models.IntegerField(verbose_name=_("order"), default=0)
 
@@ -101,25 +108,23 @@ class Team(TranslationMixin):
         site = current_site()
         if self.section.site == site:
             return reverse_app(
-                (f"{self.section.site_id}-people",),
+                (f"{self.section.site_id}-people", ),
                 "team-detail",
                 kwargs={"pk": self.pk},
             )
         with set_current_site(self.section.site):
-            return (
-                "//"
-                + self.section.site.host
-                + reverse_app(
-                    [f"{self.section.site.id}-people"],
-                    "team-detail",
-                    urlconf=apps_urlconf(),
-                    kwargs={"pk": self.pk},
-                )
-            )
+            return ("//" + self.section.site.host + reverse_app(
+                [f"{self.section.site.id}-people"],
+                "team-detail",
+                urlconf=apps_urlconf(),
+                kwargs={"pk": self.pk},
+            ))
 
 
 class Membership(models.Model):
-    person = models.ForeignKey(Person, models.CASCADE, verbose_name=_("person"))
+    person = models.ForeignKey(Person,
+                               models.CASCADE,
+                               verbose_name=_("person"))
     team = models.ForeignKey(Team, models.CASCADE, verbose_name=_("team"))
     title = models.CharField(max_length=100, verbose_name=_("title"))
     image = ImageField(
@@ -131,9 +136,9 @@ class Membership(models.Model):
         formats={
             "square": ["default", ("crop", (900, 900))],
         },
-        help_text=_(
-            "Only necessary if you want to use another picture for this position."
-        ),
+        help_text=
+        _("Only necessary if you want to use another picture for this position."
+          ),
     )
     order = models.IntegerField(default=0)
 
@@ -160,10 +165,13 @@ class CandidateList(models.Model):
 
 
 class Candidature(models.Model):
-    person = models.ForeignKey(Person, models.CASCADE, verbose_name=_("person"))
-    candidate_list = models.ForeignKey(
-        CandidateList, models.CASCADE, verbose_name=_("list"), related_name="candidates"
-    )
+    person = models.ForeignKey(Person,
+                               models.CASCADE,
+                               verbose_name=_("person"))
+    candidate_list = models.ForeignKey(CandidateList,
+                                       models.CASCADE,
+                                       verbose_name=_("list"),
+                                       related_name="candidates")
     image = ImageField(
         _("image"),
         blank=True,
@@ -173,9 +181,9 @@ class Candidature(models.Model):
         formats={
             "square": ["default", ("crop", (900, 900))],
         },
-        help_text=_(
-            "Only necessary if you want to use another picture for this candidature."
-        ),
+        help_text=
+        _("Only necessary if you want to use another picture for this candidature."
+          ),
     )
 
     list_number = models.CharField(max_length=10, blank=True)

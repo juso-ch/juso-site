@@ -24,7 +24,6 @@ from html_sanitizer.sanitizer import (
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
@@ -80,7 +79,6 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-
 ROOT_URLCONF = "juso.urls"
 
 TEMPLATES = [
@@ -113,25 +111,27 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "juso.wsgi.application"
 
-
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+        "NAME":
+        "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+        "NAME":
+        "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+        "NAME":
+        "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+        "NAME":
+        "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
@@ -144,7 +144,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
@@ -156,51 +155,50 @@ STATIC_URL = "/static/"
 # Configure django-ckeditor
 CKEDITOR_CONFIGS = {
     "default": {
-        "toolbar": "Custom",
-        "format_tags": "h1;h2;h3;h4;p;pre",
-        "toolbar_Custom": [
-            [
-                "Format",
-                "RemoveFormat",
-                "-",
-                "Undo",
-                "Redo",
-                "-",
-                "Bold",
-                "Italic",
-                "Strike",
-                "Subscript",
-                "Superscript",
-                "-",
-                "NumberedList",
-                "BulletedList",
-                "Table",
-                "Blockquote",
-                "-",
-                "Anchor",
-                "Link",
-                "Unlink",
-                "-",
-                "HorizontalRule",
-                "SpecialChar",
-                "-",
-                "ShowBlocks",
-                "Source",
-            ]
-        ],
+        "toolbar":
+        "Custom",
+        "format_tags":
+        "h1;h2;h3;h4;p;pre",
+        "toolbar_Custom": [[
+            "Format",
+            "RemoveFormat",
+            "-",
+            "Undo",
+            "Redo",
+            "-",
+            "Bold",
+            "Italic",
+            "Strike",
+            "Subscript",
+            "Superscript",
+            "-",
+            "NumberedList",
+            "BulletedList",
+            "Table",
+            "Blockquote",
+            "-",
+            "Anchor",
+            "Link",
+            "Unlink",
+            "-",
+            "HorizontalRule",
+            "SpecialChar",
+            "-",
+            "ShowBlocks",
+            "Source",
+        ]],
     },
 }
 CKEDITOR_CONFIGS["richtext-plugin"] = CKEDITOR_CONFIGS["default"]
 
-TEAM_TEMPLATE_CHOICES = (("teams/default.html", _("default")),)
+TEAM_TEMPLATE_CHOICES = (("teams/default.html", _("default")), )
 
-EVENT_TEMPLATE_CHOICES = (("events/plugins/default.html", _("default")),)
+EVENT_TEMPLATE_CHOICES = (("events/plugins/default.html", _("default")), )
 
 BLOG_TEMPLATE_CHOICES = (
     ("blog/plugins/default.html", _("default")),
     ("blog/plugins/simple_list.html", _("list")),
 )
-
 
 LANGUAGES = (
     ("de", _("German")),
@@ -217,7 +215,9 @@ AUTHENTICATION_BACKENDS = [
     "django_su.backends.SuBackend",
 ]
 
-AJAX_LOOKUP_CHANNELS = {"django_su": dict(model="auth.user", search_field="username")}
+AJAX_LOOKUP_CHANNELS = {
+    "django_su": dict(model="auth.user", search_field="username")
+}
 
 SU_LOGIN_REDIRECT_URL = "/admin/"
 SU_LOGOUT_REDIRECT_URL = "/admin/"
@@ -253,13 +253,13 @@ FONTAWESOME_5_ICON_CLASS = "semantic_ui"
 
 SECRET_KEY = os.environ.get("SECRET_KEY", "changeme")
 
-
 ALLOWED_HOSTS = ["*"]
 
 DATABASES = {
     "default": {
         "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
-        "NAME": os.environ.get("POSTGRES_DB", os.path.join(BASE_DIR, "db.sqlite3")),
+        "NAME": os.environ.get("POSTGRES_DB",
+                               os.path.join(BASE_DIR, "db.sqlite3")),
         "USER": os.environ.get("POSTGRES_USER", "user"),
         "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "password"),
         "HOST": os.environ.get("SQL_HOST", "localhost"),
@@ -267,14 +267,11 @@ DATABASES = {
     }
 }
 
-
 DEFAULT_COLOR = "#eb141f"
 
-
-LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
+LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"), )
 
 MAPS_URL = "https://www.google.com/maps/dir/My+Location/{location.lat},{location.lng}"
-
 
 CACHES = {
     "default": {
@@ -283,8 +280,8 @@ CACHES = {
     }
 }
 
-
-DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "webmaster@localhost")
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL",
+                                    "webmaster@localhost")
 SERVER_EMAIL = os.environ.get("SERVER_EMAIL", "root@localhost")
 
 EMAIL_HOST = os.environ.get("SMTP_HOST", "smtp")
@@ -296,9 +293,9 @@ EMAIL_USE_SSL = int(os.environ.get("SMTP_SSL", "0"))
 EMAIL_HOST_USER = os.environ.get("SMTP_USER", "user")
 EMAIL_HOST_PASSWORD = os.environ.get("SMTP_PASSWORD", "pw")
 
-DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "webmaster@localhost")
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL",
+                                    "webmaster@localhost")
 SERVER_EMAIL = os.environ.get("SERVER_EMAIL", "root@localhost")
-
 
 CELERY_BROKER_URL = "redis://redis:6379"
 
@@ -353,10 +350,14 @@ HTML_SANITIZERS = {
         "empty": {"hr", "a", "br"},
         "separate": {"a", "p", "li"},
         "whitespace": {"br"},
-        "keep_typographic_whitespace": False,
-        "add_nofollow": False,
-        "autolink": False,
-        "sanitize_href": sanitize_href,
+        "keep_typographic_whitespace":
+        False,
+        "add_nofollow":
+        False,
+        "autolink":
+        False,
+        "sanitize_href":
+        sanitize_href,
         "element_preprocessors": [
             bold_span_to_strong,
             italic_span_to_em,
@@ -366,7 +367,8 @@ HTML_SANITIZERS = {
             target_blank_noopener,
         ],
         "element_postprocessors": [],
-        "is_mergeable": is_mergeable,
+        "is_mergeable":
+        is_mergeable,
     }
 }
 
@@ -382,39 +384,55 @@ INTERNAL_IPS = [
     "127.0.0.1",
 ]
 
-
 DEBUG_TOOLBAR_CONFIG = {
     "SHOW_TOOLBAR_CALLBACK": "juso.settings.toolbar_callback",
 }
 
 JAZZMIN_SETTINGS = {
     # title of the window
-    "site_title": _("JUSO"),
+    "site_title":
+    _("JUSO"),
     # Title on the brand, and the login screen (19 chars max)
-    "site_header": _("JUSO"),
+    "site_header":
+    _("JUSO"),
     # square logo to use for your site, must be present in static files, used for favicon and brand on top left
-    "site_logo": "logo.png",
+    "site_logo":
+    "logo.png",
     # Welcome text on the login screen
-    "welcome_sign": _("JUSO Admin"),
+    "welcome_sign":
+    _("JUSO Admin"),
     # Copyright on the footer
-    "copyright": "JUSO Schweiz",
+    "copyright":
+    "JUSO Schweiz",
     # The model admin to search from the search bar, search bar omitted if excluded
-    "search_model": "blog.Article",
+    "search_model":
+    "blog.Article",
     # Field name on user model that contains avatar image
-    "user_avatar": None,
+    "user_avatar":
+    None,
     ############
     # Top Menu #
     ############
     # Links to put along the top menu
     "topmenu_links": [
-        # Url that gets reversed (Permissions can be added)
-        {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
-        # external url that opens in a new window (Permissions can be added)
-        # model admin to link to (Permissions checked against model)
-        {"model": "blog.Article"},
-        {"model": "pages.Page"},
-        # App with dropdown menu to all its models pages (Permissions checked against models)
-        {"app": "events"},
+    # Url that gets reversed (Permissions can be added)
+        {
+            "name": "Home",
+            "url": "admin:index",
+            "permissions": ["auth.view_user"]
+        },
+    # external url that opens in a new window (Permissions can be added)
+    # model admin to link to (Permissions checked against model)
+        {
+            "model": "blog.Article"
+        },
+        {
+            "model": "pages.Page"
+        },
+    # App with dropdown menu to all its models pages (Permissions checked against models)
+        {
+            "app": "events"
+        },
         {
             "name": "Support",
             "url": "https://github.com/juso-ch/juso-site/wiki",
@@ -430,11 +448,14 @@ JAZZMIN_SETTINGS = {
     # Side Menu #
     #############
     # Whether to display the side menu
-    "show_sidebar": True,
+    "show_sidebar":
+    True,
     # Whether to aut expand the menu
-    "navigation_expanded": True,
+    "navigation_expanded":
+    True,
     # Hide these apps when generating side menu e.g (auth)
-    "hide_apps": ["webpush", "testimonials", "taggit", "django_celery_results"],
+    "hide_apps":
+    ["webpush", "testimonials", "taggit", "django_celery_results"],
     # Hide these models when generating side menu (e.g auth.user)
     "hide_models": [],
     # List of apps (and/or models) to base side menu ordering off of (does not need to contain all apps/models)
@@ -450,14 +471,12 @@ JAZZMIN_SETTINGS = {
     ],
     # Custom links to append to app groups, keyed on app name
     "custom_links": {
-        "books": [
-            {
-                "name": "Make Messages",
-                "url": "make_messages",
-                "icon": "fas fa-comments",
-                "permissions": ["books.view_book"],
-            }
-        ]
+        "books": [{
+            "name": "Make Messages",
+            "url": "make_messages",
+            "icon": "fas fa-comments",
+            "permissions": ["books.view_book"],
+        }]
     },
     # Custom icons for side menu apps/models See https://fontawesome.com/icons?d=gallery&m=free
     # for a list of icon classes
@@ -485,21 +504,27 @@ JAZZMIN_SETTINGS = {
         "sections.Section": "fas fa-sitemap",
     },
     # Icons that are used when one is not manually specified
-    "default_icon_parents": "fas fa-chevron-circle-right",
-    "default_icon_children": "fas fa-circle",
+    "default_icon_parents":
+    "fas fa-chevron-circle-right",
+    "default_icon_children":
+    "fas fa-circle",
     #################
     # Related Modal #
     #################
     # Use modals instead of popups
-    "related_modal_active": True,
+    "related_modal_active":
+    True,
     #############
     # UI Tweaks #
     #############
     # Relative paths to custom CSS/JS scripts (must be present in static files)
-    "custom_css": "admin.css",
-    "custom_js": None,
+    "custom_css":
+    "admin.css",
+    "custom_js":
+    None,
     # Whether to show the UI customizer on the sidebar
-    "show_ui_builder": False,
+    "show_ui_builder":
+    False,
     ###############
     # Change view #
     ###############
@@ -509,14 +534,16 @@ JAZZMIN_SETTINGS = {
     # - vertical_tabs
     # - collapsible
     # - carousel
-    "changeform_format": "vertical_tabs",
+    "changeform_format":
+    "vertical_tabs",
     # override change forms on a per modeladmin basis
     "changeform_format_overrides": {
-        #        "auth.user": "collapsible",
+    #        "auth.user": "collapsible",
         "auth.group": "vertical_tabs",
     },
     # Add a language dropdown into the admin
-    "language_chooser": True,
+    "language_chooser":
+    True,
 }
 
 JAZZMIN_UI_TWEAKS = {

@@ -15,16 +15,16 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="form",
             name="mailchimp_list_id",
-            field=models.CharField(
-                blank=True, max_length=100, verbose_name="mailchimp list id"
-            ),
+            field=models.CharField(blank=True,
+                                   max_length=100,
+                                   verbose_name="mailchimp list id"),
         ),
         migrations.AlterField(
             model_name="form",
             name="list_id",
-            field=models.CharField(
-                blank=True, max_length=30, verbose_name="mailtrain list id"
-            ),
+            field=models.CharField(blank=True,
+                                   max_length=30,
+                                   verbose_name="mailtrain list id"),
         ),
         migrations.CreateModel(
             name="MailchimpConnection",
@@ -41,13 +41,13 @@ class Migration(migrations.Migration):
                 ("name", models.CharField(max_length=30, verbose_name="name")),
                 (
                     "mailchimp_api_key",
-                    models.CharField(max_length=180, verbose_name="mailchimp api key"),
+                    models.CharField(max_length=180,
+                                     verbose_name="mailchimp api key"),
                 ),
                 (
                     "mailchimp_api_server",
-                    models.CharField(
-                        max_length=20, verbose_name="mailchimp api server"
-                    ),
+                    models.CharField(max_length=20,
+                                     verbose_name="mailchimp api server"),
                 ),
                 (
                     "section",

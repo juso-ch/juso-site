@@ -15,15 +15,17 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="person",
             name="image",
-            field=models.ImageField(
-                blank=True, null=True, upload_to="people/", verbose_name="Bild"
-            ),
+            field=models.ImageField(blank=True,
+                                    null=True,
+                                    upload_to="people/",
+                                    verbose_name="Bild"),
         ),
         migrations.AddField(
             model_name="team",
             name="language_code",
             field=models.CharField(
-                choices=[("de", "German"), ("fr", "French"), ("it", "Italian")],
+                choices=[("de", "German"), ("fr", "French"),
+                         ("it", "Italian")],
                 default="de",
                 max_length=10,
                 verbose_name="language",
@@ -55,7 +57,9 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="person",
             name="email",
-            field=models.EmailField(blank=True, max_length=254, verbose_name="e-mail"),
+            field=models.EmailField(blank=True,
+                                    max_length=254,
+                                    verbose_name="e-mail"),
         ),
         migrations.AlterField(
             model_name="person",
@@ -75,9 +79,9 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="person",
             name="sections",
-            field=models.ManyToManyField(
-                blank=True, to="sections.Section", verbose_name="sections"
-            ),
+            field=models.ManyToManyField(blank=True,
+                                         to="sections.Section",
+                                         verbose_name="sections"),
         ),
         migrations.AlterField(
             model_name="team",

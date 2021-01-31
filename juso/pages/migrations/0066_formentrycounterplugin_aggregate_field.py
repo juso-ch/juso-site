@@ -15,7 +15,8 @@ class Migration(migrations.Migration):
             name="aggregate_field",
             field=models.SlugField(
                 blank=True,
-                help_text="use if you don't want the count of entries, but the sum of a field",
+                help_text=
+                "use if you don't want the count of entries, but the sum of a field",
                 verbose_name="aggregate field",
             ),
         ),

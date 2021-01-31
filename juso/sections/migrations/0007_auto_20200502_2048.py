@@ -13,6 +13,8 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="category",
             name="color",
-            field=models.CharField(blank=True, max_length=7, verbose_name="color"),
+            field=models.CharField(blank=True,
+                                   max_length=7,
+                                   verbose_name="color"),
         ),
     ]

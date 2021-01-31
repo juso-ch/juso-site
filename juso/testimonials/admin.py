@@ -23,7 +23,7 @@ class CampaignAdmin(admin.ModelAdmin):
         (
             _("advanced"),
             {
-                "classes": ("collapse",),
+                "classes": ("collapse", ),
                 "fields": (
                     "title_label",
                     "email_validation",
@@ -33,7 +33,7 @@ class CampaignAdmin(admin.ModelAdmin):
         (
             _("meta"),
             {
-                "classes": ("collapse",),
+                "classes": ("collapse", ),
                 "fields": (
                     "meta_title",
                     "meta_description",
@@ -45,7 +45,9 @@ class CampaignAdmin(admin.ModelAdmin):
 
 @admin.register(Testimonial)
 class TestimonialAdmin(admin.ModelAdmin):
-    list_display = ["first_name", "last_name", "created_at", "validated", "public"]
+    list_display = [
+        "first_name", "last_name", "created_at", "validated", "public"
+    ]
 
     fields = (
         "first_name",

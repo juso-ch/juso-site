@@ -11,4 +11,5 @@ class SiteTemplateLoader(filesystem.Loader):
     def get_template_sources(self, template_name):
         if self.template_names and template_name not in self.template_names:
             return []
-        return super().get_template_sources(f"{current_site().host}/{template_name}")
+        return super().get_template_sources(
+            f"{current_site().host}/{template_name}")

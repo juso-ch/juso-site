@@ -23,16 +23,18 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("text", models.CharField(max_length=240, verbose_name="Text")),
+                ("text", models.CharField(max_length=240,
+                                          verbose_name="Text")),
                 (
                     "inverted",
-                    models.BooleanField(default=False, verbose_name="inverted"),
+                    models.BooleanField(default=False,
+                                        verbose_name="inverted"),
                 ),
                 (
                     "color",
-                    models.CharField(
-                        blank=True, choices=[("red", "red")], max_length=20
-                    ),
+                    models.CharField(blank=True,
+                                     choices=[("red", "red")],
+                                     max_length=20),
                 ),
                 (
                     "style",
@@ -49,7 +51,8 @@ class Migration(migrations.Migration):
                         verbose_name="style",
                     ),
                 ),
-                ("target", models.CharField(max_length=800, verbose_name="Ziel")),
+                ("target", models.CharField(max_length=800,
+                                            verbose_name="Ziel")),
                 ("region", models.CharField(max_length=255)),
                 ("ordering", models.IntegerField(default=0)),
                 (

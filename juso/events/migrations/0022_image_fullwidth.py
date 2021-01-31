@@ -13,6 +13,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="image",
             name="fullwidth",
-            field=models.BooleanField(default=False, verbose_name="full width"),
+            field=models.BooleanField(default=False,
+                                      verbose_name="full width"),
         ),
     ]

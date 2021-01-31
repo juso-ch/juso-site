@@ -79,7 +79,8 @@ class PersonAdmin(VersionAdmin, admin.ModelAdmin):
         if request.user.is_superuser:
             return True
         sections = request.user.section_set.all()
-        return obj.sections.filter(pk__in=sections) or obj.sections.count() == 0
+        return obj.sections.filter(
+            pk__in=sections) or obj.sections.count() == 0
 
     def has_change_permission(self, request, obj=None):
         if obj is None:
@@ -89,7 +90,8 @@ class PersonAdmin(VersionAdmin, admin.ModelAdmin):
             return True
 
         sections = request.user.section_set.all()
-        return obj.sections.filter(pk__in=sections) or obj.sections.count() == 0
+        return obj.sections.filter(
+            pk__in=sections) or obj.sections.count() == 0
 
 
 @admin.register(Team)

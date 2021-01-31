@@ -21,8 +21,7 @@ from juso.sections.views import CategorySitemap
 
 def get_landing_page(request):
     queryset = Page.objects.active().filter(
-        is_landing_page=True, language_code=request.LANGUAGE_CODE
-    )
+        is_landing_page=True, language_code=request.LANGUAGE_CODE)
 
     if bool(queryset):
         return queryset[0]
@@ -39,25 +38,23 @@ def page_detail(request, path=None):
 
     if path is None and not bool(page):
         return redirect(
-            get_landing_page(request).path
-            + (("?" + request.GET.urlencode()) if request.GET else "")
-        )
+            get_landing_page(request).path +
+            (("?" + request.GET.urlencode()) if request.GET else ""))
 
     if not bool(page):
-        page = Page.objects.active().filter(path=f"/{request.LANGUAGE_CODE}/{path}/")
+        page = Page.objects.active().filter(
+            path=f"/{request.LANGUAGE_CODE}/{path}/")
         if bool(page):
-            return redirect(
-                page[0].path + (("?" + request.GET.urlencode()) if request.GET else "")
-            )
+            return redirect(page[0].path + (
+                ("?" + request.GET.urlencode()) if request.GET else ""))
 
         for language_code, _ in settings.LANGUAGES:
-            page = Page.objects.active().filter(path=f"/{language_code}/{path}/")
+            page = Page.objects.active().filter(
+                path=f"/{language_code}/{path}/")
 
             if bool(page):
-                return redirect(
-                    page[0].path
-                    + (("?" + request.GET.urlencode()) if request.GET else "")
-                )
+                return redirect(page[0].path + (
+                    ("?" + request.GET.urlencode()) if request.GET else ""))
         raise Http404()
 
     page = page[0]
@@ -65,16 +62,11 @@ def page_detail(request, path=None):
     if page.redirect_to_url or page.redirect_to_page:
         return redirect(
             page.redirect_to_url
-            or (
-                page.redirect_to_page.get_absolute_url()
-                + (("?" + request.GET.urlencode()) if request.GET else "")
-            )
-        )
+            or (page.redirect_to_page.get_absolute_url() +
+                (("?" + request.GET.urlencode()) if request.GET else "")))
 
-    edit = (
-        request.user.is_authenticated
-        and request.user.section_set.filter(pk=page.site.section.pk).exists()
-    )
+    edit = (request.user.is_authenticated and
+            request.user.section_set.filter(pk=page.site.section.pk).exists())
 
     page.activate_language(request)
     ancestors = list(page.ancestors().reverse())
@@ -96,7 +88,8 @@ def page_detail(request, path=None):
 
 
 def error404(request, exception):
-    query = Article.objects.filter(slug=[x for x in request.path.split("/") if x][-1])
+    query = Article.objects.filter(
+        slug=[x for x in request.path.split("/") if x][-1])
 
     if bool(query):
         return redirect(query[0].get_absolute_url())
@@ -162,7 +155,9 @@ def webmanifest(request):
 
 
 def service_worker(request):
-    return render(request, "service-worker.js", {}, content_type="text/javascript")
+    return render(request,
+                  "service-worker.js", {},
+                  content_type="text/javascript")
 
 
 def offline_view(request):
@@ -191,17 +186,16 @@ def sitemap_index(request, path=None):
 
     sitemaps["pages"] = PageSitemap(top_page)
 
-    for blog_page in top_page.descendants(include_self=True).filter(application="blog"):
+    for blog_page in top_page.descendants(include_self=True).filter(
+            application="blog"):
         sitemaps[blog_page.slug] = ArticleSitemap(blog_page)
 
     for event_page in top_page.descendants(include_self=True).filter(
-        application="events"
-    ):
+            application="events"):
         sitemaps[event_page.slug] = EventSitemap(event_page)
 
     for category_page in top_page.descendants(include_self=True).filter(
-        application="categories"
-    ):
+            application="categories"):
         sitemaps[category_page.slug] = CategorySitemap(category_page)
 
     return sitemap_view(
@@ -220,8 +214,7 @@ class PageSitemap(Sitemap):
 
     def items(self):
         return self.top_page.descendants(include_self=True).filter(
-            is_active=True, redirect_to_url="", redirect_to_page__isnull=True
-        )
+            is_active=True, redirect_to_url="", redirect_to_page__isnull=True)
 
     def lastmod(self, obj):
         return obj.lastmod

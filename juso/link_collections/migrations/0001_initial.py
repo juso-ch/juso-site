@@ -25,7 +25,8 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("name", models.CharField(max_length=120, verbose_name="Name")),
+                ("name", models.CharField(max_length=120,
+                                          verbose_name="Name")),
                 (
                     "section",
                     models.ForeignKey(
@@ -53,7 +54,8 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("text", models.CharField(max_length=120, verbose_name="Text")),
+                ("text", models.CharField(max_length=120,
+                                          verbose_name="Text")),
                 ("target", models.URLField(verbose_name="Ziel")),
                 ("order", models.IntegerField(default=0)),
                 (

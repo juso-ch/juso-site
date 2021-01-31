@@ -12,11 +12,16 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterModelOptions(
             name="image",
-            options={"verbose_name": "Bild", "verbose_name_plural": "Bilder"},
+            options={
+                "verbose_name": "Bild",
+                "verbose_name_plural": "Bilder"
+            },
         ),
         migrations.AddField(
             model_name="image",
             name="title",
-            field=models.CharField(blank=True, max_length=200, verbose_name="Titel"),
+            field=models.CharField(blank=True,
+                                   max_length=200,
+                                   verbose_name="Titel"),
         ),
     ]

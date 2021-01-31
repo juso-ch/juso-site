@@ -13,6 +13,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="page",
             name="fonts",
-            field=models.TextField(default="klima\nmontserrat", verbose_name="fonts"),
+            field=models.TextField(default="klima\nmontserrat",
+                                   verbose_name="fonts"),
         ),
     ]

@@ -53,9 +53,9 @@ class ArticlePlugin(TranslationMixin):
         null=True,
     )
 
-    sections = models.ManyToManyField(
-        Section, related_name="%(app_label)s_%(class)s", blank=True
-    )
+    sections = models.ManyToManyField(Section,
+                                      related_name="%(app_label)s_%(class)s",
+                                      blank=True)
 
     all_articles = models.ForeignKey(
         "pages.Page",
@@ -72,7 +72,8 @@ class ArticlePlugin(TranslationMixin):
         blank=True,
     )
 
-    structured_data = models.BooleanField(_("include structured data"), default=False)
+    structured_data = models.BooleanField(_("include structured data"),
+                                          default=False)
 
     class Meta:
         abstract = True
@@ -109,7 +110,7 @@ class ArticlePluginInline(ContentEditorInline):
         (
             _("advanced"),
             {
-                "classes": ("collapse",),
+                "classes": ("collapse", ),
                 "fields": (
                     "articles",
                     "sections",
@@ -129,9 +130,7 @@ def get_article_list(plugin):
         return plugin.articles.all()
     from juso.blog.models import Article
 
-    articles = Article.objects.filter(
-        language_code=plugin.language_code,
-    )
+    articles = Article.objects.filter(language_code=plugin.language_code, )
 
     if plugin.category:
         articles = articles.filter(category=plugin.category)
@@ -146,7 +145,7 @@ def get_article_list(plugin):
 
     articles = articles.filter(publication_date__lte=timezone.now())
 
-    return articles[: plugin.count]
+    return articles[:plugin.count]
 
 
 def render_articles(plugin, **kwargs):

@@ -8,11 +8,12 @@ class Download(models.Model):
 
     document = models.FileField(verbose_name=_("File"), upload_to="downloads/")
 
-    download_text = models.CharField(max_length=200, verbose_name=_("download text"))
+    download_text = models.CharField(max_length=200,
+                                     verbose_name=_("download text"))
 
-    link_classes = models.CharField(
-        max_length=200, blank=True, verbose_name=_("link classes (css)")
-    )
+    link_classes = models.CharField(max_length=200,
+                                    blank=True,
+                                    verbose_name=_("link classes (css)"))
 
     class Meta:
         abstract = True

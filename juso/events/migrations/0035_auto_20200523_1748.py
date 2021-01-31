@@ -30,7 +30,10 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterModelOptions(
             name="download",
-            options={"verbose_name": "download", "verbose_name_plural": "downloads"},
+            options={
+                "verbose_name": "download",
+                "verbose_name_plural": "downloads"
+            },
         ),
         migrations.AlterModelOptions(
             name="event",
@@ -49,7 +52,10 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterModelOptions(
             name="image",
-            options={"verbose_name": "image", "verbose_name_plural": "images"},
+            options={
+                "verbose_name": "image",
+                "verbose_name_plural": "images"
+            },
         ),
         migrations.AlterModelOptions(
             name="location",
@@ -114,7 +120,9 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="articleplugin",
             name="title",
-            field=models.CharField(blank=True, max_length=180, verbose_name="title"),
+            field=models.CharField(blank=True,
+                                   max_length=180,
+                                   verbose_name="title"),
         ),
         migrations.AlterField(
             model_name="button",
@@ -150,24 +158,28 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="button",
             name="text",
-            field=models.CharField(blank=True, max_length=240, verbose_name="text"),
+            field=models.CharField(blank=True,
+                                   max_length=240,
+                                   verbose_name="text"),
         ),
         migrations.AlterField(
             model_name="download",
             name="document",
-            field=models.FileField(upload_to="downloads/", verbose_name="File"),
+            field=models.FileField(upload_to="downloads/",
+                                   verbose_name="File"),
         ),
         migrations.AlterField(
             model_name="download",
             name="download_text",
-            field=models.CharField(max_length=200, verbose_name="download text"),
+            field=models.CharField(max_length=200,
+                                   verbose_name="download text"),
         ),
         migrations.AlterField(
             model_name="download",
             name="link_classes",
-            field=models.CharField(
-                blank=True, max_length=200, verbose_name="link classes (css)"
-            ),
+            field=models.CharField(blank=True,
+                                   max_length=200,
+                                   verbose_name="link classes (css)"),
         ),
         migrations.AlterField(
             model_name="event",
@@ -194,12 +206,14 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="event",
             name="created_date",
-            field=models.DateTimeField(auto_now_add=True, verbose_name="created at"),
+            field=models.DateTimeField(auto_now_add=True,
+                                       verbose_name="created at"),
         ),
         migrations.AlterField(
             model_name="event",
             name="edited_date",
-            field=models.DateTimeField(auto_now=True, verbose_name="edited at"),
+            field=models.DateTimeField(auto_now=True,
+                                       verbose_name="edited at"),
         ),
         migrations.AlterField(
             model_name="event",
@@ -241,9 +255,8 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="event",
             name="publication_date",
-            field=models.DateTimeField(
-                default=django.utils.timezone.now, verbose_name="publication date"
-            ),
+            field=models.DateTimeField(default=django.utils.timezone.now,
+                                       verbose_name="publication date"),
         ),
         migrations.AlterField(
             model_name="event",
@@ -309,7 +322,9 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="eventplugin",
             name="title",
-            field=models.CharField(blank=True, max_length=180, verbose_name="title"),
+            field=models.CharField(blank=True,
+                                   max_length=180,
+                                   verbose_name="title"),
         ),
         migrations.AlterField(
             model_name="formplugin",
@@ -324,12 +339,16 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="image",
             name="caption",
-            field=models.CharField(blank=True, max_length=200, verbose_name="caption"),
+            field=models.CharField(blank=True,
+                                   max_length=200,
+                                   verbose_name="caption"),
         ),
         migrations.AlterField(
             model_name="image",
             name="title",
-            field=models.CharField(blank=True, max_length=200, verbose_name="title"),
+            field=models.CharField(blank=True,
+                                   max_length=200,
+                                   verbose_name="title"),
         ),
         migrations.AlterField(
             model_name="location",
@@ -397,7 +416,9 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="locationimage",
             name="caption",
-            field=models.CharField(blank=True, max_length=200, verbose_name="caption"),
+            field=models.CharField(blank=True,
+                                   max_length=200,
+                                   verbose_name="caption"),
         ),
         migrations.AlterField(
             model_name="namespace",
@@ -408,7 +429,8 @@ class Migration(migrations.Migration):
             model_name="team",
             name="columns",
             field=models.CharField(
-                choices=[("two", "2"), ("three", "3"), ("four", "4"), ("five", "5")],
+                choices=[("two", "2"), ("three", "3"), ("four", "4"),
+                         ("five", "5")],
                 default="three",
                 max_length=10,
                 verbose_name="columns",

@@ -47,41 +47,38 @@ class Command(BaseCommand):
             indexed_posts = defaultdict(lambda: None)
 
             for post in tree.findall(
-                "channel/item/{http://wordpress.org/export/1.2/}post_id"
-            ):
+                    "channel/item/{http://wordpress.org/export/1.2/}post_id"):
                 pid = post.text
                 indexed_posts[pid] = post.getparent()
 
             for item in items:
-                post_type = item.find("{http://wordpress.org/export/1.2/}post_type")
+                post_type = item.find(
+                    "{http://wordpress.org/export/1.2/}post_type")
                 if post_type.text != "post":
                     continue
 
                 title = item.find("title").text
                 content = item.find(
-                    "{http://purl.org/rss/1.0/modules/content/}encoded"
-                ).text
+                    "{http://purl.org/rss/1.0/modules/content/}encoded").text
                 if len(content) < 400 or item.find("pubDate").text is None:
                     continue
                 pub_date = parser.parse(item.find("pubDate").text)
                 language = detect(content)
-                categories = [i.get("nicename") for i in item.findall("category")]
+                categories = [
+                    i.get("nicename") for i in item.findall("category")
+                ]
                 namespace = wp_import.default_namespace
                 if wp_import.mappings.filter(nicename__in=categories).exists():
-                    namespace = wp_import.mappings.filter(nicename__in=categories)[
-                        0
-                    ].target
+                    namespace = wp_import.mappings.filter(
+                        nicename__in=categories)[0].target
                 thumbnail = None
-                for meta in item.findall("{http://wordpress.org/export/1.2/}postmeta"):
-                    if (
-                        meta.find("{http://wordpress.org/export/1.2/}meta_key").text
-                        == "_thumbnail_id"
-                    ):
-                        thumbnail = indexed_posts[
-                            meta.find(
-                                "{http://wordpress.org/export/1.2/}meta_value"
-                            ).text
-                        ]
+                for meta in item.findall(
+                        "{http://wordpress.org/export/1.2/}postmeta"):
+                    if (meta.find("{http://wordpress.org/export/1.2/}meta_key"
+                                  ).text == "_thumbnail_id"):
+                        thumbnail = indexed_posts[meta.find(
+                            "{http://wordpress.org/export/1.2/}meta_value").
+                                                  text]
                 try:
                     article = Article.objects.create(
                         title=title,
@@ -103,7 +100,8 @@ class Command(BaseCommand):
                 if image is not None:
                     try:
                         print(image[0])
-                        article.header_image.save(image[0], files.File(image[1]))
+                        article.header_image.save(image[0],
+                                                  files.File(image[1]))
                     except Exception as e:
                         print(e)
 

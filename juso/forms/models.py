@@ -171,6 +171,7 @@ class FormField(models.Model):
                             choices=SIZES,
                             help_text=_("proportion of the field"))
     ordering = models.IntegerField(default=10)
+    disallow_text = models.CharField(max_length=40, blank=True)
 
     unique = models.BooleanField(
         _("unique"),

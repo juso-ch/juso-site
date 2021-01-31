@@ -116,6 +116,7 @@ def get_field_instance(field, request):
             label=field.name,
             help_text=field.help_text,
             initial=field.initial,
+            queryset=Section.objects.filter(
                 name__in=(l.strip() for l in field.choices.split("\n")))
             if field.choices else Section.objects.all(),
         )

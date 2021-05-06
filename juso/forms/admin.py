@@ -34,34 +34,21 @@ from juso.utils import CopyContentMixin
 # Register your models here.
 
 
-class FormFieldInline(OrderableAdmin, admin.TabularInline):
+class FormFieldInline(OrderableAdmin, admin.StackedInline):
     model = FormField
     ordering_field = "ordering"
     ordering_field_hide_input = True
-    fieldsets = (
-        (
-            None,
-            {
-                "fields":
-                (("name", "ordering", "slug", "input_type", "required"), )
-            },
-        ),
-        (
-            _("advanced"),
-            {
-                "classes": ("tabbed", ),
-                "fields": (
-                    "size",
-                    "choices",
-                    "initial",
-                    "help_text",
-                    "unique",
-                    "unique_error",
-                    "disallow_text",
-                ),
-            },
-        ),
-    )
+    fieldsets = ((
+        None,
+        {
+            "fields": (
+                ("name", "slug", "ordering"),
+                ("input_type", "required", "unique"),
+                ("size", "initial", "help_text"),
+                ("choices", "unique_error", "disallow_text"),
+            ),
+        },
+    ), )
 
 
 class FormEntryValueInline(admin.TabularInline):
@@ -238,7 +225,9 @@ class FormAdmin(VersionAdmin, CopyContentMixin):
                 static=False,
             ),
             "admin/plugin_buttons.js",
+            "content_editor/tabbed_fieldsets.js",
         )
+        css = {"all": ["content_editor/content_editor.css"]}
 
     def result_link(self, obj):
         url = reverse("admin:forms_Form_show_results", args=(obj.pk, ))

@@ -49,7 +49,7 @@ class FormFieldInline(OrderableAdmin, admin.TabularInline):
         (
             _("advanced"),
             {
-                "classes": ("collapse", ),
+                "classes": ("tabbed", ),
                 "fields": (
                     "size",
                     "choices",

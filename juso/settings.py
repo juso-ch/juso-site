@@ -31,7 +31,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 INSTALLED_APPS = [
     "django_su",
-    "jazzmin",
+#    "jazzmin",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -72,7 +72,7 @@ MIDDLEWARE = [
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "feincms3.apps.apps_middleware",
+    "feincms3.applications.apps_middleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -268,6 +268,8 @@ DATABASES = {
     }
 }
 
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
 DEFAULT_COLOR = "#eb141f"
 
 LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"), )
@@ -276,7 +278,7 @@ MAPS_URL = "https://www.google.com/maps/dir/My+Location/{location.lat},{location
 
 CACHES = {
     "default": {
-        "BACKEND": "django.core.cache.backends.memcached.MemcachedCache",
+        "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
         "LOCATION": "cache:11211",
     }
 }
@@ -543,7 +545,7 @@ JAZZMIN_SETTINGS = {
     },
     # Add a language dropdown into the admin
     "language_chooser":
-    True,
+    False,
 }
 
 JAZZMIN_UI_TWEAKS = {

@@ -1,7 +1,7 @@
 import json
 
 from django.http import JsonResponse
-from feincms3.apps import page_for_app_request
+from feincms3.applications import page_for_app_request
 
 from juso.webpush.models import Subscription
 

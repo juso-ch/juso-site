@@ -5,7 +5,7 @@ from django.core.validators import MinValueValidator
 from django.db import models, transaction
 from django.utils.translation import gettext_lazy as _
 from feincms3 import plugins as feincms3_plugins
-from feincms3.apps import AppsMixin
+from feincms3.applications import AppsMixin
 from feincms3.mixins import MenuMixin, RedirectMixin, TemplateMixin
 from feincms3_meta.models import MetaMixin
 from feincms3_sites.middleware import current_site

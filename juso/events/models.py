@@ -13,7 +13,7 @@ from django.utils import timezone
 from django.utils.timezone import datetime, now
 from django.utils.translation import gettext_lazy as _
 from feincms3 import plugins
-from feincms3.apps import apps_urlconf, reverse_app
+from feincms3.applications import apps_urlconf, reverse_app
 from feincms3_meta.models import MetaMixin
 from feincms3_sites.middleware import current_site, set_current_site
 from imagefield.fields import ImageField

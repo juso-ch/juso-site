@@ -1,6 +1,6 @@
 from django.core.paginator import Paginator
 from django.shortcuts import redirect, render
-from feincms3.apps import page_for_app_request, reverse_app
+from feincms3.applications import page_for_app_request, reverse_app
 from feincms3.regions import Regions
 from feincms3_meta.utils import meta_tags
 

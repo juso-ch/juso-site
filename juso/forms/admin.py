@@ -214,19 +214,7 @@ class FormAdmin(VersionAdmin, CopyContentMixin):
     plugins = [FormField]
 
     class Media:
-        js = (
-            "admin/js/jquery.init.js",
-            JS(
-                "https://kit.fontawesome.com/91a6274901.js",
-                {
-                    "async": "async",
-                    "crossorigin": "anonymous",
-                },
-                static=False,
-            ),
-            "admin/plugin_buttons.js",
-            "content_editor/tabbed_fieldsets.js",
-        )
+        js = ("content_editor/tabbed_fieldsets.js", )
         css = {"all": ["content_editor/content_editor.css"]}
 
     def result_link(self, obj):

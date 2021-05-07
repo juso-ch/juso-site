@@ -194,19 +194,6 @@ class PageAdmin(VersionAdmin, CopyContentMixin, ContentEditor, TreeAdmin):
                                      form_class=ResctrictedMoveForm,
                                      title=_("Move %s") % obj)
 
-    class Media:
-        js = (
-            "admin/js/jquery.init.js",
-            JS(
-                "https://kit.fontawesome.com/91a6274901.js",
-                {
-                    "async": "async",
-                    "crossorigin": "anonymous",
-                },
-                static=False,
-            ),
-            "admin/plugin_buttons.js",
-        )
 
     def get_inline_instances(self, request, obj=None):
         inlines = super().get_inline_instances(request, obj)

@@ -117,20 +117,6 @@ class EventAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
 
     plugins = models.plugins
 
-    class Media:
-        js = (
-            "admin/js/jquery.init.js",
-            JS(
-                "https://kit.fontawesome.com/7655daeee1.js",
-                {
-                    "async": "async",
-                    "crossorigin": "anonymous",
-                },
-                static=False,
-            ),
-            "admin/plugin_buttons.js",
-        )
-
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
 

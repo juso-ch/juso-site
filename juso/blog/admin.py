@@ -120,20 +120,6 @@ class ArticleAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
     plugins = models.plugins
     actions = ("copy_selected", "send_webpush")
 
-    class Media:
-        js = (
-            "admin/js/jquery.init.js",
-            JS(
-                "https://kit.fontawesome.com/91a6274901.js",
-                {
-                    "async": "async",
-                    "crossorigin": "anonymous",
-                },
-                static=False,
-            ),
-            "admin/plugin_buttons.js",
-        )
-
     def send_webpush(self, request, queryset):
         for article in queryset:
             pages = Page.objects.filter(

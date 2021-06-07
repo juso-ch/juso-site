@@ -251,7 +251,7 @@ class FormAdmin(VersionAdmin, CopyContentMixin):
             model=Form,
             fields=fields,
             entries=entries,
-            data=json.dumps(entries, default=str),
+            data=entries,
             original=form,
             has_view_permission=True,
         )

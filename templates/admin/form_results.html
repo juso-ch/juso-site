@@ -56,7 +56,7 @@ table#results.dataTable tbody tr {
           responsive: true,
           columns: [
               {% for field in fields %}
-              { data: '{{field}}' }{% if not forloop.last %},{% endif %}
+              { data: '{{field}}', render: $.fn.dataTable.render.text() }{% if not forloop.last %},{% endif %}
               {% endfor %}
             ]
         });

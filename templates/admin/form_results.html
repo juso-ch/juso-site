@@ -27,9 +27,9 @@
     </thead>
   </table>
 </div>
-
+{{ data|json_script:"result-data"}}
 <script>
-  let data = {{data}};
+  let data = JSON.parse(document.getElementById("result-data").textContent);
   $(document).ready( function () {
     $('#results').DataTable({
       data: data,

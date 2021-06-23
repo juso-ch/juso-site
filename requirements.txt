@@ -120,7 +120,7 @@ django-tree-queries==0.4.3
     #   feincms3
 django-treebeard==4.5.1
     # via -r requirements.in
-django==3.2.2
+django==3.2.4
     # via
     #   -r requirements.in
     #   django-classy-tags

@@ -1,5 +1,5 @@
 {% load translations cache %}
-<div class="translations">
+<ul class="translations">
 {% for language_code, uri in translations %}
 {% if language_code != page.language_code %}
   <a href="{{uri}}">{{language_code}}</a>
@@ -8,4 +8,4 @@
   {% endif %}
   {% endif %}
   {% endfor %}
-</div>
+</ul>

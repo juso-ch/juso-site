@@ -101,7 +101,7 @@ TEMPLATES = [
                 (
                     "juso.template.SiteTemplateLoader",
                     ["custom/templates"],
-                    ["base.html"],
+                    ["base.html", "blog/default.html"],
                 ),
                 "django.template.loaders.filesystem.Loader",
                 "django.template.loaders.app_directories.Loader",
@@ -282,6 +282,12 @@ CACHES = {
         "LOCATION": "cache:11211",
     }
 }
+if DEBUG:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        }
+    }
 
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL",
                                     "webmaster@localhost")

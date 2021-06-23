@@ -1,0 +1,3 @@
+[submodule "99prozent.ch"]
+	path = 99prozent.ch
+	url = git@github.com:juso-ch/99prozent.ch

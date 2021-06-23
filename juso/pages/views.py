@@ -74,14 +74,20 @@ def page_detail(request, path=None):
         request,
         page.template.template_name,
         {
-            "page": page,
-            "edit": edit,
-            "header_image": page.get_header_image(),
-            "meta_tags": meta_tags([page] + ancestors, request=request),
-            "regions": Regions.from_item(
+            "page":
+            page,
+            "edit":
+            edit,
+            "header_image":
+            page.get_header_image(),
+            "meta_tags":
+            meta_tags([page] + ancestors, request=request),
+            "regions":
+            Regions.from_item(
                 page,
                 renderer=renderer,
                 timeout=60,
+                inherit_from=ancestors,
             ),
         },
     )

@@ -1,3 +1,4 @@
+from juso.testimonials.plugins import TestimonialInline
 from admin_ordering.admin import OrderableAdmin
 from content_editor.admin import ContentEditor, ContentEditorInline
 from django import forms
@@ -94,6 +95,7 @@ class PageAdmin(VersionAdmin, CopyContentMixin, ContentEditor, TreeAdmin):
         form_plugins.FormPluginInline.create(models.FormPlugin),
         form_plugins.EntryCounterInline.create(models.FormEntryCounterPlugin),
         NavigationPluginInline.create(models.NavigationPlugin),
+        TestimonialInline.create(models.TestimonialPlugin),
         CategoryLinkingInline,
     ]
 
@@ -148,6 +150,7 @@ class PageAdmin(VersionAdmin, CopyContentMixin, ContentEditor, TreeAdmin):
                     "sections",
                     "collection",
                     "app_instance_namespace",
+                    "campaign",
                 ),
             },
         ),

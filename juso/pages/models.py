@@ -22,6 +22,7 @@ from juso.glossary.models import GlossaryContent
 from juso.models import TranslationMixin
 from juso.people import plugins as people_plugins
 from juso.plugins import download
+from juso.testimonials import plugins as testimonials_plugins
 from juso.sections.models import get_template_list
 
 # Create your models here.
@@ -132,6 +133,16 @@ class Page(
                 lambda page: str(page.slug) + "-collections",
             },
         ),
+        (
+            "testimonial",
+            _("testimonial"),
+            {
+                'urlconf': 'juso.testimonials.urls',
+                "required_fields": ["campaign"],
+                "app_instance_namespace":
+                lambda page: "testimonial-" + str(page.campaign.id) + "-" + str(page.site_id)
+            }
+        ),
     ]
 
     MENUS = (
@@ -194,6 +205,14 @@ class Page(
         blank=True,
         null=True,
         verbose_name=_("collection"),
+    )
+
+    campaign = models.ForeignKey(
+        "testimonials.Campaign",
+        models.CASCADE,
+        blank=True,
+        null=True,
+        verbose_name=_("campaign"),
     )
 
     header_image = ImageField(
@@ -459,6 +478,10 @@ class VotingRecommendationPlugin(juso.VotingRecommendation, PluginBase):
     pass
 
 
+class TestimonialPlugin(testimonials_plugins.TestimonialPlugin, PluginBase):
+    pass
+
+
 plugins = [
     RichText,
     Image,
@@ -475,4 +498,5 @@ plugins = [
     NavigationPlugin,
     CandidaturePlugin,
     VotingRecommendationPlugin,
+    TestimonialPlugin,
 ]

@@ -11,6 +11,10 @@ from .forms import TestimonialForm
 # Create your views here.
 
 
+def validate_testimonial(request, pk):
+    pass
+
+
 def create(request):
     page = page_for_app_request(request)
     page.activate_language(request)
@@ -24,12 +28,13 @@ def create(request):
 
         if form.is_valid():
             form.save()
-            return redirect(reverse_app(f"testimonials-{campaign.pk}",
-                                        "index"))
+            return redirect(
+                reverse_app(f"testimonial-{campaign.pk}-{page.site_id}",
+                            "index"))
 
     return render(
         request,
-        page.template_key,
+        "testimonials/create_testimonial.html",
         {
             "form":
             form,
@@ -53,18 +58,29 @@ def index(request):
     page.activate_language(request)
 
     campaign = page.campaign
-    testimonials = campaign.testimonial_set.filter(public=True, validated=True)
+    testimonials = campaign.testimonial_set.filter(public=True)
 
-    create_url = reverse_app(f"testimonials-{campaign.pk}", "create")
+    create_url = reverse_app(f"testimonial-{campaign.pk}-{page.site_id}",
+                             "create")
+    form = TestimonialForm(campaign=campaign)
 
-    paginator = Paginator(testimonials, 27)
+    if request.POST:
+        form = TestimonialForm(request.POST, request.FILES, campaign=campaign)
+
+        if form.is_valid():
+            form.save()
+            return redirect(
+                reverse_app(f"testimonial-{campaign.pk}-{page.site_id}",
+                            "index"))
+
+    paginator = Paginator(testimonials, 26)
     page_number = request.GET.get("page", 1)
     page_obj = paginator.get_page(page_number)
 
     ancestors = list(page.ancestors().reverse())
     return render(
         request,
-        page.template_key,
+        "testimonials/testimonial_list.html",
         {
             "campaign":
             campaign,
@@ -83,5 +99,7 @@ def index(request):
                 timeout=60,
                 inherit_from=page.ancestors().reverse(),
             ),
+            'form':
+            form
         },
     )

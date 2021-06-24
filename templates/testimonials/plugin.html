@@ -1,0 +1,24 @@
+<section class="{{ plugin.class }} remove-margin">
+  {% if plugin.title %}
+  <h2>{{ plugin.title }}</h2>
+  {% endif %}
+  <div class="testimonials">
+    {% for testimonial in selected %}
+    <section class="testimonial">
+      <div class="image">
+        <img src="{{ testimonial.image.square }}" />
+      </div>
+      <div class="person">
+        <div class="name">
+          {{ testimonial.first_name }} {{ testimonial.last_name }}
+        </div>
+        -
+        <div class="testimonial-title">{{ testimonial.title }}</div>
+      </div>
+      <div class="quote">{{ testimonial.statement }}</div>
+      <div class="share-buttons"></div>
+    </section>
+    {% endfor %}
+  </div>
+  <a href="{{ plugin.create_url }}" class="button">{{ plugin.button_text }}</a>
+</section>

@@ -26,6 +26,7 @@ from juso.models import Button, TranslationMixin
 from juso.people import plugins as people_plugins
 from juso.plugins import download
 from juso.sections.models import ContentMixin, Section, get_template_list
+from juso.testimonials import plugins as testimonials_plugins
 
 # Create your models here.
 
@@ -372,6 +373,10 @@ class FormEntryCounterPlugin(form_plugins.EntryCounter, PluginBase):
     pass
 
 
+class TestimonialPlugin(testimonials_plugins.TestimonialPlugin, PluginBase):
+    pass
+
+
 plugins = [
     RichText,
     Image,
@@ -384,4 +389,5 @@ plugins = [
     EventPlugin,
     FormPlugin,
     CandidaturePlugin,
+    TestimonialPlugin,
 ]

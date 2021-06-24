@@ -1,3 +1,4 @@
+import secrets
 from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext as _
@@ -10,12 +11,20 @@ from juso.sections.models import Section
 # Create your models here.
 
 
+def generate_secret():
+    return secrets.token_urlsafe(40)
+
+
 class Campaign(LanguageMixin, MetaMixin):
     name = models.CharField(_("name"), max_length=100)
 
     section = models.ForeignKey(Section, models.CASCADE)
 
-    description = models.CharField(_("description"), max_length=240)
+    create_title = models.CharField(verbose_name=_("create title"),
+                                    blank=True,
+                                    max_length=255)
+    create_text = models.TextField(verbose_name=_("create text"), blank=True)
+
     title_label = models.CharField(_("label for title"), max_length=180)
     email_validation = models.BooleanField(_("enable email validation"))
     is_active = models.BooleanField(_("is active"))
@@ -37,7 +46,7 @@ class Testimonial(models.Model):
     title = models.CharField(_("title"), max_length=180)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    statement = models.TextField(_("statement"))
+    statement = models.TextField(_("statement"), max_length=280)
 
     image = ImageField(
         _("image"),
@@ -50,6 +59,17 @@ class Testimonial(models.Model):
     validated = models.BooleanField(_("validate"), default=False)
     public = models.BooleanField(_("public"), default=False)
 
+    secret = models.CharField(
+        verbose_name=_("secret"),
+        max_length=280,
+        default=generate_secret,
+    )
+
+    def save(self, *args, **kwargs):
+        if not self.validated and not self.campaign.email_validation:
+            self.validated = True
+        return super().save(*args, **kwargs)
+
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
@@ -57,3 +77,10 @@ class Testimonial(models.Model):
         verbose_name = _("testimonial")
         verbose_name_plural = _("testimonials")
         ordering = ["-created_at"]
+
+        constraints = [
+            models.UniqueConstraint(
+                fields=['campaign', 'email'],
+                name="unique_email_per_campaign",
+            )
+        ]

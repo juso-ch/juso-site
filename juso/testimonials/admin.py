@@ -15,8 +15,10 @@ class CampaignAdmin(admin.ModelAdmin):
             {
                 "fields": (
                     "name",
-                    "description",
                     "is_active",
+                    "section",
+                    "create_title",
+                    "create_text",
                 )
             },
         ),
@@ -42,21 +44,61 @@ class CampaignAdmin(admin.ModelAdmin):
         ),
     )
 
+    autocomplete_fields = ['section']
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        sections = request.user.section_set.all()
+        return qs.filter(section__in=sections)
+
 
 @admin.register(Testimonial)
 class TestimonialAdmin(admin.ModelAdmin):
     list_display = [
-        "first_name", "last_name", "created_at", "validated", "public"
+        "first_name", "last_name", "email", "created_at", "validated", "public"
     ]
+
+    list_filter = ['validated', 'public', 'campaign']
+
+    autocomplete_fields = ['campaign']
 
     fields = (
         "first_name",
         "last_name",
-        "image_ppoi",
+        "email",
         "title",
+        "image_ppoi",
         "statement",
         "image",
         "validated",
         "public",
         "campaign",
     )
+
+    actions = [
+        'publish_testimonials',
+        'unpublish_testimonials',
+        'validate_testimonials',
+        'invalidate_testimonials',
+    ]
+
+    def publish_testimonials(self, request, queryset):
+        queryset.update(public=True)
+
+    def unpublish_testimonials(self, request, queryset):
+        queryset.update(public=False)
+
+    def validate_testimonials(self, request, queryset):
+        queryset.update(validated=True)
+
+    def invalidate_testimonials(self, request, queryset):
+        queryset.update(validated=False)
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        sections = request.user.section_set.all()
+        return qs.filter(campaign__section__in=sections)

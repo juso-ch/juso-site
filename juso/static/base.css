@@ -6,9 +6,15 @@ body {
   background-color: var(--background-color);
   color: var(--text-color);
   line-height: 1.65;
-} 
+}
 
-h1, h2, h3, h4, h5, h6, header {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+header {
   font-family: var(--title-font);
   font-weight: 800;
   text-transform: uppercase;
@@ -27,10 +33,19 @@ h5 {
   font-style: italic;
 }
 
-h4, h5, h6 {
+h4,
+h5,
+h6 {
   font-weight: 400;
 }
 
 .hidden {
   display: none;
+}
+
+.remove-margin {
+  margin-left: calc(-1 * var(--inner-padding));
+  margin-right: calc(-1 * var(--inner-padding));
+  padding-left: var(--inner-padding);
+  padding-right: var(--inner-padding);
 }

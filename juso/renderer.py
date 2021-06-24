@@ -1,3 +1,4 @@
+from juso.testimonials.plugins import render_testimonials
 from django.template.loader import render_to_string
 from django.utils.html import mark_safe
 from feincms3 import plugins
@@ -62,6 +63,10 @@ def register_renderers(renderer, pages):
     if hasattr(pages, "VotingRecommendationPlugin"):
         renderer.register_string_renderer(pages.VotingRecommendationPlugin,
                                           render_voting_recommendation)
+
+    if hasattr(pages, "TestimonialPlugin"):
+        renderer.register_string_renderer(pages.TestimonialPlugin,
+                                          render_testimonials)
 
     renderer.register_string_renderer(pages.HTML, render_html)
 

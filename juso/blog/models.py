@@ -19,6 +19,7 @@ from juso.models import TranslationMixin
 from juso.people import plugins as people_plugins
 from juso.plugins import download
 from juso.sections.models import ContentMixin, get_template_list
+from juso.testimonials import plugins as testimonials_plugins
 
 from .plugins import ArticlePlugin
 
@@ -254,6 +255,10 @@ class CandidaturePlugin(people_plugins.CandidatePlugin, PluginBase):
     pass
 
 
+class TestimonialPlugin(testimonials_plugins.TestimonialPlugin, PluginBase):
+    pass
+
+
 plugins = [
     RichText,
     Image,
@@ -267,4 +272,5 @@ plugins = [
     FormPlugin,
     ArticlePlugin,
     CandidaturePlugin,
+    TestimonialPlugin,
 ]

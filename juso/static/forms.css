@@ -5,11 +5,12 @@ form.form {
 form.form {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 1fr 1em 1fr 1em 1fr 1em 1fr 1em 1fr 1em 1fr 1em 1fr 1em 1fr 1em 1fr 1em 1fr 1em 1fr 1em 1fr;
+  -ms-grid-columns: 1fr 1em 1fr 1em 1fr 1em 1fr 1em 1fr 1em 1fr 1em 1fr 1em 1fr
+    1em 1fr 1em 1fr 1em 1fr 1em 1fr;
   grid-template-columns: repeat(12, 1fr);
   -webkit-column-gap: 1em;
-     -moz-column-gap: 1em;
-          column-gap: 1em;
+  -moz-column-gap: 1em;
+  column-gap: 1em;
 }
 
 form.form > .message {
@@ -53,7 +54,9 @@ form .field {
     grid-column: span 8;
   }
 
-  .field.one-half {
+  .field.one-half,
+  .field.id_first_name,
+  .field.id_last_name {
     -ms-grid-column-span: 6;
     grid-column: span 6;
   }
@@ -78,7 +81,7 @@ form .field {
   font-size: 0.9rem;
 }
 
-.feature-content  label {
+.feature-content label {
   color: var(--light-color);
   top: -1rem;
   font-size: 1.2rem;
@@ -88,9 +91,9 @@ form .field {
   padding: 0;
 }
 
-.field > input[type="checkbox"]{
+.field > input[type="checkbox"] {
   width: auto;
-  display:  inline;
+  display: inline;
 }
 
 .field > input[type="checkbox"] + label {
@@ -105,29 +108,33 @@ form .field {
 .field > input[type="checkbox"] + label + small {
   display: block;
   -webkit-transform: translateY(-0.5em);
-      -ms-transform: translateY(-0.5em);
-          transform: translateY(-0.5em);
+  -ms-transform: translateY(-0.5em);
+  transform: translateY(-0.5em);
 }
 
-.field > small, .field > label {
+.field > small,
+.field > label {
   -webkit-transition: color 100ms ease-in-out;
   -o-transition: color 100ms ease-in-out;
   transition: color 100ms ease-in-out;
   opacity: 0.7;
 }
 
-
-.field > input:focus, .field > textarea:focus {
+.field > input:focus,
+.field > textarea:focus {
   border-bottom-color: var(--highlight-color);
   outline: none;
 }
 
-.field > input:focus + label, .field > input:focus ~ small {
+.field > input:focus + label,
+.field > input:focus ~ small {
   color: var(--highlight-color);
   opacity: 1;
 }
 
-.field > input, .field > select, .field > textarea {
+.field > input,
+.field > select,
+.field > textarea {
   width: 100%;
   background: var(--background-color);
   border: none;

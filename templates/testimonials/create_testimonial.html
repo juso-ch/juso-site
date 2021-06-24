@@ -1,0 +1,41 @@
+{% extends 'content.html' %}
+{% load i18n %}
+
+{% load feincms3 %}
+
+{% block regions %}
+<div class="wrapper">
+  <h2>{{campaign.create_title}}</h2>
+  <p>
+    {{campaign.create_text}}
+  </p>
+<form class="testimonial form {% if form.errors %}error{% endif %}" action="" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {% if form.non_field_errors %}
+  <div class="error message">
+    <ul>
+      {{form.non_field_errors}}
+    </ul>
+  </div>
+  {% endif %}
+  {% for field in form %}
+  <div class="field {{field.id_for_label}} {% if field.errors %}error{% endif %} {% if field.field.required %} required{% endif %}">
+    {{field}}
+    <label for="{{field.id_for_label}}">
+      {{field.label}}
+    </label>
+    <small>{{field.help_text}}</small>
+    {% if field.errors %}
+    <div class="error message">
+      {{field.errors}}
+    </div>
+    {% endif %}
+  </div>
+  {% endfor %}
+  <button id="submit_{{form.form.id}}" type="submit" class="button field {{form.form.size}}">
+    {% trans 'send' %}
+  </button>
+</form>
+</div>
+{% endblock %}
+

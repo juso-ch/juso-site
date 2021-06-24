@@ -59,7 +59,7 @@ INSTALLED_APPS = [
     "juso.forms.apps.FormsConfig",
     "juso.glossary.apps.GlossaryConfig",
     "juso.webpush.apps.WebpushConfig",
-    #"juso.testimonials.apps.TestimonialsConfig",
+    "juso.testimonials.apps.TestimonialsConfig",
     "juso.link_collections.apps.LinkCollectionsConfig",
     "django_celery_results",
     "captcha",

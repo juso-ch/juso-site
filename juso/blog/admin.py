@@ -1,3 +1,4 @@
+from juso.testimonials.plugins import TestimonialInline
 from content_editor.admin import ContentEditor
 from django.contrib import admin
 from django.db.models import Q
@@ -115,6 +116,7 @@ class ArticleAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
         event_plugins.EventPluginInline.create(models.EventPlugin),
         form_plugins.FormPluginInline.create(models.FormPlugin),
         form_plugins.EntryCounterInline.create(models.FormEntryCounterPlugin),
+        TestimonialInline.create(models.TestimonialPlugin),
     )
 
     plugins = models.plugins

@@ -9,12 +9,4 @@ class Migration(migrations.Migration):
         ("pages", "0082_votingrecommendationplugin"),
     ]
 
-    operations = [
-        migrations.AddIndex(
-            model_name="page",
-            index=models.Index(
-                fields=["is_active", "menu", "language_code"],
-                name="pages_page_is_acti_4365f3_idx",
-            ),
-        ),
-    ]
+    operations = []

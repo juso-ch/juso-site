@@ -30,7 +30,8 @@ class TestimonialInline(ContentEditorInline):
 def render_testimonials(plugin):
     campaign = plugin.campaign
 
-    selected = campaign.testimonial_set.order_by('?')[:plugin.count]
+    selected = campaign.testimonial_set.filter(
+        public=True).order_by('?')[:plugin.count]
 
     return render_to_string("testimonials/plugin.html", {
         'selected': selected,

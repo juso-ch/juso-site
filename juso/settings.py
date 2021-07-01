@@ -353,6 +353,10 @@ HTML_SANITIZERS = {
             "caption",
         },
         "attributes": {
+            "h1": ("class", ),
+            "h2": ("class", ),
+            "h3": ("class", ),
+            "h4": ("class", ),
             "a": ("href", "name", "target", "title", "id", "rel", "class"),
             "table": ("summary"),
         },

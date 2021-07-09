@@ -1,7 +1,7 @@
 import secrets
 from django.conf import settings
 from django.db import models
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 from feincms3.mixins import LanguageMixin
 from feincms3_meta.models import MetaMixin
 from imagefield.fields import ImageField

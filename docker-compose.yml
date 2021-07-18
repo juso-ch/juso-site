@@ -6,6 +6,8 @@ services:
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/usr/src/app/
+      - ./99prozent.ch/templates:/usr/src/app/custom/templates/99prozent.ch
+      - ./99prozent.ch/static:/usr/src/app/custom/static/99prozent.ch
     ports:
       - 8000:8000
     env_file:

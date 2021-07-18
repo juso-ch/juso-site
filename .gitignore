@@ -138,3 +138,6 @@ docker-compose.hosts.yml
 
 .vim
 vapid_private.pem
+static/
+.vscode/
+test.py

@@ -16,24 +16,18 @@ billiard==3.6.4.0
     # via celery
 bleach==3.3.0
     # via django-fobi
-celery-stubs==0.1.2
-    # via -r requirements.in
 celery==5.0.5
     # via
     #   -r requirements.in
     #   django-celery-results
+celery-stubs==0.1.2
+    # via -r requirements.in
 certifi==2020.12.5
     # via requests
 cffi==1.14.5
     # via cryptography
 chardet==4.0.0
     # via requests
-click-didyoumean==0.0.3
-    # via celery
-click-plugins==1.1.1
-    # via celery
-click-repl==0.1.6
-    # via celery
 click==7.1.2
     # via
     #   celery
@@ -41,11 +35,37 @@ click==7.1.2
     #   click-plugins
     #   click-repl
     #   uvicorn
+click-didyoumean==0.0.3
+    # via celery
+click-plugins==1.1.1
+    # via celery
+click-repl==0.1.6
+    # via celery
 cryptography==3.4.7
     # via
     #   http-ece
     #   py-vapid
     #   pywebpush
+django==3.2.4
+    # via
+    #   -r requirements.in
+    #   django-classy-tags
+    #   django-debug-toolbar
+    #   django-formtools
+    #   django-nine
+    #   django-ranged-response
+    #   django-reversion
+    #   django-sekizai
+    #   django-simple-captcha
+    #   django-stubs
+    #   django-stubs-ext
+    #   django-su
+    #   django-taggit
+    #   django-taggit-templatetags
+    #   django-treebeard
+    #   easy-thumbnails
+    #   feincms3-meta
+    #   feincms3-sites
 django-admin-ordering==0.14.0
     # via -r requirements.in
 django-autoslug==1.9.8
@@ -100,18 +120,18 @@ django-simple-captcha==0.5.14
     # via -r requirements.in
 django-six==1.0.4
     # via django-ip
-django-stubs-ext==0.2.0
-    # via django-stubs
 django-stubs==1.8.0
     # via -r requirements.in
+django-stubs-ext==0.2.0
+    # via django-stubs
 django-su==0.9.0
-    # via -r requirements.in
-django-taggit-templatetags==0.2.5
     # via -r requirements.in
 django-taggit==1.4.0
     # via
     #   -r requirements.in
     #   django-taggit-templatetags
+django-taggit-templatetags==0.2.5
+    # via -r requirements.in
 django-templatetag-sugar==1.0
     # via django-taggit-templatetags
 django-tree-queries==0.4.3
@@ -120,40 +140,20 @@ django-tree-queries==0.4.3
     #   feincms3
 django-treebeard==4.5.1
     # via -r requirements.in
-django==3.2.4
-    # via
-    #   -r requirements.in
-    #   django-classy-tags
-    #   django-debug-toolbar
-    #   django-formtools
-    #   django-nine
-    #   django-ranged-response
-    #   django-reversion
-    #   django-sekizai
-    #   django-simple-captcha
-    #   django-stubs
-    #   django-stubs-ext
-    #   django-su
-    #   django-taggit
-    #   django-taggit-templatetags
-    #   django-treebeard
-    #   easy-thumbnails
-    #   feincms3-meta
-    #   feincms3-sites
 docutils==0.17.1
     # via -r requirements.in
 easy-thumbnails==2.7.1
     # via django-fobi
 et-xmlfile==1.1.0
     # via openpyxl
-feincms3-meta==3.0.2
-    # via -r requirements.in
-feincms3-sites==0.11.0
-    # via -r requirements.in
 feincms3==0.38.1
     # via
     #   -r requirements.in
     #   feincms3-sites
+feincms3-meta==3.0.2
+    # via -r requirements.in
+feincms3-sites==0.11.0
+    # via -r requirements.in
 geographiclib==1.50
     # via geopy
 geopy==2.1.0
@@ -184,15 +184,15 @@ lxml==4.6.3
     # via html-sanitizer
 mccabe==0.6.1
     # via pylint
-mypy-extensions==0.4.3
-    # via
-    #   -r requirements.in
-    #   mypy
 mypy==0.812
     # via
     #   -r requirements.in
     #   celery-stubs
     #   django-stubs
+mypy-extensions==0.4.3
+    # via
+    #   -r requirements.in
+    #   mypy
 openpyxl==3.0.7
     # via -r requirements.in
 packaging==20.9
@@ -201,7 +201,7 @@ parso==0.8.2
     # via jedi
 phonenumbers==8.12.22
     # via -r requirements.in
-pillow==8.2.0
+pillow==8.3.2
     # via
     #   -r requirements.in
     #   django-fobi
@@ -216,17 +216,17 @@ py-vapid==1.8.2
     # via pywebpush
 pycparser==2.20
     # via cffi
+pylint==2.8.2
+    # via
+    #   -r requirements.in
+    #   pylint-django
+    #   pylint-plugin-utils
 pylint-django==2.4.4
     # via -r requirements.in
 pylint-plugin-utils==0.6
     # via
     #   -r requirements.in
     #   pylint-django
-pylint==2.8.2
-    # via
-    #   -r requirements.in
-    #   pylint-django
-    #   pylint-plugin-utils
 pymemcache==3.4.2
     # via -r requirements.in
 pyparsing==2.4.7

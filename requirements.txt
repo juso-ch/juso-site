@@ -46,7 +46,7 @@ cryptography==3.4.7
     #   http-ece
     #   py-vapid
     #   pywebpush
-django==3.2.4
+django==3.2.5
     # via
     #   -r requirements.in
     #   django-classy-tags

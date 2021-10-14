@@ -39,9 +39,11 @@ class DynamicForm(forms.Form):
                 bound_field = field
 
                 def clean_field(self):
-                    if bound_field.disallow_text in self.cleaned_data[
-                            bound_field.slug]:
-                        raise forms.ValidationError("illegal text")
+                    for disallowed_text in bound_field.disallow_text.split(
+                            ','):
+                        if disallowed_text in self.cleaned_data[
+                                bound_field.slug]:
+                            raise forms.ValidationError("illegal text")
                     return self.cleaned_data[bound_field.slug]
 
                 self.__dict__[f"clean_{field.slug}"] = MethodType(

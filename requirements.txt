@@ -180,7 +180,7 @@ kombu==5.0.2
     # via celery
 lazy-object-proxy==1.6.0
     # via astroid
-lxml==4.6.3
+lxml==4.6.5
     # via html-sanitizer
 mccabe==0.6.1
     # via pylint

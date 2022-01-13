@@ -201,7 +201,7 @@ parso==0.8.2
     # via jedi
 phonenumbers==8.12.22
     # via -r requirements.in
-pillow==8.3.2
+pillow==9.0.0
     # via
     #   -r requirements.in
     #   django-fobi

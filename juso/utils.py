@@ -1,3 +1,4 @@
+import uuid
 from django.template.loader import render_to_string
 from django.utils.html import mark_safe
 from django.utils.translation import gettext_lazy as _
@@ -25,6 +26,7 @@ class CopyContentMixin:
 
             page.slug = page.slug + "-copy"
             parent = self.copy_descendants(page, duplicated)
+            parent.uuid = uuid.uuid4()
             parent.save()
 
     def copy_descendants(self, old_parent, duplicated):

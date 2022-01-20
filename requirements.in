@@ -1,4 +1,4 @@
-Django
+Django<4
 
 celery
 celery-stubs
@@ -26,9 +26,9 @@ django-tree-queries
 django-treebeard
 django-celery-results
 
-feincms3
+feincms3==0.38.1
 feincms3-meta
-feincms3-sites
+feincms3-sites==0.11.0
 geopy
 gunicorn
 html-sanitizer

@@ -256,6 +256,8 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "changeme")
 
 ALLOWED_HOSTS = ["*"]
 
+CONN_MAX_AGE = os.environ.get('SQL_CONN_MAX_AGE', None)
+
 DATABASES = {
     "default": {
         "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
@@ -265,6 +267,8 @@ DATABASES = {
         "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "password"),
         "HOST": os.environ.get("SQL_HOST", "localhost"),
         "PORT": os.environ.get("SQL_PORT", "5432"),
+        "CONN_MAX_AGE":
+        int(CONN_MAX_AGE) if CONN_MAX_AGE is not None else None,
     }
 }
 

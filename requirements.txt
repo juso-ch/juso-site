@@ -212,7 +212,7 @@ parso==0.8.3
     # via jedi
 phonenumbers==8.12.41
     # via -r requirements.in
-pillow==9.0.0
+pillow==9.0.1
     # via
     #   -r requirements.in
     #   django-fobi
@@ -268,7 +268,6 @@ six==1.16.0
     #   bleach
     #   click-repl
     #   django-fobi
-    #   django-simple-captcha
     #   pymemcache
     #   python-memcached
     #   pywebpush

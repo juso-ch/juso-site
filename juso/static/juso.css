@@ -38,7 +38,7 @@ h2 {
 
 a:link,
 a:visited {
-  color: inherit;
+  color: var(--text-color);
 }
 
 .text > p,

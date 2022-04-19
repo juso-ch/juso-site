@@ -1994,3 +1994,17 @@ a.download {
   height: 0;
   position: relative;
 }
+
+nav.main a,
+nav.top a,
+nav.meta a {
+  color: var(--light-color);
+}
+
+nav.main.sticky a {
+  color: var(--text-color);
+}
+
+nav.main.sticky .buttons a {
+  color: var(--light-color);
+}

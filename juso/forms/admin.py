@@ -350,7 +350,7 @@ class FormAdmin(VersionAdmin, CopyContentMixin):
             if not self.can_access_entries(form, request):
                 continue
 
-            worksheet = workbook.add_worksheet(f"answers-{form.slug}")
+            worksheet = workbook.add_worksheet(f"{form.slug[:31]}")
             entries, fields = form.entry_dict()
 
             for col, field in enumerate(fields):

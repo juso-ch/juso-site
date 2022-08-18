@@ -28,8 +28,8 @@ def process_entry(pk):
 
     if form.mailchimp_connection:
         connection = form.mailchimp_connection
-        email = data.pop("email", "").lower().encode("utf-8")
-        email_hash = hashlib.md5(email).hexdigest()
+        email = data.pop("email", "").lower()
+        email_hash = hashlib.md5(email.encode("utf-8")).hexdigest()
 
         mailchimp_data = {
             "email_address": email,
@@ -51,7 +51,7 @@ def process_entry(pk):
             headers=headers,
             auth=auth,
         )
-        data["email"] = email.decode()
+        data["email"] = email
 
     if form.email:
         message = (f"Form: {form.title} ({form.pk})"

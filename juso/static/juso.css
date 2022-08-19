@@ -1067,6 +1067,7 @@ footer {
   margin-top: 1em;
   background-color: var(--footer-background-color);
   color: var(--footer-text-color);
+  --text-color: var(--footer-text-color);
   padding-bottom: 4em;
 }
 

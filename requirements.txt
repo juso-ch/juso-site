@@ -43,7 +43,7 @@ click-plugins==1.1.1
     # via celery
 click-repl==0.2.0
     # via celery
-cryptography==36.0.1
+cryptography==39.0.1
     # via
     #   http-ece
     #   py-vapid
@@ -268,6 +268,7 @@ six==1.16.0
     #   bleach
     #   click-repl
     #   django-fobi
+    #   django-simple-captcha
     #   pymemcache
     #   python-memcached
     #   pywebpush

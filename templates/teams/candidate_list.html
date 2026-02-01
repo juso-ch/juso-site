@@ -1,6 +1,6 @@
 {% load i18n %}
 <section class="candidate-list">
-  {% for candidature in candidate_list.candidates.all %}
+  {% for candidature in candidate_list.candidates.all|dictsort:"order" %}
   <article class="candidature">
     {% if candidature.image %}
     <div class="image">

@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "feincms3",
     "feincms3_sites",
     "feincms3_meta",
+    "tree_queries",
     "ckeditor",
     "imagefield",
     "taggit",

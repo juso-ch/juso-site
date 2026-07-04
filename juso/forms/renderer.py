@@ -1,10 +1,10 @@
 from django.template.loader import render_to_string
 from feincms3 import plugins
-from feincms3.renderer import TemplatePluginRenderer
+from feincms3.renderer import RegionRenderer
 
 from juso.forms import models
 
-renderer = TemplatePluginRenderer()
+renderer = RegionRenderer()
 
 renderer.register_string_renderer(
     models.RichText, lambda plugin: plugins.richtext.render_richtext(plugin))

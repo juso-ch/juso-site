@@ -3,7 +3,6 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, render
 from feincms3.applications import page_for_app_request
-from feincms3.regions import Regions
 from feincms3.shortcuts import render_list
 from feincms3_meta.utils import meta_tags
 
@@ -37,9 +36,8 @@ def category_list(request):
             "meta_tags":
             meta_tags([page] + ancestors, request=request),
             "regions":
-            Regions.from_item(
+            pages.renderer.renderer.regions_from_item(
                 page,
-                renderer=pages.renderer.renderer,
                 timeout=60,
             ),
         },
@@ -91,9 +89,8 @@ def category_detail(request, slug):
             "meta_tags":
             meta_tags([category, page] + ancestors, request=request),
             "regions":
-            Regions.from_item(
+            pages.renderer.renderer.regions_from_item(
                 page,
-                renderer=pages.renderer.renderer,
                 timeout=60,
                 inherit_from=ancestors,
             ),

@@ -4,7 +4,8 @@ from django.db import models
 from django.db.models.signals import m2m_changed
 from django.utils.translation import gettext_lazy as _
 from feincms3.applications import reverse_app
-from feincms3.plugins.richtext import CleansedRichTextField, RichText
+from feincms3.cleanse import CleansedRichTextField
+from feincms3.plugins.richtext import RichText
 from feincms3_sites.middleware import current_site, set_current_site
 
 from juso.models import TranslationMixin

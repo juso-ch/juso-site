@@ -27,7 +27,7 @@ from juso.glossary.admin import GlossaryContentInline
 from juso.pages import models
 from juso.people import plugins as people_plugins
 from juso.plugins import download
-from juso.utils import CopyContentMixin
+from juso.utils import CopyContentMixin, ReversionTreeAdminCompat
 
 # Register your models here.
 
@@ -46,14 +46,15 @@ class NavigationPluginInline(ContentEditorInline):
     autocomplete_fields = ["pages"]
 
 
-class PageAdmin(VersionAdmin, CopyContentMixin, ContentEditor, TreeAdmin):
+class PageAdmin(VersionAdmin, ReversionTreeAdminCompat, CopyContentMixin,
+                ContentEditor, TreeAdmin):
     list_display = [
         "indented_title",
         "move_column",
         "path",
         "is_active",
         "language_code",
-        "application",
+        "page_type",
     ]
     actions = ["open_duplicate_form"]
 
@@ -100,7 +101,7 @@ class PageAdmin(VersionAdmin, CopyContentMixin, ContentEditor, TreeAdmin):
     ]
 
     plugins = models.plugins
-    readonly_fields = ["app_instance_namespace"]
+    readonly_fields = ["app_namespace"]
 
     fieldsets = (
         (
@@ -119,7 +120,7 @@ class PageAdmin(VersionAdmin, CopyContentMixin, ContentEditor, TreeAdmin):
                     "is_active",
                     "menu",
                     "language_code",
-                    "template_key",
+                    "page_type",
                     "is_landing_page",
                     "header_image",
                     "header_image_ppoi",
@@ -143,13 +144,12 @@ class PageAdmin(VersionAdmin, CopyContentMixin, ContentEditor, TreeAdmin):
             {
                 "classes": ("tabbed", ),
                 "fields": (
-                    "application",
                     "category",
                     "blog_namespace",
                     "featured_categories",
                     "sections",
                     "collection",
-                    "app_instance_namespace",
+                    "app_namespace",
                     "campaign",
                 ),
             },
@@ -201,7 +201,7 @@ class PageAdmin(VersionAdmin, CopyContentMixin, ContentEditor, TreeAdmin):
     def get_inline_instances(self, request, obj=None):
         inlines = super().get_inline_instances(request, obj)
         if (hasattr(obj, "pk")
-                and models.Page.objects.get(pk=obj.pk).application
+                and models.Page.objects.get(pk=obj.pk).page_type
                 == "categories"):
             return inlines
         return inlines[:-1]

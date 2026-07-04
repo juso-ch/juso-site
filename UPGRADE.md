@@ -93,7 +93,35 @@ the independent packages moved. Full ecosystem upgrade is Phase 3.
 - Bump prod Postgres 12 → a supported major is deferred to Phase 5, but note PG12
   is EOL; schedule it.
 
-## Later (not in this branch)
-Phase 3: feincms3 lockstep (5.6 / content-editor 9 / sites 0.21 / meta fork exit +
-RegionRenderer refactor + page-types data migration). Phase 4: Django 5.2 / Py 3.13
-/ psycopg 3. Phase 5: Postgres 12 → 17. See the full plan discussion.
+## Phase 3 — feincms3 lockstep upgrade (done, branch upgrade/phase-3-feincms3)
+feincms3 0.38→5.6, content-editor 6→9, sites 0.11→0.21.3, tree-queries 0.7→0.24,
+js-asset 1→4, imagefield 0.14→0.22, admin-ordering→0.20. Validated on the dump:
+131/131 URLs render, admin suite green, no drift, row counts identical.
+
+- **Rich text:** `CleansedRichTextField` moved to `feincms3.cleanse` (was
+  `feincms3.plugins.richtext`); split imports in people/glossary/pages models.
+- **Renderer:** `TemplatePluginRenderer` → `RegionRenderer` (4 renderer.py); the
+  `register_string_renderer` shim still works. `Regions.from_item(x, renderer=r,
+  …)` → `r.regions_from_item(x, …)` across 21 view call sites.
+- **Page types (data migration `pages/0093`):** Page `AppsMixin`+`TemplateMixin`
+  → `PageTypeMixin`; `APPLICATIONS`+`TEMPLATES` → one `TYPES` list of
+  `TemplateType`/`ApplicationType`. `template_key`+`application` → `page_type`
+  (backfilled: application key if set, else template key); `app_instance_namespace`
+  → `app_namespace` (renamed, data preserved). `page.template.template_name` →
+  `page.type.template_name`. Backfill verified against real data.
+- **feincms3-sites 0.21:** requires `("site","path")` in `unique_together`
+  (replaced the named UniqueConstraint). `site` is now a dynamically-added
+  `SiteForeignKey`, so it can't appear in `Meta.indexes`; the two site-indexes
+  were dropped (unique_together covers path+site lookups). Added
+  `ordering=["position"]` (feincms3.W001).
+- **tree-queries 0.24** must be in `INSTALLED_APPS`. Its `TreeAdmin.changelist_view`
+  clashes with django-reversion's positional `super()` call — bridged with
+  `ReversionTreeAdminCompat` mixin (juso/utils.py) placed after VersionAdmin.
+- Admin: `application`/`template_key`/`app_instance_namespace` fields → `page_type`
+  /`app_namespace`.
+- **Deferred** (work on target stack, keep for a focused follow-up): exit the
+  feincms3-meta fork (still imports/renders on 5.6), taggit 5→6, django-su→hijack,
+  CKEditor 4 → django-prose-editor.
+
+## Later
+Phase 4: Django 5.2 / Py 3.13 / psycopg 3. Phase 5: Postgres 12 → 17.

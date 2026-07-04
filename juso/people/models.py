@@ -4,7 +4,8 @@ from django.db import models
 from django.urls import NoReverseMatch
 from django.utils.translation import gettext_lazy as _
 from feincms3.applications import apps_urlconf, reverse_app
-from feincms3.plugins.richtext import CleansedRichTextField, RichText
+from feincms3.cleanse import CleansedRichTextField
+from feincms3.plugins.richtext import RichText
 from feincms3_sites.middleware import current_site, set_current_site
 from imagefield.fields import ImageField
 

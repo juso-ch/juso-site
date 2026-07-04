@@ -1,12 +1,13 @@
 import bleach
-from content_editor.models import create_plugin_base
+from content_editor.models import Region, create_plugin_base
 from django.conf import settings
 from django.core.validators import MinValueValidator
 from django.db import models, transaction
 from django.utils.translation import gettext_lazy as _
 from feincms3 import plugins as feincms3_plugins
-from feincms3.applications import AppsMixin
-from feincms3.mixins import MenuMixin, RedirectMixin, TemplateMixin
+from feincms3.applications import ApplicationType, PageTypeMixin, TemplateType
+from feincms3.cleanse import CleansedRichTextField
+from feincms3.mixins import MenuMixin, RedirectMixin
 from feincms3_meta.models import MetaMixin
 from feincms3_sites.middleware import current_site
 from feincms3_sites.models import AbstractPage
@@ -23,7 +24,6 @@ from juso.models import TranslationMixin
 from juso.people import plugins as people_plugins
 from juso.plugins import download
 from juso.testimonials import plugins as testimonials_plugins
-from juso.sections.models import get_template_list
 
 # Create your models here.
 
@@ -46,11 +46,15 @@ def darken(get_image):
     return processor
 
 
+def _page_regions(*keys):
+    # Mirrors the old get_template_list(): all regions inherited, title-cased.
+    return [Region(key=k, title=str(k).title(), inherited=True) for k in keys]
+
+
 class Page(
-        AppsMixin,
+        PageTypeMixin,
         TranslationMixin,
         MetaMixin,
-        TemplateMixin,
         RedirectMixin,
         MenuMixin,
         AbstractPage,
@@ -59,89 +63,92 @@ class Page(
     This ist the main entity of the cms
     """
 
-    APPLICATIONS = [
-        (
-            "blog",
-            _("blog"),
-            {
-                "urlconf":
-                "juso.blog.urls",
-                "app_instance_namespace":
-                lambda page: "-".join((str(x) for x in [
-                    page.site_id,
-                    page.application,
-                    page.blog_namespace.name if page.blog_namespace else None,
-                    page.category,
-                ] if x)),
-            },
+    # feincms3 0.90+ merges templates and applications into a single TYPES list.
+    # page_type replaces the old template_key + application fields; app_namespace
+    # replaces app_instance_namespace (which referenced page.application; the
+    # application key now lives in page.page_type).
+    TYPES = [
+        TemplateType(
+            key="default",
+            title=_("Default"),
+            template_name="pages/default.html",
+            regions=_page_regions("main", "footer"),
         ),
-        (
-            "people",
-            _("people"),
-            {
-                "urlconf":
-                "juso.people.urls",
-                "app_instance_namespace":
-                lambda page: "-".join((str(x) for x in [
-                    page.site_id,
-                    page.application,
-                ] if x)),
-            },
+        TemplateType(
+            key="feature_top",
+            title=_("Feature Top"),
+            template_name="pages/feature_top.html",
+            regions=_page_regions("main", "sidebar", "feature"),
         ),
-        (
-            "events",
-            _("events"),
-            {
-                "urlconf":
-                "juso.events.urls",
-                "app_instance_namespace":
-                lambda page: "-".join((str(x) for x in [
-                    page.site_id,
-                    page.application,
-                    page.category,
-                ] if x)),
-            },
+        ApplicationType(
+            key="blog",
+            title=_("blog"),
+            urlconf="juso.blog.urls",
+            template_name="pages/default.html",
+            regions=_page_regions("main", "footer"),
+            app_namespace=lambda page: "-".join(str(x) for x in [
+                page.site_id,
+                page.page_type,
+                page.blog_namespace.name if page.blog_namespace else None,
+                page.category,
+            ] if x),
         ),
-        (
-            "categories",
-            _("categories"),
-            {
-                "urlconf":
-                "juso.sections.urls",
-                "app_instance_namespace":
-                lambda page: str(page.site_id) + "-" + "categories",
-            },
+        ApplicationType(
+            key="people",
+            title=_("people"),
+            urlconf="juso.people.urls",
+            template_name="pages/default.html",
+            regions=_page_regions("main", "footer"),
+            app_namespace=lambda page: "-".join(str(x) for x in [
+                page.site_id,
+                page.page_type,
+            ] if x),
         ),
-        (
-            "glossary",
-            _("glossary"),
-            {
-                "urlconf":
-                "juso.glossary.urls",
-                "app_instance_namespace":
-                lambda page: str(page.site_id) + "-" + "glossary",
-            },
+        ApplicationType(
+            key="events",
+            title=_("events"),
+            urlconf="juso.events.urls",
+            template_name="pages/default.html",
+            regions=_page_regions("main", "footer"),
+            app_namespace=lambda page: "-".join(str(x) for x in [
+                page.site_id,
+                page.page_type,
+                page.category,
+            ] if x),
         ),
-        (
-            "collection",
-            _("collection"),
-            {
-                "urlconf":
-                "juso.link_collections.urls",
-                "required_fields": ["collection"],
-                "app_instance_namespace":
-                lambda page: str(page.slug) + "-collections",
-            },
+        ApplicationType(
+            key="categories",
+            title=_("categories"),
+            urlconf="juso.sections.urls",
+            template_name="pages/default.html",
+            regions=_page_regions("main", "footer"),
+            app_namespace=lambda page: str(page.site_id) + "-" + "categories",
         ),
-        (
-            "testimonial",
-            _("testimonial"),
-            {
-                'urlconf': 'juso.testimonials.urls',
-                "required_fields": ["campaign"],
-                "app_instance_namespace":
-                lambda page: "testimonial-" + str(page.campaign.id) + "-" + str(page.site_id)
-            }
+        ApplicationType(
+            key="glossary",
+            title=_("glossary"),
+            urlconf="juso.glossary.urls",
+            template_name="pages/default.html",
+            regions=_page_regions("main", "footer"),
+            app_namespace=lambda page: str(page.site_id) + "-" + "glossary",
+        ),
+        ApplicationType(
+            key="collection",
+            title=_("collection"),
+            urlconf="juso.link_collections.urls",
+            template_name="pages/default.html",
+            regions=_page_regions("main", "footer"),
+            required_fields=["collection"],
+            app_namespace=lambda page: str(page.slug) + "-collections",
+        ),
+        ApplicationType(
+            key="testimonial",
+            title=_("testimonial"),
+            urlconf="juso.testimonials.urls",
+            template_name="pages/default.html",
+            regions=_page_regions("main", "footer"),
+            required_fields=["campaign"],
+            app_namespace=lambda page: "testimonial-" + str(page.campaign.id) + "-" + str(page.site_id),
         ),
     ]
 
@@ -151,14 +158,6 @@ class Page(
         ("buttons", _("button navigation")),
         ("footer", _("footer navigation")),
         ("quicklink", _("quickinks")),
-    )
-
-    TEMPLATES = get_template_list(
-        "pages",
-        (
-            ("default", ("main", "footer")),
-            ("feature_top", ("main", "sidebar", "feature")),
-        ),
     )
 
     is_landing_page = models.BooleanField(
@@ -354,24 +353,18 @@ fonts/klima-bold-italic-web.woff2:font""",
     class Meta:
         verbose_name = _("page")
         verbose_name_plural = _("pages")
+        ordering = ["position"]
+        # feincms3-sites 0.20+ requires ("site", "path") in unique_together
+        # (system check feincms3_sites.E002); this also provides the (site, path)
+        # index that covers the per-request page lookup.
+        unique_together = (("site", "path"),)
+        # NB: feincms3-sites adds `site` dynamically (SiteForeignKey via
+        # contribute_to_class), so it cannot appear in Meta.indexes — the field
+        # isn't resolvable during model _prepare(). The former (path, site, ...)
+        # and (is_landing_page, site, ...) indexes are dropped; unique_together
+        # covers path+site lookups and the remaining index covers menus.
         indexes = [
-            models.Index(fields=[
-                "path",
-                "site_id",
-                "language_code",
-                "is_active",
-            ]),
-            models.Index(fields=[
-                "is_landing_page",
-                "site_id",
-                "language_code",
-            ]),
             models.Index(fields=["is_active", "menu", "language_code"]),
-        ]
-
-        constraints = [
-            models.UniqueConstraint(fields=["path", "site_id"],
-                                    name="unique_page_for_path")
         ]
 
 
@@ -452,7 +445,7 @@ class CategoryLinking(models.Model):
     page = models.ForeignKey(Page, models.CASCADE)
     category = models.ForeignKey("sections.Category", models.CASCADE)
 
-    description = feincms3_plugins.richtext.CleansedRichTextField(blank=True)
+    description = CleansedRichTextField(blank=True)
     order = models.IntegerField(default=10)
     other_site = models.ForeignKey(Page,
                                    models.CASCADE,

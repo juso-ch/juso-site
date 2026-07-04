@@ -5,7 +5,6 @@ from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
 from django.views.decorators.csrf import ensure_csrf_cookie
 from feincms3.applications import page_for_app_request
-from feincms3.regions import Regions
 from feincms3.shortcuts import render_list
 from feincms3_meta.utils import meta_tags
 
@@ -67,15 +66,13 @@ def location_detail(request, slug):
             "meta_tags":
             meta_tags([location, page] + ancestors, request=request),
             "regions":
-            Regions.from_item(
+            location_renderer.regions_from_item(
                 location,
-                renderer=location_renderer,
                 timeout=60,
             ),
             "page_regions":
-            Regions.from_item(
+            pages.renderer.renderer.regions_from_item(
                 page,
-                renderer=pages.renderer.renderer,
                 timeout=60,
                 inherit_from=ancestors,
             ),
@@ -110,9 +107,8 @@ def event_list(request, past=False):
             "meta_tags":
             meta_tags([page] + ancestors, request=request),
             "regions":
-            Regions.from_item(
+            pages.renderer.renderer.regions_from_item(
                 page,
-                renderer=pages.renderer.renderer,
                 timeout=60,
                 inherit_from=ancestors,
             ),
@@ -177,15 +173,13 @@ def event_detail(request, year, month, day, slug):
                 request=request,
             ),
             "regions":
-            Regions.from_item(
+            renderer.regions_from_item(
                 event,
-                renderer=renderer,
                 timeout=60,
             ),
             "page_regions":
-            Regions.from_item(
+            pages.renderer.renderer.regions_from_item(
                 page,
-                renderer=pages.renderer.renderer,
                 timeout=60,
                 inherit_from=ancestors,
             ),
@@ -217,9 +211,8 @@ def event_list_for_section(request, pk):
             "meta_tags":
             meta_tags([page] + ancestors, request=request),
             "regions":
-            Regions.from_item(
+            pages.renderer.renderer.regions_from_item(
                 page,
-                renderer=pages.renderer.renderer,
                 timeout=60,
                 inherit_from=ancestors,
             ),

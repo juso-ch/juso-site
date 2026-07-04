@@ -5,7 +5,6 @@ from django.http.response import Http404
 from django.shortcuts import get_list_or_404, get_object_or_404, redirect, render
 from django.views.decorators.cache import cache_page
 from django.views.decorators.csrf import ensure_csrf_cookie
-from feincms3.regions import Regions
 from feincms3_meta.utils import meta_tags
 from feincms3_sites.middleware import current_site
 
@@ -72,7 +71,7 @@ def page_detail(request, path=None):
     ancestors = list(page.ancestors().reverse())
     return render(
         request,
-        page.template.template_name,
+        page.type.template_name,
         {
             "page":
             page,
@@ -83,9 +82,8 @@ def page_detail(request, path=None):
             "meta_tags":
             meta_tags([page] + ancestors, request=request),
             "regions":
-            Regions.from_item(
+            renderer.regions_from_item(
                 page,
-                renderer=renderer,
                 timeout=60,
                 inherit_from=ancestors,
             ),
@@ -112,9 +110,8 @@ def error404(request, exception):
         {
             "exception": exception,
             "page": page,
-            "regions": Regions.from_item(
+            "regions": renderer.regions_from_item(
                 page,
-                renderer=renderer,
                 timeout=60,
             ),
             "header_image": page.get_header_image(),
@@ -134,9 +131,8 @@ def error500(request):
         "500.html",
         {
             "page": page,
-            "regions": Regions.from_item(
+            "regions": renderer.regions_from_item(
                 page,
-                renderer=renderer,
                 timeout=60,
             ),
             "header_image": page.get_header_image(),

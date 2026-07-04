@@ -5,6 +5,20 @@ from django.utils.translation import gettext_lazy as _
 from feincms3.plugins.external import oembed_html, oembed_json
 
 
+class ReversionTreeAdminCompat:
+    """Bridge django-reversion's VersionAdmin and django-tree-queries' TreeAdmin.
+
+    VersionAdmin.changelist_view calls ``super().changelist_view(request,
+    context)`` positionally, but tree-queries 0.24's TreeAdmin.changelist_view
+    only accepts ``(request, **kwargs)``. Place this mixin right after
+    VersionAdmin in the MRO so the positional extra_context is forwarded as a
+    keyword argument.
+    """
+
+    def changelist_view(self, request, extra_context=None):
+        return super().changelist_view(request, extra_context=extra_context)
+
+
 def copy_plugins(model_class, old_parent, parent):
     for plugin in model_class.objects.filter(parent=old_parent):
         plugin.pk = None
@@ -35,9 +49,12 @@ class CopyContentMixin:
         parent.pk = None
         parent.id = None
 
-        if hasattr(parent, "app_instance_namespace"):
-            parent.app_instance_namespace = ""
-            parent.application = ""
+        # Don't let a duplicate of an application page become a second app
+        # instance (which would clash on app_namespace); make the copy a plain
+        # template page. Template pages keep their type. app_namespace is
+        # recomputed on save() from the type.
+        if hasattr(parent, "page_type") and parent.type.get("urlconf"):
+            parent.page_type = "default"
 
         parent.save()
 

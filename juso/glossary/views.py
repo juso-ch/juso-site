@@ -1,6 +1,5 @@
 from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
 from feincms3.applications import page_for_app_request
-from feincms3.regions import Regions
 from feincms3.shortcuts import render_list
 from feincms3_meta.utils import meta_tags
 
@@ -42,9 +41,8 @@ def glossary(request):
             "header_image":
             page.get_header_image(),
             "regions":
-            Regions.from_item(
+            pages.renderer.renderer.regions_from_item(
                 page,
-                renderer=pages.renderer.renderer,
                 timeout=60,
                 inherit_from=ancestors,
             ),

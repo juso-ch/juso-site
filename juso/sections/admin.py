@@ -5,12 +5,13 @@ from feincms3_meta.models import MetaMixin
 from reversion.admin import VersionAdmin
 
 from juso.sections.models import Category, Section
+from juso.utils import ReversionTreeAdminCompat
 
 # Register your models here.
 
 
 @admin.register(Section)
-class SectionAdmin(VersionAdmin, TreeAdmin):
+class SectionAdmin(VersionAdmin, ReversionTreeAdminCompat, TreeAdmin):
     list_display = [
         "indented_title",
         "move_column",
@@ -57,7 +58,7 @@ class SectionAdmin(VersionAdmin, TreeAdmin):
 
 
 @admin.register(Category)
-class CategoryAdmin(VersionAdmin, TreeAdmin):
+class CategoryAdmin(VersionAdmin, ReversionTreeAdminCompat, TreeAdmin):
     list_display = [
         "indented_title",
         "move_column",

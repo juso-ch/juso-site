@@ -1,7 +1,6 @@
 from django.core.paginator import Paginator
 from django.shortcuts import redirect, render
 from feincms3.applications import page_for_app_request, reverse_app
-from feincms3.regions import Regions
 from feincms3_meta.utils import meta_tags
 
 from juso.pages.renderer import renderer
@@ -43,9 +42,8 @@ def create(request):
             "page":
             page,
             "regions":
-            Regions.from_item(
+            renderer.regions_from_item(
                 page,
-                renderer=renderer,
                 timeout=60,
                 inherit_from=page.ancestors().reverse(),
             ),
@@ -93,9 +91,8 @@ def index(request):
             "create_url":
             create_url,
             "regions":
-            Regions.from_item(
+            renderer.regions_from_item(
                 page,
-                renderer=renderer,
                 timeout=60,
                 inherit_from=page.ancestors().reverse(),
             ),

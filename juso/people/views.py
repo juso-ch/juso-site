@@ -1,6 +1,5 @@
 from django.shortcuts import get_object_or_404, render
 from feincms3.applications import page_for_app_request
-from feincms3.regions import Regions
 from feincms3.shortcuts import render_list
 from feincms3_meta.utils import meta_tags
 
@@ -48,9 +47,8 @@ def person_detail(request, pk):
                 description=person.description(),
             ),
             "regions":
-            Regions.from_item(
+            pages.renderer.renderer.regions_from_item(
                 page,
-                renderer=pages.renderer.renderer,
                 timeout=60,
                 inherit_from=ancestors,
             ),
@@ -77,9 +75,8 @@ def team_detail(request, pk):
             "meta_tags":
             meta_tags([page] + ancestors, request=request),
             "regions":
-            Regions.from_item(
+            pages.renderer.renderer.regions_from_item(
                 page,
-                renderer=pages.renderer.renderer,
                 timeout=60,
                 inherit_from=ancestors,
             ),
@@ -106,9 +103,8 @@ def teams_for_section(request):
             "meta_tags":
             meta_tags([page] + ancestors, request=request),
             "regions":
-            Regions.from_item(
+            pages.renderer.renderer.regions_from_item(
                 page,
-                renderer=pages.renderer.renderer,
                 timeout=60,
                 inherit_from=ancestors,
             ),

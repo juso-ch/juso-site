@@ -8,21 +8,18 @@ celery>=5.3,<5.4
 celery-stubs
 docutils
 
-# --- feincms3 stack: pinned, upgraded in Phase 3 ---
-feincms3==0.38.1
+# --- feincms3 stack (Phase 3: upgraded in lockstep) ---
+feincms3>=5.6,<6
 feincms3-meta
-feincms3-sites==0.11.0
-django-content-editor==6.0.0
-django-js-asset==1.2.2
-django-tree-queries==0.7.0
-django-imagefield==0.14.0
+feincms3-sites>=0.21,<0.22
+django-content-editor>=9,<10
+django-js-asset>=4,<5
+django-tree-queries>=0.24
+django-imagefield>=0.22,<0.23
 django-ckeditor==6.2.0
 # ----------------------------------------------------
 
-# admin-ordering >=0.18 needs django-js-asset>=2, which the pinned
-# content-editor 6.0 stack is not verified against; float to a js-asset 1.x
-# compatible release for now (revisit in Phase 3).
-django-admin-ordering
+django-admin-ordering>=0.18
 django-autoslug>=1.9.9
 django-debug-toolbar>=4,<5
 django-flat-json-widget>=0.3

@@ -61,3 +61,13 @@ jobs:
 
       - name: Run test suite
         run: python manage.py test juso.tests_smoke -v2
+
+  # Validate the production image builds (base image, deps, feincms3-meta fork,
+  # compilemessages). Build-only — publishing happens via docker-publish.yml on
+  # push to master/testing.
+  docker-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build production image
+        run: docker build . --file Dockerfile.prod --tag juso-site:ci

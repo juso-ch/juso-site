@@ -7,3 +7,16 @@ vapid_private.pem
 .env.prod
 .env.dev
 99prozent.ch/
+
+# Local virtualenvs and DB dumps must never enter the image (a dev-machine
+# `COPY . ` would otherwise bake them in; CI builds from a clean checkout).
+.venv*/
+venv*/
+*.dump
+*.sql
+*.sql.gz
+backups/
+__pycache__/
+*.py[cod]
+.mypy_cache/
+.pytest_cache/

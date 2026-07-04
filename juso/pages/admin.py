@@ -213,7 +213,9 @@ class PageAdmin(VersionAdmin, CopyContentMixin, ContentEditor, TreeAdmin):
         site_field.required = True
 
         sections = request.user.section_set.all()
-        site_field.initial = Site.objects.filter(section__in=sections)[0]
+        initial_site = Site.objects.filter(section__in=sections).first()
+        if initial_site is not None:
+            site_field.initial = initial_site
 
         return form
 

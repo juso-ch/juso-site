@@ -145,7 +145,8 @@ class ArticleAdmin(VersionAdmin, ContentEditor, CopyContentMixin):
         section_field = form.base_fields["section"]
 
         sections = request.user.section_set.all()
-        section_field.initial = sections[0]
+        if sections:
+            section_field.initial = sections[0]
 
         return form
 

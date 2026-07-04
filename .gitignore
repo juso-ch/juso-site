@@ -141,3 +141,5 @@ vapid_private.pem
 static/
 .vscode/
 test.py
+*.dump
+.venv*/

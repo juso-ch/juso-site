@@ -141,10 +141,6 @@ TIME_ZONE = "Europe/Zurich"
 
 USE_I18N = True
 
-# USE_L10N is deprecated on Django 4.0 (localization is always on). Keep it here
-# on 3.2 where the global default is False; drop it in the Django 4.x phase.
-USE_L10N = True
-
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
@@ -243,6 +239,14 @@ LANGUAGE_COOKIE_SAMESITE = "strict"
 
 CSRF_COOKIE_SAMESITE = "strict"
 CSRF_COOKIE_SECURE = not DEBUG
+
+# Django 4.0+ checks the Origin header against the request host. Same-origin
+# form posts pass without configuration; set this (comma-separated, e.g.
+# "https://*.juso.ch,https://99prozent.ch") only if cross-origin posts appear.
+CSRF_TRUSTED_ORIGINS = [
+    o.strip() for o in os.environ.get("CSRF_TRUSTED_ORIGINS", "").split(",")
+    if o.strip()
+]
 
 SESSION_COOKIE_SECURE = not DEBUG
 # SESSION_COOKIE_NAME = '__Secure-sessionid'
@@ -364,7 +368,7 @@ HTML_SANITIZERS = {
             "h3": ("class", ),
             "h4": ("class", ),
             "a": ("href", "name", "target", "title", "id", "rel", "class"),
-            "table": ("summary"),
+            "table": ("summary", ),
         },
         "empty": {"hr", "a", "br"},
         "separate": {"a", "p", "li"},

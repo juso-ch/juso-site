@@ -3,7 +3,7 @@ version: '3.7'
 services:
   web:
     image: jusoch/juso-site
-    command: gunicorn -w 4 -k uvicorn.workers.UvicornH11Worker juso.asgi:application --bind 0.0.0.0:8000
+    command: gunicorn -w 4 -k uvicorn_worker.UvicornH11Worker juso.asgi:application --bind 0.0.0.0:8000
     volumes:
       - static_volume:/home/app/web/static/
       - media_volume:/home/app/web/media/

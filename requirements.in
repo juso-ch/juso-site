@@ -1,50 +1,60 @@
-Django<4
+# Django 4.2 LTS (Phase 2). The feincms3 stack is intentionally pinned to the
+# versions that already run on 4.2 (verified: 131/131 real URLs render); it is
+# upgraded together in Phase 3.
+Django>=4.2,<4.3
 
 bleach
-celery
+celery>=5.3,<5.4
 celery-stubs
 docutils
 
-django-admin-ordering
-django-autoslug
-django-content-editor
-django-ckeditor
-django-debug-toolbar
-django-flat-json-widget
-django-imagefield
-django-ip
-django-js-asset
-django-reversion
-django-sekizai
-django-simple-captcha
-django-su
-django-stubs
-django-taggit
-django-tree-queries
-django-treebeard
-django-celery-results
-
+# --- feincms3 stack: pinned, upgraded in Phase 3 ---
 feincms3==0.38.1
 feincms3-meta
 feincms3-sites==0.11.0
+django-content-editor==6.0.0
+django-js-asset==1.2.2
+django-tree-queries==0.7.0
+django-imagefield==0.14.0
+django-ckeditor==6.2.0
+# ----------------------------------------------------
+
+# admin-ordering >=0.18 needs django-js-asset>=2, which the pinned
+# content-editor 6.0 stack is not verified against; float to a js-asset 1.x
+# compatible release for now (revisit in Phase 3).
+django-admin-ordering
+django-autoslug>=1.9.9
+django-debug-toolbar>=4,<5
+django-flat-json-widget>=0.3
+django-ip
+django-reversion>=5,<6
+django-sekizai>=4,<5
+django-simple-captcha>=0.6,<0.7
+django-su>=1,<2
+django-stubs
+django-taggit>=5,<6
+django-treebeard
+django-celery-results>=2.5,<2.6
+
 geopy
-gunicorn
-html-sanitizer
+gunicorn>=23,<24
+uvicorn>=0.30
+uvicorn-worker
+html-sanitizer>=2.5
 isort
 jedi
 mypy
 mypy-extensions
 openpyxl
-Pillow
-psycopg2-binary
+Pillow>=10,<11
+psycopg2-binary>=2.9.9
 pylint
 pylint-django
 pylint-plugin-utils
 pymemcache
 python-memcached
-redis
-uvicorn
+redis>=5,<6
 jdcal
 phonenumbers
-pywebpush
+pywebpush>=2,<3
 xlsxwriter

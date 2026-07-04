@@ -77,7 +77,7 @@ class Migration(migrations.Migration):
                         on_delete=django.db.models.deletion.SET_NULL,
                         related_name="+",
                         related_query_name="+",
-                        to="events.NameSpace",
+                        to="blog.NameSpace",
                         verbose_name="namespace",
                     ),
                 ),

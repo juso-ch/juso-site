@@ -141,6 +141,8 @@ TIME_ZONE = "Europe/Zurich"
 
 USE_I18N = True
 
+# USE_L10N is deprecated on Django 4.0 (localization is always on). Keep it here
+# on 3.2 where the global default is False; drop it in the Django 4.x phase.
 USE_L10N = True
 
 USE_TZ = True

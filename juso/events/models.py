@@ -2,8 +2,9 @@ import json
 import urllib
 import uuid
 
+from zoneinfo import ZoneInfo
+
 import bleach
-import pytz
 from content_editor.models import Region, create_plugin_base
 from django.conf import settings
 from django.core.cache import cache
@@ -183,7 +184,7 @@ class Event(ContentMixin):
             icon = "https://" + page.site.host + "/static/logo.png"
             return json.dumps({
                 "title":
-                self.start_date.astimezone(pytz.timezone(
+                self.start_date.astimezone(ZoneInfo(
                     settings.TIME_ZONE)).strftime("%d.%m.%Y %H:%M") + " - " +
                 self.title,
                 "tagline":

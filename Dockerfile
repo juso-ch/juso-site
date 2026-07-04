@@ -1,5 +1,5 @@
 # pull official base image
-FROM python:3.8-buster
+FROM python:3.10-bookworm
 
 # set work directory
 WORKDIR /usr/src/app
@@ -10,7 +10,7 @@ ENV PYTHONUNBUFFERED 1
 
 RUN apt-get update && \
   apt-get install -y \
-    netcat sox flite
+    netcat-traditional sox flite
 
 # install dependencies
 RUN pip install --upgrade pip

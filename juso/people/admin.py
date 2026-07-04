@@ -1,6 +1,6 @@
 from admin_ordering.admin import OrderableAdmin
 from django.contrib import admin
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 from reversion.admin import VersionAdmin
 
 # Register your models here.

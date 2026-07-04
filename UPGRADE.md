@@ -42,12 +42,20 @@ export SQL_ENGINE=django.db.backends.postgresql POSTGRES_DB=juso POSTGRES_USER=j
   pages admins did `sections[0]` / `Site.objects.filter(...)[0]`, which 500s when
   the editor has no sections. Guarded — behavior unchanged when sections exist.
 
-## Phase 1 — cleanup on Django 3.2 (pending)
-- Remove unused `django-fobi` and `django-taggit-templatetags` (+ orphaned
-  transitives) from requirements.
-- `ugettext`→`gettext` (people/admin.py); fix removed `postgres...jsonb.JSONField`
-  import in `webpush/migrations/0001`; `pytz`→`zoneinfo` (events/models.py); drop
-  `USE_L10N`. Docker base → `python:3.10-slim-bookworm`.
+## Phase 1 — cleanup on Django 3.2 (done)
+- Removed unused `django-fobi` + `django-taggit-templatetags`; recompiled
+  requirements dropped 13 orphaned transitives (django-nine, django-nonefield,
+  vishap, easy-thumbnails, reportlab, svglib, unidecode, …). Django stays 3.2.15.
+- **`bleach` re-added as an explicit dep** — it is imported directly in
+  people/events models but was only present as a fobi transitive.
+- `ugettext`→`gettext` (people/admin.py); removed the `postgres…jsonb.JSONField`
+  import from `webpush/migrations/0001` (would crash migrate on Django 4.0);
+  `pytz`→`zoneinfo.ZoneInfo` (events/models.py). Verified no migration drift.
+- **`USE_L10N` kept for now** — on 3.2 the global default is False, so removing it
+  here would flip localized formatting off. Removed in Phase 2 (no-op on Django 4).
+- Docker base → `python:3.10-bookworm`, `netcat`→`netcat-traditional` (both
+  Dockerfiles). NB: needs a `docker build` smoke on CI/host before deploy.
+- Validated on the prod dump: 131/131 URLs → 200, admin suite green, no drift.
 
 ## Phase 2 — Django 3.2 → 4.2 (pending)
 - Step 4.0→4.1→4.2; bump reversion, simple-captcha, tree-queries, debug-toolbar,

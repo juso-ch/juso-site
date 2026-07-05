@@ -27,7 +27,8 @@ from juso.sections.models import Category
 
 def articles_for_page(page, qs=None, allow_future=False):
     qs = qs if qs else models.Article.objects.filter(
-        language_code=page.language_code)
+        language_code=page.language_code).select_related(
+            "category", "namespace", "section__site")
 
     if page.category:
         qs = qs.filter(category=page.category)

@@ -17,7 +17,9 @@ from juso.sections.models import Section
 
 
 def event_list_for_page(page, past_events=False, all_events=False):
-    qs = Event.objects.filter(language_code=page.language_code, )
+    qs = Event.objects.filter(
+        language_code=page.language_code).select_related(
+            "category", "section__site")
     if all_events:
         pass
     elif not past_events:

@@ -1,5 +1,5 @@
 <figure class="{% if plugin.fullwidth %}full{%endif%}">
-  <img class="" src="{{plugin.image.url}}" alt="{{plugin.caption}}" title="{{plugin.title}}"/>
+  <img class="" src="{{plugin.image.url}}" alt="{{ plugin.alternative_text|default:plugin.caption }}" title="{{plugin.title}}"/>
 
   <figcaption>{{plugin.caption}}</figcaption>
 </figure>

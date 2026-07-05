@@ -1,6 +1,6 @@
 {% if json.type == 'photo' %}
 <figure class="{% if plugin.fullwidth %}full{%endif%}">
-  <img class="" src="{{json.url}}" alt="{{plugin.caption}}" title="{{json.title}}"/>
+  <img class="" src="{{json.url}}" alt="{{ plugin.alternative_text|default:plugin.caption }}" title="{{json.title}}"/>
 
   <figcaption>{{plugin.caption}}</figcaption>
 </figure>

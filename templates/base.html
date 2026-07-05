@@ -66,6 +66,8 @@
 
   </head>
     <body class="{{page.category.slug}}">
+      <style>.skip-link{position:absolute;left:-9999px;top:0;z-index:1000}.skip-link:focus{left:0;padding:.6em 1em;background:#fff;color:#000;outline:2px solid #000}</style>
+      <a class="skip-link" href="#main">{% trans "Skip to main content" %}</a>
 
       {% button_menu request.LANGUAGE_CODE top as buttons %}
       <div id="loading-bar" class="complete">
@@ -118,7 +120,7 @@
       </header>
       {% endblock %}
 
-      <main>
+      <main id="main">
         {% block content %}
         {% endblock %}
       </main>

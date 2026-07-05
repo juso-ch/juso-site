@@ -11,15 +11,15 @@
         <input type="text" name="search" id="search">
       </div>
 
-      <button type="submit">
+      <button type="submit" aria-label="{% trans 'Search' %}">
       <i title="{% trans 'Search' %}" class="fas fa-search"></i>
       </button>
   </form>
  <div id="notification-area">
-    <button alt="" id="subscribe-button" class="button">
+    <button aria-label="{% trans 'Enable Notifications' %}" id="subscribe-button" class="button">
       <i title="{% trans 'Enable Notifications' %}" class="fas fa-bell"></i>
     </button>
-    <button style="display: none" id="unsubscribe-button" class="button">
+    <button aria-label="{% trans 'Disable Notifications' %}" style="display: none" id="unsubscribe-button" class="button">
       <i title="{% trans 'Disable Notifications' %}" class="fas fa-bell-slash"></i>
     </button>
     <input type="hidden" id="vapid_public_key" value="{{vapid_public_key}}">

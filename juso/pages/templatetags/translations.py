@@ -11,7 +11,7 @@ def load_translations(page, obj=None):
 
 
 @register.simple_tag
-def translations(page, obj=None):
+def translations(page, obj=None, scheme="https:"):
     for language, _ in settings.LANGUAGES:
         if language != page.language_code:
             if obj:

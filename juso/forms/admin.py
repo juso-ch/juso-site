@@ -414,4 +414,4 @@ class WebhookAdmin(admin.ModelAdmin):
         if request.user.is_superuser:
             return super().get_queryset(request)
         sections = request.user.section_set.all()
-        return super().get_queryset(request).filter(onwer__in=sections)
+        return super().get_queryset(request).filter(owner__in=sections)

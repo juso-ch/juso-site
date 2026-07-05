@@ -169,7 +169,11 @@ class ContentMixin(TranslationMixin, MetaMixin, TemplateMixin):
 
                 for text in title:
                     line += 1
-                    size = font.getsize_multiline(text)
+                    # Pillow 10 removed ImageFont.getsize_multiline(); each
+                    # `text` here is a single already-wrapped line, so the glyph
+                    # bounding box from getbbox() gives the equivalent (w, h).
+                    left, top, right, bottom = font.getbbox(text)
+                    size = (right - left, bottom - top)
                     x = 30
                     y = text_top + line * line_height
                     draw.rectangle(

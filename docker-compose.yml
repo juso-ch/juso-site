@@ -26,13 +26,13 @@ services:
     expose:
       - 6379
   db:
-    image: postgres:13-alpine
+    image: postgres:17-alpine
     volumes:
-      - postgres13_data:/var/lib/postgresql/data/
+      - postgres17_data:/var/lib/postgresql/data/
       - .:/tmp
     environment:
       - POSTGRES_USER=hello_django
       - POSTGRES_PASSWORD=hello_django
       - POSTGRES_DB=hello_django_dev
 volumes:
-  postgres13_data:
+  postgres17_data:

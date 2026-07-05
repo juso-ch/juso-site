@@ -34,7 +34,10 @@ services:
     expose:
       - 6379
   db:
-    image: postgres:12.0-alpine
+    # Django 5.2 requires PostgreSQL 14+. Upgrading the image alone is not enough:
+    # a 17 container will refuse to start on a PG12 data dir. See UPGRADE.md
+    # (Phase 4) for the one-time pg_dump(12) -> pg_restore(17) migration runbook.
+    image: postgres:17-alpine
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:

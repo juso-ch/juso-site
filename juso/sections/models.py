@@ -5,7 +5,7 @@ from content_editor.models import Region, Template
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core import files
-from django.core.files.storage import get_storage_class
+from django.core.files.storage import default_storage
 from django.db import models
 from django.urls import NoReverseMatch
 from django.utils import timezone
@@ -140,7 +140,7 @@ class ContentMixin(TranslationMixin, MetaMixin, TemplateMixin):
             if (settings.DEBUG or
                     not self.generated_meta_image) and self.get_header_image():
                 orig = self.get_header_image()
-                img = Image.open(get_storage_class()().open(
+                img = Image.open(default_storage.open(
                     self.get_header_image().some[1:].partition("/")[2]))
                 draw = ImageDraw.Draw(img)
                 font = ImageFont.truetype(

@@ -123,5 +123,53 @@ js-asset 1→4, imagefield 0.14→0.22, admin-ordering→0.20. Validated on the 
   feincms3-meta fork (still imports/renders on 5.6), taggit 5→6, django-su→hijack,
   CKEditor 4 → django-prose-editor.
 
-## Later
-Phase 4: Django 5.2 / Py 3.13 / psycopg 3. Phase 5: Postgres 12 → 17.
+## Phase 4 — Django 4.2 → 5.2 LTS, Python 3.13, psycopg 3 (done)
+Landing zone: Django 5.2 LTS (supported to April 2028) on Python 3.13, psycopg 3.
+Validated on the prod dump: **131/131 URLs → 200**, admin suite green, no
+migration drift.
+
+- Django → 5.2, `psycopg2-binary` → `psycopg[binary]` 3.2 (the `postgresql`
+  backend auto-selects psycopg 3 — no settings change). Bumps: Pillow 11,
+  debug-toolbar 7, ckeditor 6.7, reversion 6.3, celery 5.5, taggit 5.1+,
+  beautifulsoup4 4.15, cryptography 49. Compiled against `.venv-p4` (Py 3.13).
+- **`get_storage_class()` removed in Django 5.1** (sections/models.py) → use the
+  `default_storage` instance directly.
+- **debug-toolbar 7 imports a model at URL-import time.** `juso/urls.py`
+  unconditionally did `include(debug_toolbar.urls)`, but `debug_toolbar` is only
+  in `INSTALLED_APPS` when `DEBUG` is on — so under `DEBUG=0` (prod, CI) every
+  request 500'd with `HistoryEntry ... isn't in an application in INSTALLED_APPS`.
+  Moved the import + `__debug__/` route inside the `if settings.DEBUG:` block.
+- Docker base → `python:3.13-bookworm`; CI `python-version` → 3.13.
+
+### Postgres 14+ requirement — Phase 5 folded in
+**Django 5.2 hard-requires PostgreSQL 14+** (`NotSupportedError` on connect
+otherwise), so the Postgres upgrade can no longer be deferred: Phase 4 is *not*
+deployable against the existing PG12. All Postgres pins moved to
+`postgres:17-alpine` (CI `test.yml`, `docker-compose.yml` — dev volume renamed
+`postgres13_data` → `postgres17_data`, and `docker-compose.prod.yml`).
+
+**Prod DB migration runbook (one-time, required before/with the Phase 4 deploy).**
+A 17 container will not start on a PG12 `PGDATA`; dump from 12 and restore into a
+fresh 17 volume:
+```
+# 1. With prod still on PG12, dump the live DB (custom format):
+docker compose -f docker-compose.prod.yml exec db \
+  pg_dump -U "$POSTGRES_USER" -Fc "$POSTGRES_DB" > juso-pg12.dump
+
+# 2. Stop the stack; remove/rename the old PG12 volume so 17 initialises fresh:
+docker compose -f docker-compose.prod.yml down
+docker volume rm <project>_postgres_data   # back it up first if unsure
+
+# 3. Bring up only the new PG17 db, then restore:
+docker compose -f docker-compose.prod.yml up -d db
+docker compose -f docker-compose.prod.yml exec -T db \
+  pg_restore -U "$POSTGRES_USER" -d "$POSTGRES_DB" --no-owner --no-privileges < juso-pg12.dump
+
+# 4. Start the rest and migrate (applies the Phase 3 feincms3 + language_code
+#    migrations the raw prod dump predates):
+docker compose -f docker-compose.prod.yml up -d
+docker compose -f docker-compose.prod.yml exec web python manage.py migrate --noinput
+```
+Local validation followed exactly this shape: prod dump restored into a fresh
+`postgres:17-alpine`, `migrate` applied 25 pending migrations, `smoke_urls
+--per-site 3` → 131/131.

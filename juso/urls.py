@@ -20,7 +20,6 @@ from django.contrib.auth import views as auth_views
 from django.http import HttpResponse
 from django.urls import include, path
 
-import debug_toolbar
 from juso import views
 
 
@@ -34,7 +33,6 @@ Disallow: /"""
 
 
 urlpatterns = [
-    path("__debug__/", include(debug_toolbar.urls)),
     path(
         "admin/password_reset/",
         auth_views.PasswordResetView.as_view(),
@@ -68,5 +66,14 @@ handler404 = "juso.pages.views.error404"
 handler500 = "juso.pages.views.error500"
 
 if settings.DEBUG:
+    # debug_toolbar is only in INSTALLED_APPS when DEBUG is on, and its urls
+    # module imports a model at import time (django-debug-toolbar >= 5), so it
+    # can only be included here.
+    import debug_toolbar
+
+    urlpatterns = [
+        path("__debug__/", include(debug_toolbar.urls)),
+        *urlpatterns,
+    ]
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)

@@ -30,10 +30,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Application definition
 
 INSTALLED_APPS = [
-    "django_su",
     #    "jazzmin",
     "juso",
     "django.contrib.admin",
+    "hijack",
+    "hijack.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -77,6 +78,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "hijack.middleware.HijackUserMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
@@ -212,19 +214,7 @@ MEDIA_URL = "/media/"
 
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
-    "django_su.backends.SuBackend",
 ]
-
-AJAX_LOOKUP_CHANNELS = {
-    "django_su": dict(model="auth.user", search_field="username")
-}
-
-SU_LOGIN_REDIRECT_URL = "/admin/"
-SU_LOGOUT_REDIRECT_URL = "/admin/"
-
-
-def superuser_callback(user):
-    return user.is_superuser
 
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
@@ -252,8 +242,6 @@ CSRF_TRUSTED_ORIGINS = [
 SESSION_COOKIE_SECURE = not DEBUG
 # SESSION_COOKIE_NAME = '__Secure-sessionid'
 SESSION_COOKIE_SAMESITE = "Lax"
-
-SU_LOGIN_CALLBACK = "juso.settings.superuser_callback"
 
 NOMINATIM_USER_AGENT = "juso-site"
 

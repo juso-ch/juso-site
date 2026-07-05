@@ -53,7 +53,7 @@ urlpatterns = [
         auth_views.PasswordResetCompleteView.as_view(),
         name="password_reset_complete",
     ),
-    path("su/", include("django_su.urls")),
+    path("hijack/", include("hijack.urls")),
     path("admin/", admin.site.urls),
     path("forms/", include("juso.forms.urls")),
     path('captcha/', include('captcha.urls')),

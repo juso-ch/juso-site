@@ -16,7 +16,6 @@ RUN apt-get update && \
 RUN pip install --upgrade pip
 COPY ./requirements.txt /usr/src/app/requirements.txt
 RUN pip install -r requirements.txt
-RUN pip install git+https://github.com/sacovo/feincms3-meta.git@4132326eb74d897f6d4c019d820f59edad8a94f0 --upgrade
 
 # copy project
 COPY . /usr/src/app/

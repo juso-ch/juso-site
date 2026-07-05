@@ -9,7 +9,9 @@ docutils
 
 # --- feincms3 stack (Phase 3: upgraded in lockstep) ---
 feincms3>=5.6,<6
-feincms3-meta
+# Upstream (Phase 4: exited the sacovo fork; its Twitter-Card/OG-video fields
+# were dropped — see migration pages/0093-style meta field removals).
+feincms3-meta>=4.6,<5
 feincms3-sites>=0.21,<0.22
 django-content-editor>=9,<10
 django-js-asset>=4,<5
@@ -26,9 +28,9 @@ django-ip
 django-reversion>=5.1,<7
 django-sekizai>=4,<5
 django-simple-captcha>=0.6,<0.7
-django-su>=1,<2
+django-hijack>=3.7,<4
 django-stubs
-django-taggit>=5.1
+django-taggit>=6.1,<7
 django-treebeard
 django-celery-results>=2.5,<2.6
 

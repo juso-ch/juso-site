@@ -65,6 +65,7 @@ django==5.2.15
     #   django-content-editor
     #   django-debug-toolbar
     #   django-flat-json-widget
+    #   django-hijack
     #   django-js-asset
     #   django-ranged-response
     #   django-reversion
@@ -72,7 +73,6 @@ django==5.2.15
     #   django-simple-captcha
     #   django-stubs
     #   django-stubs-ext
-    #   django-su
     #   django-taggit
     #   django-treebeard
     #   feincms3
@@ -95,6 +95,8 @@ django-content-editor==9.0.0
 django-debug-toolbar==7.0.0
     # via -r requirements.in
 django-flat-json-widget==0.4
+    # via -r requirements.in
+django-hijack==3.7.8
     # via -r requirements.in
 django-imagefield==0.22.0
     # via
@@ -124,8 +126,6 @@ django-stubs==6.0.6
     # via -r requirements.in
 django-stubs-ext==6.0.6
     # via django-stubs
-django-su==1.0.0
-    # via -r requirements.in
 django-taggit==6.1.0
     # via -r requirements.in
 django-tree-queries==0.24.0

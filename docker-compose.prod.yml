@@ -26,7 +26,7 @@ services:
       - 25
   celery:
     image: jusoch/juso-site
-    command: celery -A juso worker --loglevel WARN
+    command: celery -A juso worker --loglevel WARNING
     env_file:
       - ./.env.prod
   redis:

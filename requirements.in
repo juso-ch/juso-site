@@ -44,7 +44,7 @@ jedi
 mypy
 mypy-extensions
 openpyxl
-Pillow>=11,<12
+Pillow>=12.3.0,<13
 psycopg[binary]>=3.2
 pylint
 pylint-django

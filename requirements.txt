@@ -128,7 +128,7 @@ django-stubs-ext==6.0.6
     # via django-stubs
 django-taggit==6.1.0
     # via -r requirements.in
-django-tree-queries==0.24.0
+django-tree-queries[admin]==0.24.0
     # via
     #   -r requirements.in
     #   feincms3
@@ -212,7 +212,7 @@ pathspec==1.1.1
     # via mypy
 phonenumbers==9.0.34
     # via -r requirements.in
-pillow==11.3.0
+pillow==12.3.0
     # via
     #   -r requirements.in
     #   django-imagefield
@@ -225,7 +225,7 @@ propcache==0.5.2
     # via
     #   aiohttp
     #   yarl
-psycopg==3.3.4
+psycopg[binary]==3.3.4
     # via -r requirements.in
 psycopg-binary==3.3.4
     # via psycopg

@@ -2,7 +2,7 @@
 #    uv pip compile requirements.in -o requirements.txt --python .venv-p4/bin/python
 aiohappyeyeballs==2.7.1
     # via aiohttp
-aiohttp==3.14.1
+aiohttp==3.14.3
     # via pywebpush
 aiosignal==1.4.0
     # via aiohttp
@@ -128,7 +128,7 @@ django-stubs-ext==6.0.6
     # via django-stubs
 django-taggit==6.1.0
     # via -r requirements.in
-django-tree-queries==0.24.0
+django-tree-queries[admin]==0.24.0
     # via
     #   -r requirements.in
     #   feincms3
@@ -225,7 +225,7 @@ propcache==0.5.2
     # via
     #   aiohttp
     #   yarl
-psycopg==3.3.4
+psycopg[binary]==3.3.4
     # via -r requirements.in
 psycopg-binary==3.3.4
     # via psycopg

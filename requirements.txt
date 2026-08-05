@@ -49,7 +49,7 @@ click-plugins==1.1.1.2
     # via celery
 click-repl==0.3.0
     # via celery
-cryptography==49.0.0
+cryptography==50.0.0
     # via
     #   http-ece
     #   py-vapid
@@ -128,7 +128,7 @@ django-stubs-ext==6.0.6
     # via django-stubs
 django-taggit==6.1.0
     # via -r requirements.in
-django-tree-queries==0.24.0
+django-tree-queries[admin]==0.24.0
     # via
     #   -r requirements.in
     #   feincms3
@@ -225,7 +225,7 @@ propcache==0.5.2
     # via
     #   aiohttp
     #   yarl
-psycopg==3.3.4
+psycopg[binary]==3.3.4
     # via -r requirements.in
 psycopg-binary==3.3.4
     # via psycopg
